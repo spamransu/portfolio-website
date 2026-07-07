@@ -1,0 +1,56 @@
+@use '../styles/mixins' as mix;
+
+.root {
+  @include mix.flex(column, space-between, stretch, var(--space-sm));
+  width: min(calc(100% - 2rem), var(--max-width));
+  margin-inline: auto;
+  padding-block: 1.25rem;
+
+  @include mix.mq(md) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.brand {
+  @include mix.flex(row, null, center, 0.85rem);
+  text-decoration: none;
+}
+
+.brand strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.brand small {
+  display: block;
+  color: var(--muted);
+}
+
+.brandMark {
+  display: grid;
+  width: 2.8rem;
+  aspect-ratio: 1;
+  color: var(--ink);
+  font-weight: 800;
+  background: var(--accent);
+  border-radius: 999px;
+  place-items: center;
+}
+
+.nav {
+  @include mix.flex(row, null, null, var(--space-sm), wrap);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.nav a:hover,
+.nav .is-active {
+  color: var(--text);
+}

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import styles from './Section.module.scss'
 
 type SectionProps = {
   title: string
@@ -8,12 +9,12 @@ type SectionProps = {
 
 export function Section({ title, intro, children }: SectionProps) {
   return (
-    <section className="section-block">
-      <div className="section-block__heading">
+    <section className={styles.root}>
+      <div className={styles.heading}>
         <h2>{title}</h2>
         {intro ? <p>{intro}</p> : null}
       </div>
-      <div className="section-block__body">{children}</div>
+      <div>{children}</div>
     </section>
   )
 }

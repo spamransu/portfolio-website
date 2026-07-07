@@ -1,0 +1,36 @@
+@use './mixins' as mix;
+
+.site-shell {
+  min-height: 100vh;
+}
+
+.site-main,
+.layout-contained {
+  width: min(calc(100% - 2rem), var(--max-width));
+  margin-inline: auto;
+}
+
+.site-main {
+  padding-block: var(--space-lg) 5rem;
+}
+
+.page-stack {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.project-grid,
+.contact-grid,
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+
+@include mix.mq(md) {
+  .project-grid,
+  .contact-grid,
+  .detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

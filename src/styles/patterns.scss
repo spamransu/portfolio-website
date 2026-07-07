@@ -1,0 +1,70 @@
+@use './mixins' as mix;
+
+.callout-card,
+.contact-card,
+.timeline__item {
+  @include mix.card-surface(1.35rem);
+}
+
+.callout-card,
+.contact-card,
+.timeline__item,
+.detail-grid div {
+  min-width: 0;
+}
+
+.callout-card p,
+.contact-card p,
+.timeline__meta p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.callout-card a:hover,
+.inline-links a:hover {
+  color: var(--text);
+}
+
+.contact-card h3,
+.timeline__item h3 {
+  margin-top: 0;
+}
+
+.timeline {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.detail-grid {
+  margin: 0;
+}
+
+.detail-grid div {
+  padding: var(--space-sm);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.detail-grid dt,
+.detail-grid dd {
+  margin: 0;
+}
+
+.detail-grid dt {
+  color: var(--muted);
+}
+
+.not-found {
+  width: min(calc(100% - 2rem), 720px);
+  margin: 5rem auto;
+  text-align: center;
+
+  h1 {
+    margin-top: 0;
+    line-height: 1.05;
+  }
+
+  p {
+    color: var(--muted);
+  }
+}

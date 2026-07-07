@@ -1,0 +1,16 @@
+@use '../styles/mixins' as mix;
+
+.root {
+  @include mix.card-surface(var(--space-lg));
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.heading h2 {
+  margin-top: 0;
+  line-height: 1.05;
+}
+
+.heading p {
+  color: var(--muted);
+}

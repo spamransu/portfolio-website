@@ -1,0 +1,29 @@
+@use '../styles/mixins' as mix;
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  margin: 0;
+
+  @include mix.mq(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.item {
+  padding: var(--space-sm) 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.item dt {
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+}
+
+.item dd {
+  margin: 0;
+  font-weight: 700;
+}

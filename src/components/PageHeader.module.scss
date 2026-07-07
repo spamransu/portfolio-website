@@ -1,0 +1,31 @@
+@use '../styles/mixins' as mix;
+
+.root {
+  @include mix.card-surface(var(--space-lg));
+}
+
+.root h1 {
+  max-width: 12ch;
+  margin-block: 0 1rem;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+}
+
+.eyebrow {
+  margin-top: 0;
+  color: var(--accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.intro {
+  max-width: 70ch;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.actions {
+  @include mix.flex(row, null, null, 0.85rem, wrap);
+  margin-top: 1.25rem;
+}

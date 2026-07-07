@@ -1,0 +1,52 @@
+@use './tokens' as tokens;
+@use './mixins' as mix;
+
+:root {
+  color-scheme: dark;
+  --bg: #{tokens.color(bg)};
+  --surface: #{tokens.color(surface)};
+  --surface-2: #{tokens.color(surface-2)};
+  --text: #{tokens.color(text)};
+  --muted: #{tokens.color(muted)};
+  --line: #{tokens.color(line)};
+  --accent: #{tokens.color(accent)};
+  --accent-2: #{tokens.color(accent-2)};
+  --ink: #{tokens.color(ink)};
+  --max-width: #{tokens.$max-width};
+  --radius: #{tokens.radius(lg)};
+  --radius-md: #{tokens.radius(md)};
+  --shadow: #{tokens.$shadow-card};
+  --space-xs: #{tokens.space(xs)};
+  --space-sm: #{tokens.space(sm)};
+  --space-md: #{tokens.space(md)};
+  --space-lg: #{tokens.space(lg)};
+  --space-xl: #{tokens.space(xl)};
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #1b1b1b 0%, var(--bg) 58%);
+  color: var(--text);
+  @include mix.font(body, 400, body);
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  @include mix.focus-ring;
+}

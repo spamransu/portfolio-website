@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { siteContent } from '../content/siteContent'
+import styles from './SiteHeader.module.scss'
 
 const navItems = [
   { to: '/about', label: 'About' },
@@ -10,9 +11,9 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="site-header">
-      <NavLink to="/" className="site-header__brand">
-        <span className="site-header__brand-mark">R</span>
+    <header className={styles.root}>
+      <NavLink to="/" className={styles.brand}>
+        <span className={styles.brandMark}>R</span>
         <span>
           <strong>{siteContent.site.name}</strong>
           <small>{siteContent.site.tagline}</small>
@@ -20,10 +21,10 @@ export function SiteHeader() {
       </NavLink>
 
       <nav aria-label="Primary">
-        <ul className="site-header__nav">
+        <ul className={styles.nav}>
           {navItems.map((item) => (
             <li key={item.to}>
-              <NavLink to={item.to} className={({ isActive }) => (isActive ? 'is-active' : undefined)}>
+              <NavLink to={item.to} className={({ isActive }) => (isActive ? styles['is-active'] : undefined)}>
                 {item.label}
               </NavLink>
             </li>
