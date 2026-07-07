@@ -1,0 +1,22 @@
+/*
+  X-Robots-Tag: index, follow
+  Content-Signal: search=yes, ai-input=yes, ai-train=no
+  Link: </llms.txt>; rel="alternate"; type="text/markdown"
+  Link: </llms-full.txt>; rel="alternate"; type="text/markdown"
+  Link: </sitemap.xml>; rel="sitemap"; type="application/xml"
+  Link: </.well-known/agent-skills/index.json>; rel="agent-skills"
+
+/
+  Link: </index.md>; rel="alternate"; type="text/markdown"
+
+/about
+  Link: </about.md>; rel="alternate"; type="text/markdown"
+
+/projects
+  Link: </projects.md>; rel="alternate"; type="text/markdown"
+
+/contact
+  Link: </contact.md>; rel="alternate"; type="text/markdown"
+
+/resume
+  Link: </resume.md>; rel="alternate"; type="text/markdown"

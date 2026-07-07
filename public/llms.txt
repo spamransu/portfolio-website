@@ -1,0 +1,22 @@
+# Ransu Portfolio
+
+> Frontend developer and designer building accessible, content-rich digital experiences.
+
+A portfolio website for showcasing case-study style projects, experience, and future writing.
+
+## Preferred machine-readable entry points
+- [Site index](https://example.com/index.md)
+- [Full site content](https://example.com/llms-full.txt)
+- [Project archive](https://example.com/projects.md)
+- [Resume](https://example.com/resume.md)
+- [Contact](https://example.com/contact.md)
+
+## Core pages
+- [Home](https://example.com/index.md)
+- [About](https://example.com/about.md)
+- [Projects](https://example.com/projects.md)
+- [Contact](https://example.com/contact.md)
+- [Resume](https://example.com/resume.md)
+- [Design System Refresh](https://example.com/projects/design-system-refresh.md)
+- [Content-First Portfolio Rebuild](https://example.com/projects/content-first-portfolio-rebuild.md)
+- [WordPress Performance Audit](https://example.com/projects/wordpress-performance-audit.md)
