@@ -7,9 +7,18 @@
     "location": "Manila, Philippines",
     "siteUrl": "https://example.com",
     "socials": [
-      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/your-handle" },
-      { "label": "GitHub", "href": "https://github.com/your-handle" },
-      { "label": "Figma", "href": "https://www.figma.com/@your-handle" }
+      {
+        "label": "LinkedIn",
+        "href": "https://www.linkedin.com/in/your-handle"
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/your-handle"
+      },
+      {
+        "label": "Figma",
+        "href": "https://www.figma.com/@your-handle"
+      }
     ]
   },
   "about": {
@@ -26,37 +35,62 @@
     ]
   },
   "resume": {
-    "headline": "Frontend Developer + Graphic Designer",
-    "summary": "I build responsive interfaces, design systems, landing pages, and content-driven websites with a focus on accessibility, maintainability, and good visual hierarchy.",
+    "headline": "Frontend Web Developer / Graphic Designer",
+    "summary": "Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.",
     "skills": [
       "React",
       "TypeScript",
-      "SCSS",
+      "JavaScript",
+      "HTML",
+      "CSS / SCSS",
       "WordPress",
+      "Elementor",
       "Figma",
-      "Accessibility / WCAG",
-      "Design systems",
-      "Responsive UI engineering"
+      "Accessibility-minded frontend work",
+      "Responsive UI implementation",
+      "Design systems / reusable templates",
+      "Git / GitHub"
     ],
     "experience": [
       {
-        "role": "Frontend Developer",
-        "company": "Your Company",
-        "period": "2023 — Present",
+        "role": "Frontend Web Developer / Graphic Designer",
+        "company": "Tech Support Plus I.T Services",
+        "period": "Jan 2026 — Present",
         "highlights": [
-          "Built and refined responsive marketing and product pages.",
-          "Collaborated with designers and stakeholders to improve structure, clarity, and implementation quality.",
-          "Improved maintainability by standardizing reusable UI patterns and cleanup workflows."
+          "Support Elementor v2 and v3 to v4 migrations by setting up global variables and reusable class structures for more consistent styling and easier maintenance.",
+          "Build custom WordPress themes and reusable templates for company websites.",
+          "Maintain 8+ company websites and 3+ client websites, including updates, security cleanup, spam prevention, audits, and performance work.",
+          "Create branding and marketing assets for internal and client use, and prepare websites for SEO handoff and deployment through cPanel and Hostinger."
         ]
       },
       {
-        "role": "Graphic Designer / Web Designer",
-        "company": "Freelance + Agency Work",
-        "period": "2019 — 2023",
+        "role": "Web Developer",
+        "company": "ABCDE Creative Studio",
+        "period": "Apr 2025 — Dec 2025",
         "highlights": [
-          "Designed brand and web assets across client projects.",
-          "Translated visual concepts into practical layouts ready for implementation.",
-          "Balanced aesthetics with content structure and conversion goals."
+          "Developed and maintained client websites across WordPress and React projects.",
+          "Translated Figma designs into responsive React interfaces with accessibility in mind.",
+          "Contributed to reusable UI patterns and design-system work that made project builds easier to maintain.",
+          "Supported delivery workflows using Git, GitHub Actions, Vitest, and Cloudflare."
+        ]
+      },
+      {
+        "role": "Print Machine Operator / Graphic Designer",
+        "company": "Young Alpha Advertising Corp.",
+        "period": "Jan 2024 — Oct 2024",
+        "highlights": [
+          "Improved large-format print workflows through RIP setup, color calibration, and cutting-process cleanup.",
+          "Created reusable templates and organized asset libraries to reduce manual revisions across production work.",
+          "Troubleshot hardware and software issues across production workstations and print systems."
+        ]
+      },
+      {
+        "role": "Social Media Designer",
+        "company": "But First, Coffee (Multiple Branches)",
+        "period": "Jan 2023 — Jul 2024",
+        "highlights": [
+          "Designed social media graphics and branded marketing assets for multiple branches.",
+          "Worked with branch managers and marketing teams to refine assets and keep campaign visuals consistent."
         ]
       }
     ]
@@ -74,7 +108,12 @@
       "client": "SaaS Platform",
       "summary": "A case study on cleaning up inconsistent UI patterns and aligning design and implementation.",
       "role": "Frontend developer + design systems support",
-      "stack": ["React", "TypeScript", "SCSS", "Storybook"],
+      "stack": [
+        "React",
+        "TypeScript",
+        "SCSS",
+        "Storybook"
+      ],
       "challenge": "The product had visual drift, duplicated components, and inconsistent behavior across breakpoints.",
       "approach": [
         "Audited components and grouped repeated patterns into a smaller token-based system.",
@@ -94,7 +133,12 @@
       "client": "Personal Brand",
       "summary": "A personal site rebuild focused on stronger project storytelling, clearer structure, and better machine readability.",
       "role": "Product designer + frontend developer",
-      "stack": ["React", "TypeScript", "SCSS", "Cloudflare Pages"],
+      "stack": [
+        "React",
+        "TypeScript",
+        "SCSS",
+        "Cloudflare Pages"
+      ],
       "challenge": "The older portfolio showed visuals but not enough context, which made it harder for recruiters, collaborators, and AI tools to understand the work.",
       "approach": [
         "Shifted from gallery-style presentation to case-study style narratives.",
@@ -114,7 +158,12 @@
       "client": "Content Publisher",
       "summary": "A performance and UX cleanup effort for a content-heavy website.",
       "role": "Frontend developer",
-      "stack": ["WordPress", "PHP", "SCSS", "JavaScript"],
+      "stack": [
+        "WordPress",
+        "PHP",
+        "SCSS",
+        "JavaScript"
+      ],
       "challenge": "The site suffered from heavy theme code, layout inconsistencies, and weak mobile navigation.",
       "approach": [
         "Removed dead styles and narrowed CSS to the components actually in use.",
