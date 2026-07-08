@@ -6,11 +6,6 @@
   background: var(--bg);
 }
 
-.inner {
-  width: min(calc(100% - 2rem), var(--max-width));
-  margin-inline: auto;
-}
-
 .hero,
 .section {
   background: var(--bg);
@@ -280,7 +275,7 @@
 .contactFormWrap {
   display: grid;
   gap: 1rem;
-  width: min(calc(100% - 2rem), 20rem);
+  width: min(100%, 20rem);
   padding: 1rem 0.95rem 0.9rem;
   margin-inline: auto;
   background: var(--surface-light);
@@ -395,7 +390,7 @@
   }
 
   .contactFormWrap {
-    width: min(calc(100% - 2rem), 24rem);
+    width: min(100%, 24rem);
     padding: 1rem 1rem 0.95rem;
   }
 }

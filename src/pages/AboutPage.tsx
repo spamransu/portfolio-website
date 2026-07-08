@@ -4,7 +4,7 @@ import { siteContent } from '../content/siteContent'
 
 export function AboutPage() {
   return (
-    <div className="page-stack">
+    <div className="md-wrapper page-stack">
       <PageHeader eyebrow="About" title="A designer-minded frontend practice." intro={siteContent.about.intro} />
 
       <Section title="How I work">

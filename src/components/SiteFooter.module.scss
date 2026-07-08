@@ -7,9 +7,7 @@
 .inner {
   display: grid;
   gap: 2rem;
-  width: min(calc(100% - 2rem), var(--max-width));
   padding-block: 2rem 1.7rem;
-  margin-inline: auto;
 
   @include mix.mq(md) {
     grid-template-columns: minmax(0, 1fr) 360px;

@@ -9,7 +9,7 @@ export function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <div className="page-stack">
+      <div className="md-wrapper page-stack">
         <PageHeader eyebrow="Projects" title="Project not found" intro="That case study is missing or has not been published yet." />
         <Link className="button button--primary" to="/projects">
           Back to projects
@@ -19,7 +19,7 @@ export function ProjectDetailPage() {
   }
 
   return (
-    <div className="page-stack">
+    <div className="md-wrapper page-stack">
       <PageHeader eyebrow={`${project.year} · ${project.client}`} title={project.title} intro={project.summary} />
 
       <Section title="Project snapshot">

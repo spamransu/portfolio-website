@@ -4,7 +4,7 @@ import { siteContent } from '../content/siteContent'
 
 export function ContactPage() {
   return (
-    <div className="page-stack">
+    <div className="md-wrapper page-stack">
       <PageHeader
         eyebrow="Contact"
         title={siteContent.contact.title}

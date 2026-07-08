@@ -105,7 +105,7 @@ export function HomePage() {
   return (
     <div className={styles.root}>
       <section className={styles.hero}>
-        <div className={styles.inner}>
+        <div className="md-wrapper">
           <div className={styles.heroCopy}>
             <p className={styles.heroEyebrow}>{siteContent.home.hero.eyebrow}</p>
             <h1 className={styles.heroTitle}>
@@ -124,7 +124,7 @@ export function HomePage() {
       </section>
 
       <section className={styles.section}>
-        <div className={styles.inner}>
+        <div className="md-wrapper">
           <div className={styles.sectionHeadingCentered}>
             <h2>{siteContent.home.featuredProjects.title}</h2>
           </div>
@@ -155,7 +155,7 @@ export function HomePage() {
       </section>
 
       <section className={styles.section}>
-        <div className={`${styles.inner} ${styles.bioSection}`}>
+        <div className={`md-wrapper ${styles.bioSection}`}>
           <div className={styles.bioCopy}>
             <p className={styles.heroEyebrow}>{siteContent.home.bio.eyebrow}</p>
             <div className={styles.bioColumns}>
@@ -180,7 +180,7 @@ export function HomePage() {
       </section>
 
       <section className={styles.section}>
-        <div className={`${styles.inner} ${styles.skillsSection}`}>
+        <div className={`md-wrapper ${styles.skillsSection}`}>
           <div className={styles.skillsCloud}>
             {siteContent.home.skills.items.map((skill) => (
               <span key={skill} className={styles.skillPill}>
@@ -197,7 +197,8 @@ export function HomePage() {
       </section>
 
       <section className={styles.contactSection} id="contact">
-        <div className={styles.contactFormWrap}>
+        <div className="md-wrapper">
+          <div className={styles.contactFormWrap}>
           <div className={styles.contactIntro}>
             <h2>{siteContent.home.contact.title}</h2>
             {siteContent.home.contact.intro ? <p>{siteContent.home.contact.intro}</p> : null}
@@ -261,6 +262,7 @@ export function HomePage() {
               {siteContent.home.contact.submitLabel}
             </button>
           </form>
+        </div>
         </div>
       </section>
     </div>

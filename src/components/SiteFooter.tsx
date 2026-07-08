@@ -29,7 +29,7 @@ export function SiteFooter() {
 
   return (
     <footer className={styles.root}>
-      <div className={styles.inner}>
+      <div className={`md-wrapper ${styles.inner}`}>
         <div className={styles.info}>
           <p className={styles.brand}>
             <span>{brand.primary}</span>

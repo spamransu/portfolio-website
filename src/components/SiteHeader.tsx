@@ -23,7 +23,7 @@ export function SiteHeader() {
 
   return (
     <header className={styles.root}>
-      <div className={styles.inner}>
+      <div className={`md-wrapper ${styles.inner}`}>
         <NavLink to="/" className={styles.brand} aria-label={`${siteContent.site.name} home`}>
           <span className={styles.brandPrimary}>{brand.primary}</span>
           {brand.secondary ? <span className={styles.brandSecondary}>{brand.secondary}</span> : null}

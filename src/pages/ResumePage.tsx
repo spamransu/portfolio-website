@@ -4,7 +4,7 @@ import { siteContent } from '../content/siteContent'
 
 export function ResumePage() {
   return (
-    <div className="page-stack">
+    <div className="md-wrapper page-stack">
       <PageHeader eyebrow="CV / Resume" title={siteContent.resume.headline} intro={siteContent.resume.summary} />
 
       <Section title="Core skills">

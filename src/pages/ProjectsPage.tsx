@@ -4,7 +4,7 @@ import { siteContent } from '../content/siteContent'
 
 export function ProjectsPage() {
   return (
-    <div className="page-stack">
+    <div className="md-wrapper page-stack">
       <PageHeader
         eyebrow="Projects"
         title="Case studies with enough context to be useful."

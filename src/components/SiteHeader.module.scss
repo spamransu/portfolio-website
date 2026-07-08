@@ -7,9 +7,7 @@
 
 .inner {
   @include mix.flex(column, null, flex-start, 0.85rem);
-  width: min(calc(100% - 2rem), var(--max-width));
   padding-block: 1.2rem 1rem;
-  margin-inline: auto;
 
   @include mix.mq(md) {
     @include mix.flex(row, space-between, center, 1.25rem);
