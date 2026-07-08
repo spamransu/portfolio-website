@@ -4,6 +4,7 @@
 - Client: SaaS Platform
 - Role: Frontend developer + design systems support
 - Stack: React, TypeScript, SCSS, Storybook
+- Homepage image: https://example.com/images/home/featured-project-1.png
 
 ## Summary
 A case study on cleaning up inconsistent UI patterns and aligning design and implementation.

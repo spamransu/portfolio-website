@@ -12,6 +12,11 @@ export type Job = {
   highlights: string[]
 }
 
+export type ProjectImage = {
+  src: string
+  alt: string
+}
+
 export type Project = {
   slug: string
   title: string
@@ -23,6 +28,15 @@ export type Project = {
   challenge: string
   approach: string[]
   outcome: string[]
+  image?: ProjectImage
+}
+
+export type HomeStatTone = 'accent' | 'accent-2' | 'accent-3'
+
+export type HomeStat = {
+  value: string
+  label: string
+  tone: HomeStatTone
 }
 
 export type SiteContent = {
@@ -34,6 +48,41 @@ export type SiteContent = {
     location: string
     siteUrl: string
     socials: SocialLink[]
+  }
+  home: {
+    hero: {
+      eyebrow: string
+      titleLines: string[]
+      description: string
+    }
+    cta: {
+      primaryLabel: string
+      secondaryLabel: string
+    }
+    featuredProjects: {
+      title: string
+      intro: string
+      slugs: string[]
+      fallbackLabel: string
+      fallbackDescription: string
+    }
+    bio: {
+      eyebrow: string
+      titleLines: string[]
+      description: string
+    }
+    stats: HomeStat[]
+    skills: {
+      title: string
+      description: string
+      items: string[]
+    }
+    contact: {
+      title: string
+      intro: string
+      submitLabel: string
+      messageLimit: number
+    }
   }
   about: {
     intro: string
@@ -55,3 +104,7 @@ export type SiteContent = {
 }
 
 export const siteContent = rawContent as SiteContent
+
+export function getLinktreeUrl() {
+  return siteContent.site.socials.find((social) => /linktree/i.test(social.label) || /linktr\.ee/i.test(social.href))?.href
+}

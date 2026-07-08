@@ -1,17 +1,34 @@
-# Ransu Portfolio
+# LanceCarteciano
 
-Frontend developer and designer building accessible, content-rich digital experiences.
+Full-stack web developer and graphic designer based in the Philippines.
 
-A portfolio website for showcasing case-study style projects, experience, and future writing.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit
+
+## Homepage hero
+HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
 
 ## Main pages
-- [Home](https://example.com/index.md) — A portfolio website for showcasing case-study style projects, experience, and future writing.
-- [About](https://example.com/about.md) — I design and build web experiences with a bias toward clarity, accessibility, and maintainable systems.
-- [Projects](https://example.com/projects.md) — Project index and case-study summaries.
-- [Contact](https://example.com/contact.md) — For portfolio work, contract opportunities, or collaboration, email me directly. I prefer projects where design quality and implementation quality both matter.
-- [Resume](https://example.com/resume.md) — Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.
+- [Home](https://lancecarteciano.com/index.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [About](https://lancecarteciano.com/about.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+- [Projects](https://lancecarteciano.com/projects.md) — Project index and case-study summaries.
+- [Contact](https://lancecarteciano.com/contact.md) — Tell me about the project, the role, or the problem you want solved. I'll reply by email.
+- [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.
 
 ## Featured case studies
-- [Design System Refresh](https://example.com/projects/design-system-refresh.md) — A case study on cleaning up inconsistent UI patterns and aligning design and implementation.
-- [Content-First Portfolio Rebuild](https://example.com/projects/content-first-portfolio-rebuild.md) — A personal site rebuild focused on stronger project storytelling, clearer structure, and better machine readability.
-- [WordPress Performance Audit](https://example.com/projects/wordpress-performance-audit.md) — A performance and UX cleanup effort for a content-heavy website.
+- [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [TETHERLY](https://lancecarteciano.com/projects/tetherly.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Homepage stats
+- 2+ — Years of experience
+- 5+ — Projects completed
+- 4+ — Happy clients
+
+## Highlighted skills
+- React
+- ASP.NET Core
+- Tailwind CSS
+- MongoDB
+- Stripe API
+- GraphQL

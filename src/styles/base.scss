@@ -6,15 +6,19 @@
   --bg: #{tokens.color(bg)};
   --surface: #{tokens.color(surface)};
   --surface-2: #{tokens.color(surface-2)};
+  --surface-light: #{tokens.color(surface-light)};
   --text: #{tokens.color(text)};
+  --text-dark: #{tokens.color(text-dark)};
   --muted: #{tokens.color(muted)};
   --line: #{tokens.color(line)};
   --accent: #{tokens.color(accent)};
   --accent-2: #{tokens.color(accent-2)};
+  --accent-3: #{tokens.color(accent-3)};
   --ink: #{tokens.color(ink)};
   --max-width: #{tokens.$max-width};
   --radius: #{tokens.radius(lg)};
   --radius-md: #{tokens.radius(md)};
+  --radius-sm: #{tokens.radius(sm)};
   --shadow: #{tokens.$shadow-card};
   --space-xs: #{tokens.space(xs)};
   --space-sm: #{tokens.space(sm)};
@@ -33,9 +37,30 @@ html {
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #1b1b1b 0%, var(--bg) 58%);
+  background: var(--bg);
   color: var(--text);
   @include mix.font(body, 400, body);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+body,
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {

@@ -4,4 +4,4 @@ Allow: /
 # Content Signals preference
 Content-Signal: search=yes, ai-input=yes, ai-train=no
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://lancecarteciano.com/sitemap.xml

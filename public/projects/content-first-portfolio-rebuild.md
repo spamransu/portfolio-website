@@ -4,6 +4,7 @@
 - Client: Personal Brand
 - Role: Product designer + frontend developer
 - Stack: React, TypeScript, SCSS, Cloudflare Pages
+- Homepage image: https://example.com/images/home/featured-project-2.png
 
 ## Summary
 A personal site rebuild focused on stronger project storytelling, clearer structure, and better machine readability.

@@ -1,27 +1,65 @@
-# Ransu Portfolio — full machine-readable content
+# LanceCarteciano — full machine-readable content
 
 ## Site summary
-- Name: Ransu Portfolio
-- Tagline: Frontend developer and designer building accessible, content-rich digital experiences.
-- Description: A portfolio website for showcasing case-study style projects, experience, and future writing.
-- Contact email: hello@example.com
-- Location: Manila, Philippines
+- Name: LanceCarteciano
+- Tagline: Full-stack web developer and graphic designer based in the Philippines.
+- Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- Contact email: hello@lancecarteciano.com
+- Location: Philippines
+
+## Home
+# LanceCarteciano
+
+Full-stack web developer and graphic designer based in the Philippines.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit
+
+## Homepage hero
+HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
+
+
+
+## Main pages
+- [Home](https://lancecarteciano.com/index.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [About](https://lancecarteciano.com/about.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+- [Projects](https://lancecarteciano.com/projects.md) — Project index and case-study summaries.
+- [Contact](https://lancecarteciano.com/contact.md) — Tell me about the project, the role, or the problem you want solved. I'll reply by email.
+- [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.
+
+## Featured case studies
+- [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [TETHERLY](https://lancecarteciano.com/projects/tetherly.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Homepage stats
+- 2+ — Years of experience
+- 5+ — Projects completed
+- 4+ — Happy clients
+
+## Highlighted skills
+- React
+- ASP.NET Core
+- Tailwind CSS
+- MongoDB
+- Stripe API
+- GraphQL
 
 ## About
 # About
 
-I design and build web experiences with a bias toward clarity, accessibility, and maintainable systems.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-My work sits between frontend implementation and visual design. I like translating messy requirements into tidy interfaces and reusable systems.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-This portfolio is structured around case studies so each project can explain the context, constraints, decisions, and measurable outcomes behind the final screen.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-A blog will live here later. The content model already leaves room for long-form notes, technical writing, and design breakdowns.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 ## Working principles
-- Design for readability before decoration.
-- Treat accessibility as product quality, not a checklist.
-- Document decisions so future collaborators and future agents can follow the reasoning.
+- Readable interfaces over decoration.
+- Frontend structure that stays maintainable.
+- Design and implementation that work together.
 
 ## Resume
 # Resume
@@ -67,82 +105,109 @@ Frontend web developer and graphic designer with experience in WordPress, React,
 - Worked with branch managers and marketing teams to refine assets and keep campaign visuals consistent.
 
 ## Projects
-# Design System Refresh
+# ABCDE CREATIVE
 
 - Year: 2026
-- Client: SaaS Platform
-- Role: Frontend developer + design systems support
-- Stack: React, TypeScript, SCSS, Storybook
+- Client: ABCDE Creative
+- Role: Full-stack developer
+- Stack: React, ASP.NET Core, GraphQL, MongoDB
+- Homepage image: https://lancecarteciano.com/images/home/featured-project-1.png
 
 ## Summary
-A case study on cleaning up inconsistent UI patterns and aligning design and implementation.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ## Challenge
-The product had visual drift, duplicated components, and inconsistent behavior across breakpoints.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 ## Approach
-- Audited components and grouped repeated patterns into a smaller token-based system.
-- Aligned spacing, typography, and state patterns across the highest-traffic flows.
-- Documented usage notes so future work could extend the system instead of bypassing it.
+- Interface implementation
+- Responsive frontend delivery
+- Design-to-code handoff
 
 ## Outcome
-- Reduced visual inconsistency in core journeys.
-- Made future page work faster by establishing reusable building blocks.
-- Improved handoff between design and development.
+- Shipped a polished web experience
+- Kept the system maintainable
+- Supported future iteration
 
-# Content-First Portfolio Rebuild
+# INSIGHT INDEX
 
 - Year: 2026
-- Client: Personal Brand
-- Role: Product designer + frontend developer
-- Stack: React, TypeScript, SCSS, Cloudflare Pages
-
-## Summary
-A personal site rebuild focused on stronger project storytelling, clearer structure, and better machine readability.
-
-## Challenge
-The older portfolio showed visuals but not enough context, which made it harder for recruiters, collaborators, and AI tools to understand the work.
-
-## Approach
-- Shifted from gallery-style presentation to case-study style narratives.
-- Created markdown mirrors, llms.txt resources, and structured metadata for machine access.
-- Left room in the information architecture for a future writing section.
-
-## Outcome
-- Clearer project framing for hiring and client conversations.
-- Better discoverability for both humans and agents.
-- A maintainable base for future blog content.
-
-# WordPress Performance Audit
-
-- Year: 2025
-- Client: Content Publisher
+- Client: Insight Index
 - Role: Frontend developer
-- Stack: WordPress, PHP, SCSS, JavaScript
+- Stack: ASP.NET Core, Tailwind CSS, Stripe API, GraphQL
+- Homepage image: https://lancecarteciano.com/images/home/featured-project-2.png
 
 ## Summary
-A performance and UX cleanup effort for a content-heavy website.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ## Challenge
-The site suffered from heavy theme code, layout inconsistencies, and weak mobile navigation.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 ## Approach
-- Removed dead styles and narrowed CSS to the components actually in use.
-- Fixed responsive navigation behavior and simplified key templates.
-- Prioritized readable content blocks and lighter page structure.
+- Component-based layout
+- Responsive implementation
+- API-backed product surface
 
 ## Outcome
-- Improved mobile experience and maintainability.
-- Reduced styling debt in critical templates.
-- Created a cleaner base for future content work.
+- Clearer product UI
+- Consistent page structure
+- Stronger frontend maintainability
+
+# GSAP ANIMATION
+
+- Year: 2026
+- Client: Animation Showcase
+- Role: Frontend developer
+- Stack: React, Tailwind CSS, Stripe API
+- Homepage image: https://lancecarteciano.com/images/home/featured-project-3.png
+
+## Summary
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Challenge
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+## Approach
+- Animation-led storytelling
+- Responsive component styling
+- Performance-aware implementation
+
+## Outcome
+- Sharper visual hierarchy
+- Memorable interactions
+- Reusable animation patterns
+
+# TETHERLY
+
+- Year: 2026
+- Client: Tetherly
+- Role: Frontend developer
+- Stack: Tailwind CSS, Stripe API, GraphQL, MongoDB
+- Homepage image: https://lancecarteciano.com/images/home/featured-project-4.png
+
+## Summary
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Challenge
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+## Approach
+- Product card system
+- Clean visual rhythm
+- Frontend polish
+
+## Outcome
+- Uniform card presentation
+- Scalable content structure
+- Stronger visual consistency
 
 ## Contact
 # Contact
 
-Let’s work on something clear and useful.
+Let's connect!
 
-For portfolio work, contract opportunities, or collaboration, email me directly. I prefer projects where design quality and implementation quality both matter.
+Tell me about the project, the role, or the problem you want solved. I'll reply by email.
 
-- Email: hello@example.com
-- Location: Manila, Philippines
-- Availability: Available for freelance, contract, and select full-time opportunities.
+- Email: hello@lancecarteciano.com
+- Location: Philippines
+- Availability: Available for freelance projects, collaborations, and select full-time roles.

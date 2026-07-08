@@ -1,14 +1,14 @@
 # About
 
-I design and build web experiences with a bias toward clarity, accessibility, and maintainable systems.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
-My work sits between frontend implementation and visual design. I like translating messy requirements into tidy interfaces and reusable systems.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-This portfolio is structured around case studies so each project can explain the context, constraints, decisions, and measurable outcomes behind the final screen.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
-A blog will live here later. The content model already leaves room for long-form notes, technical writing, and design breakdowns.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 ## Working principles
-- Design for readability before decoration.
-- Treat accessibility as product quality, not a checklist.
-- Document decisions so future collaborators and future agents can follow the reasoning.
+- Readable interfaces over decoration.
+- Frontend structure that stays maintainable.
+- Design and implementation that work together.

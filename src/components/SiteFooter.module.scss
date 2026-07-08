@@ -1,39 +1,125 @@
 @use '../styles/mixins' as mix;
 
 .root {
+  background: var(--bg);
+}
+
+.inner {
   display: grid;
+  gap: 2rem;
   width: min(calc(100% - 2rem), var(--max-width));
-  gap: var(--space-sm);
-  padding-block: 1.25rem 2.5rem;
+  padding-block: 2rem 1.7rem;
   margin-inline: auto;
-  border-top: 1px solid var(--line);
 
   @include mix.mq(md) {
-    @include mix.flex(row, space-between, null, var(--space-sm));
+    grid-template-columns: minmax(0, 1fr) 360px;
+    align-items: end;
   }
 }
 
-.title {
-  display: block;
-  font-size: 1rem;
+.info {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 14rem;
 }
 
-.root p {
+.brand {
+  display: inline-flex;
+  gap: 0.1rem;
+  margin: 0;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--accent);
+  @include mix.font(h3, 600, snug, display);
+}
+
+.brandSecondary {
+  color: var(--text);
+}
+
+.description,
+.copyright,
+.linkList a {
   color: var(--muted);
 }
 
-.navList {
-  @include mix.flex(row, null, null, var(--space-sm), wrap);
-  padding: 0;
+.description,
+.copyright,
+.heading,
+.linkList,
+.socials {
   margin: 0;
+}
+
+.description,
+.copyright,
+.linkList a {
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.linksWrap {
+  display: grid;
+  gap: 1rem;
+}
+
+.linkColumns {
+  display: grid;
+  gap: 1.35rem;
+
+  @include mix.mq(sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.heading {
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.linkList {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0;
   list-style: none;
 }
 
-.navList a {
-  color: var(--muted);
+.linkList a,
+.socials a {
   text-decoration: none;
 }
 
-.navList a:hover {
+.linkList a:hover,
+.socials a:hover {
   color: var(--text);
+}
+
+.socials {
+  @include mix.flex(row, flex-start, center, 0.45rem, wrap);
+  padding: 0;
+  list-style: none;
+
+  @include mix.mq(md) {
+    justify-content: flex-end;
+  }
+}
+
+.socialIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding-inline: 0.22rem;
+  color: var(--text);
+  border: 1px solid rgba(252, 255, 246, 0.24);
+  border-radius: 999px;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }

@@ -4,6 +4,7 @@
 - Client: Content Publisher
 - Role: Frontend developer
 - Stack: WordPress, PHP, SCSS, JavaScript
+- Homepage image: https://example.com/images/home/featured-project-3.png
 
 ## Summary
 A performance and UX cleanup effort for a content-heavy website.

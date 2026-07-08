@@ -1,0 +1,431 @@
+@use '../styles/mixins' as mix;
+
+.root {
+  display: grid;
+  gap: 0;
+  background: var(--bg);
+}
+
+.inner {
+  width: min(calc(100% - 2rem), var(--max-width));
+  margin-inline: auto;
+}
+
+.hero,
+.section {
+  background: var(--bg);
+}
+
+.hero {
+  padding-block: 3.25rem 2.6rem;
+}
+
+.heroCopy {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 34rem;
+}
+
+.heroEyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.heroTitle,
+.bioTitle,
+.sectionHeadingCentered h2,
+.skillsCopy h2,
+.contactIntro h2 {
+  margin: 0;
+  text-transform: uppercase;
+  @include mix.font(display, 600, tight, display);
+}
+
+.heroTitle,
+.bioTitle {
+  display: grid;
+  gap: 0.08em;
+}
+
+.heroTitle {
+  max-width: 8.5ch;
+}
+
+.heroDescription,
+.projectSummary,
+.bioDescription,
+.skillsCopy p,
+.contactIntro p,
+.statLabel,
+.formCount {
+  margin: 0;
+  color: var(--muted);
+}
+
+.heroDescription {
+  max-width: 34rem;
+}
+
+.heroActions {
+  @include mix.flex(row, null, center, 0.9rem, wrap);
+  margin-top: 0.2rem;
+}
+
+.primaryButton,
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.72rem 1.12rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 140ms ease, opacity 140ms ease, border-color 140ms ease, background-color 140ms ease;
+}
+
+.primaryButton {
+  color: var(--ink);
+  background: var(--accent);
+}
+
+.primaryButton:hover,
+.submitButton:hover,
+.projectImageLink:hover .projectImage,
+.projectTitle a:hover {
+  transform: translateY(-1px);
+}
+
+.section {
+  padding-block: 0 3.5rem;
+}
+
+.sectionHeadingCentered {
+  display: grid;
+  justify-items: center;
+  padding-block: 0 1rem;
+  text-align: center;
+}
+
+.projectGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.projectCard {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.projectImageLink {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1.18;
+  background: var(--surface);
+}
+
+.projectImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 180ms ease;
+}
+
+.projectBody {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.projectMeta {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.projectTitle {
+  margin: 0;
+  color: var(--accent);
+  @include mix.font(h3, 600, snug);
+}
+
+.projectTitle a {
+  text-decoration: none;
+}
+
+.projectSummary {
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.stackList {
+  @include mix.flex(row, null, center, 0.3rem, wrap);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.stackList li {
+  padding: 0.18rem 0.52rem;
+  color: var(--muted);
+  background: rgba(252, 255, 246, 0.04);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  line-height: 1.2;
+}
+
+.bioSection {
+  display: grid;
+  gap: 1.7rem;
+}
+
+.bioCopy {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.bioColumns {
+  display: grid;
+  gap: 1rem;
+}
+
+.bioTitle {
+  max-width: 8.4ch;
+}
+
+.bioDescription {
+  max-width: 17rem;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.statsGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.statCard {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  padding: 1.5rem 1rem 1.3rem;
+  text-align: center;
+  border: 1px solid rgba(252, 255, 246, 0.35);
+}
+
+.statValue {
+  margin: 0;
+  @include mix.font(display, 600, tight, display);
+}
+
+.statAccent {
+  color: var(--accent);
+}
+
+.statAccent2 {
+  color: var(--accent-2);
+}
+
+.statAccent3 {
+  color: var(--accent-3);
+}
+
+.statLabel {
+  font-size: 0.82rem;
+}
+
+.skillsSection {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.skillsCloud {
+  @include mix.flex(row, flex-start, center, 0.42rem, wrap);
+  max-width: 28rem;
+}
+
+.skillPill {
+  @include mix.flex(row, null, center, 0.45rem);
+  padding: 0.16rem 0.55rem;
+  color: var(--text);
+  border: 1px solid rgba(252, 255, 246, 0.28);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.skillPill::before {
+  width: 0.42rem;
+  aspect-ratio: 1;
+  content: '';
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.skillsCopy {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 15rem;
+}
+
+.skillsCopy p {
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.contactSection {
+  padding-block: 2.4rem 2.8rem;
+  background: var(--accent);
+}
+
+.contactFormWrap {
+  display: grid;
+  gap: 1rem;
+  width: min(calc(100% - 2rem), 20rem);
+  padding: 1rem 0.95rem 0.9rem;
+  margin-inline: auto;
+  background: var(--surface-light);
+  color: var(--text-dark);
+  border-radius: 0.15rem;
+}
+
+.contactIntro {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.contactIntro p,
+.formCount {
+  color: rgba(22, 22, 20, 0.5);
+}
+
+.contactForm {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.formField {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.formField label {
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.formField input,
+.formField textarea {
+  width: 100%;
+  padding: 0.62rem 0.72rem;
+  color: var(--text-dark);
+  background: transparent;
+  border: 1px solid rgba(22, 22, 20, 0.12);
+  border-radius: 0.15rem;
+}
+
+.formField input {
+  min-height: 2.55rem;
+}
+
+.formField textarea {
+  min-height: 5.8rem;
+  resize: vertical;
+}
+
+.formField input::placeholder,
+.formField textarea::placeholder {
+  color: rgba(22, 22, 20, 0.33);
+}
+
+.formMetaRow {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.formCount,
+.formError {
+  font-size: 0.7rem;
+}
+
+.formError {
+  margin: 0;
+  color: #b42318;
+}
+
+.submitButton {
+  width: 100%;
+  min-height: 2.1rem;
+  color: var(--text);
+  background: var(--ink);
+  padding: 0.55rem 1rem;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding-block: 4.25rem 3.7rem;
+  }
+
+  .projectGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem 0.7rem;
+  }
+
+  .bioColumns,
+  .skillsSection {
+    grid-template-columns: minmax(0, 1fr) 16.5rem;
+    align-items: end;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .statCard + .statCard {
+    border-left: 0;
+  }
+
+  .skillsSection {
+    gap: 2.4rem;
+  }
+
+  .contactSection {
+    padding-block: 2.8rem 3rem;
+  }
+
+  .contactFormWrap {
+    width: min(calc(100% - 2rem), 24rem);
+    padding: 1rem 1rem 0.95rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding-block: 4.8rem 4rem;
+  }
+
+  .section {
+    padding-block-end: 4rem;
+  }
+
+  .heroCopy {
+    max-width: 35rem;
+  }
+
+  .bioSection {
+    gap: 2.2rem;
+  }
+
+  .bioColumns {
+    grid-template-columns: minmax(0, 1.15fr) minmax(14rem, 17rem);
+    gap: 2rem;
+    align-items: end;
+  }
+
+  .skillsSection {
+    grid-template-columns: minmax(0, 1fr) 17rem;
+    gap: 2.8rem;
+    align-items: end;
+  }
+}

@@ -1,37 +1,41 @@
 {
   "site": {
-    "name": "Ransu Portfolio",
-    "tagline": "Frontend developer and designer building accessible, content-rich digital experiences.",
-    "description": "A portfolio website for showcasing case-study style projects, experience, and future writing.",
-    "email": "hello@example.com",
-    "location": "Manila, Philippines",
-    "siteUrl": "https://example.com",
+    "name": "LanceCarteciano",
+    "tagline": "Full-stack web developer and graphic designer based in the Philippines.",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "email": "hello@lancecarteciano.com",
+    "location": "Philippines",
+    "siteUrl": "https://lancecarteciano.com",
     "socials": [
       {
         "label": "LinkedIn",
-        "href": "https://www.linkedin.com/in/your-handle"
+        "href": "https://www.linkedin.com/in/lancecarteciano"
       },
       {
         "label": "GitHub",
-        "href": "https://github.com/your-handle"
+        "href": "https://github.com/lancecarteciano"
       },
       {
-        "label": "Figma",
-        "href": "https://www.figma.com/@your-handle"
+        "label": "X",
+        "href": "https://x.com/lancecarteciano"
+      },
+      {
+        "label": "Linktree",
+        "href": "https://linktr.ee/lancecarteciano"
       }
     ]
   },
   "about": {
-    "intro": "I design and build web experiences with a bias toward clarity, accessibility, and maintainable systems.",
+    "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "body": [
-      "My work sits between frontend implementation and visual design. I like translating messy requirements into tidy interfaces and reusable systems.",
-      "This portfolio is structured around case studies so each project can explain the context, constraints, decisions, and measurable outcomes behind the final screen.",
-      "A blog will live here later. The content model already leaves room for long-form notes, technical writing, and design breakdowns."
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
     ],
     "principles": [
-      "Design for readability before decoration.",
-      "Treat accessibility as product quality, not a checklist.",
-      "Document decisions so future collaborators and future agents can follow the reasoning."
+      "Readable interfaces over decoration.",
+      "Frontend structure that stays maintainable.",
+      "Design and implementation that work together."
     ]
   },
   "resume": {
@@ -55,7 +59,7 @@
       {
         "role": "Frontend Web Developer / Graphic Designer",
         "company": "Tech Support Plus I.T Services",
-        "period": "Jan 2026 — Present",
+        "period": "Jan 2026 \u2014 Present",
         "highlights": [
           "Support Elementor v2 and v3 to v4 migrations by setting up global variables and reusable class structures for more consistent styling and easier maintenance.",
           "Build custom WordPress themes and reusable templates for company websites.",
@@ -66,7 +70,7 @@
       {
         "role": "Web Developer",
         "company": "ABCDE Creative Studio",
-        "period": "Apr 2025 — Dec 2025",
+        "period": "Apr 2025 \u2014 Dec 2025",
         "highlights": [
           "Developed and maintained client websites across WordPress and React projects.",
           "Translated Figma designs into responsive React interfaces with accessibility in mind.",
@@ -77,7 +81,7 @@
       {
         "role": "Print Machine Operator / Graphic Designer",
         "company": "Young Alpha Advertising Corp.",
-        "period": "Jan 2024 — Oct 2024",
+        "period": "Jan 2024 \u2014 Oct 2024",
         "highlights": [
           "Improved large-format print workflows through RIP setup, color calibration, and cutting-process cleanup.",
           "Created reusable templates and organized asset libraries to reduce manual revisions across production work.",
@@ -87,7 +91,7 @@
       {
         "role": "Social Media Designer",
         "company": "But First, Coffee (Multiple Branches)",
-        "period": "Jan 2023 — Jul 2024",
+        "period": "Jan 2023 \u2014 Jul 2024",
         "highlights": [
           "Designed social media graphics and branded marketing assets for multiple branches.",
           "Worked with branch managers and marketing teams to refine assets and keep campaign visuals consistent."
@@ -96,85 +100,196 @@
     ]
   },
   "contact": {
-    "title": "Let’s work on something clear and useful.",
-    "body": "For portfolio work, contract opportunities, or collaboration, email me directly. I prefer projects where design quality and implementation quality both matter.",
-    "availability": "Available for freelance, contract, and select full-time opportunities."
+    "title": "Let's connect!",
+    "body": "Tell me about the project, the role, or the problem you want solved. I'll reply by email.",
+    "availability": "Available for freelance projects, collaborations, and select full-time roles."
   },
   "projects": [
     {
-      "slug": "design-system-refresh",
-      "title": "Design System Refresh",
+      "slug": "abcde-creative",
+      "title": "ABCDE CREATIVE",
       "year": "2026",
-      "client": "SaaS Platform",
-      "summary": "A case study on cleaning up inconsistent UI patterns and aligning design and implementation.",
-      "role": "Frontend developer + design systems support",
+      "client": "ABCDE Creative",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "role": "Full-stack developer",
       "stack": [
         "React",
-        "TypeScript",
-        "SCSS",
-        "Storybook"
+        "ASP.NET Core",
+        "GraphQL",
+        "MongoDB"
       ],
-      "challenge": "The product had visual drift, duplicated components, and inconsistent behavior across breakpoints.",
+      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "approach": [
-        "Audited components and grouped repeated patterns into a smaller token-based system.",
-        "Aligned spacing, typography, and state patterns across the highest-traffic flows.",
-        "Documented usage notes so future work could extend the system instead of bypassing it."
+        "Interface implementation",
+        "Responsive frontend delivery",
+        "Design-to-code handoff"
       ],
       "outcome": [
-        "Reduced visual inconsistency in core journeys.",
-        "Made future page work faster by establishing reusable building blocks.",
-        "Improved handoff between design and development."
-      ]
+        "Shipped a polished web experience",
+        "Kept the system maintainable",
+        "Supported future iteration"
+      ],
+      "image": {
+        "src": "/images/home/featured-project-1.png",
+        "alt": "Phone mockup for ABCDE Creative."
+      }
     },
     {
-      "slug": "content-first-portfolio-rebuild",
-      "title": "Content-First Portfolio Rebuild",
+      "slug": "insight-index",
+      "title": "INSIGHT INDEX",
       "year": "2026",
-      "client": "Personal Brand",
-      "summary": "A personal site rebuild focused on stronger project storytelling, clearer structure, and better machine readability.",
-      "role": "Product designer + frontend developer",
-      "stack": [
-        "React",
-        "TypeScript",
-        "SCSS",
-        "Cloudflare Pages"
-      ],
-      "challenge": "The older portfolio showed visuals but not enough context, which made it harder for recruiters, collaborators, and AI tools to understand the work.",
-      "approach": [
-        "Shifted from gallery-style presentation to case-study style narratives.",
-        "Created markdown mirrors, llms.txt resources, and structured metadata for machine access.",
-        "Left room in the information architecture for a future writing section."
-      ],
-      "outcome": [
-        "Clearer project framing for hiring and client conversations.",
-        "Better discoverability for both humans and agents.",
-        "A maintainable base for future blog content."
-      ]
-    },
-    {
-      "slug": "wordpress-performance-audit",
-      "title": "WordPress Performance Audit",
-      "year": "2025",
-      "client": "Content Publisher",
-      "summary": "A performance and UX cleanup effort for a content-heavy website.",
+      "client": "Insight Index",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "role": "Frontend developer",
       "stack": [
-        "WordPress",
-        "PHP",
-        "SCSS",
-        "JavaScript"
+        "ASP.NET Core",
+        "Tailwind CSS",
+        "Stripe API",
+        "GraphQL"
       ],
-      "challenge": "The site suffered from heavy theme code, layout inconsistencies, and weak mobile navigation.",
+      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "approach": [
-        "Removed dead styles and narrowed CSS to the components actually in use.",
-        "Fixed responsive navigation behavior and simplified key templates.",
-        "Prioritized readable content blocks and lighter page structure."
+        "Component-based layout",
+        "Responsive implementation",
+        "API-backed product surface"
       ],
       "outcome": [
-        "Improved mobile experience and maintainability.",
-        "Reduced styling debt in critical templates.",
-        "Created a cleaner base for future content work."
-      ]
+        "Clearer product UI",
+        "Consistent page structure",
+        "Stronger frontend maintainability"
+      ],
+      "image": {
+        "src": "/images/home/featured-project-2.png",
+        "alt": "Laptop mockup for Insight Index."
+      }
+    },
+    {
+      "slug": "gsap-animation",
+      "title": "GSAP ANIMATION",
+      "year": "2026",
+      "client": "Animation Showcase",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "role": "Frontend developer",
+      "stack": [
+        "React",
+        "Tailwind CSS",
+        "Stripe API"
+      ],
+      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "approach": [
+        "Animation-led storytelling",
+        "Responsive component styling",
+        "Performance-aware implementation"
+      ],
+      "outcome": [
+        "Sharper visual hierarchy",
+        "Memorable interactions",
+        "Reusable animation patterns"
+      ],
+      "image": {
+        "src": "/images/home/featured-project-3.png",
+        "alt": "Laptop mockup for GSAP Animation."
+      }
+    },
+    {
+      "slug": "tetherly",
+      "title": "TETHERLY",
+      "year": "2026",
+      "client": "Tetherly",
+      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "role": "Frontend developer",
+      "stack": [
+        "Tailwind CSS",
+        "Stripe API",
+        "GraphQL",
+        "MongoDB"
+      ],
+      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "approach": [
+        "Product card system",
+        "Clean visual rhythm",
+        "Frontend polish"
+      ],
+      "outcome": [
+        "Uniform card presentation",
+        "Scalable content structure",
+        "Stronger visual consistency"
+      ],
+      "image": {
+        "src": "/images/home/featured-project-4.png",
+        "alt": "Tablet mockup for Tetherly."
+      }
     }
-  ]
+  ],
+  "home": {
+    "hero": {
+      "eyebrow": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "titleLines": [
+        "HI! I'M A FULL-STACK",
+        "WEB DEVELOPER",
+        "BASED IN THE PHILIPPINES."
+      ],
+      "description": ""
+    },
+    "cta": {
+      "primaryLabel": "Book a call",
+      "secondaryLabel": "View CV"
+    },
+    "featuredProjects": {
+      "title": "FEATURED PROJECTS",
+      "intro": "",
+      "slugs": [
+        "abcde-creative",
+        "insight-index",
+        "gsap-animation",
+        "tetherly"
+      ],
+      "fallbackLabel": "",
+      "fallbackDescription": ""
+    },
+    "bio": {
+      "eyebrow": "Lance S. Carteciano",
+      "titleLines": [
+        "FREELANCE FULL-STACK",
+        "WEB DEVELOPER AND",
+        "GRAPHIC DESIGNER."
+      ],
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+    },
+    "stats": [
+      {
+        "value": "2+",
+        "label": "Years of experience",
+        "tone": "accent"
+      },
+      {
+        "value": "5+",
+        "label": "Projects completed",
+        "tone": "accent-2"
+      },
+      {
+        "value": "4+",
+        "label": "Happy clients",
+        "tone": "accent-3"
+      }
+    ],
+    "skills": {
+      "title": "MY SKILLS",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+      "items": [
+        "React",
+        "ASP.NET Core",
+        "Tailwind CSS",
+        "MongoDB",
+        "Stripe API",
+        "GraphQL"
+      ]
+    },
+    "contact": {
+      "title": "LET'S CONNECT!",
+      "intro": "",
+      "submitLabel": "Send message",
+      "messageLimit": 500
+    }
+  }
 }

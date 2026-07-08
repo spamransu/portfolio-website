@@ -28,8 +28,8 @@
   }
 }
 
-@mixin font($role: body, $weight: 400, $leading: body) {
-  font-family: map.get(tokens.$font-families, sans);
+@mixin font($role: body, $weight: 400, $leading: body, $family: sans) {
+  font-family: tokens.font-family($family);
   font-size: tokens.type-scale($role);
   font-weight: $weight;
   line-height: tokens.leading($leading);
@@ -46,5 +46,5 @@
 @mixin focus-ring {
   outline: 2px solid transparent;
   outline-offset: 3px;
-  box-shadow: 0 0 0 3px rgba(215, 255, 111, 0.24);
+  box-shadow: 0 0 0 3px rgba(182, 207, 79, 0.24);
 }

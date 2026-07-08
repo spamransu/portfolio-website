@@ -2,16 +2,25 @@
 
 .site-shell {
   min-height: 100vh;
+  background: var(--bg);
 }
 
-.site-main,
+.site-main {
+  width: 100%;
+}
+
+.site-main--inner,
 .layout-contained {
   width: min(calc(100% - 2rem), var(--max-width));
   margin-inline: auto;
 }
 
-.site-main {
+.site-main--inner {
   padding-block: var(--space-lg) 5rem;
+}
+
+.site-main--home {
+  padding: 0 0 4.5rem;
 }
 
 .page-stack {

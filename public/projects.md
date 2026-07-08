@@ -2,29 +2,38 @@
 
 Case-study style project archive.
 
-## [Design System Refresh](https://example.com/projects/design-system-refresh.md)
+## [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md)
 
 - Year: 2026
-- Client: SaaS Platform
-- Role: Frontend developer + design systems support
-- Stack: React, TypeScript, SCSS, Storybook
+- Client: ABCDE Creative
+- Role: Full-stack developer
+- Stack: React, ASP.NET Core, GraphQL, MongoDB
 
-A case study on cleaning up inconsistent UI patterns and aligning design and implementation.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
-## [Content-First Portfolio Rebuild](https://example.com/projects/content-first-portfolio-rebuild.md)
+## [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md)
 
 - Year: 2026
-- Client: Personal Brand
-- Role: Product designer + frontend developer
-- Stack: React, TypeScript, SCSS, Cloudflare Pages
-
-A personal site rebuild focused on stronger project storytelling, clearer structure, and better machine readability.
-
-## [WordPress Performance Audit](https://example.com/projects/wordpress-performance-audit.md)
-
-- Year: 2025
-- Client: Content Publisher
+- Client: Insight Index
 - Role: Frontend developer
-- Stack: WordPress, PHP, SCSS, JavaScript
+- Stack: ASP.NET Core, Tailwind CSS, Stripe API, GraphQL
 
-A performance and UX cleanup effort for a content-heavy website.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md)
+
+- Year: 2026
+- Client: Animation Showcase
+- Role: Frontend developer
+- Stack: React, Tailwind CSS, Stripe API
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## [TETHERLY](https://lancecarteciano.com/projects/tetherly.md)
+
+- Year: 2026
+- Client: Tetherly
+- Role: Frontend developer
+- Stack: Tailwind CSS, Stripe API, GraphQL, MongoDB
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

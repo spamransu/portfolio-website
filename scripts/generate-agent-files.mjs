@@ -9,6 +9,8 @@ const skillDir = path.join(publicDir, '.well-known', 'agent-skills', 'site-navig
 const siteUrl = (process.env.SITE_URL || siteContent.site.siteUrl || 'https://example.com').replace(/\/$/, '')
 const email = process.env.CONTACT_EMAIL || siteContent.site.email
 const location = process.env.CONTACT_LOCATION || siteContent.site.location
+const featuredProjectSlugs = new Set(siteContent.home.featuredProjects.slugs)
+const featuredProjects = siteContent.projects.filter((project) => featuredProjectSlugs.has(project.slug))
 
 const routes = [
   { path: '/', md: '/index.md', title: 'Home', description: siteContent.site.description },
@@ -31,7 +33,12 @@ const homeMd = `# ${siteContent.site.name}
 
 ${siteContent.site.tagline}
 
-${siteContent.site.description}
+${siteContent.home.hero.eyebrow}
+
+## Homepage hero
+${siteContent.home.hero.titleLines.join(' ')}
+
+${siteContent.home.hero.description}
 
 ## Main pages
 ${routes
@@ -40,9 +47,13 @@ ${routes
   .join('\n')}
 
 ## Featured case studies
-${siteContent.projects
-  .map((project) => `- [${project.title}](${siteUrl}/projects/${project.slug}.md) — ${project.summary}`)
-  .join('\n')}
+${featuredProjects.map((project) => `- [${project.title}](${siteUrl}/projects/${project.slug}.md) — ${project.summary}`).join('\n')}
+
+## Homepage stats
+${siteContent.home.stats.map((stat) => `- ${stat.value} — ${stat.label}`).join('\n')}
+
+## Highlighted skills
+${bullets(siteContent.home.skills.items)}
 `
 
 const aboutMd = `# About
@@ -61,14 +72,8 @@ Case-study style project archive.
 
 ${siteContent.projects
   .map(
-    (project) => `## [${project.title}](${siteUrl}/projects/${project.slug}.md)
-
-- Year: ${project.year}
-- Client: ${project.client}
-- Role: ${project.role}
-- Stack: ${project.stack.join(', ')}
-
-${project.summary}`,
+    (project) => `## [${project.title}](${siteUrl}/projects/${project.slug}.md)\n
+- Year: ${project.year}\n- Client: ${project.client}\n- Role: ${project.role}\n- Stack: ${project.stack.join(', ')}\n\n${project.summary}`,
   )
   .join('\n\n')}
 `
@@ -110,6 +115,7 @@ const projectMarkdown = Object.fromEntries(
 - Client: ${project.client}
 - Role: ${project.role}
 - Stack: ${project.stack.join(', ')}
+${project.image ? `- Homepage image: ${siteUrl}${project.image.src}` : ''}
 
 ## Summary
 ${project.summary}
@@ -160,6 +166,9 @@ const llmsFull = `# ${siteContent.site.name} — full machine-readable content
 - Description: ${siteContent.site.description}
 - Contact email: ${email}
 - Location: ${location}
+
+## Home
+${lines(homeMd).join('\n')}
 
 ## About
 ${lines(aboutMd).join('\n')}
@@ -242,7 +251,7 @@ await fs.mkdir(skillDir, { recursive: true })
 for (const [relativePath, content] of Object.entries(pageMarkdown)) {
   const filePath = path.join(publicDir, relativePath)
   await fs.mkdir(path.dirname(filePath), { recursive: true })
-  await fs.writeFile(filePath, content, 'utf8')
+  await fs.writeFile(filePath, content.replace(/\n\n\n+/g, '\n\n'), 'utf8')
 }
 
 await fs.writeFile(path.join(publicDir, 'llms.txt'), llms, 'utf8')
@@ -257,6 +266,3 @@ await fs.writeFile(
 
 const robots = `User-agent: *\nAllow: /\n\n# Content Signals preference\nContent-Signal: search=yes, ai-input=yes, ai-train=no\n\nSitemap: ${siteUrl}/sitemap.xml\n`
 await fs.writeFile(path.join(publicDir, 'robots.txt'), robots, 'utf8')
-
-const securityTxt = `Contact: mailto:${email}\nExpires: 2027-06-25T00:00:00.000Z\nPreferred-Languages: en\nCanonical: ${siteUrl}/.well-known/security.txt\nPolicy: ${siteUrl}/contact\n`
-await fs.writeFile(path.join(publicDir, '.well-known', 'security.txt'), securityTxt, 'utf8')

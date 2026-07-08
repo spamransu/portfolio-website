@@ -1,9 +1,9 @@
 # Contact
 
-Let’s work on something clear and useful.
+Let's connect!
 
-For portfolio work, contract opportunities, or collaboration, email me directly. I prefer projects where design quality and implementation quality both matter.
+Tell me about the project, the role, or the problem you want solved. I'll reply by email.
 
-- Email: hello@example.com
-- Location: Manila, Philippines
-- Availability: Available for freelance, contract, and select full-time opportunities.
+- Email: hello@lancecarteciano.com
+- Location: Philippines
+- Availability: Available for freelance projects, collaborations, and select full-time roles.
