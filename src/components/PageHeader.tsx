@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import styles from './PageHeader.module.scss'
+import sty from './PageHeader.module.scss'
 
 type PageHeaderProps = {
   eyebrow?: string
@@ -10,11 +10,11 @@ type PageHeaderProps = {
 
 export function PageHeader({ eyebrow, title, intro, actions }: PageHeaderProps) {
   return (
-    <header className={styles.root}>
-      {eyebrow ? <p className={styles.eyebrow}>{eyebrow}</p> : null}
+    <header className={sty.root}>
+      {eyebrow ? <p className={sty.eyebrow}>{eyebrow}</p> : null}
       <h1>{title}</h1>
-      <p className={styles.intro}>{intro}</p>
-      {actions ? <div className={styles.actions}>{actions}</div> : null}
+      <p className={sty.intro}>{intro}</p>
+      {actions ? <div className={sty.actions}>{actions}</div> : null}
     </header>
   )
 }

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { getLinktreeUrl, siteContent } from '../content/siteContent'
-import styles from './SiteHeader.module.scss'
+import sty from './SiteHeader.module.scss'
 
 const navItems = [
   { to: '/projects', label: 'Projects' },
@@ -22,18 +22,18 @@ export function SiteHeader() {
   const linktreeUrl = getLinktreeUrl()
 
   return (
-    <header className={styles.root}>
-      <div className={`md-wrapper ${styles.inner}`}>
-        <NavLink to="/" className={styles.brand} aria-label={`${siteContent.site.name} home`}>
-          <span className={styles.brandPrimary}>{brand.primary}</span>
-          {brand.secondary ? <span className={styles.brandSecondary}>{brand.secondary}</span> : null}
+    <header className={sty.root}>
+      <div className={`md-wrapper ${sty.inner}`}>
+        <NavLink to="/" className={sty.brand} aria-label={`${siteContent.site.name} home`}>
+          <span className={sty.brandPrimary}>{brand.primary}</span>
+          {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
         </NavLink>
 
-        <nav aria-label="Primary" className={styles.navWrap}>
-          <ul className={styles.nav}>
+        <nav aria-label="Primary" className={sty.navWrap}>
+          <ul className={sty.nav}>
             {navItems.map((item) => (
               <li key={item.to}>
-                <NavLink to={item.to} className={({ isActive }) => (isActive ? styles.active : undefined)}>
+                <NavLink to={item.to} className={({ isActive }) => (isActive ? sty.active : undefined)}>
                   {item.label}
                 </NavLink>
               </li>

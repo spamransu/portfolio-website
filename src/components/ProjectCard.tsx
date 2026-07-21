@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Project } from '../content/siteContent'
-import styles from './ProjectCard.module.scss'
+import sty from './ProjectCard.module.scss'
 
 type ProjectCardProps = {
   project: Project
@@ -8,8 +8,8 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className={styles.root}>
-      <div className={styles.meta}>
+    <article className={sty.root}>
+      <div className={sty.meta}>
         <span>{project.year}</span>
         <span>{project.client}</span>
       </div>
@@ -17,7 +17,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <Link to={`/projects/${project.slug}`}>{project.title}</Link>
       </h2>
       <p>{project.summary}</p>
-      <p className={styles.role}>Role: {project.role}</p>
+      <p className={sty.role}>Role: {project.role}</p>
       <ul className="tag-list" aria-label={`${project.title} technologies`}>
         {project.stack.map((item) => (
           <li key={item}>{item}</li>

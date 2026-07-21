@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import styles from './Section.module.scss'
+import sty from './Section.module.scss'
 
 type SectionProps = {
   title: string
@@ -9,8 +9,8 @@ type SectionProps = {
 
 export function Section({ title, intro, children }: SectionProps) {
   return (
-    <section className={styles.root}>
-      <div className={styles.heading}>
+    <section className={sty.root}>
+      <div className={sty.heading}>
         <h2>{title}</h2>
         {intro ? <p>{intro}</p> : null}
       </div>

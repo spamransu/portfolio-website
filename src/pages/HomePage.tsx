@@ -1,6 +1,6 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from 'react'
 import { siteContent, type HomeStatTone, type Project } from '../content/siteContent'
-import styles from './HomePage.module.scss'
+import sty from './HomePage.module.scss'
 
 type ContactFormState = {
   name: string
@@ -17,9 +17,9 @@ const initialFormState: ContactFormState = {
 }
 
 const statToneClassNames: Record<HomeStatTone, string> = {
-  accent: styles.statAccent,
-  'accent-2': styles.statAccent2,
-  'accent-3': styles.statAccent3,
+  accent: sty.statAccent,
+  'accent-2': sty.statAccent2,
+  'accent-3': sty.statAccent3,
 }
 
 function getFeaturedProjects() {
@@ -103,19 +103,19 @@ export function HomePage() {
   }
 
   return (
-    <div className={styles.root}>
-      <section className={styles.hero}>
+    <div className={sty.root}>
+      <section className={sty.hero}>
         <div className="lg-wrapper">
-          <div className={styles.heroCopy}>
-            <p className={styles.heroEyebrow}>{siteContent.home.hero.eyebrow}</p>
-            <h1 className={styles.heroTitle}>
+          <div className={sty.heroCopy}>
+            <p className={sty.heroEyebrow}>{siteContent.home.hero.eyebrow}</p>
+            <h1 className={sty.heroTitle}>
               {siteContent.home.hero.titleLines.map((line) => (
                 <span key={line}>{line}</span>
               ))}
             </h1>
-            {siteContent.home.hero.description ? <p className={styles.heroDescription}>{siteContent.home.hero.description}</p> : null}
-            <div className={styles.heroActions}>
-              <a className={styles.primaryButton} href="#contact">
+            {siteContent.home.hero.description ? <p className={sty.heroDescription}>{siteContent.home.hero.description}</p> : null}
+            <div className={sty.heroActions}>
+              <a className={sty.primaryButton} href="#contact">
                 {siteContent.home.cta.primaryLabel}
               </a>
             </div>
@@ -123,26 +123,26 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className={styles.section}>
+      <section className={sty.section}>
         <div className="lg-wrapper">
-          <div className={styles.sectionHeadingCentered}>
+          <div className={sty.sectionHeadingCentered}>
             <h2>{siteContent.home.featuredProjects.title}</h2>
           </div>
 
-          <div className={styles.projectGrid}>
+          <div className={sty.projectGrid}>
             {featuredProjects.map((project) => (
-              <article key={project.slug} className={styles.projectCard}>
-                <a href={`/projects/${project.slug}`} className={styles.projectImageLink}>
-                  {project.image ? <img src={project.image.src} alt={project.image.alt} className={styles.projectImage} /> : null}
+              <article key={project.slug} className={sty.projectCard}>
+                <a href={`/projects/${project.slug}`} className={sty.projectImageLink}>
+                  {project.image ? <img src={project.image.src} alt={project.image.alt} className={sty.projectImage} /> : null}
                 </a>
-                <div className={styles.projectBody}>
-                  <div className={styles.projectMeta}>
-                    <p className={styles.projectTitle}>
+                <div className={sty.projectBody}>
+                  <div className={sty.projectMeta}>
+                    <p className={sty.projectTitle}>
                       <a href={`/projects/${project.slug}`}>{project.title}</a>
                     </p>
-                    <p className={styles.projectSummary}>{project.summary}</p>
+                    <p className={sty.projectSummary}>{project.summary}</p>
                   </div>
-                  <ul className={styles.stackList} aria-label={`${project.title} stack`}>
+                  <ul className={sty.stackList} aria-label={`${project.title} stack`}>
                     {project.stack.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
@@ -154,58 +154,58 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={`md-wrapper ${styles.bioSection}`}>
-          <div className={styles.bioCopy}>
-            <p className={styles.heroEyebrow}>{siteContent.home.bio.eyebrow}</p>
-            <div className={styles.bioColumns}>
-              <h2 className={styles.bioTitle}>
+      <section className={sty.section}>
+        <div className={`md-wrapper ${sty.bioSection}`}>
+          <div className={sty.bioCopy}>
+            <p className={sty.heroEyebrow}>{siteContent.home.bio.eyebrow}</p>
+            <div className={sty.bioColumns}>
+              <h2 className={sty.bioTitle}>
                 {siteContent.home.bio.titleLines.map((line) => (
                   <span key={line}>{line}</span>
                 ))}
               </h2>
-              <p className={styles.bioDescription}>{siteContent.home.bio.description}</p>
+              <p className={sty.bioDescription}>{siteContent.home.bio.description}</p>
             </div>
           </div>
 
-          <div className={styles.statsGrid}>
+          <div className={sty.statsGrid}>
             {siteContent.home.stats.map((stat) => (
-              <article key={stat.label} className={styles.statCard}>
-                <p className={`${styles.statValue} ${statToneClassNames[stat.tone]}`}>{stat.value}</p>
-                <p className={styles.statLabel}>{stat.label}</p>
+              <article key={stat.label} className={sty.statCard}>
+                <p className={`${sty.statValue} ${statToneClassNames[stat.tone]}`}>{stat.value}</p>
+                <p className={sty.statLabel}>{stat.label}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={`md-wrapper ${styles.skillsSection}`}>
-          <div className={styles.skillsCloud}>
+      <section className={sty.section}>
+        <div className={`md-wrapper ${sty.skillsSection}`}>
+          <div className={sty.skillsCloud}>
             {siteContent.home.skills.items.map((skill) => (
-              <span key={skill} className={styles.skillPill}>
+              <span key={skill} className={sty.skillPill}>
                 {skill}
               </span>
             ))}
           </div>
 
-          <div className={styles.skillsCopy}>
+          <div className={sty.skillsCopy}>
             <h2>{siteContent.home.skills.title}</h2>
             <p>{siteContent.home.skills.description}</p>
           </div>
         </div>
       </section>
 
-      <section className={styles.contactSection} id="contact">
+      <section className={sty.contactSection} id="contact">
         <div className="md-wrapper">
-          <div className={styles.contactFormWrap}>
-          <div className={styles.contactIntro}>
+          <div className={sty.contactFormWrap}>
+          <div className={sty.contactIntro}>
             <h2>{siteContent.home.contact.title}</h2>
             {siteContent.home.contact.intro ? <p>{siteContent.home.contact.intro}</p> : null}
           </div>
 
-          <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
-            <div className={styles.formField}>
+          <form className={sty.contactForm} onSubmit={handleSubmit} noValidate>
+            <div className={sty.formField}>
               <label htmlFor="contact-name">Name *</label>
               <input
                 id="contact-name"
@@ -218,10 +218,10 @@ export function HomePage() {
                 aria-describedby={formErrors.name ? 'contact-name-error' : undefined}
                 required
               />
-              {formErrors.name ? <p className={styles.formError} id="contact-name-error">{formErrors.name}</p> : null}
+              {formErrors.name ? <p className={sty.formError} id="contact-name-error">{formErrors.name}</p> : null}
             </div>
 
-            <div className={styles.formField}>
+            <div className={sty.formField}>
               <label htmlFor="contact-email">Email *</label>
               <input
                 id="contact-email"
@@ -234,10 +234,10 @@ export function HomePage() {
                 aria-describedby={formErrors.email ? 'contact-email-error' : undefined}
                 required
               />
-              {formErrors.email ? <p className={styles.formError} id="contact-email-error">{formErrors.email}</p> : null}
+              {formErrors.email ? <p className={sty.formError} id="contact-email-error">{formErrors.email}</p> : null}
             </div>
 
-            <div className={styles.formField}>
+            <div className={sty.formField}>
               <label htmlFor="contact-message">Message *</label>
               <textarea
                 id="contact-message"
@@ -250,15 +250,15 @@ export function HomePage() {
                 rows={5}
                 required
               />
-              <div className={styles.formMetaRow}>
-                <p className={styles.formCount} id="contact-message-count">
+              <div className={sty.formMetaRow}>
+                <p className={sty.formCount} id="contact-message-count">
                   {formValues.message.length}/{messageLimit} characters
                 </p>
-                {formErrors.message ? <p className={styles.formError} id="contact-message-error">{formErrors.message}</p> : null}
+                {formErrors.message ? <p className={sty.formError} id="contact-message-error">{formErrors.message}</p> : null}
               </div>
             </div>
 
-            <button type="submit" className={styles.submitButton}>
+            <button type="submit" className={sty.submitButton}>
               {siteContent.home.contact.submitLabel}
             </button>
           </form>
