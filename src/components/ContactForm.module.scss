@@ -1,0 +1,114 @@
+@use '../styles/mixins' as mix;
+
+.root {
+  display: grid;
+  gap: 0.82rem;
+  width: min(100%, 19rem);
+  padding: 0.88rem 0.82rem 0.82rem;
+  margin-inline: auto;
+  background: var(--surface-light);
+  color: var(--text-dark);
+  border-radius: 0.15rem;
+}
+
+.intro {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.intro h2 {
+  margin: 0;
+  text-transform: uppercase;
+  @include mix.type-style(h3);
+}
+
+.intro p,
+.count {
+  margin: 0;
+  color: rgba(22, 22, 20, 0.5);
+}
+
+.form {
+  display: grid;
+  gap: 0.62rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.22rem;
+}
+
+.field label {
+  @include mix.type-style(body-xs, 600);
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 0.54rem 0.68rem;
+  color: var(--text-dark);
+  background: transparent;
+  border: 1px solid rgba(22, 22, 20, 0.14);
+  border-radius: 0.15rem;
+}
+
+.field input {
+  min-height: 2.35rem;
+}
+
+.field textarea {
+  min-height: 5.25rem;
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(22, 22, 20, 0.28);
+}
+
+.metaRow {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.count,
+.error {
+  @include mix.type-style(body-xs);
+}
+
+.error {
+  margin: 0;
+  color: #b42318;
+}
+
+.submitButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 1.9rem;
+  padding: 0.48rem 1rem;
+  color: var(--text);
+  @include mix.type-style(body-xs, 600);
+  text-decoration: none;
+  background: var(--ink);
+  border: 1px solid transparent;
+  transition: transform 140ms ease, opacity 140ms ease, border-color 140ms ease, background-color 140ms ease;
+}
+
+.submitButton:hover {
+  transform: translateY(-1px);
+}
+
+@media (min-width: 768px) {
+  .root {
+    width: min(100%, 18.4rem);
+    padding: 0.9rem 0.85rem 0.85rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .root {
+    width: min(100%, 16.8rem);
+  }
+}

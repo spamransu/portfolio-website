@@ -24,18 +24,16 @@
 .heroEyebrow {
   margin: 0;
   color: var(--muted);
-  font-size: 0.74rem;
-  line-height: 1.4;
+  @include mix.type-style(body-xs);
 }
 
 .heroTitle,
 .bioTitle,
 .sectionHeadingCentered h2,
-.skillsCopy h2,
-.contactIntro h2 {
+.skillsCopy h2 {
   margin: 0;
   text-transform: uppercase;
-  @include mix.font(display, 600, tight, display);
+  @include mix.type-style(h2);
 }
 
 .heroTitle,
@@ -46,24 +44,21 @@
 
 .heroTitle {
   max-width: 9.2ch;
-  font-size: clamp(3.45rem, 2.4rem + 3.9vw, 5.1rem);
+  @include mix.type-style(h1);
 }
 
 .heroDescription,
 .projectSummary,
 .bioDescription,
 .skillsCopy p,
-.contactIntro p,
-.statLabel,
-.formCount {
+.statLabel {
   margin: 0;
   color: var(--muted);
 }
 
 .heroDescription {
   max-width: 30rem;
-  font-size: 0.9rem;
-  line-height: 1.45;
+  @include mix.type-style(body-sm);
 }
 
 .heroActions {
@@ -71,8 +66,7 @@
   margin-top: 0.1rem;
 }
 
-.primaryButton,
-.submitButton {
+.primaryButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -87,11 +81,10 @@
   color: var(--ink);
   background: var(--accent);
   padding: 0.72rem 1rem;
-  font-size: 0.76rem;
+  @include mix.type-style(body-xs, 600);
 }
 
 .primaryButton:hover,
-.submitButton:hover,
 .projectImageLink:hover .projectImage,
 .projectTitle a:hover {
   transform: translateY(-1px);
@@ -109,7 +102,7 @@
 }
 
 .sectionHeadingCentered h2 {
-  font-size: clamp(2.4rem, 1.9rem + 2vw, 3.45rem);
+  @include mix.type-style(h2);
 }
 
 .projectGrid {
@@ -149,9 +142,7 @@
 .projectTitle {
   margin: 0;
   color: var(--accent);
-  font-size: clamp(1.05rem, 0.98rem + 0.22vw, 1.18rem);
-  font-weight: 600;
-  line-height: 1.15;
+  @include mix.type-style(body-lg, 600);
 }
 
 .projectTitle a {
@@ -159,8 +150,7 @@
 }
 
 .projectSummary {
-  font-size: 0.82rem;
-  line-height: 1.35;
+  @include mix.type-style(body-sm);
 }
 
 .stackList {
@@ -175,8 +165,7 @@
   color: var(--muted);
   background: rgba(252, 255, 246, 0.04);
   border-radius: 999px;
-  font-size: 0.62rem;
-  line-height: 1.2;
+  @include mix.type-style(body-xs);
 }
 
 .bioSection {
@@ -196,13 +185,12 @@
 
 .bioTitle {
   max-width: 8.8ch;
-  font-size: clamp(3rem, 2.2rem + 3vw, 4.35rem);
+  @include mix.type-style(h1);
 }
 
 .bioDescription {
   max-width: 15rem;
-  font-size: 0.86rem;
-  line-height: 1.45;
+  @include mix.type-style(body-sm);
 }
 
 .statsGrid {
@@ -221,9 +209,7 @@
 
 .statValue {
   margin: 0;
-  font-size: clamp(2.25rem, 1.9rem + 1vw, 2.9rem);
-  font-family: 'Oswald', Impact, 'Arial Narrow Bold', sans-serif;
-  font-weight: 600;
+  @include mix.type-style(h3);
   line-height: 1;
 }
 
@@ -240,7 +226,7 @@
 }
 
 .statLabel {
-  font-size: 0.72rem;
+  @include mix.type-style(body-xs);
 }
 
 .skillsSection {
@@ -259,8 +245,7 @@
   color: var(--text);
   border: 1px solid rgba(252, 255, 246, 0.28);
   border-radius: 999px;
-  font-size: 0.65rem;
-  line-height: 1.2;
+  @include mix.type-style(body-xs);
 }
 
 .skillPill::before {
@@ -278,102 +263,16 @@
 }
 
 .skillsCopy p {
-  font-size: 0.84rem;
-  line-height: 1.42;
+  @include mix.type-style(body-sm);
 }
 
-.skillsCopy h2,
-.contactIntro h2 {
-  font-size: clamp(2.25rem, 1.8rem + 1.8vw, 3.05rem);
+.skillsCopy h2 {
+  @include mix.type-style(h3);
 }
 
 .contactSection {
   padding-block: 1.95rem 2.2rem;
   background: var(--accent);
-}
-
-.contactFormWrap {
-  display: grid;
-  gap: 0.82rem;
-  width: min(100%, 19rem);
-  padding: 0.88rem 0.82rem 0.82rem;
-  margin-inline: auto;
-  background: var(--surface-light);
-  color: var(--text-dark);
-  border-radius: 0.15rem;
-}
-
-.contactIntro {
-  display: grid;
-  gap: 0.28rem;
-}
-
-.contactIntro p,
-.formCount {
-  color: rgba(22, 22, 20, 0.5);
-}
-
-.contactForm {
-  display: grid;
-  gap: 0.62rem;
-}
-
-.formField {
-  display: grid;
-  gap: 0.22rem;
-}
-
-.formField label {
-  font-size: 0.68rem;
-  font-weight: 600;
-}
-
-.formField input,
-.formField textarea {
-  width: 100%;
-  padding: 0.54rem 0.68rem;
-  color: var(--text-dark);
-  background: transparent;
-  border: 1px solid rgba(22, 22, 20, 0.14);
-  border-radius: 0.15rem;
-}
-
-.formField input {
-  min-height: 2.35rem;
-}
-
-.formField textarea {
-  min-height: 5.25rem;
-  resize: vertical;
-}
-
-.formField input::placeholder,
-.formField textarea::placeholder {
-  color: rgba(22, 22, 20, 0.28);
-}
-
-.formMetaRow {
-  display: grid;
-  gap: 0.2rem;
-}
-
-.formCount,
-.formError {
-  font-size: 0.64rem;
-}
-
-.formError {
-  margin: 0;
-  color: #b42318;
-}
-
-.submitButton {
-  width: 100%;
-  min-height: 1.9rem;
-  color: var(--text);
-  background: var(--ink);
-  padding: 0.48rem 1rem;
-  font-size: 0.68rem;
 }
 
 @media (min-width: 768px) {
@@ -413,11 +312,6 @@
   .contactSection {
     padding-block: 2.25rem 2.55rem;
   }
-
-  .contactFormWrap {
-    width: min(100%, 18.4rem);
-    padding: 0.9rem 0.85rem 0.85rem;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -448,10 +342,6 @@
     gap: 1.95rem;
     align-items: end;
   }
-
-  .contactFormWrap {
-    width: min(100%, 16.8rem);
-  }
 }
 
 @media (max-width: 479.98px) {
@@ -460,9 +350,6 @@
     max-width: 8.2ch;
   }
 
-  .sectionHeadingCentered h2 {
-    font-size: clamp(2.1rem, 1.45rem + 3vw, 2.8rem);
-  }
 
   .skillsSection {
     gap: 0.9rem;

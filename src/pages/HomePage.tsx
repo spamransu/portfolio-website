@@ -1,20 +1,7 @@
-import { useMemo, useState, type ChangeEvent, type FormEvent } from 'react'
+import { useMemo } from 'react'
+import { ContactForm } from '../components/ContactForm'
 import { siteContent, type HomeStatTone, type Project } from '../content/siteContent'
 import sty from './HomePage.module.scss'
-
-type ContactFormState = {
-  name: string
-  email: string
-  message: string
-}
-
-type ContactFormErrors = Partial<Record<keyof ContactFormState, string>>
-
-const initialFormState: ContactFormState = {
-  name: '',
-  email: '',
-  message: '',
-}
 
 const statToneClassNames: Record<HomeStatTone, string> = {
   accent: sty.statAccent,
@@ -30,77 +17,8 @@ function getFeaturedProjects() {
   return ordered.length ? ordered : siteContent.projects.slice(0, 4)
 }
 
-function buildMailtoHref(values: ContactFormState) {
-  const subject = `Portfolio inquiry from ${values.name}`
-  const body = [
-    `Name: ${values.name}`,
-    `Email: ${values.email}`,
-    '',
-    'Message:',
-    values.message,
-  ].join('\n')
-
-  return `mailto:${siteContent.site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-}
-
-function validateForm(values: ContactFormState, messageLimit: number) {
-  const errors: ContactFormErrors = {}
-
-  if (!values.name.trim()) {
-    errors.name = 'Please enter your name.'
-  }
-
-  if (!values.email.trim()) {
-    errors.email = 'Please enter your email.'
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
-    errors.email = 'Please enter a valid email address.'
-  }
-
-  if (!values.message.trim()) {
-    errors.message = 'Please add a short message.'
-  } else if (values.message.length > messageLimit) {
-    errors.message = `Please keep the message under ${messageLimit} characters.`
-  }
-
-  return errors
-}
-
 export function HomePage() {
   const featuredProjects = useMemo(getFeaturedProjects, [])
-  const [formValues, setFormValues] = useState(initialFormState)
-  const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
-  const messageLimit = siteContent.home.contact.messageLimit
-
-  const handleFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target
-    const nextValue = name === 'message' ? value.slice(0, messageLimit) : value
-
-    setFormValues((currentValues) => ({
-      ...currentValues,
-      [name]: nextValue,
-    }))
-
-    setFormErrors((currentErrors) => ({
-      ...currentErrors,
-      [name]: undefined,
-    }))
-  }
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const errors = validateForm(formValues, messageLimit)
-
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors)
-      return
-    }
-
-    window.location.href = buildMailtoHref({
-      name: formValues.name.trim(),
-      email: formValues.email.trim(),
-      message: formValues.message.trim(),
-    })
-  }
 
   return (
     <div className={sty.root}>
@@ -198,71 +116,7 @@ export function HomePage() {
 
       <section className={sty.contactSection} id="contact">
         <div className="md-wrapper">
-          <div className={sty.contactFormWrap}>
-          <div className={sty.contactIntro}>
-            <h2>{siteContent.home.contact.title}</h2>
-            {siteContent.home.contact.intro ? <p>{siteContent.home.contact.intro}</p> : null}
-          </div>
-
-          <form className={sty.contactForm} onSubmit={handleSubmit} noValidate>
-            <div className={sty.formField}>
-              <label htmlFor="contact-name">Name *</label>
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                placeholder="Your full name"
-                value={formValues.name}
-                onChange={handleFieldChange}
-                aria-invalid={Boolean(formErrors.name)}
-                aria-describedby={formErrors.name ? 'contact-name-error' : undefined}
-                required
-              />
-              {formErrors.name ? <p className={sty.formError} id="contact-name-error">{formErrors.name}</p> : null}
-            </div>
-
-            <div className={sty.formField}>
-              <label htmlFor="contact-email">Email *</label>
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                placeholder="your.email@example.com"
-                value={formValues.email}
-                onChange={handleFieldChange}
-                aria-invalid={Boolean(formErrors.email)}
-                aria-describedby={formErrors.email ? 'contact-email-error' : undefined}
-                required
-              />
-              {formErrors.email ? <p className={sty.formError} id="contact-email-error">{formErrors.email}</p> : null}
-            </div>
-
-            <div className={sty.formField}>
-              <label htmlFor="contact-message">Message *</label>
-              <textarea
-                id="contact-message"
-                name="message"
-                placeholder="Tell me about your project or just say hello..."
-                value={formValues.message}
-                onChange={handleFieldChange}
-                aria-invalid={Boolean(formErrors.message)}
-                aria-describedby={formErrors.message ? 'contact-message-error' : 'contact-message-count'}
-                rows={5}
-                required
-              />
-              <div className={sty.formMetaRow}>
-                <p className={sty.formCount} id="contact-message-count">
-                  {formValues.message.length}/{messageLimit} characters
-                </p>
-                {formErrors.message ? <p className={sty.formError} id="contact-message-error">{formErrors.message}</p> : null}
-              </div>
-            </div>
-
-            <button type="submit" className={sty.submitButton}>
-              {siteContent.home.contact.submitLabel}
-            </button>
-          </form>
-        </div>
+          <ContactForm contact={siteContent.home.contact} recipientEmail={siteContent.site.email} />
         </div>
       </section>
     </div>
