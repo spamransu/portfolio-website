@@ -25,6 +25,12 @@
 - SCSS reference notes live at `agent-generated-docs/project-scss-reference.md`.
 - Prefer clear descriptive filenames in `agent-generated-docs/` so the root stays focused on source files and primary project docs.
 
+## Playwright file hygiene
+
+- Do not write Playwright screenshots, snapshot markdown, MCP output, or other generated verification files into the project root.
+- Keep Playwright-generated working files inside the dedicated ignored folders for this repo, such as `.playwright/`, `.playwright-cli/`, and `.playwright-mcp/`.
+- If a Playwright run produces files like `*-snapshot.md` or screenshot PNGs, move or configure them into those dedicated folders instead of leaving them at the root.
+
 ## Goal
 
 Keep the site content-first, case-study oriented, and easy for both humans and agents to navigate.

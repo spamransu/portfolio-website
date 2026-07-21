@@ -105,7 +105,7 @@ export function HomePage() {
   return (
     <div className={styles.root}>
       <section className={styles.hero}>
-        <div className="md-wrapper">
+        <div className="lg-wrapper">
           <div className={styles.heroCopy}>
             <p className={styles.heroEyebrow}>{siteContent.home.hero.eyebrow}</p>
             <h1 className={styles.heroTitle}>
@@ -124,7 +124,7 @@ export function HomePage() {
       </section>
 
       <section className={styles.section}>
-        <div className="md-wrapper">
+        <div className="lg-wrapper">
           <div className={styles.sectionHeadingCentered}>
             <h2>{siteContent.home.featuredProjects.title}</h2>
           </div>

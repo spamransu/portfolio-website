@@ -29,7 +29,7 @@ export function SiteHeader() {
           {brand.secondary ? <span className={styles.brandSecondary}>{brand.secondary}</span> : null}
         </NavLink>
 
-        <nav aria-label="Primary">
+        <nav aria-label="Primary" className={styles.navWrap}>
           <ul className={styles.nav}>
             {navItems.map((item) => (
               <li key={item.to}>
