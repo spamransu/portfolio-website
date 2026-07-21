@@ -1,3 +1,5 @@
+@use './tokens' as tokens;
+
 /*
  * Global wrapper grid system ported from:
  * /home/ransu/personal-projects/abcde-main/src/assets/styles/base/_grid.scss
@@ -12,7 +14,7 @@
 .grid-system {
   display: grid;
   width: 100%;
-  --padding-inline: clamp(1rem, -2.429rem + 7.143vw, 4rem);
+  --padding-inline: #{tokens.fluid(1rem, 4rem)};
 }
 
 .sm-wrapper {

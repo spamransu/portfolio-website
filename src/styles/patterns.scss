@@ -61,7 +61,7 @@
 
   h1 {
     margin-top: 0;
-    line-height: 1.05;
+    @include mix.type-style(h1);
   }
 
   p {

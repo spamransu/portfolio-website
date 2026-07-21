@@ -25,6 +25,26 @@
   --space-md: #{tokens.space(md)};
   --space-lg: #{tokens.space(lg)};
   --space-xl: #{tokens.space(xl)};
+  --type-h1-size: #{tokens.type-prop(h1, size)};
+  --type-h1-line: #{tokens.type-prop(h1, line-height)};
+  --type-h2-size: #{tokens.type-prop(h2, size)};
+  --type-h2-line: #{tokens.type-prop(h2, line-height)};
+  --type-h3-size: #{tokens.type-prop(h3, size)};
+  --type-h3-line: #{tokens.type-prop(h3, line-height)};
+  --type-h4-size: #{tokens.type-prop(h4, size)};
+  --type-h4-line: #{tokens.type-prop(h4, line-height)};
+  --type-h5-size: #{tokens.type-prop(h5, size)};
+  --type-h5-line: #{tokens.type-prop(h5, line-height)};
+  --type-h6-size: #{tokens.type-prop(h6, size)};
+  --type-h6-line: #{tokens.type-prop(h6, line-height)};
+  --type-body-lg-size: #{tokens.type-prop(body-lg, size)};
+  --type-body-lg-line: #{tokens.type-prop(body-lg, line-height)};
+  --type-body-md-size: #{tokens.type-prop(body-md, size)};
+  --type-body-md-line: #{tokens.type-prop(body-md, line-height)};
+  --type-body-sm-size: #{tokens.type-prop(body-sm, size)};
+  --type-body-sm-line: #{tokens.type-prop(body-sm, line-height)};
+  --type-body-xs-size: #{tokens.type-prop(body-xs, size)};
+  --type-body-xs-line: #{tokens.type-prop(body-xs, line-height)};
 }
 
 * {
@@ -39,7 +59,44 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  @include mix.font(body, 400, body);
+  @include mix.type-style(body-md);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-block: 0 0.5em;
+}
+
+h1 {
+  @include mix.type-style(h1);
+}
+
+h2 {
+  @include mix.type-style(h2);
+}
+
+h3 {
+  @include mix.type-style(h3);
+}
+
+h4 {
+  @include mix.type-style(h4);
+}
+
+h5 {
+  @include mix.type-style(h5);
+}
+
+h6 {
+  @include mix.type-style(h6);
+}
+
+p {
+  margin-block: 0 1em;
 }
 
 button,

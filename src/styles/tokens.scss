@@ -1,22 +1,139 @@
 @use 'sass:map';
+@use 'sass:math';
 
 $font-families: (
   sans: ('Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif),
   display: ('Oswald', Impact, 'Arial Narrow Bold', sans-serif),
 ) !default;
 
+
+$fluid-min-width: 767px !default;
+$fluid-max-width: 1366px !default;
+
+@function strip-unit($value) {
+  @return math.div($value, $value * 0 + 1);
+}
+
+@function fluid($min-size, $max-size, $min-width: $fluid-min-width, $max-width: $fluid-max-width) {
+  $min-size-px: strip-unit($min-size) * 16;
+  $max-size-px: strip-unit($max-size) * 16;
+  $min-width-px: strip-unit($min-width);
+  $max-width-px: strip-unit($max-width);
+  $slope-vw: math.div($max-size-px - $min-size-px, $max-width-px - $min-width-px) * 100;
+  $intercept-rem: math.div($min-size-px - $slope-vw * math.div($min-width-px, 100), 16) * 1rem;
+
+  @return clamp(#{$min-size}, #{$intercept-rem} + #{$slope-vw}vw, #{$max-size});
+}
+
+// Typography values are mapped from docs/portfolio-project-design-variables.json.
+// The Figma export contains Desktop and Mobile values; Tablet is currently
+// zeroed, so the site interpolates fluidly between the chosen portfolio
+// breakpoints: 767px and 1366px.
+// Mobile H4 line-height is also zeroed in the export, so it uses its paragraph
+// spacing value (32px), which matches the rest of the heading system.
+$type-styles: (
+  h1: (
+    family: display,
+    weight: 600,
+    size: fluid(3rem, 3.75rem),
+    line-height: fluid(3.5rem, 4.5rem),
+    paragraph-spacing: fluid(3.5rem, 4.5rem),
+  ),
+  h2: (
+    family: display,
+    weight: 600,
+    size: fluid(2.5rem, 3rem),
+    line-height: fluid(3rem, 3.5rem),
+    paragraph-spacing: fluid(3rem, 3.5rem),
+  ),
+  h3: (
+    family: display,
+    weight: 600,
+    size: fluid(2rem, 2.5rem),
+    line-height: fluid(2.5rem, 3rem),
+    paragraph-spacing: fluid(2.5rem, 3rem),
+  ),
+  h4: (
+    family: display,
+    weight: 600,
+    size: fluid(1.75rem, 2rem),
+    line-height: fluid(2rem, 2.5rem),
+    paragraph-spacing: fluid(2rem, 2.5rem),
+  ),
+  h5: (
+    family: display,
+    weight: 600,
+    size: 1.5rem,
+    line-height: 1.75rem,
+    paragraph-spacing: 1.75rem,
+  ),
+  h6: (
+    family: display,
+    weight: 600,
+    size: 1.25rem,
+    line-height: 1.5rem,
+    paragraph-spacing: 1.5rem,
+  ),
+  body-lg: (
+    family: sans,
+    weight: 400,
+    size: 1.25rem,
+    line-height: 1.5rem,
+    paragraph-spacing: 1.5rem,
+  ),
+  body-md: (
+    family: sans,
+    weight: 400,
+    size: 1rem,
+    line-height: 1.25rem,
+    paragraph-spacing: 1.25rem,
+  ),
+  body-sm: (
+    family: sans,
+    weight: 400,
+    size: 0.875rem,
+    line-height: 1rem,
+    paragraph-spacing: 1rem,
+  ),
+  body-xs: (
+    family: sans,
+    weight: 400,
+    size: 0.75rem,
+    line-height: 1rem,
+    paragraph-spacing: 1rem,
+  ),
+) !default;
+
 $type-scale: (
-  meta: clamp(0.75rem, 0.72rem + 0.12vw, 0.82rem),
-  body: clamp(1rem, 0.96rem + 0.18vw, 1.05rem),
-  h3: clamp(1.2rem, 1.08rem + 0.42vw, 1.4rem),
-  h2: clamp(1.95rem, 1.4rem + 1.8vw, 3rem),
-  display: clamp(3rem, 1.9rem + 3.6vw, 4rem),
+  meta: map.get(map.get($type-styles, body-xs), size),
+  body: map.get(map.get($type-styles, body-md), size),
+  body-lg: map.get(map.get($type-styles, body-lg), size),
+  body-md: map.get(map.get($type-styles, body-md), size),
+  body-sm: map.get(map.get($type-styles, body-sm), size),
+  body-xs: map.get(map.get($type-styles, body-xs), size),
+  h1: map.get(map.get($type-styles, h1), size),
+  h2: map.get(map.get($type-styles, h2), size),
+  h3: map.get(map.get($type-styles, h3), size),
+  h4: map.get(map.get($type-styles, h4), size),
+  h5: map.get(map.get($type-styles, h5), size),
+  h6: map.get(map.get($type-styles, h6), size),
+  display: fluid(3.5rem, 4.5rem),
 ) !default;
 
 $line-height: (
   tight: 1,
   snug: 1.12,
-  body: 1.6,
+  body: map.get(map.get($type-styles, body-md), line-height),
+  body-lg: map.get(map.get($type-styles, body-lg), line-height),
+  body-md: map.get(map.get($type-styles, body-md), line-height),
+  body-sm: map.get(map.get($type-styles, body-sm), line-height),
+  body-xs: map.get(map.get($type-styles, body-xs), line-height),
+  h1: map.get(map.get($type-styles, h1), line-height),
+  h2: map.get(map.get($type-styles, h2), line-height),
+  h3: map.get(map.get($type-styles, h3), line-height),
+  h4: map.get(map.get($type-styles, h4), line-height),
+  h5: map.get(map.get($type-styles, h5), line-height),
+  h6: map.get(map.get($type-styles, h6), line-height),
 ) !default;
 
 $colors: (
@@ -35,11 +152,11 @@ $colors: (
 ) !default;
 
 $space: (
-  xs: clamp(0.5rem, 0.46rem + 0.12vw, 0.65rem),
-  sm: clamp(0.85rem, 0.76rem + 0.2vw, 1rem),
-  md: clamp(1.2rem, 1rem + 0.6vw, 1.5rem),
-  lg: clamp(1.8rem, 1.3rem + 1.3vw, 2.6rem),
-  xl: clamp(3rem, 2.1rem + 2.4vw, 4.5rem),
+  xs: fluid(0.5rem, 0.65rem),
+  sm: fluid(0.85rem, 1rem),
+  md: fluid(1.2rem, 1.5rem),
+  lg: fluid(1.8rem, 2.6rem),
+  xl: fluid(3rem, 4.5rem),
 ) !default;
 
 $breakpoints: (
@@ -62,6 +179,14 @@ $max-width: 1312px !default;
 
 @function color($key) {
   @return map.get($colors, $key);
+}
+
+@function type-style($role) {
+  @return map.get($type-styles, $role);
+}
+
+@function type-prop($role, $property) {
+  @return map.get(type-style($role), $property);
 }
 
 @function type-scale($key) {

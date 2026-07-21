@@ -23,9 +23,7 @@
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--accent);
-  font-family: 'Oswald', Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(1.45rem, 1.2rem + 0.8vw, 1.85rem);
-  font-weight: 600;
+  @include mix.type-style(h5);
   line-height: 1;
 }
 
@@ -50,8 +48,7 @@
 .description,
 .copyright,
 .linkList a {
-  font-size: 0.72rem;
-  line-height: 1.55;
+  @include mix.type-style(body-xs);
 }
 
 .linksWrap {
@@ -68,7 +65,7 @@
 .heading {
   margin-bottom: 0.42rem;
   color: var(--text);
-  font-size: 0.66rem;
+  @include mix.type-style(body-xs, 600);
   letter-spacing: 0.03em;
   text-transform: none;
 }

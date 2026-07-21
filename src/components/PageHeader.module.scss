@@ -7,14 +7,13 @@
 .root h1 {
   max-width: 12ch;
   margin-block: 0 1rem;
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  line-height: 1.05;
+  @include mix.type-style(h1);
 }
 
 .eyebrow {
   margin-top: 0;
   color: var(--accent);
-  font-size: 0.78rem;
+  @include mix.type-style(body-xs, 600);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -22,7 +21,7 @@
 .intro {
   max-width: 70ch;
   color: var(--muted);
-  font-size: 1.05rem;
+  @include mix.type-style(body-lg);
 }
 
 .actions {

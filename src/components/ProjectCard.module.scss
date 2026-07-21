@@ -6,13 +6,13 @@
 
 .root h2 {
   margin-top: 0;
-  line-height: 1.05;
+  @include mix.type-style(h4);
 }
 
 .meta {
   @include mix.flex(row, null, null, 0.75rem);
   color: var(--muted);
-  font-size: 0.92rem;
+  @include mix.type-style(body-sm);
 }
 
 .role {

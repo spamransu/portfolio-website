@@ -16,10 +16,22 @@
 .eyebrow {
   margin-top: 0;
   color: var(--accent);
-  font-size: 0.78rem;
+  @include mix.type-style(body-xs, 600);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+
+
+.text-h1 { @include mix.type-style(h1); }
+.text-h2 { @include mix.type-style(h2); }
+.text-h3 { @include mix.type-style(h3); }
+.text-h4 { @include mix.type-style(h4); }
+.text-h5 { @include mix.type-style(h5); }
+.text-h6 { @include mix.type-style(h6); }
+.text-body-lg { @include mix.type-style(body-lg); }
+.text-body-md { @include mix.type-style(body-md); }
+.text-body-sm { @include mix.type-style(body-sm); }
+.text-body-xs { @include mix.type-style(body-xs); }
 
 .button-row,
 .inline-links,
@@ -38,6 +50,7 @@
   text-decoration: none;
   border: 1px solid var(--line);
   border-radius: 999px;
+  @include mix.type-style(body-sm, 600);
   transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
 
   &:hover {
@@ -59,6 +72,7 @@
 .tag-list li,
 .check-list li {
   padding: 0.45rem 0.75rem;
+  @include mix.type-style(body-sm);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--line);
   border-radius: 999px;

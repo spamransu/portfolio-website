@@ -35,6 +35,31 @@
   line-height: tokens.leading($leading);
 }
 
+@mixin type-style($role, $weight: null) {
+  $family: tokens.type-prop($role, family);
+  $resolved-weight: tokens.type-prop($role, weight);
+  $letter-spacing: tokens.type-prop($role, letter-spacing);
+  $text-transform: tokens.type-prop($role, text-transform);
+
+  font-family: tokens.font-family($family);
+  font-size: tokens.type-prop($role, size);
+
+  @if $weight {
+    font-weight: $weight;
+  } @else {
+    font-weight: $resolved-weight;
+  }
+  line-height: tokens.type-prop($role, line-height);
+
+  @if $letter-spacing {
+    letter-spacing: $letter-spacing;
+  }
+
+  @if $text-transform {
+    text-transform: $text-transform;
+  }
+}
+
 @mixin card-surface($padding: tokens.space(md)) {
   padding: $padding;
   background: rgba(255, 255, 255, 0.03);

@@ -21,9 +21,7 @@
   text-decoration: none;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  font-family: 'Oswald', Impact, 'Arial Narrow Bold', sans-serif;
-  font-size: clamp(1.55rem, 1.25rem + 0.9vw, 1.95rem);
-  font-weight: 600;
+  @include mix.type-style(h5);
   line-height: 1;
 }
 
@@ -46,7 +44,7 @@
   color: var(--text);
   display: inline-flex;
   padding-block: 0.1rem;
-  font-size: 0.58rem;
+  font-size: var(--type-body-xs-size);
   text-decoration: none;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -83,7 +81,7 @@
   }
 
   .nav a {
-    font-size: 0.61rem;
+    font-size: var(--type-body-xs-size);
     letter-spacing: 0.12em;
   }
 }
