@@ -383,6 +383,7 @@ export const DashboardScreen = ({
   const publicMediaUrl = normalizedSiteUrl && mediaPath ? `${normalizedSiteUrl}${mediaPath}` : null
   const publicBlogUrl = normalizedSiteUrl ? `${normalizedSiteUrl}/blog` : null
   const publicPostUrl = normalizedSiteUrl && blogPost?.status === 'published' ? `${normalizedSiteUrl}/blog/${blogPost.slug}` : null
+  const publicProjectUrl = normalizedSiteUrl && selectedProject?.slug ? `${normalizedSiteUrl}/projects/${selectedProject.slug}` : null
   const activityRefreshLabel = formatRefreshTimestamp(activityLoadedAt)
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
   const sanitizedMediaSlug = sanitizePathSegment(mediaSlug)
@@ -974,6 +975,12 @@ export const DashboardScreen = ({
               </label>
               {selectedProject ? (
                 <>
+                  <div className="admin-actions">
+                    <p className="admin-note">Selected slug: <span className="admin-code">{selectedProject.slug}</span></p>
+                    <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(selectedProject.slug, 'Project slug')}>Copy slug</button>
+                    {publicProjectUrl ? <a className="admin-button admin-button-secondary" href={publicProjectUrl} target="_blank" rel="noreferrer">Open public route</a> : null}
+                    {publicProjectUrl ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(publicProjectUrl, 'Project route URL')}>Copy route</button> : null}
+                  </div>
                   <label className="admin-field"><span>Title</span><input value={selectedProject.title} onChange={(event) => onStructuredFieldChange('project', 'title', event.target.value)} /></label>
                   <label className="admin-field"><span>Slug</span><input value={selectedProject.slug} onChange={(event) => onStructuredFieldChange('project', 'slug', event.target.value)} /></label>
                   {siteValidation.selectedProject ? <p className="admin-note admin-note-warning">{siteValidation.selectedProject}</p> : null}
