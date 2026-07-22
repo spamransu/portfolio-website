@@ -1063,6 +1063,45 @@ export const App = () => {
   const [activityError, setActivityError] = useState<string | null>(null)
   const [activityLoadedAt, setActivityLoadedAt] = useState<string | null>(null)
 
+  const resetAuthenticatedState = useCallback((nextError: string | null) => {
+    setSession(DEFAULT_SESSION)
+    setSiteContent(null)
+    setWorkingCopy(null)
+    setBlogList(null)
+    setSelectedBlogSlug('')
+    setSelectedBlogPost(null)
+    setSelectedBlogBaseline(null)
+    setMediaArea(DEFAULT_MEDIA_AREA)
+    setMediaSlug('')
+    setMediaFile(null)
+    setMediaFileInputKey((current) => current + 1)
+    setMediaResult(null)
+    setMediaTarget(null)
+    setSaveStatus(null)
+    setBlogStatus(null)
+    setMediaStatus(null)
+    setSiteConflict(null)
+    setBlogConflict(null)
+    setBlogActivity(null)
+    setActivity(null)
+    setActivityError(null)
+    setActivityLoadedAt(null)
+    setAuthStatus(null)
+    setError(nextError)
+  }, [])
+
+  const getApiErrorMessage = useCallback((error: unknown, fallback: string) => {
+    return error instanceof Error && error.message ? error.message : fallback
+  }, [])
+
+  const handleUnauthorizedError = useCallback((error: unknown, fallback: string) => {
+    const apiError = error as AdminApiError
+    if (apiError.status !== 401) return false
+
+    resetAuthenticatedState(apiError.message || fallback)
+    return true
+  }, [resetAuthenticatedState])
+
   const loadSiteContent = useCallback(async () => {
     setLoadingContent(true)
 
@@ -1083,13 +1122,14 @@ export const App = () => {
       setSaveStatus(null)
       setSiteConflict(null)
     } catch (loadError) {
+      if (handleUnauthorizedError(loadError, 'Your admin session expired. Sign in again.')) return
       setSiteContent(null)
       setWorkingCopy(null)
-      setError(loadError instanceof Error ? loadError.message : 'Failed to load site content.')
+      setError(getApiErrorMessage(loadError, 'Failed to load site content.'))
     } finally {
       setLoadingContent(false)
     }
-  }, [])
+  }, [getApiErrorMessage, handleUnauthorizedError])
 
   const loadActivity = useCallback(async () => {
     setLoadingActivity(true)
@@ -1101,11 +1141,12 @@ export const App = () => {
       setActivityLoadedAt(new Date().toISOString())
       setActivityError(null)
     } catch (loadError) {
-      setActivityError(loadError instanceof Error ? loadError.message : 'Failed to load recent activity.')
+      if (handleUnauthorizedError(loadError, 'Your admin session expired. Sign in again.')) return
+      setActivityError(getApiErrorMessage(loadError, 'Failed to load recent activity.'))
     } finally {
       setLoadingActivity(false)
     }
-  }, [])
+  }, [getApiErrorMessage, handleUnauthorizedError])
 
   const loadBlogPost = useCallback(async (slug: string) => {
     if (!slug) {
@@ -1128,13 +1169,14 @@ export const App = () => {
       setError(null)
       setAuthStatus(null)
     } catch (loadError) {
+      if (handleUnauthorizedError(loadError, 'Your admin session expired. Sign in again.')) return
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
-      setError(loadError instanceof Error ? loadError.message : 'Failed to load blog post.')
+      setError(getApiErrorMessage(loadError, 'Failed to load blog post.'))
     } finally {
       setLoadingBlog(false)
     }
-  }, [])
+  }, [getApiErrorMessage, handleUnauthorizedError])
 
   const loadBlogList = useCallback(async (preferredSlug?: string) => {
     try {
@@ -1170,33 +1212,14 @@ export const App = () => {
       if (currentSession.authenticated) {
         await Promise.all([loadSiteContent(), loadBlogList(), loadActivity()])
       } else {
-        setSiteContent(null)
-        setWorkingCopy(null)
-        setBlogList(null)
-        setSelectedBlogSlug('')
-        setSelectedBlogPost(null)
-        setSelectedBlogBaseline(null)
-        setActivity(null)
-        setActivityError(null)
-        setActivityLoadedAt(null)
+        resetAuthenticatedState(null)
       }
     } catch (sessionError) {
-      setSession(DEFAULT_SESSION)
-      setSiteContent(null)
-      setWorkingCopy(null)
-      setBlogList(null)
-      setSelectedBlogSlug('')
-      setSelectedBlogPost(null)
-      setSelectedBlogBaseline(null)
-      setActivity(null)
-      setActivityError(null)
-      setActivityLoadedAt(null)
-      setAuthStatus(null)
-      setError(sessionError instanceof Error ? sessionError.message : 'Failed to load session.')
+      resetAuthenticatedState(getApiErrorMessage(sessionError, 'Failed to load session.'))
     } finally {
       setLoading(false)
     }
-  }, [loadActivity, loadBlogList, loadSiteContent])
+  }, [getApiErrorMessage, loadActivity, loadBlogList, loadSiteContent, resetAuthenticatedState])
 
   useEffect(() => {
     void loadSession()
@@ -1217,31 +1240,9 @@ export const App = () => {
 
     try {
       await adminApi.logout()
-      setSession(DEFAULT_SESSION)
-      setSiteContent(null)
-      setWorkingCopy(null)
-      setBlogList(null)
-      setSelectedBlogSlug('')
-      setSelectedBlogPost(null)
-      setSelectedBlogBaseline(null)
-      setMediaArea(DEFAULT_MEDIA_AREA)
-      setMediaSlug('')
-      setMediaFile(null)
-      setMediaResult(null)
-      setMediaTarget(null)
-      setError(null)
-      setSaveStatus(null)
-      setBlogStatus(null)
-      setMediaStatus(null)
-      setSiteConflict(null)
-      setBlogConflict(null)
-      setBlogActivity(null)
-      setActivity(null)
-      setActivityError(null)
-      setActivityLoadedAt(null)
-      setAuthStatus(null)
+      resetAuthenticatedState(null)
     } catch (logoutError) {
-      setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
+      setError(getApiErrorMessage(logoutError, 'Failed to log out.'))
     }
   }
 
@@ -1655,6 +1656,7 @@ export const App = () => {
       setSaveStatus(`Saved site content to ${response.branch} at ${response.latestCommitSha ?? response.sha}.`)
     } catch (saveError) {
       const apiError = saveError as AdminApiError
+      if (handleUnauthorizedError(saveError, 'Your admin session expired. Sign in again.')) return
       setSiteConflict(
         apiError.status === 409
           ? {
@@ -1671,7 +1673,7 @@ export const App = () => {
     } finally {
       setSaving(false)
     }
-  }, [loadActivity, siteContent, siteValidationError, workingCopy])
+  }, [handleUnauthorizedError, loadActivity, siteContent, siteValidationError, workingCopy])
 
   const handleBlogFieldChange = useCallback((field: string, value: string) => {
     setSelectedBlogPost((current) => {
@@ -1729,6 +1731,7 @@ export const App = () => {
       await loadBlogList(response.post.slug)
     } catch (saveError) {
       const apiError = saveError as AdminApiError
+      if (handleUnauthorizedError(saveError, 'Your admin session expired. Sign in again.')) return
       setBlogConflict(
         apiError.status === 409
           ? {
@@ -1745,7 +1748,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, blogValidationError, loadActivity, loadBlogList, selectedBlogPost])
+  }, [blogList, blogValidationError, handleUnauthorizedError, loadActivity, loadBlogList, selectedBlogPost])
 
   const handleBlogCreate = useCallback(() => {
     if (blogDirty && !confirmDiscardChanges('You have unsaved blog edits. Create a new draft and discard them?')) {
@@ -1797,6 +1800,7 @@ export const App = () => {
       await loadBlogList()
     } catch (deleteError) {
       const apiError = deleteError as AdminApiError
+      if (handleUnauthorizedError(deleteError, 'Your admin session expired. Sign in again.')) return
       setBlogConflict(
         apiError.status === 409
           ? {
@@ -1813,7 +1817,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, confirmDiscardChanges, loadActivity, loadBlogList, selectedBlogPost])
+  }, [blogList, confirmDiscardChanges, handleUnauthorizedError, loadActivity, loadBlogList, selectedBlogPost])
 
   const handleMediaAreaChange = useCallback((value: string) => {
     setMediaArea(value)
@@ -1900,11 +1904,12 @@ export const App = () => {
       setMediaFileInputKey((current) => current + 1)
     } catch (uploadError) {
       const apiError = uploadError as AdminApiError
+      if (handleUnauthorizedError(uploadError, 'Your admin session expired. Sign in again.')) return
       setError(apiError.message || 'Failed to upload media.')
     } finally {
       setUploadingMedia(false)
     }
-  }, [handleBlogFieldChange, handleStructuredFieldChange, loadActivity, mediaArea, mediaFile, mediaTarget, mediaValidationError, normalizedMediaSlug])
+  }, [handleBlogFieldChange, handleStructuredFieldChange, handleUnauthorizedError, loadActivity, mediaArea, mediaFile, mediaTarget, mediaValidationError, normalizedMediaSlug])
 
   const selectedBlogMeta = useMemo<BlogPostMeta | null>(() => {
     return blogList?.posts.find((post) => post.slug === selectedBlogSlug) ?? null
