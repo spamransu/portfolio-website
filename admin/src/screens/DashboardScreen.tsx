@@ -576,6 +576,7 @@ export const DashboardScreen = ({
               {activityRefreshLabel ? <p className="admin-note">Last refreshed {activityRefreshLabel}</p> : null}
             </div>
             <div className="admin-actions">
+              {loadingActivity ? <span className="admin-status">Refreshing…</span> : null}
               <button type="button" className="admin-button admin-button-secondary" onClick={onReloadActivity} disabled={loadingActivity}>
                 {loadingActivity ? 'Refreshing…' : 'Refresh activity'}
               </button>
