@@ -6,11 +6,19 @@ export interface AdminSession {
   expiresAt: string | null
 }
 
+export interface AdminRepoInfo {
+  branchUrl: string
+  owner: string
+  repo: string
+  repoUrl: string
+}
+
 export interface SiteContentResponse {
   branch: string
   sha: string
   latestCommitSha: string | null
   path: string
+  repo: AdminRepoInfo
   content: SiteContent
 }
 
@@ -24,11 +32,13 @@ export interface SaveSiteContentRequest {
 export interface BlogListResponse {
   branch: string
   posts: BlogPostMeta[]
+  repo: AdminRepoInfo
 }
 
 export interface BlogDetailResponse {
   branch: string
   post: BlogPostResponse
+  repo: AdminRepoInfo
 }
 
 export interface SaveBlogPostRequest {
@@ -47,6 +57,7 @@ export interface DeleteBlogPostRequest {
 export interface MediaUploadResponse {
   branch: string
   path: string
+  repo: AdminRepoInfo
   sha: string
   latestCommitSha: string | null
 }
@@ -140,7 +151,7 @@ export const adminApi = {
     })
 
     if (!response.ok) throw await toApiError(response)
-    return (await response.json()) as { branch: string; latestCommitSha: string | null; path: string }
+    return (await response.json()) as { branch: string; latestCommitSha: string | null; path: string; repo: AdminRepoInfo }
   },
   uploadMedia: async (payload: MediaUploadRequest) => {
     const formData = new FormData()

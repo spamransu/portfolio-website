@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import {
   adminApi,
   type AdminApiError,
+  type AdminRepoInfo,
   type AdminSession,
   type BlogDetailResponse,
   type BlogListResponse,
@@ -23,6 +24,13 @@ const DEFAULT_MEDIA_AREA = 'blog'
 type ConflictState = {
   currentSha?: string
   latestCommitSha?: string | null
+} | null
+
+type BlogActivity = {
+  latestCommitSha: string | null
+  path: string
+  repo: AdminRepoInfo
+  summary: string
 } | null
 
 const splitLines = (value: string): string[] =>
@@ -202,6 +210,7 @@ export const App = () => {
   const [mediaStatus, setMediaStatus] = useState<string | null>(null)
   const [siteConflict, setSiteConflict] = useState<ConflictState>(null)
   const [blogConflict, setBlogConflict] = useState<ConflictState>(null)
+  const [blogActivity, setBlogActivity] = useState<BlogActivity>(null)
 
   const loadSiteContent = useCallback(async () => {
     setLoadingContent(true)
@@ -219,6 +228,7 @@ export const App = () => {
       setSelectedMethodIndex(0)
       setError(null)
       setSaveStatus(null)
+      setSiteConflict(null)
     } catch (loadError) {
       setSiteContent(null)
       setWorkingCopy(null)
@@ -243,6 +253,7 @@ export const App = () => {
       setMediaArea('blog')
       setMediaSlug(slug)
       setBlogStatus(null)
+      setBlogConflict(null)
       setError(null)
     } catch (loadError) {
       setSelectedBlogPost(null)
@@ -335,6 +346,7 @@ export const App = () => {
       setMediaStatus(null)
       setSiteConflict(null)
       setBlogConflict(null)
+      setBlogActivity(null)
     } catch (logoutError) {
       setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
     }
@@ -686,7 +698,13 @@ export const App = () => {
         sha: selectedBlogPost.post.sha,
       })
 
-      setSelectedBlogPost({ branch: response.branch, post: response.post })
+      setSelectedBlogPost({ branch: response.branch, post: response.post, repo: response.repo })
+      setBlogActivity({
+        latestCommitSha: response.latestCommitSha,
+        path: response.post.path,
+        repo: response.repo,
+        summary: `Saved ${response.post.slug}`,
+      })
       setBlogStatus(`Saved blog post at ${response.latestCommitSha ?? response.post.sha}.`)
       await loadBlogList()
     } catch (saveError) {
@@ -720,13 +738,15 @@ export const App = () => {
     setSelectedBlogPost({
       branch: blogList?.branch ?? siteContent?.branch ?? 'main',
       post,
+      repo: blogList?.repo ?? siteContent?.repo ?? { branchUrl: '', owner: '', repo: '', repoUrl: '' },
     })
     setMediaArea('blog')
     setMediaSlug(slug)
     setBlogStatus('New draft created locally. Save it to create the markdown file.')
     setBlogConflict(null)
+    setBlogActivity(null)
     setError(null)
-  }, [blogDirty, blogList?.branch, confirmDiscardChanges, siteContent?.branch])
+  }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, siteContent?.branch, siteContent?.repo])
 
   const handleBlogDelete = useCallback(async () => {
     if (!blogList || !selectedBlogPost?.post.sha) return
@@ -744,6 +764,12 @@ export const App = () => {
         sha: selectedBlogPost.post.sha,
       })
 
+      setBlogActivity({
+        latestCommitSha: response.latestCommitSha,
+        path: response.path,
+        repo: response.repo,
+        summary: `Deleted ${selectedBlogPost.post.slug}`,
+      })
       setBlogStatus(`Deleted ${response.path} at ${response.latestCommitSha ?? 'latest commit'}.`)
       await loadBlogList()
     } catch (deleteError) {
@@ -822,8 +848,10 @@ export const App = () => {
 
   const dashboardProps = useMemo(
     () => ({
+      blogActivity,
       blogDirty,
       blogList: blogList?.posts ?? [],
+      blogRepo: selectedBlogPost?.repo ?? blogList?.repo ?? null,
       blogLoading: loadingBlog,
       blogMeta: selectedBlogMeta,
       blogPost: selectedBlogPost?.post ?? null,
@@ -916,6 +944,7 @@ export const App = () => {
       workingCopy,
     }),
     [
+      blogActivity,
       blogDirty,
       blogConflict,
       blogList,

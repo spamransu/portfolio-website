@@ -1,13 +1,20 @@
-import type { AdminSession, SiteContentResponse } from '../api/adminApi'
+import type { AdminRepoInfo, AdminSession, SiteContentResponse } from '../api/adminApi'
 import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
 
 interface DashboardScreenProps {
+  blogActivity: {
+    latestCommitSha: string | null
+    path: string
+    repo: AdminRepoInfo
+    summary: string
+  } | null
   blogConflict: {
     currentSha?: string
     latestCommitSha?: string | null
   } | null
   blogDirty: boolean
   blogList: BlogPostMeta[]
+  blogRepo: AdminRepoInfo | null
   blogLoading: boolean
   onBlogCreate: () => void
   onBlogDelete: () => void
@@ -84,9 +91,11 @@ const mediaAreas = ['blog', 'home', 'projects', 'about', 'resume', 'contact']
 const toLines = (value: string[]): string => value.join('\n')
 
 export const DashboardScreen = ({
+  blogActivity,
   blogConflict,
   blogDirty,
   blogList,
+  blogRepo,
   blogLoading,
   onBlogCreate,
   onBlogDelete,
@@ -157,6 +166,16 @@ export const DashboardScreen = ({
 }: DashboardScreenProps) => {
   const formattedJson = workingCopy ? JSON.stringify(workingCopy, null, 2) : ''
   const sectionNames = workingCopy ? Object.keys(workingCopy) : []
+  const activeRepo = siteContent?.repo ?? blogRepo ?? blogActivity?.repo ?? null
+  const createCommitUrl = (repo: AdminRepoInfo | null, sha: string | null | undefined) =>
+    repo && sha ? `${repo.repoUrl}/commit/${encodeURIComponent(sha)}` : null
+  const createBlobUrl = (repo: AdminRepoInfo | null, branch: string | null | undefined, path: string | null | undefined) =>
+    repo && branch && path ? `${repo.repoUrl}/blob/${encodeURIComponent(branch)}/${path}` : null
+  const mediaRepoPath = mediaPath ? `public/${mediaPath.replace(/^\//, '')}` : null
+  const selectedBlogPath = blogPost?.path ?? blogMeta?.path ?? null
+  const siteContentUrl = createBlobUrl(siteContent?.repo ?? null, siteContent?.branch ?? null, siteContent?.path ?? null)
+  const selectedBlogUrl = createBlobUrl(blogRepo, siteContent?.branch ?? null, selectedBlogPath)
+  const uploadedMediaUrl = createBlobUrl(mediaPath ? activeRepo : null, siteContent?.branch ?? null, mediaRepoPath)
 
   return (
     <main className="admin-shell">
@@ -251,6 +270,23 @@ export const DashboardScreen = ({
             <div><dt>Projects</dt><dd>{projectOptions.length}</dd></div>
             <div><dt>Blog posts</dt><dd>{blogList.length}</dd></div>
           </dl>
+          <div className="admin-actions admin-actions--links">
+            {activeRepo ? <a className="admin-button admin-button-secondary" href={activeRepo.repoUrl} target="_blank" rel="noreferrer">Open repo</a> : null}
+            {siteContent?.repo ? <a className="admin-button admin-button-secondary" href={siteContent.repo.branchUrl} target="_blank" rel="noreferrer">Open branch</a> : null}
+            {siteContentUrl ? <a className="admin-button admin-button-secondary" href={siteContentUrl} target="_blank" rel="noreferrer">Open site JSON</a> : null}
+            {createCommitUrl(siteContent?.repo ?? null, siteContent?.latestCommitSha) ? (
+              <a className="admin-button admin-button-secondary" href={createCommitUrl(siteContent?.repo ?? null, siteContent?.latestCommitSha) ?? undefined} target="_blank" rel="noreferrer">
+                Latest site commit
+              </a>
+            ) : null}
+            {selectedBlogUrl ? <a className="admin-button admin-button-secondary" href={selectedBlogUrl} target="_blank" rel="noreferrer">Open selected post</a> : null}
+            {blogActivity && createCommitUrl(blogActivity.repo, blogActivity.latestCommitSha) ? (
+              <a className="admin-button admin-button-secondary" href={createCommitUrl(blogActivity.repo, blogActivity.latestCommitSha) ?? undefined} target="_blank" rel="noreferrer">
+                {blogActivity.summary} commit
+              </a>
+            ) : null}
+            {uploadedMediaUrl ? <a className="admin-button admin-button-secondary" href={uploadedMediaUrl} target="_blank" rel="noreferrer">Open uploaded asset</a> : null}
+          </div>
         </article>
       </section>
 

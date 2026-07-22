@@ -118,7 +118,15 @@ type MediaUploadResponse = {
   branch: string
   latestCommitSha: string | null
   path: string
+  repo: AdminRepoInfo
   sha: string
+}
+
+type AdminRepoInfo = {
+  branchUrl: string
+  owner: string
+  repo: string
+  repoUrl: string
 }
 
 const ADMIN_SESSION_COOKIE = 'admin_session'
@@ -519,6 +527,15 @@ const getGitHubHeaders = (token: string): HeadersInit => ({
 
 const getRepoBase = (env: Env): string => `${GITHUB_API_BASE}/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}`
 
+const getRepoHtmlBase = (env: Env): string => `https://github.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}`
+
+const getAdminRepoInfo = (env: Env, branch: string): AdminRepoInfo => ({
+  branchUrl: `${getRepoHtmlBase(env)}/tree/${encodeURIComponent(branch)}`,
+  owner: env.GITHUB_OWNER ?? '',
+  repo: env.GITHUB_REPO ?? '',
+  repoUrl: getRepoHtmlBase(env),
+})
+
 const fetchGitHubJson = async <T>(input: RequestInfo | URL, init?: RequestInit): Promise<T> => {
   const response = await fetch(input, init)
   if (!response.ok) {
@@ -563,6 +580,7 @@ const loadGitHubSiteContent = async (env: Env, accessToken: string, branch: stri
     content: JSON.parse(decodedContent),
     latestCommitSha: branchResponse.commit?.sha ?? null,
     path: fileResponse.path,
+    repo: getAdminRepoInfo(env, branch),
     sha: fileResponse.sha,
   }
 }
@@ -877,6 +895,7 @@ const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Pro
     content: body.content,
     latestCommitSha: updateResponse.commit?.sha ?? null,
     path: updateResponse.content?.path ?? SITE_CONTENT_PATH,
+    repo: getAdminRepoInfo(env, branch),
     sha: updateResponse.content?.sha ?? current.sha,
   })
 }
@@ -894,6 +913,7 @@ const handleAdminBlogList = async ({ request, env }: PagesContext): Promise<Resp
   return jsonResponse({
     branch,
     posts: await loadGitHubBlogPostList(env, session.accessToken, branch),
+    repo: getAdminRepoInfo(env, branch),
   })
 }
 
@@ -913,7 +933,7 @@ const handleAdminBlogDetail = async (context: PagesContext, slug: string): Promi
     return jsonResponse({ error: 'Blog post not found.' }, { status: 404 })
   }
 
-  return jsonResponse({ branch, post })
+  return jsonResponse({ branch, post, repo: getAdminRepoInfo(env, branch) })
 }
 
 const handleAdminMediaUpload = async ({ request, env }: PagesContext): Promise<Response> => {
@@ -980,6 +1000,7 @@ const handleAdminMediaUpload = async ({ request, env }: PagesContext): Promise<R
     branch,
     latestCommitSha: updateResponse.commit?.sha ?? null,
     path: `/${repoPath.replace(/^public\//, '')}`,
+    repo: getAdminRepoInfo(env, branch),
     sha: updateResponse.content?.sha ?? existing?.sha ?? '',
   }
 
@@ -1053,6 +1074,7 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
       sha: updateResponse.content?.sha ?? existingPost?.sha ?? '',
     },
     latestCommitSha: updateResponse.commit?.sha ?? null,
+    repo: getAdminRepoInfo(env, branch),
   })
 }
 
@@ -1116,6 +1138,7 @@ const handleAdminBlogDelete = async (context: PagesContext, slug: string): Promi
     branch,
     latestCommitSha: updateResponse.commit?.sha ?? null,
     path: existingPost.path,
+    repo: getAdminRepoInfo(env, branch),
   })
 }
 
