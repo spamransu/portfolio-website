@@ -1032,6 +1032,7 @@ export const App = () => {
   const [mediaArea, setMediaArea] = useState(DEFAULT_MEDIA_AREA)
   const [mediaSlug, setMediaSlug] = useState('')
   const [mediaFile, setMediaFile] = useState<File | null>(null)
+  const [mediaFileInputKey, setMediaFileInputKey] = useState(0)
   const [mediaResult, setMediaResult] = useState<MediaUploadResponse | null>(null)
   const [mediaTarget, setMediaTarget] = useState<MediaTargetSelection | null>(null)
   const [error, setError] = useState<string | null>(getAuthMessageFromUrl())
@@ -1791,6 +1792,18 @@ export const App = () => {
     setMediaStatus(null)
   }, [])
 
+  const handleMediaFileClear = useCallback(() => {
+    setMediaFile(null)
+    setMediaFileInputKey((current) => current + 1)
+    setMediaStatus(null)
+  }, [])
+
+  const handleMediaFileChange = useCallback((file: File | null) => {
+    setMediaFile(file)
+    setMediaStatus(null)
+    setError(null)
+  }, [])
+
   const handleMediaTargetSelect = useCallback((target: MediaTargetSelection) => {
     setMediaArea(target.area)
     setMediaSlug(target.slug)
@@ -1829,6 +1842,7 @@ export const App = () => {
           : `Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha}.`,
       )
       setMediaFile(null)
+      setMediaFileInputKey((current) => current + 1)
     } catch (uploadError) {
       const apiError = uploadError as AdminApiError
       setError(apiError.message || 'Failed to upload media.')
@@ -1888,6 +1902,7 @@ export const App = () => {
       loadingContent,
       mediaArea,
       mediaFile,
+      mediaFileInputKey,
       mediaPath: mediaResult?.path ?? '',
       mediaSlug,
       mediaStatus,
@@ -1925,10 +1940,8 @@ export const App = () => {
         void handleLogout()
       },
       onMediaAreaChange: handleMediaAreaChange,
-      onMediaFileClear: () => {
-        setMediaFile(null)
-      },
-      onMediaFileChange: setMediaFile,
+      onMediaFileClear: handleMediaFileClear,
+      onMediaFileChange: handleMediaFileChange,
       onMediaSlugChange: handleMediaSlugChange,
       onMediaTargetClear: handleMediaTargetClear,
       onMediaTargetSelect: handleMediaTargetSelect,
@@ -2003,6 +2016,8 @@ export const App = () => {
       handleBlogSave,
       handleFieldChange,
       handleMediaAreaChange,
+      handleMediaFileChange,
+      handleMediaFileClear,
       handleMediaSlugChange,
       handleMediaTargetClear,
       handleMediaTargetSelect,
@@ -2020,6 +2035,7 @@ export const App = () => {
       loadingContent,
       mediaArea,
       mediaFile,
+      mediaFileInputKey,
       mediaResult,
       mediaSlug,
       mediaStatus,
