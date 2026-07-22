@@ -368,6 +368,21 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
+            <h2>Project detail page</h2>
+            <div className="admin-form-grid">
+              <label className="admin-field"><span>Not found title</span><input value={workingCopy.projectDetailPage?.notFoundTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.notFoundTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Not found intro</span><textarea value={workingCopy.projectDetailPage?.notFoundIntro ?? ''} onChange={(event) => onFieldChange('projectDetailPage.notFoundIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Snapshot section title</span><input value={workingCopy.projectDetailPage?.snapshotTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.snapshotTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Gallery section title</span><input value={workingCopy.projectDetailPage?.galleryTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.galleryTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Gallery section intro</span><textarea value={workingCopy.projectDetailPage?.galleryIntro ?? ''} onChange={(event) => onFieldChange('projectDetailPage.galleryIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Next project eyebrow</span><input value={workingCopy.projectDetailPage?.nextProjectEyebrow ?? ''} onChange={(event) => onFieldChange('projectDetailPage.nextProjectEyebrow', event.target.value)} /></label>
+              <label className="admin-field"><span>Similar work eyebrow</span><input value={workingCopy.projectDetailPage?.similarWorkEyebrow ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkEyebrow', event.target.value)} /></label>
+              <label className="admin-field"><span>Similar work title</span><input value={workingCopy.projectDetailPage?.similarWorkTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Similar work intro</span><textarea value={workingCopy.projectDetailPage?.similarWorkIntro ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkIntro', event.target.value)} /></label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
             <h2>Projects page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Projects title</span><input value={workingCopy.projectsPage?.title ?? ''} onChange={(event) => onFieldChange('projectsPage.title', event.target.value)} /></label>

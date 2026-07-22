@@ -250,6 +250,33 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
         heroImage: next.blogPage?.heroImage,
       }
       return next
+    case 'projectDetailPage.notFoundTitle':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: value, notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.notFoundIntro':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: value, snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.snapshotTitle':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: value, galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.galleryTitle':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: value, galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.galleryIntro':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: value, nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.nextProjectEyebrow':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: value, similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.similarWorkEyebrow':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: value, similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.similarWorkTitle':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: value, similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '' }
+      return next
+    case 'projectDetailPage.similarWorkIntro':
+      next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: value }
+      return next
     default:
       return next
   }

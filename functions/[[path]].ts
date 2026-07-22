@@ -406,6 +406,14 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
       || (value.blogPage.heroImage !== undefined && !isImageAsset(value.blogPage.heroImage))
     )
   ) return false
+  const projectDetailPage = value.projectDetailPage
+  if (
+    projectDetailPage !== undefined
+    && (
+      !isRecord(projectDetailPage)
+      || !(['notFoundTitle', 'notFoundIntro', 'snapshotTitle', 'galleryTitle', 'galleryIntro', 'nextProjectEyebrow', 'similarWorkEyebrow', 'similarWorkTitle', 'similarWorkIntro'] as const).every((key) => typeof projectDetailPage[key] === 'string')
+    )
+  ) return false
 
   return projects.every((entry) => {
     if (!isRecord(entry)) return false

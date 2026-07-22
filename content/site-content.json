@@ -556,5 +556,16 @@
       "alt": "Mock editorial collage showing article cards, a content editor, and development notes.",
       "caption": "Published notes pulled from content/blog markdown files."
     }
+  },
+  "projectDetailPage": {
+    "notFoundTitle": "Project not found",
+    "notFoundIntro": "That case study is missing or has not been published yet.",
+    "snapshotTitle": "Project snapshot",
+    "galleryTitle": "Project gallery",
+    "galleryIntro": "Mock visuals used to support the case-study narrative.",
+    "nextProjectEyebrow": "Next up",
+    "similarWorkEyebrow": "Need something similar?",
+    "similarWorkTitle": "Open for frontend and design-to-code work.",
+    "similarWorkIntro": "Available for portfolio sites, landing pages, responsive cleanup, and interface implementation."
   }
 }

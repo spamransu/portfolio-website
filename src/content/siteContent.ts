@@ -162,6 +162,17 @@ export type SiteContent = {
     intro: string
     heroImage?: ImageAsset
   }
+  projectDetailPage?: {
+    notFoundTitle: string
+    notFoundIntro: string
+    snapshotTitle: string
+    galleryTitle: string
+    galleryIntro: string
+    nextProjectEyebrow: string
+    similarWorkEyebrow: string
+    similarWorkTitle: string
+    similarWorkIntro: string
+  }
   projects: Project[]
 }
 

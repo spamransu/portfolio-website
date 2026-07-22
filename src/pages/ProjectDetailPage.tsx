@@ -8,11 +8,12 @@ export function ProjectDetailPage() {
   const { slug } = useParams()
   const projectIndex = siteContent.projects.findIndex((entry) => entry.slug === slug)
   const project = projectIndex >= 0 ? siteContent.projects[projectIndex] : undefined
+  const detailCopy = siteContent.projectDetailPage
 
   if (!project) {
     return (
       <div className={`md-wrapper ${sty.page}`}>
-        <InternalHero eyebrow="Projects" title="Project not found" intro="That case study is missing or has not been published yet." />
+        <InternalHero eyebrow="Projects" title={detailCopy?.notFoundTitle ?? 'Project not found'} intro={detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'} />
         <Link className="button button--primary" to="/projects">
           Back to projects
         </Link>
@@ -41,7 +42,7 @@ export function ProjectDetailPage() {
         }
       />
 
-      <Section title="Project snapshot" intro={project.challenge}>
+      <Section title={detailCopy?.snapshotTitle ?? 'Project snapshot'} intro={project.challenge}>
         <dl className={sty.snapshotGrid}>
           <div className={sty.snapshotCard}>
             <dt>Role</dt>
@@ -105,7 +106,7 @@ export function ProjectDetailPage() {
       })}
 
       {project.gallery?.length ? (
-        <Section title="Project gallery" intro="Mock visuals used to support the case-study narrative.">
+        <Section title={detailCopy?.galleryTitle ?? 'Project gallery'} intro={detailCopy?.galleryIntro ?? 'Mock visuals used to support the case-study narrative.'}>
           <div className={sty.gallery}>
             {project.gallery.map((item) => (
               <figure className={sty.galleryCard} key={`${item.src}-${item.alt}`}>
@@ -119,7 +120,7 @@ export function ProjectDetailPage() {
 
       <section className={sty.infoGrid}>
         <div className={sty.ctaPanel}>
-          <p className="eyebrow">Next up</p>
+          <p className="eyebrow">{detailCopy?.nextProjectEyebrow ?? 'Next up'}</p>
           <h2>{nextProject.title}</h2>
           <p>{nextProject.summary}</p>
           <Link className="button button--primary" to={`/projects/${nextProject.slug}`}>
@@ -128,9 +129,9 @@ export function ProjectDetailPage() {
         </div>
 
         <div className={sty.ctaPanel}>
-          <p className="eyebrow">Need something similar?</p>
-          <h2>Open for frontend and design-to-code work.</h2>
-          <p>Available for portfolio sites, landing pages, responsive cleanup, and interface implementation.</p>
+          <p className="eyebrow">{detailCopy?.similarWorkEyebrow ?? 'Need something similar?'}</p>
+          <h2>{detailCopy?.similarWorkTitle ?? 'Open for frontend and design-to-code work.'}</h2>
+          <p>{detailCopy?.similarWorkIntro ?? 'Available for portfolio sites, landing pages, responsive cleanup, and interface implementation.'}</p>
           <Link className="button button--ghost" to="/contact">
             Contact me
           </Link>
