@@ -1,14 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import { adminApi, type AdminApiError, type AdminSession, type BlogListResponse, type BlogDetailResponse, type SiteContentResponse } from './api/adminApi'
+import {
+  adminApi,
+  type AdminApiError,
+  type AdminSession,
+  type BlogDetailResponse,
+  type BlogListResponse,
+  type MediaUploadResponse,
+  type SiteContentResponse,
+} from './api/adminApi'
 import { DashboardScreen } from './screens/DashboardScreen'
-import type { BlogPostResponse, BlogPostMeta, SiteContent } from './types'
+import type { BlogPostMeta, BlogPostResponse, SiteContent } from './types'
 
 const DEFAULT_SESSION: AdminSession = {
   authenticated: false,
   login: null,
   expiresAt: null,
 }
+
+const DEFAULT_MEDIA_AREA = 'blog'
 
 const splitLines = (value: string): string[] =>
   value
@@ -151,9 +161,15 @@ export const App = () => {
   const [loadingBlog, setLoadingBlog] = useState(false)
   const [saving, setSaving] = useState(false)
   const [savingBlog, setSavingBlog] = useState(false)
+  const [uploadingMedia, setUploadingMedia] = useState(false)
+  const [mediaArea, setMediaArea] = useState(DEFAULT_MEDIA_AREA)
+  const [mediaSlug, setMediaSlug] = useState('')
+  const [mediaFile, setMediaFile] = useState<File | null>(null)
+  const [mediaResult, setMediaResult] = useState<MediaUploadResponse | null>(null)
   const [error, setError] = useState<string | null>(getAuthMessageFromUrl())
   const [saveStatus, setSaveStatus] = useState<string | null>(null)
   const [blogStatus, setBlogStatus] = useState<string | null>(null)
+  const [mediaStatus, setMediaStatus] = useState<string | null>(null)
 
   const loadSiteContent = useCallback(async () => {
     setLoadingContent(true)
@@ -185,6 +201,8 @@ export const App = () => {
       const response = await adminApi.getBlogPost(slug)
       setSelectedBlogPost(response)
       setSelectedBlogSlug(slug)
+      setMediaArea('blog')
+      setMediaSlug(slug)
       setBlogStatus(null)
       setError(null)
     } catch (loadError) {
@@ -260,9 +278,14 @@ export const App = () => {
       setBlogList(null)
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
+      setMediaArea(DEFAULT_MEDIA_AREA)
+      setMediaSlug('')
+      setMediaFile(null)
+      setMediaResult(null)
       setError(null)
       setSaveStatus(null)
       setBlogStatus(null)
+      setMediaStatus(null)
     } catch (logoutError) {
       setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
     }
@@ -340,6 +363,31 @@ export const App = () => {
     }
   }, [blogList, loadBlogList, selectedBlogPost])
 
+  const handleMediaUpload = useCallback(async () => {
+    if (!mediaFile || !mediaArea || !mediaSlug.trim()) return
+
+    setUploadingMedia(true)
+    setError(null)
+    setMediaStatus(null)
+
+    try {
+      const response = await adminApi.uploadMedia({
+        area: mediaArea,
+        slug: mediaSlug,
+        file: mediaFile,
+      })
+
+      setMediaResult(response)
+      setMediaStatus(`Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha}.`)
+      setMediaFile(null)
+    } catch (uploadError) {
+      const apiError = uploadError as AdminApiError
+      setError(apiError.message || 'Failed to upload media.')
+    } finally {
+      setUploadingMedia(false)
+    }
+  }, [mediaArea, mediaFile, mediaSlug])
+
   const dirty = useMemo(() => {
     if (!siteContent || !workingCopy) return false
     return JSON.stringify(siteContent.content) !== JSON.stringify(workingCopy)
@@ -367,6 +415,10 @@ export const App = () => {
       error,
       loading,
       loadingContent,
+      mediaArea,
+      mediaPath: mediaResult?.path ?? '',
+      mediaSlug,
+      mediaStatus,
       onBlogFieldChange: handleBlogFieldChange,
       onBlogReload: () => {
         if (selectedBlogSlug) void loadBlogPost(selectedBlogSlug)
@@ -382,6 +434,12 @@ export const App = () => {
       onLogout: () => {
         void handleLogout()
       },
+      onMediaAreaChange: setMediaArea,
+      onMediaFileChange: setMediaFile,
+      onMediaSlugChange: setMediaSlug,
+      onMediaUpload: () => {
+        void handleMediaUpload()
+      },
       onReload: () => {
         void loadSiteContent()
       },
@@ -394,6 +452,7 @@ export const App = () => {
       selectedBlogSlug,
       session,
       siteContent,
+      uploadingMedia,
       workingCopy,
     }),
     [
@@ -405,12 +464,17 @@ export const App = () => {
       handleBlogFieldChange,
       handleBlogSave,
       handleFieldChange,
+      handleMediaUpload,
       handleSave,
       loadBlogPost,
       loadSiteContent,
       loading,
       loadingBlog,
       loadingContent,
+      mediaArea,
+      mediaResult,
+      mediaSlug,
+      mediaStatus,
       saveStatus,
       saving,
       savingBlog,
@@ -419,6 +483,7 @@ export const App = () => {
       selectedBlogSlug,
       session,
       siteContent,
+      uploadingMedia,
       workingCopy,
     ],
   )

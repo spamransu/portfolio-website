@@ -12,6 +12,10 @@ interface DashboardScreenProps {
   error: string | null
   loading: boolean
   loadingContent: boolean
+  mediaArea: string
+  mediaPath: string
+  mediaSlug: string
+  mediaStatus: string | null
   onBlogFieldChange: (field: string, value: string) => void
   onBlogReload: () => void
   onBlogSave: () => void
@@ -19,6 +23,10 @@ interface DashboardScreenProps {
   onFieldChange: (field: string, value: string) => void
   onLogin: () => void
   onLogout: () => void
+  onMediaAreaChange: (value: string) => void
+  onMediaFileChange: (file: File | null) => void
+  onMediaSlugChange: (value: string) => void
+  onMediaUpload: () => void
   onReload: () => void
   onSave: () => void
   saveStatus: string | null
@@ -27,9 +35,11 @@ interface DashboardScreenProps {
   selectedBlogSlug: string
   session: AdminSession | null
   siteContent: SiteContentResponse | null
+  uploadingMedia: boolean
   workingCopy: SiteContent | null
 }
 
+const mediaAreas = ['blog', 'home', 'projects', 'about', 'resume', 'contact']
 const toLines = (value: string[]): string => value.join('\n')
 
 export const DashboardScreen = ({
@@ -43,6 +53,10 @@ export const DashboardScreen = ({
   error,
   loading,
   loadingContent,
+  mediaArea,
+  mediaPath,
+  mediaSlug,
+  mediaStatus,
   onBlogFieldChange,
   onBlogReload,
   onBlogSave,
@@ -50,6 +64,10 @@ export const DashboardScreen = ({
   onFieldChange,
   onLogin,
   onLogout,
+  onMediaAreaChange,
+  onMediaFileChange,
+  onMediaSlugChange,
+  onMediaUpload,
   onReload,
   onSave,
   saveStatus,
@@ -58,6 +76,7 @@ export const DashboardScreen = ({
   selectedBlogSlug,
   session,
   siteContent,
+  uploadingMedia,
   workingCopy,
 }: DashboardScreenProps) => {
   const formattedJson = workingCopy ? JSON.stringify(workingCopy, null, 2) : ''
@@ -70,7 +89,7 @@ export const DashboardScreen = ({
           <p className="admin-kicker">Portfolio admin</p>
           <h1>Git-backed content dashboard</h1>
           <p className="admin-copy">
-            This admin shell authenticates through GitHub, edits structured site content, and now exposes blog posts as markdown-backed content.
+            This admin shell authenticates through GitHub, edits structured site content, exposes blog posts as markdown-backed content, and can now upload media directly into the repo.
           </p>
         </div>
         <div className="admin-actions">
@@ -82,7 +101,7 @@ export const DashboardScreen = ({
               <button type="button" className="admin-button" onClick={onSave} disabled={!dirty || saving || !workingCopy}>
                 {saving ? 'Saving…' : dirty ? 'Save content' : 'Content saved'}
               </button>
-              <button type="button" className="admin-button admin-button-secondary" onClick={onLogout} disabled={saving || savingBlog}>
+              <button type="button" className="admin-button admin-button-secondary" onClick={onLogout} disabled={saving || savingBlog || uploadingMedia}>
                 Log out
               </button>
             </>
@@ -97,6 +116,7 @@ export const DashboardScreen = ({
       {error ? <section className="admin-panel admin-error">{error}</section> : null}
       {saveStatus ? <section className="admin-panel admin-success">{saveStatus}</section> : null}
       {blogStatus ? <section className="admin-panel admin-success">{blogStatus}</section> : null}
+      {mediaStatus ? <section className="admin-panel admin-success">{mediaStatus}</section> : null}
 
       <section className="admin-grid">
         <article className="admin-panel">
@@ -290,6 +310,44 @@ export const DashboardScreen = ({
                 <span>Submit label</span>
                 <input value={workingCopy.contact.form.submitLabel} onChange={(event) => onFieldChange('contact.form.submitLabel', event.target.value)} />
               </label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
+            <div className="admin-panel-header">
+              <div>
+                <h2>Media uploader</h2>
+                <p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p>
+              </div>
+              <button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !mediaSlug.trim()}>
+                {uploadingMedia ? 'Uploading…' : 'Upload media'}
+              </button>
+            </div>
+            <div className="admin-form-grid">
+              <label className="admin-field">
+                <span>Area</span>
+                <select value={mediaArea} onChange={(event) => onMediaAreaChange(event.target.value)}>
+                  {mediaAreas.map((area) => (
+                    <option key={area} value={area}>
+                      {area}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className="admin-field">
+                <span>Slug</span>
+                <input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} placeholder="e.g. lightweight-git-backed-portfolio-cms" />
+              </label>
+              <label className="admin-field">
+                <span>Image file</span>
+                <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} />
+              </label>
+              {mediaPath ? (
+                <label className="admin-field">
+                  <span>Last uploaded path</span>
+                  <input readOnly value={mediaPath} />
+                </label>
+              ) : null}
             </div>
           </article>
 

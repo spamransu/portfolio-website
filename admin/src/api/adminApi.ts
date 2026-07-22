@@ -38,6 +38,19 @@ export interface SaveBlogPostRequest {
   sha?: string
 }
 
+export interface MediaUploadResponse {
+  branch: string
+  path: string
+  sha: string
+  latestCommitSha: string | null
+}
+
+export interface MediaUploadRequest {
+  area: string
+  slug: string
+  file: File
+}
+
 export interface AdminApiError extends Error {
   currentSha?: string
   latestCommitSha?: string | null
@@ -108,6 +121,22 @@ export const adminApi = {
 
     if (!response.ok) throw await toApiError(response)
     return (await response.json()) as BlogDetailResponse & { latestCommitSha: string | null }
+  },
+  uploadMedia: async (payload: MediaUploadRequest) => {
+    const formData = new FormData()
+    formData.set('area', payload.area)
+    formData.set('slug', payload.slug)
+    formData.set('file', payload.file)
+
+    const response = await fetch('/api/admin/media', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { accept: 'application/json' },
+      body: formData,
+    })
+
+    if (!response.ok) throw await toApiError(response)
+    return (await response.json()) as MediaUploadResponse
   },
   logout: async () => {
     const response = await fetch('/api/admin/auth/logout', {

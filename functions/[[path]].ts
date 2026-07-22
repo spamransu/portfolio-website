@@ -102,6 +102,13 @@ type BlogPostWriteRequest = {
   sha?: unknown
 }
 
+type MediaUploadResponse = {
+  branch: string
+  latestCommitSha: string | null
+  path: string
+  sha: string
+}
+
 const ADMIN_SESSION_COOKIE = 'admin_session'
 const ADMIN_STATE_COOKIE = 'admin_oauth_state'
 const ADMIN_SESSION_TTL_SECONDS = 60 * 60 * 8
@@ -113,7 +120,11 @@ const SITE_CONTENT_PATH = 'content/site-content.json'
 const BLOG_CONTENT_DIR = 'content/blog'
 const DEFAULT_SITE_CONTENT_COMMIT_MESSAGE = 'chore(content): update site content from admin'
 const DEFAULT_BLOG_COMMIT_MESSAGE = 'chore(blog): update blog post from admin'
+const DEFAULT_MEDIA_COMMIT_MESSAGE = 'chore(media): upload asset from admin'
 const MAX_ADMIN_BODY_BYTES = 1024 * 512
+const MAX_MEDIA_FILE_BYTES = 5 * 1024 * 1024
+const ALLOWED_MEDIA_AREAS = ['about', 'blog', 'contact', 'home', 'projects', 'resume'] as const
+const ALLOWED_MEDIA_TYPES = ['image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'] as const
 
 const textEncoder = new TextEncoder()
 const textDecoder = new TextDecoder()
@@ -205,6 +216,14 @@ const toBase64 = (value: string): string => {
     binary += String.fromCharCode(byte)
   }
 
+  return btoa(binary)
+}
+
+const toBase64FromBytes = (bytes: Uint8Array): string => {
+  let binary = ''
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte)
+  })
   return btoa(binary)
 }
 
@@ -363,6 +382,12 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
 }
 
 const isBlogStatus = (value: unknown): value is BlogStatus => value === 'draft' || value === 'published'
+const isAllowedMediaArea = (value: string): value is (typeof ALLOWED_MEDIA_AREAS)[number] =>
+  (ALLOWED_MEDIA_AREAS as readonly string[]).includes(value)
+
+const isAllowedMediaType = (value: string): value is (typeof ALLOWED_MEDIA_TYPES)[number] =>
+  (ALLOWED_MEDIA_TYPES as readonly string[]).includes(value)
+
 
 const validateBlogPost = (value: unknown): value is BlogPost => {
   if (!isRecord(value)) return false
@@ -374,6 +399,46 @@ const validateBlogPost = (value: unknown): value is BlogPost => {
   if (value.coverAlt !== undefined && typeof value.coverAlt !== 'string') return false
   if (value.excerpt !== undefined && typeof value.excerpt !== 'string') return false
   return true
+}
+
+const sanitizePathSegment = (value: string): string =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+const sanitizeFilename = (value: string): string => {
+  const normalized = value.toLowerCase().trim()
+  const dotIndex = normalized.lastIndexOf('.')
+  const name = dotIndex === -1 ? normalized : normalized.slice(0, dotIndex)
+  const extension = dotIndex === -1 ? '' : normalized.slice(dotIndex + 1)
+  const safeName = sanitizePathSegment(name) || 'upload'
+  const safeExtension = extension.replace(/[^a-z0-9]+/g, '')
+  return safeExtension ? `${safeName}.${safeExtension}` : safeName
+}
+
+const extensionForMimeType = (mimeType: string): string => {
+  switch (mimeType) {
+    case 'image/jpeg':
+      return 'jpg'
+    case 'image/png':
+      return 'png'
+    case 'image/webp':
+      return 'webp'
+    case 'image/gif':
+      return 'gif'
+    case 'image/svg+xml':
+      return 'svg'
+    default:
+      return 'bin'
+  }
+}
+
+const resolveMediaFilename = (originalName: string, mimeType: string): string => {
+  const filename = sanitizeFilename(originalName)
+  if (filename.includes('.')) return filename
+  return `${filename}.${extensionForMimeType(mimeType)}`
 }
 
 const sanitizeCommitMessage = (value: unknown, fallback: string): string => {
@@ -581,6 +646,20 @@ const loadGitHubBlogPostBySlug = async (env: Env, accessToken: string, branch: s
 
   const markdown = textDecoder.decode(fromBase64(fileResponse.content.replace(/\n/g, '')))
   return parseBlogMarkdown(markdown, fileResponse.path, fileResponse.sha)
+}
+
+const readGitHubFileIfExists = async (env: Env, accessToken: string, branch: string, repoPath: string): Promise<GitHubContentResponse | null> => {
+  const response = await fetch(`${getRepoBase(env)}/contents/${repoPath}?ref=${encodeURIComponent(branch)}`, {
+    headers: getGitHubHeaders(accessToken),
+  })
+
+  if (response.status === 404) return null
+  if (!response.ok) {
+    const message = await response.text()
+    throw new Error(message || `GitHub request failed (${response.status})`)
+  }
+
+  return (await response.json()) as GitHubContentResponse
 }
 
 const loadGitHubBlogPostList = async (env: Env, accessToken: string, branch: string): Promise<BlogPostMeta[]> => {
@@ -824,6 +903,76 @@ const handleAdminBlogDetail = async (context: PagesContext, slug: string): Promi
   return jsonResponse({ branch, post })
 }
 
+const handleAdminMediaUpload = async ({ request, env }: PagesContext): Promise<Response> => {
+  const sameOriginError = requireSameOrigin(request)
+  if (sameOriginError) return sameOriginError
+
+  const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
+  if (envCheck instanceof Response) return envCheck
+
+  const session = await readSession(request, env)
+  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+
+  const formData = await request.formData()
+  const area = `${formData.get('area') ?? ''}`
+  const slug = sanitizePathSegment(`${formData.get('slug') ?? ''}`)
+  const file = formData.get('file')
+
+  if (!area || !isAllowedMediaArea(area)) {
+    return jsonResponse({ error: 'Media area must be one of: about, blog, contact, home, projects, resume.' }, { status: 400 })
+  }
+
+  if (!slug) {
+    return jsonResponse({ error: 'Media slug is required.' }, { status: 400 })
+  }
+
+  if (!(file instanceof File)) {
+    return jsonResponse({ error: 'A media file is required.' }, { status: 400 })
+  }
+
+  if (!isAllowedMediaType(file.type)) {
+    return jsonResponse({ error: 'Unsupported media type. Use png, jpg, webp, gif, or svg.' }, { status: 400 })
+  }
+
+  if (file.size > MAX_MEDIA_FILE_BYTES) {
+    return jsonResponse({ error: 'Media file is too large. Maximum size is 5 MB.' }, { status: 413 })
+  }
+
+  const branch = getAllowedCmsBranch(env)
+  const filename = resolveMediaFilename(file.name, file.type)
+  const repoPath = `public/images/${area}/${slug}/${filename}`
+  const existing = await readGitHubFileIfExists(env, session.accessToken, branch, repoPath)
+  const content = toBase64FromBytes(new Uint8Array(await file.arrayBuffer()))
+
+  const updatePayload: GitHubUpdateContentRequest = {
+    branch,
+    content,
+    message: `${DEFAULT_MEDIA_COMMIT_MESSAGE}: ${area}/${slug}/${filename}`.slice(0, 120),
+    ...(existing ? { sha: existing.sha } : {}),
+  }
+
+  const updateResponse = await fetchGitHubJson<GitHubUpdateContentResponse>(
+    `${getRepoBase(env)}/contents/${repoPath}`,
+    {
+      method: 'PUT',
+      headers: {
+        ...getGitHubHeaders(session.accessToken),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatePayload),
+    },
+  )
+
+  const response: MediaUploadResponse = {
+    branch,
+    latestCommitSha: updateResponse.commit?.sha ?? null,
+    path: `/${repoPath.replace(/^public\//, '')}`,
+    sha: updateResponse.content?.sha ?? existing?.sha ?? '',
+  }
+
+  return jsonResponse(response)
+}
+
 const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promise<Response> => {
   const { request, env } = context
   const sameOriginError = requireSameOrigin(request)
@@ -903,6 +1052,7 @@ const handleAdminRequest = async (context: PagesContext, pathname: string): Prom
   if (adminPath === '/auth/logout' && context.request.method === 'POST') return handleAdminAuthLogout(context)
   if (adminPath === '/content/site' && context.request.method === 'GET') return handleAdminContentSite(context)
   if (adminPath === '/content/site' && context.request.method === 'PUT') return handleAdminContentSiteUpdate(context)
+  if (adminPath === '/media' && context.request.method === 'POST') return handleAdminMediaUpload(context)
   if (adminPath === '/blog' && context.request.method === 'GET') return handleAdminBlogList(context)
 
   const blogDetailMatch = adminPath.match(/^\/blog\/([a-z0-9-]+)$/)
