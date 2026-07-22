@@ -1778,28 +1778,33 @@ export const App = () => {
   const handleMediaAreaChange = useCallback((value: string) => {
     setMediaArea(value)
     setMediaTarget((current) => (current && current.area === value ? current : null))
+    setMediaResult(null)
     setMediaStatus(null)
   }, [])
 
   const handleMediaSlugChange = useCallback((value: string) => {
     setMediaSlug(value)
     setMediaTarget((current) => (current && current.slug === normalizeSlug(value) ? current : null))
+    setMediaResult(null)
     setMediaStatus(null)
   }, [])
 
   const handleMediaTargetClear = useCallback(() => {
     setMediaTarget(null)
+    setMediaResult(null)
     setMediaStatus(null)
   }, [])
 
   const handleMediaFileClear = useCallback(() => {
     setMediaFile(null)
     setMediaFileInputKey((current) => current + 1)
+    setMediaResult(null)
     setMediaStatus(null)
   }, [])
 
   const handleMediaFileChange = useCallback((file: File | null) => {
     setMediaFile(file)
+    setMediaResult(null)
     setMediaStatus(null)
     setError(null)
   }, [])
@@ -1808,6 +1813,7 @@ export const App = () => {
     setMediaArea(target.area)
     setMediaSlug(target.slug)
     setMediaTarget(target)
+    setMediaResult(null)
     setMediaStatus(null)
     setError(null)
   }, [])
