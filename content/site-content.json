@@ -152,12 +152,17 @@
     "title": "Let's connect!",
     "body": "If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.",
     "availability": "Available for freelance builds, design-to-code support, and selected frontend roles.",
+    "availabilityTitle": "Availability",
+    "availabilityStatusLabel": "Status",
+    "availabilityLocationLabel": "Location",
     "form": {
       "title": "Start the conversation",
       "intro": "Share a few details about the project, page, or frontend cleanup you need help with and I will reply by email.",
       "submitLabel": "Draft email inquiry",
       "messageLimit": 800
     },
+    "formSectionTitle": "Send a project brief",
+    "formSectionIntro": "Use the form if you want to draft the email with the main details already filled in.",
     "methods": [
       {
         "title": "Email",
@@ -178,6 +183,8 @@
         "description": "See code samples, repositories, and ongoing frontend work."
       }
     ],
+    "methodsSectionTitle": "Preferred contact methods",
+    "methodsSectionIntro": "Pick the channel that fits the kind of conversation you want to have.",
     "heroImage": {
       "src": "https://picsum.photos/seed/portfolio-contact-desk/1600/1100.jpg",
       "alt": "Mock desk setup with message panels, contact cards, and a highlighted email call to action."

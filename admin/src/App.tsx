@@ -118,6 +118,15 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'contact.availability':
       next.contact.availability = value
       return next
+    case 'contact.availabilityTitle':
+      next.contact.availabilityTitle = value
+      return next
+    case 'contact.availabilityStatusLabel':
+      next.contact.availabilityStatusLabel = value
+      return next
+    case 'contact.availabilityLocationLabel':
+      next.contact.availabilityLocationLabel = value
+      return next
     case 'contact.form.title':
       next.contact.form.title = value
       return next
@@ -126,6 +135,18 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'contact.form.submitLabel':
       next.contact.form.submitLabel = value
+      return next
+    case 'contact.formSectionTitle':
+      next.contact.formSectionTitle = value
+      return next
+    case 'contact.formSectionIntro':
+      next.contact.formSectionIntro = value
+      return next
+    case 'contact.methodsSectionTitle':
+      next.contact.methodsSectionTitle = value
+      return next
+    case 'contact.methodsSectionIntro':
+      next.contact.methodsSectionIntro = value
       return next
     case 'projectsPage.title':
       next.projectsPage = {

@@ -19,26 +19,26 @@ export function ContactPage() {
         }
       />
 
-      <Section title="Availability">
+      <Section title={siteContent.contact.availabilityTitle}>
         <div className={sty.infoGrid}>
           <article className={sty.card}>
-            <h3>Status</h3>
+            <h3>{siteContent.contact.availabilityStatusLabel}</h3>
             <p>{siteContent.contact.availability}</p>
           </article>
           <article className={sty.card}>
-            <h3>Location</h3>
+            <h3>{siteContent.contact.availabilityLocationLabel}</h3>
             <p>{siteContent.site.location}</p>
           </article>
         </div>
       </Section>
 
-      <Section title="Send a project brief" intro="Use the form if you want to draft the email with the main details already filled in.">
+      <Section title={siteContent.contact.formSectionTitle} intro={siteContent.contact.formSectionIntro}>
         <div className="md-wrapper">
           <ContactForm contact={siteContent.contact.form} recipientEmail={siteContent.site.email} />
         </div>
       </Section>
 
-      <Section title="Preferred contact methods" intro="Pick the channel that fits the kind of conversation you want to have.">
+      <Section title={siteContent.contact.methodsSectionTitle} intro={siteContent.contact.methodsSectionIntro}>
         <div className={sty.cardGrid}>
           {siteContent.contact.methods.map((method) => (
             <article className={sty.methodCard} key={method.title}>

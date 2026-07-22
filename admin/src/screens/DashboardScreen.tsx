@@ -430,6 +430,28 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
+            <h2>Contact page</h2>
+            <div className="admin-form-grid">
+              <label className="admin-field"><span>Contact title</span><input value={workingCopy.contact.title} onChange={(event) => onFieldChange('contact.title', event.target.value)} /></label>
+              <label className="admin-field"><span>Contact intro</span><textarea value={workingCopy.contact.body} onChange={(event) => onFieldChange('contact.body', event.target.value)} /></label>
+              <label className="admin-field"><span>Availability section title</span><input value={workingCopy.contact.availabilityTitle} onChange={(event) => onFieldChange('contact.availabilityTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Availability status label</span><input value={workingCopy.contact.availabilityStatusLabel} onChange={(event) => onFieldChange('contact.availabilityStatusLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Availability location label</span><input value={workingCopy.contact.availabilityLocationLabel} onChange={(event) => onFieldChange('contact.availabilityLocationLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Availability body</span><textarea value={workingCopy.contact.availability} onChange={(event) => onFieldChange('contact.availability', event.target.value)} /></label>
+              <label className="admin-field"><span>Form section title</span><input value={workingCopy.contact.formSectionTitle} onChange={(event) => onFieldChange('contact.formSectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Form section intro</span><textarea value={workingCopy.contact.formSectionIntro} onChange={(event) => onFieldChange('contact.formSectionIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Form card title</span><input value={workingCopy.contact.form.title} onChange={(event) => onFieldChange('contact.form.title', event.target.value)} /></label>
+              <label className="admin-field"><span>Form card intro</span><textarea value={workingCopy.contact.form.intro} onChange={(event) => onFieldChange('contact.form.intro', event.target.value)} /></label>
+              <label className="admin-field"><span>Form submit label</span><input value={workingCopy.contact.form.submitLabel} onChange={(event) => onFieldChange('contact.form.submitLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Methods section title</span><input value={workingCopy.contact.methodsSectionTitle} onChange={(event) => onFieldChange('contact.methodsSectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Methods section intro</span><textarea value={workingCopy.contact.methodsSectionIntro} onChange={(event) => onFieldChange('contact.methodsSectionIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Contact hero image src</span><input value={workingCopy.contact.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.src', event.target.value)} /></label>
+              <label className="admin-field"><span>Contact hero image alt</span><input value={workingCopy.contact.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.alt', event.target.value)} /></label>
+              <label className="admin-field"><span>Contact hero image caption</span><textarea value={workingCopy.contact.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.caption', event.target.value)} /></label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
             <div className="admin-panel-header"><div><h2>Contact methods</h2><p className="admin-copy">Edit each contact method card.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('method')}>Add method</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('method', selectedMethodIndex)} disabled={selectedMethodTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -447,8 +469,6 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Description</span><textarea value={selectedMethod.description} onChange={(event) => onStructuredFieldChange('method', 'description', event.target.value, selectedMethodIndex)} /></label>
                 </>
               ) : null}
-              <label className="admin-field"><span>Contact hero image src</span><input value={workingCopy.contact.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.src', event.target.value)} /></label>
-              <label className="admin-field"><span>Contact hero image alt</span><input value={workingCopy.contact.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.alt', event.target.value)} /></label>
             </div>
           </article>
 

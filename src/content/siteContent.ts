@@ -133,8 +133,15 @@ export type SiteContent = {
     title: string
     body: string
     availability: string
+    availabilityTitle: string
+    availabilityStatusLabel: string
+    availabilityLocationLabel: string
     form: ContactFormContent
+    formSectionTitle: string
+    formSectionIntro: string
     methods: ContactMethod[]
+    methodsSectionTitle: string
+    methodsSectionIntro: string
     heroImage?: ImageAsset
   }
   projectsPage?: {

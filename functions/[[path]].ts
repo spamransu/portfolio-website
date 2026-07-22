@@ -383,7 +383,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   }
   if (resume.heroImage !== undefined && !isImageAsset(resume.heroImage)) return false
 
-  if (!['title', 'body', 'availability'].every((key) => typeof contact[key] === 'string')) return false
+  if (!['title', 'body', 'availability', 'availabilityTitle', 'availabilityStatusLabel', 'availabilityLocationLabel', 'formSectionTitle', 'formSectionIntro', 'methodsSectionTitle', 'methodsSectionIntro'].every((key) => typeof contact[key] === 'string')) return false
   if (!isRecord(contact.form) || typeof contact.form.title !== 'string' || typeof contact.form.intro !== 'string' || typeof contact.form.submitLabel !== 'string' || typeof contact.form.messageLimit !== 'number') return false
   if (!Array.isArray(contact.methods) || !contact.methods.every((entry) => isRecord(entry) && ['title', 'label', 'href', 'description'].every((key) => typeof entry[key] === 'string'))) return false
   if (contact.heroImage !== undefined && !isImageAsset(contact.heroImage)) return false
