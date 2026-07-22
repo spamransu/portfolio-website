@@ -604,6 +604,8 @@ export const DashboardScreen = ({
                 </div>
               ))}
             </div>
+          ) : loadingActivity ? (
+            <p className="admin-note">Loading recent branch activity…</p>
           ) : (
             <p className="admin-note">No recent branch activity available yet.</p>
           )}
