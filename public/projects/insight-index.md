@@ -3,21 +3,21 @@
 - Year: 2026
 - Client: Insight Index
 - Role: Frontend developer
-- Stack: ASP.NET Core, Tailwind CSS, Stripe API, GraphQL
+- Stack: React, Tailwind CSS, API integration, Responsive UI
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-2.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The product needed a clearer story. Interface screenshots existed, but the surrounding content was not doing enough to frame why the product mattered.
 
 ## Approach
-- Component-based layout
-- Responsive implementation
-- API-backed product surface
+- Introduced content blocks that explained value before details.
+- Paired interface imagery with concise product context.
+- Used a cleaner card rhythm for related sections and previews.
 
 ## Outcome
-- Clearer product UI
-- Consistent page structure
-- Stronger frontend maintainability
+- Improved clarity around the product offering.
+- A better balance of visuals and explanatory copy.
+- Stronger consistency across overview and feature sections.

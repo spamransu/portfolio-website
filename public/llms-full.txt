@@ -2,15 +2,15 @@
 
 ## Site summary
 - Name: LanceCarteciano
-- Tagline: Full-stack web developer and graphic designer based in the Philippines.
-- Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- Tagline: Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.
+- Description: Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.
 - Contact email: hello@lancecarteciano.com
 - Location: Philippines
 
 ## Home
 # LanceCarteciano
 
-Full-stack web developer and graphic designer based in the Philippines.
+Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit
 
@@ -20,17 +20,17 @@ HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
 
 
 ## Main pages
-- [Home](https://lancecarteciano.com/index.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- [About](https://lancecarteciano.com/about.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+- [Home](https://lancecarteciano.com/index.md) — Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.
+- [About](https://lancecarteciano.com/about.md) — I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.
 - [Projects](https://lancecarteciano.com/projects.md) — Project index and case-study summaries.
-- [Contact](https://lancecarteciano.com/contact.md) — Tell me about the project, the role, or the problem you want solved. I'll reply by email.
-- [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.
+- [Contact](https://lancecarteciano.com/contact.md) — If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
+- [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
 
 ## Featured case studies
-- [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- [TETHERLY](https://lancecarteciano.com/projects/tetherly.md) — Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+- [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md) — A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
+- [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md) — A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.
+- [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md) — A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
+- [TETHERLY](https://lancecarteciano.com/projects/tetherly.md) — A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.
 
 ## Homepage stats
 - 2+ — Years of experience
@@ -48,25 +48,26 @@ HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
 ## About
 # About
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.
 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+I care about visual rhythm, content hierarchy, and practical structure. That usually means reusable sections, token-driven styling, and layouts that still feel deliberate on smaller screens.
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Most of the projects I enjoy combine interface polish with real delivery work: shipping pages, tightening responsive behavior, organizing content, and making the next update easier instead of harder.
 
 ## Working principles
-- Readable interfaces over decoration.
-- Frontend structure that stays maintainable.
-- Design and implementation that work together.
+- Content should read clearly before decoration starts.
+- Reusable layout systems beat one-off page fixes.
+- Mockups matter, but shipped code has to stay editable.
+- Frontend polish should improve trust, not add noise.
 
 ## Resume
 # Resume
 
-## Frontend Web Developer / Graphic Designer
+## Frontend Web Developer and Graphic Designer
 
-Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.
+Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
 
 ## Skills
 - React
@@ -109,105 +110,105 @@ Frontend web developer and graphic designer with experience in WordPress, React,
 
 - Year: 2026
 - Client: ABCDE Creative
-- Role: Full-stack developer
-- Stack: React, ASP.NET Core, GraphQL, MongoDB
+- Role: Frontend developer
+- Stack: React, TypeScript, SCSS, Content modeling
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-1.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The site needed stronger hierarchy and more reusable structure so new case-study and service pages could be added without layout drift.
 
 ## Approach
-- Interface implementation
-- Responsive frontend delivery
-- Design-to-code handoff
+- Reworked marketing sections into reusable content blocks.
+- Tightened spacing and type rhythm for clearer scanning.
+- Aligned page components so future pages could follow the same system.
 
 ## Outcome
-- Shipped a polished web experience
-- Kept the system maintainable
-- Supported future iteration
+- Cleaner presentation across portfolio and services content.
+- More consistent page-building patterns for future updates.
+- A stronger visual-first case-study experience.
 
 # INSIGHT INDEX
 
 - Year: 2026
 - Client: Insight Index
 - Role: Frontend developer
-- Stack: ASP.NET Core, Tailwind CSS, Stripe API, GraphQL
+- Stack: React, Tailwind CSS, API integration, Responsive UI
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-2.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The product needed a clearer story. Interface screenshots existed, but the surrounding content was not doing enough to frame why the product mattered.
 
 ## Approach
-- Component-based layout
-- Responsive implementation
-- API-backed product surface
+- Introduced content blocks that explained value before details.
+- Paired interface imagery with concise product context.
+- Used a cleaner card rhythm for related sections and previews.
 
 ## Outcome
-- Clearer product UI
-- Consistent page structure
-- Stronger frontend maintainability
+- Improved clarity around the product offering.
+- A better balance of visuals and explanatory copy.
+- Stronger consistency across overview and feature sections.
 
 # GSAP ANIMATION
 
 - Year: 2026
 - Client: Animation Showcase
 - Role: Frontend developer
-- Stack: React, Tailwind CSS, Stripe API
+- Stack: React, GSAP, SCSS, Performance tuning
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-3.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The motion needed to feel expressive without overwhelming the content or creating a site that only worked on ideal hardware.
 
 ## Approach
-- Animation-led storytelling
-- Responsive component styling
-- Performance-aware implementation
+- Used animation to support hierarchy instead of replacing it.
+- Focused on transforms and staged reveals for smoother motion.
+- Preserved a readable static structure underneath the effects.
 
 ## Outcome
-- Sharper visual hierarchy
-- Memorable interactions
-- Reusable animation patterns
+- More memorable visual pacing without losing clarity.
+- Reusable motion patterns for future sections.
+- A better balance between flair and restraint.
 
 # TETHERLY
 
 - Year: 2026
 - Client: Tetherly
 - Role: Frontend developer
-- Stack: Tailwind CSS, Stripe API, GraphQL, MongoDB
+- Stack: React, Design systems, SCSS, Content-first UI
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-4.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The product presentation needed more consistency across cards, sections, and preview imagery so the brand could feel more cohesive.
 
 ## Approach
-- Product card system
-- Clean visual rhythm
-- Frontend polish
+- Standardized the card hierarchy and supporting metadata.
+- Built a cleaner visual rhythm between sections and imagery.
+- Used mock product views to make the content more tangible.
 
 ## Outcome
-- Uniform card presentation
-- Scalable content structure
-- Stronger visual consistency
+- A more cohesive product-marketing presentation.
+- Clearer card patterns and stronger visual consistency.
+- Better readiness for future landing-page variations.
 
 ## Contact
 # Contact
 
 Let's connect!
 
-Tell me about the project, the role, or the problem you want solved. I'll reply by email.
+If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
 
 - Email: hello@lancecarteciano.com
 - Location: Philippines
-- Availability: Available for freelance projects, collaborations, and select full-time roles.
+- Availability: Available for freelance builds, design-to-code support, and selected frontend roles.

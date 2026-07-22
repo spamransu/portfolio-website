@@ -3,21 +3,21 @@
 - Year: 2026
 - Client: Tetherly
 - Role: Frontend developer
-- Stack: Tailwind CSS, Stripe API, GraphQL, MongoDB
+- Stack: React, Design systems, SCSS, Content-first UI
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-4.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The product presentation needed more consistency across cards, sections, and preview imagery so the brand could feel more cohesive.
 
 ## Approach
-- Product card system
-- Clean visual rhythm
-- Frontend polish
+- Standardized the card hierarchy and supporting metadata.
+- Built a cleaner visual rhythm between sections and imagery.
+- Used mock product views to make the content more tangible.
 
 ## Outcome
-- Uniform card presentation
-- Scalable content structure
-- Stronger visual consistency
+- A more cohesive product-marketing presentation.
+- Clearer card patterns and stronger visual consistency.
+- Better readiness for future landing-page variations.

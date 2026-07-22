@@ -1,8 +1,8 @@
 {
   "site": {
     "name": "LanceCarteciano",
-    "tagline": "Full-stack web developer and graphic designer based in the Philippines.",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "tagline": "Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.",
+    "description": "Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.",
     "email": "hello@lancecarteciano.com",
     "location": "Philippines",
     "siteUrl": "https://lancecarteciano.com",
@@ -26,21 +26,50 @@
     ]
   },
   "about": {
-    "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "intro": "I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.",
     "body": [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+      "My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.",
+      "I care about visual rhythm, content hierarchy, and practical structure. That usually means reusable sections, token-driven styling, and layouts that still feel deliberate on smaller screens.",
+      "Most of the projects I enjoy combine interface polish with real delivery work: shipping pages, tightening responsive behavior, organizing content, and making the next update easier instead of harder."
     ],
     "principles": [
-      "Readable interfaces over decoration.",
-      "Frontend structure that stays maintainable.",
-      "Design and implementation that work together."
-    ]
+      "Content should read clearly before decoration starts.",
+      "Reusable layout systems beat one-off page fixes.",
+      "Mockups matter, but shipped code has to stay editable.",
+      "Frontend polish should improve trust, not add noise."
+    ],
+    "process": [
+      {
+        "title": "Structure first",
+        "description": "Map the page flow, content hierarchy, and reusable sections before styling details."
+      },
+      {
+        "title": "Design into code",
+        "description": "Translate mockups into token-based components with responsive spacing and readable markup."
+      },
+      {
+        "title": "Refine the system",
+        "description": "Clean repetition, tighten edge cases, and leave the page easier to extend after launch."
+      }
+    ],
+    "tools": [
+      "React",
+      "TypeScript",
+      "SCSS",
+      "WordPress",
+      "Figma",
+      "Elementor",
+      "GitHub",
+      "Cloudflare Pages"
+    ],
+    "heroImage": {
+      "src": "https://picsum.photos/seed/portfolio-about-workspace/1600/1100.jpg",
+      "alt": "Mock workspace scene showing a laptop, interface panels, and layout notes for a design-to-code workflow."
+    }
   },
   "resume": {
-    "headline": "Frontend Web Developer / Graphic Designer",
-    "summary": "Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.",
+    "headline": "Frontend Web Developer and Graphic Designer",
+    "summary": "Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.",
     "skills": [
       "React",
       "TypeScript",
@@ -97,12 +126,54 @@
           "Worked with branch managers and marketing teams to refine assets and keep campaign visuals consistent."
         ]
       }
-    ]
+    ],
+    "highlights": [
+      {
+        "value": "8+",
+        "label": "Sites maintained"
+      },
+      {
+        "value": "3+",
+        "label": "Client websites supported"
+      },
+      {
+        "value": "React + WP",
+        "label": "Main delivery stack"
+      }
+    ],
+    "heroImage": {
+      "src": "https://picsum.photos/seed/portfolio-resume-profile/1600/1100.jpg",
+      "alt": "Mock profile presentation with resume cards, experience timeline, and frontend tooling highlights."
+    }
   },
   "contact": {
     "title": "Let's connect!",
-    "body": "Tell me about the project, the role, or the problem you want solved. I'll reply by email.",
-    "availability": "Available for freelance projects, collaborations, and select full-time roles."
+    "body": "If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.",
+    "availability": "Available for freelance builds, design-to-code support, and selected frontend roles.",
+    "methods": [
+      {
+        "title": "Email",
+        "label": "hello@lancecarteciano.com",
+        "href": "mailto:hello@lancecarteciano.com",
+        "description": "Best for project briefs, collaboration inquiries, and longer notes."
+      },
+      {
+        "title": "LinkedIn",
+        "label": "View profile",
+        "href": "https://www.linkedin.com/in/lancecarteciano",
+        "description": "Good for role discussions, networking, and professional background."
+      },
+      {
+        "title": "GitHub",
+        "label": "Browse work",
+        "href": "https://github.com/lancecarteciano",
+        "description": "See code samples, repositories, and ongoing frontend work."
+      }
+    ],
+    "heroImage": {
+      "src": "https://picsum.photos/seed/portfolio-contact-desk/1600/1100.jpg",
+      "alt": "Mock desk setup with message panels, contact cards, and a highlighted email call to action."
+    }
   },
   "projects": [
     {
@@ -110,115 +181,268 @@
       "title": "ABCDE CREATIVE",
       "year": "2026",
       "client": "ABCDE Creative",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "role": "Full-stack developer",
+      "summary": "A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.",
+      "role": "Frontend developer",
       "stack": [
         "React",
-        "ASP.NET Core",
-        "GraphQL",
-        "MongoDB"
+        "TypeScript",
+        "SCSS",
+        "Content modeling"
       ],
-      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "challenge": "The site needed stronger hierarchy and more reusable structure so new case-study and service pages could be added without layout drift.",
       "approach": [
-        "Interface implementation",
-        "Responsive frontend delivery",
-        "Design-to-code handoff"
+        "Reworked marketing sections into reusable content blocks.",
+        "Tightened spacing and type rhythm for clearer scanning.",
+        "Aligned page components so future pages could follow the same system."
       ],
       "outcome": [
-        "Shipped a polished web experience",
-        "Kept the system maintainable",
-        "Supported future iteration"
+        "Cleaner presentation across portfolio and services content.",
+        "More consistent page-building patterns for future updates.",
+        "A stronger visual-first case-study experience."
       ],
       "image": {
         "src": "/images/home/featured-project-1.png",
         "alt": "Phone mockup for ABCDE Creative."
-      }
+      },
+      "gallery": [
+        {
+          "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
+          "alt": "Mock landing page composition for ABCDE Creative with modular sections and structured content blocks.",
+          "caption": "Homepage direction with reusable marketing sections."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
+          "alt": "Mock case-study detail screen showing typography hierarchy, stats, and project modules.",
+          "caption": "Case-study system built for easier expansion."
+        }
+      ],
+      "sections": [
+        {
+          "title": "Challenge",
+          "body": "The original content felt serviceable but flat. New pages risked turning into one-off layouts, which made the system harder to extend with confidence.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
+            "alt": "Mock layout showing the challenge phase for ABCDE Creative with uneven blocks being reorganized."
+          }
+        },
+        {
+          "title": "Approach",
+          "body": "I focused on reusable page sections, stronger headings, and a more disciplined layout rhythm so content blocks could carry more of the page without feeling repetitive.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
+            "alt": "Mock layout demonstrating the reusable section system and visual cleanup for ABCDE Creative."
+          }
+        },
+        {
+          "title": "Outcome",
+          "body": "The result was a cleaner portfolio experience with better section reuse, stronger content hierarchy, and an easier path for future case studies and service pages.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
+            "alt": "Mock layout representing the final polished project presentation for ABCDE Creative."
+          }
+        }
+      ]
     },
     {
       "slug": "insight-index",
       "title": "INSIGHT INDEX",
       "year": "2026",
       "client": "Insight Index",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "summary": "A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.",
       "role": "Frontend developer",
       "stack": [
-        "ASP.NET Core",
+        "React",
         "Tailwind CSS",
-        "Stripe API",
-        "GraphQL"
+        "API integration",
+        "Responsive UI"
       ],
-      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "challenge": "The product needed a clearer story. Interface screenshots existed, but the surrounding content was not doing enough to frame why the product mattered.",
       "approach": [
-        "Component-based layout",
-        "Responsive implementation",
-        "API-backed product surface"
+        "Introduced content blocks that explained value before details.",
+        "Paired interface imagery with concise product context.",
+        "Used a cleaner card rhythm for related sections and previews."
       ],
       "outcome": [
-        "Clearer product UI",
-        "Consistent page structure",
-        "Stronger frontend maintainability"
+        "Improved clarity around the product offering.",
+        "A better balance of visuals and explanatory copy.",
+        "Stronger consistency across overview and feature sections."
       ],
       "image": {
         "src": "/images/home/featured-project-2.png",
         "alt": "Laptop mockup for Insight Index."
-      }
+      },
+      "gallery": [
+        {
+          "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
+          "alt": "Mock product overview page for Insight Index with cards, charts, and interface previews.",
+          "caption": "Product storytelling framed around interface previews."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
+          "alt": "Mock feature detail layout for Insight Index showing metrics, annotations, and supporting content.",
+          "caption": "Feature detail layout pairing metrics and explanation."
+        }
+      ],
+      "sections": [
+        {
+          "title": "Challenge",
+          "body": "The visual assets were there, but the page still felt like a gallery. It needed context that made the interface feel meaningful instead of decorative.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
+            "alt": "Mock product page illustrating the challenge of unexplained interface visuals."
+          }
+        },
+        {
+          "title": "Approach",
+          "body": "I paired each visual block with a tighter explanation, leaned on modular cards, and used cleaner spacing so the product story could unfold in a more readable order.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
+            "alt": "Mock product page showing the clearer approach for Insight Index."
+          }
+        },
+        {
+          "title": "Outcome",
+          "body": "The updated page communicated both interface quality and product value more clearly, giving the work a stronger case-study feel without becoming text-heavy.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
+            "alt": "Mock product page showing the final polished case-study presentation for Insight Index."
+          }
+        }
+      ]
     },
     {
       "slug": "gsap-animation",
       "title": "GSAP ANIMATION",
       "year": "2026",
       "client": "Animation Showcase",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "summary": "A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.",
       "role": "Frontend developer",
       "stack": [
         "React",
-        "Tailwind CSS",
-        "Stripe API"
+        "GSAP",
+        "SCSS",
+        "Performance tuning"
       ],
-      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "challenge": "The motion needed to feel expressive without overwhelming the content or creating a site that only worked on ideal hardware.",
       "approach": [
-        "Animation-led storytelling",
-        "Responsive component styling",
-        "Performance-aware implementation"
+        "Used animation to support hierarchy instead of replacing it.",
+        "Focused on transforms and staged reveals for smoother motion.",
+        "Preserved a readable static structure underneath the effects."
       ],
       "outcome": [
-        "Sharper visual hierarchy",
-        "Memorable interactions",
-        "Reusable animation patterns"
+        "More memorable visual pacing without losing clarity.",
+        "Reusable motion patterns for future sections.",
+        "A better balance between flair and restraint."
       ],
       "image": {
         "src": "/images/home/featured-project-3.png",
         "alt": "Laptop mockup for GSAP Animation."
-      }
+      },
+      "gallery": [
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
+          "alt": "Mock animation sequence board showing staggered cards and scroll-linked reveals.",
+          "caption": "Motion storyboard focused on hierarchy and pacing."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+          "alt": "Mock UI panels showing transitions, overlays, and motion annotation details.",
+          "caption": "Interface details designed for expressive but controlled motion."
+        }
+      ],
+      "sections": [
+        {
+          "title": "Challenge",
+          "body": "Motion-heavy work can collapse into spectacle fast. The real challenge was making the animations enhance the story instead of competing with it.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
+            "alt": "Mock storyboard showing the motion challenge for the GSAP Animation project."
+          }
+        },
+        {
+          "title": "Approach",
+          "body": "I kept the base layout readable, built the motion on transforms, and treated reveal timing as part of content hierarchy instead of as decoration.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+            "alt": "Mock storyboard showing the motion approach for the GSAP Animation project."
+          }
+        },
+        {
+          "title": "Outcome",
+          "body": "The final experience felt more polished and memorable, while the static structure still held up for reduced-motion users and smaller screens.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+            "alt": "Mock storyboard showing the finished motion-led presentation for the GSAP Animation project."
+          }
+        }
+      ]
     },
     {
       "slug": "tetherly",
       "title": "TETHERLY",
       "year": "2026",
       "client": "Tetherly",
-      "summary": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "summary": "A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.",
       "role": "Frontend developer",
       "stack": [
-        "Tailwind CSS",
-        "Stripe API",
-        "GraphQL",
-        "MongoDB"
+        "React",
+        "Design systems",
+        "SCSS",
+        "Content-first UI"
       ],
-      "challenge": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "challenge": "The product presentation needed more consistency across cards, sections, and preview imagery so the brand could feel more cohesive.",
       "approach": [
-        "Product card system",
-        "Clean visual rhythm",
-        "Frontend polish"
+        "Standardized the card hierarchy and supporting metadata.",
+        "Built a cleaner visual rhythm between sections and imagery.",
+        "Used mock product views to make the content more tangible."
       ],
       "outcome": [
-        "Uniform card presentation",
-        "Scalable content structure",
-        "Stronger visual consistency"
+        "A more cohesive product-marketing presentation.",
+        "Clearer card patterns and stronger visual consistency.",
+        "Better readiness for future landing-page variations."
       ],
       "image": {
         "src": "/images/home/featured-project-4.png",
         "alt": "Tablet mockup for Tetherly."
-      }
+      },
+      "gallery": [
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
+          "alt": "Mock product marketing page for Tetherly with cards, feature blocks, and device imagery.",
+          "caption": "Card-led product marketing direction."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+          "alt": "Mock feature comparison and CTA layout for Tetherly with tablet and content panels.",
+          "caption": "A calmer layout rhythm built around reusable sections."
+        }
+      ],
+      "sections": [
+        {
+          "title": "Challenge",
+          "body": "The experience needed stronger consistency. Cards, metadata, and image treatments were all pulling in slightly different directions.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
+            "alt": "Mock product marketing page showing the initial consistency challenge for Tetherly."
+          }
+        },
+        {
+          "title": "Approach",
+          "body": "I simplified the section rhythm, tightened the card treatment, and used clearer mockups so the product story felt more unified from top to bottom.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+            "alt": "Mock product marketing page showing the cleaner section and card approach for Tetherly."
+          }
+        },
+        {
+          "title": "Outcome",
+          "body": "The resulting concept felt more cohesive, easier to scan, and more reusable as a foundation for future product and landing pages.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+            "alt": "Mock product marketing page showing the final cohesive presentation for Tetherly."
+          }
+        }
+      ]
     }
   ],
   "home": {
@@ -291,5 +515,8 @@
       "submitLabel": "Send message",
       "messageLimit": 500
     }
+  },
+  "projectsPage": {
+    "intro": "Selected frontend and design-to-code work, presented as short case studies with mock visuals and enough context to explain the thinking behind the build."
   }
 }

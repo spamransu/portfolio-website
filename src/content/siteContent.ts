@@ -12,9 +12,33 @@ export type Job = {
   highlights: string[]
 }
 
-export type ProjectImage = {
+export type ImageAsset = {
   src: string
   alt: string
+  caption?: string
+}
+
+export type ProcessStep = {
+  title: string
+  description: string
+}
+
+export type ContactMethod = {
+  title: string
+  label: string
+  href: string
+  description: string
+}
+
+export type HighlightStat = {
+  value: string
+  label: string
+}
+
+export type ProjectSection = {
+  title: string
+  body: string
+  image?: ImageAsset
 }
 
 export type Project = {
@@ -28,7 +52,9 @@ export type Project = {
   challenge: string
   approach: string[]
   outcome: string[]
-  image?: ProjectImage
+  image?: ImageAsset
+  gallery?: ImageAsset[]
+  sections?: ProjectSection[]
 }
 
 export type HomeStatTone = 'accent' | 'accent-2' | 'accent-3'
@@ -88,17 +114,27 @@ export type SiteContent = {
     intro: string
     body: string[]
     principles: string[]
+    process: ProcessStep[]
+    tools: string[]
+    heroImage?: ImageAsset
   }
   resume: {
     headline: string
     summary: string
     skills: string[]
+    highlights: HighlightStat[]
+    heroImage?: ImageAsset
     experience: Job[]
   }
   contact: {
     title: string
     body: string
     availability: string
+    methods: ContactMethod[]
+    heroImage?: ImageAsset
+  }
+  projectsPage?: {
+    intro: string
   }
   projects: Project[]
 }

@@ -3,21 +3,21 @@
 - Year: 2026
 - Client: Animation Showcase
 - Role: Frontend developer
-- Stack: React, Tailwind CSS, Stripe API
+- Stack: React, GSAP, SCSS, Performance tuning
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-3.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The motion needed to feel expressive without overwhelming the content or creating a site that only worked on ideal hardware.
 
 ## Approach
-- Animation-led storytelling
-- Responsive component styling
-- Performance-aware implementation
+- Used animation to support hierarchy instead of replacing it.
+- Focused on transforms and staged reveals for smoother motion.
+- Preserved a readable static structure underneath the effects.
 
 ## Outcome
-- Sharper visual hierarchy
-- Memorable interactions
-- Reusable animation patterns
+- More memorable visual pacing without losing clarity.
+- Reusable motion patterns for future sections.
+- A better balance between flair and restraint.

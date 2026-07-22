@@ -1,0 +1,245 @@
+@use '../styles/mixins' as mix;
+
+.page,
+.sectionStack,
+.cardGrid,
+.infoGrid,
+.mediaSplit,
+.gallery,
+.toolCloud,
+.timeline,
+.timelineCard,
+.methodCard,
+.ctaPanel,
+.statGrid,
+.statCard,
+.listBlock,
+.metaList,
+.projectLead,
+.projectCardLink,
+.galleryCard,
+.copyStack {
+  display: grid;
+}
+
+.page {
+  gap: var(--space-lg);
+}
+
+.sectionStack,
+.copyStack,
+.listBlock,
+.metaList {
+  gap: var(--space-stack);
+}
+
+.cardGrid,
+.infoGrid,
+.gallery,
+.statGrid {
+  gap: var(--gap-grid);
+}
+
+.cardGrid {
+  grid-template-columns: 1fr;
+}
+
+.infoGrid,
+.mediaSplit,
+.timeline {
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+.card,
+.methodCard,
+.timelineCard,
+.statCard,
+.ctaPanel,
+.galleryCard,
+.projectLead {
+  @include mix.card-surface(var(--card-padding));
+}
+
+.card,
+.methodCard,
+.timelineCard,
+.statCard,
+.ctaPanel,
+.galleryCard,
+.projectLead,
+.projectCardLink {
+  gap: var(--space-xs);
+}
+
+.card p,
+.methodCard p,
+.timelineCard p,
+.statCard p,
+.ctaPanel p,
+.galleryCard p,
+.projectLead p,
+.mediaSplit p,
+.listBlock p {
+  margin: 0;
+}
+
+.card h3,
+.methodCard h3,
+.timelineCard h3,
+.galleryCard h3,
+.statValue,
+.projectLead h2,
+.projectLead h3,
+.sectionHeading,
+.metaList dt,
+.metaList dd {
+  margin: 0;
+}
+
+.card p,
+.methodCard p,
+.timelineCard p,
+.galleryCard p,
+.projectLead p,
+.metaList dd,
+.mediaCaption,
+.muted {
+  color: var(--color-text-muted);
+}
+
+.sectionHeading {
+  @include mix.type-style(h3);
+}
+
+.projectLead {
+  text-decoration: none;
+  color: inherit;
+  @include mix.interactive-transition((transform, border-color, box-shadow, opacity));
+}
+
+.projectLead:hover {
+  transform: translateY(var(--interactive-lift));
+  border-color: var(--color-border-hover);
+}
+
+.projectLead img,
+.galleryCard img,
+.mediaImage {
+  width: 100%;
+  aspect-ratio: 1.2;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-background-surface);
+}
+
+.projectLead h2,
+.projectLead h3 {
+  color: var(--color-action-primary);
+}
+
+.metaRow,
+.toolCloud,
+.pillRow,
+.buttonRowLocal {
+  @include mix.flex(row, null, center, var(--gap-inline), wrap);
+}
+
+.metaRow {
+  color: var(--color-text-muted);
+  @include mix.type-style(body-xs);
+}
+
+.pillRow {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.pillRow li,
+.toolCloud span {
+  @include mix.pill-base(body-xs);
+  background: var(--color-surface-overlay);
+}
+
+.mediaSplit {
+  align-items: center;
+}
+
+.mediaCaption {
+  @include mix.type-style(body-xs);
+}
+
+.metaList {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metaList dt {
+  color: var(--color-text-muted);
+  @include mix.type-style(body-xs, 600);
+}
+
+.metaList dd {
+  @include mix.type-style(body-sm);
+}
+
+.statGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.statCard {
+  justify-items: start;
+}
+
+.statValue {
+  @include mix.type-style(h3);
+  color: var(--color-action-primary);
+}
+
+.timelineCard {
+  grid-template-columns: 1fr;
+}
+
+.timelineMeta {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.timelineMeta p {
+  color: var(--color-text-muted);
+}
+
+.methodCard a,
+.projectCardLink {
+  text-decoration: none;
+}
+
+.ctaPanel {
+  justify-items: start;
+}
+
+@include mix.mq(md) {
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .infoGrid,
+  .gallery,
+  .statGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mediaSplit {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+
+  .mediaSplitReverse {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .timelineCard {
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+    align-items: start;
+  }
+}

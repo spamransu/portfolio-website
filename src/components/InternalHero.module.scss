@@ -1,0 +1,63 @@
+@use '../styles/mixins' as mix;
+
+.root,
+.copy,
+.media {
+  display: grid;
+}
+
+.root {
+  gap: var(--space-lg);
+  padding-block-end: var(--space-section-compact);
+  border-bottom: var(--section-divider);
+}
+
+.copy {
+  gap: var(--space-stack);
+}
+
+.copy h1,
+.intro,
+.media figcaption {
+  margin: 0;
+}
+
+.copy h1 {
+  max-width: 12ch;
+  text-wrap: balance;
+}
+
+.intro {
+  max-width: min(100%, 34rem);
+  color: var(--color-text-muted);
+  @include mix.type-style(body-lg);
+}
+
+.actions {
+  @include mix.flex(row, null, center, var(--gap-inline), wrap);
+}
+
+.media {
+  gap: var(--space-xs);
+}
+
+.media img {
+  width: 100%;
+  aspect-ratio: 1.28;
+  object-fit: cover;
+  background: var(--color-background-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--card-radius);
+}
+
+.media figcaption {
+  color: var(--color-text-muted);
+  @include mix.type-style(body-xs);
+}
+
+@include mix.mq(lg) {
+  .root {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: center;
+  }
+}

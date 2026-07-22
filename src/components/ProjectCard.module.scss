@@ -1,28 +1,53 @@
 @use '../styles/mixins' as mix;
 
-.root {
+.root,
+.content {
   display: grid;
-  gap: var(--section-stack-gap);
-  padding-block-start: var(--space-stack);
-  border-top: var(--section-divider);
 }
 
-.root h2,
-.root p {
+.root {
+  gap: var(--space-stack);
+}
+
+.content {
+  gap: var(--space-xs);
+}
+
+.imageLink {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--color-border-default);
+  background: var(--color-background-surface);
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: var(--project-card-image-ratio);
+  object-fit: cover;
+  transition: var(--project-card-image-transition);
+}
+
+.imageLink:hover .image {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.content h2,
+.content p {
   margin: 0;
 }
 
-.root h2 {
+.content h2 {
   @include mix.type-style(h4);
 }
 
-.root h2 a {
+.content h2 a {
   color: var(--project-card-title-color);
   text-decoration: none;
   @include mix.interactive-transition((color, opacity));
 }
 
-.root h2 a:hover {
+.content h2 a:hover {
   opacity: 0.82;
 }
 

@@ -1,8 +1,8 @@
 # Resume
 
-## Frontend Web Developer / Graphic Designer
+## Frontend Web Developer and Graphic Designer
 
-Frontend web developer and graphic designer with experience in WordPress, React, responsive UI implementation, Figma-to-code work, and ongoing website maintenance.
+Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
 
 ## Skills
 - React

@@ -6,34 +6,34 @@ Case-study style project archive.
 
 - Year: 2026
 - Client: ABCDE Creative
-- Role: Full-stack developer
-- Stack: React, ASP.NET Core, GraphQL, MongoDB
+- Role: Frontend developer
+- Stack: React, TypeScript, SCSS, Content modeling
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
 
 ## [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md)
 
 - Year: 2026
 - Client: Insight Index
 - Role: Frontend developer
-- Stack: ASP.NET Core, Tailwind CSS, Stripe API, GraphQL
+- Stack: React, Tailwind CSS, API integration, Responsive UI
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.
 
 ## [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md)
 
 - Year: 2026
 - Client: Animation Showcase
 - Role: Frontend developer
-- Stack: React, Tailwind CSS, Stripe API
+- Stack: React, GSAP, SCSS, Performance tuning
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
 
 ## [TETHERLY](https://lancecarteciano.com/projects/tetherly.md)
 
 - Year: 2026
 - Client: Tetherly
 - Role: Frontend developer
-- Stack: Tailwind CSS, Stripe API, GraphQL, MongoDB
+- Stack: React, Design systems, SCSS, Content-first UI
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.

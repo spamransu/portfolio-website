@@ -1,8 +1,8 @@
 # LanceCarteciano
 
-> Full-stack web developer and graphic designer based in the Philippines.
+> Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.
 
 ## Preferred machine-readable entry points
 - [Site index](https://lancecarteciano.com/index.md)

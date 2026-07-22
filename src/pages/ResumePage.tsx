@@ -1,11 +1,23 @@
-import { PageHeader } from '../components/PageHeader'
+import { InternalHero } from '../components/InternalHero'
 import { Section } from '../components/Section'
 import { siteContent } from '../content/siteContent'
+import sty from './InternalPages.module.scss'
 
 export function ResumePage() {
   return (
-    <div className="md-wrapper page-stack">
-      <PageHeader eyebrow="CV / Resume" title={siteContent.resume.headline} intro={siteContent.resume.summary} />
+    <div className={`lg-wrapper ${sty.page}`}>
+      <InternalHero eyebrow="CV / Resume" title={siteContent.resume.headline} intro={siteContent.resume.summary} media={siteContent.resume.heroImage} />
+
+      <Section title="Quick highlights">
+        <div className={sty.statGrid}>
+          {siteContent.resume.highlights.map((item) => (
+            <article className={sty.statCard} key={item.label}>
+              <p className={sty.statValue}>{item.value}</p>
+              <p>{item.label}</p>
+            </article>
+          ))}
+        </div>
+      </Section>
 
       <Section title="Core skills">
         <ul className="tag-list tag-list--large">
@@ -16,10 +28,10 @@ export function ResumePage() {
       </Section>
 
       <Section title="Experience">
-        <div className="timeline">
+        <div className={sty.timeline}>
           {siteContent.resume.experience.map((item) => (
-            <article className="timeline__item" key={`${item.company}-${item.role}`}>
-              <div className="timeline__meta">
+            <article className={sty.timelineCard} key={`${item.company}-${item.role}`}>
+              <div className={sty.timelineMeta}>
                 <h3>{item.role}</h3>
                 <p>
                   {item.company} · {item.period}

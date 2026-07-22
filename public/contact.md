@@ -2,8 +2,8 @@
 
 Let's connect!
 
-Tell me about the project, the role, or the problem you want solved. I'll reply by email.
+If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
 
 - Email: hello@lancecarteciano.com
 - Location: Philippines
-- Availability: Available for freelance projects, collaborations, and select full-time roles.
+- Availability: Available for freelance builds, design-to-code support, and selected frontend roles.

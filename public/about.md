@@ -1,14 +1,15 @@
 # About
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.
 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+I care about visual rhythm, content hierarchy, and practical structure. That usually means reusable sections, token-driven styling, and layouts that still feel deliberate on smaller screens.
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+Most of the projects I enjoy combine interface polish with real delivery work: shipping pages, tightening responsive behavior, organizing content, and making the next update easier instead of harder.
 
 ## Working principles
-- Readable interfaces over decoration.
-- Frontend structure that stays maintainable.
-- Design and implementation that work together.
+- Content should read clearly before decoration starts.
+- Reusable layout systems beat one-off page fixes.
+- Mockups matter, but shipped code has to stay editable.
+- Frontend polish should improve trust, not add noise.

@@ -2,22 +2,22 @@
 
 - Year: 2026
 - Client: ABCDE Creative
-- Role: Full-stack developer
-- Stack: React, ASP.NET Core, GraphQL, MongoDB
+- Role: Frontend developer
+- Stack: React, TypeScript, SCSS, Content modeling
 - Homepage image: https://lancecarteciano.com/images/home/featured-project-1.png
 
 ## Summary
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
 
 ## Challenge
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+The site needed stronger hierarchy and more reusable structure so new case-study and service pages could be added without layout drift.
 
 ## Approach
-- Interface implementation
-- Responsive frontend delivery
-- Design-to-code handoff
+- Reworked marketing sections into reusable content blocks.
+- Tightened spacing and type rhythm for clearer scanning.
+- Aligned page components so future pages could follow the same system.
 
 ## Outcome
-- Shipped a polished web experience
-- Kept the system maintainable
-- Supported future iteration
+- Cleaner presentation across portfolio and services content.
+- More consistent page-building patterns for future updates.
+- A stronger visual-first case-study experience.
