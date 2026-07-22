@@ -1991,6 +1991,13 @@ export const App = () => {
     setError(null)
   }, [])
 
+  const handleProjectSelect = useCallback((slug: string) => {
+    setSelectedProjectSlug(slug)
+    setSelectedProjectGalleryIndex(0)
+    setMediaSlug((current) => (current === selectedProjectSlug ? slug : current))
+    setMediaTarget((current) => (current && current.area === 'projects' && current.slug !== slug ? null : current))
+  }, [selectedProjectSlug])
+
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !normalizedMediaSlug || mediaValidationError) return
 
@@ -2139,7 +2146,7 @@ export const App = () => {
       onReloadActivity: () => {
         void loadActivity()
       },
-      onProjectSelect: setSelectedProjectSlug,
+      onProjectSelect: handleProjectSelect,
       onHomeStatSelect: setSelectedHomeStatIndex,
       onSocialSelect: setSelectedSocialIndex,
       onProcessSelect: setSelectedProcessIndex,
@@ -2218,6 +2225,7 @@ export const App = () => {
       handleMediaTargetClear,
       handleMediaTargetSelect,
       handleMediaUpload,
+      handleProjectSelect,
       handleStructuredAdd,
       handleStructuredFieldChange,
       handleStructuredRemove,
