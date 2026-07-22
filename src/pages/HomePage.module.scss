@@ -54,6 +54,7 @@
 .heroTitle,
 .bioTitle,
 .sectionHeadingCentered h2,
+.sectionIntro,
 .heroDescription,
 .projectTitle,
 .projectSummary,
@@ -66,6 +67,7 @@
 }
 
 .heroEyebrow,
+.sectionIntro,
 .heroDescription,
 .projectSummary,
 .bioDescription,
@@ -109,15 +111,26 @@
   margin-block-start: var(--space-hairline);
 }
 
-.primaryButton {
+.primaryButton,
+.secondaryButton {
   --button-border-color: var(--color-transparent);
 
   @include mix.button-base(body-xs);
+}
+
+.primaryButton {
   color: var(--color-text-inverse);
   background: var(--color-action-primary);
 }
 
+.secondaryButton {
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-medium);
+  background: var(--color-transparent);
+}
+
 .primaryButton:hover,
+.secondaryButton:hover,
 .projectImageLink:hover .projectImage,
 .projectTitle a:hover {
   transform: translateY(-1px);
@@ -132,6 +145,11 @@
   justify-items: center;
   padding-block-end: var(--space-xs);
   text-align: center;
+}
+
+.sectionIntro {
+  max-width: var(--measure-copy);
+  @include mix.type-style(body-sm);
 }
 
 .projectImageLink {
@@ -160,6 +178,27 @@
 .projectSummary,
 .bioDescription,
 .skillsCopy p {
+  @include mix.type-style(body-sm);
+}
+
+.projectFallback {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-xs);
+  padding: var(--card-padding);
+  text-align: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--card-radius);
+}
+
+.projectFallback h3,
+.projectFallback p {
+  margin: 0;
+}
+
+.projectFallback p {
+  max-width: var(--measure-copy);
+  color: var(--color-text-muted);
   @include mix.type-style(body-sm);
 }
 

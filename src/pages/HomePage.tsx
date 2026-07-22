@@ -36,6 +36,8 @@ function getSkillCloudRows(skills: string[]) {
 export function HomePage() {
   const featuredProjects = useMemo(getFeaturedProjects, [])
   const skillCloudRows = useMemo(() => getSkillCloudRows(siteContent.home.skills.items), [])
+  const showSecondaryCta = Boolean(siteContent.home.cta.secondaryLabel.trim())
+  const showFeaturedProjectsFallback = !featuredProjects.length && Boolean(siteContent.home.featuredProjects.fallbackLabel || siteContent.home.featuredProjects.fallbackDescription)
 
   return (
     <div className={sty.root}>
@@ -49,6 +51,11 @@ export function HomePage() {
               <a className={sty.primaryButton} href="#contact">
                 {siteContent.home.cta.primaryLabel}
               </a>
+              {showSecondaryCta ? (
+                <a className={sty.secondaryButton} href="/resume">
+                  {siteContent.home.cta.secondaryLabel}
+                </a>
+              ) : null}
             </div>
           </div>
         </div>
@@ -58,30 +65,38 @@ export function HomePage() {
         <div className="lg-wrapper">
           <div className={sty.sectionHeadingCentered}>
             <h2>{siteContent.home.featuredProjects.title}</h2>
+            {siteContent.home.featuredProjects.intro ? <p className={sty.sectionIntro}>{siteContent.home.featuredProjects.intro}</p> : null}
           </div>
 
-          <div className={sty.projectGrid}>
-            {featuredProjects.map((project) => (
-              <article key={project.slug} className={sty.projectCard}>
-                <a href={`/projects/${project.slug}`} className={sty.projectImageLink}>
-                  {project.image ? <img src={project.image.src} alt={project.image.alt} className={sty.projectImage} /> : null}
-                </a>
-                <div className={sty.projectBody}>
-                  <div className={sty.projectMeta}>
-                    <p className={sty.projectTitle}>
-                      <a href={`/projects/${project.slug}`}>{project.title}</a>
-                    </p>
-                    <p className={sty.projectSummary}>{project.summary}</p>
+          {featuredProjects.length ? (
+            <div className={sty.projectGrid}>
+              {featuredProjects.map((project) => (
+                <article key={project.slug} className={sty.projectCard}>
+                  <a href={`/projects/${project.slug}`} className={sty.projectImageLink}>
+                    {project.image ? <img src={project.image.src} alt={project.image.alt} className={sty.projectImage} /> : null}
+                  </a>
+                  <div className={sty.projectBody}>
+                    <div className={sty.projectMeta}>
+                      <p className={sty.projectTitle}>
+                        <a href={`/projects/${project.slug}`}>{project.title}</a>
+                      </p>
+                      <p className={sty.projectSummary}>{project.summary}</p>
+                    </div>
+                    <ul className={sty.stackList} aria-label={`${project.title} stack`}>
+                      {project.stack.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className={sty.stackList} aria-label={`${project.title} stack`}>
-                    {project.stack.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </article>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          ) : showFeaturedProjectsFallback ? (
+            <div className={sty.projectFallback}>
+              {siteContent.home.featuredProjects.fallbackLabel ? <h3>{siteContent.home.featuredProjects.fallbackLabel}</h3> : null}
+              {siteContent.home.featuredProjects.fallbackDescription ? <p>{siteContent.home.featuredProjects.fallbackDescription}</p> : null}
+            </div>
+          ) : null}
         </div>
       </section>
 
