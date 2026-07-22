@@ -26,11 +26,7 @@ export function HomePage() {
         <div className="lg-wrapper">
           <div className={sty.heroCopy}>
             <p className={sty.heroEyebrow}>{siteContent.home.hero.eyebrow}</p>
-            <h1 className={sty.heroTitle}>
-              {siteContent.home.hero.titleLines.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
-            </h1>
+            <h1 className={sty.heroTitle}>{siteContent.home.hero.titleLines.join(' ')}</h1>
             {siteContent.home.hero.description ? <p className={sty.heroDescription}>{siteContent.home.hero.description}</p> : null}
             <div className={sty.heroActions}>
               <a className={sty.primaryButton} href="#contact">
@@ -77,11 +73,7 @@ export function HomePage() {
           <div className={sty.bioCopy}>
             <p className={sty.heroEyebrow}>{siteContent.home.bio.eyebrow}</p>
             <div className={sty.bioColumns}>
-              <h2 className={sty.bioTitle}>
-                {siteContent.home.bio.titleLines.map((line) => (
-                  <span key={line}>{line}</span>
-                ))}
-              </h2>
+              <h2 className={sty.bioTitle}>{siteContent.home.bio.titleLines.join(' ')}</h2>
               <p className={sty.bioDescription}>{siteContent.home.bio.description}</p>
             </div>
           </div>

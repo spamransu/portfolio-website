@@ -7,12 +7,15 @@
 
 .inner {
   display: grid;
-  gap: 0.5rem;
-  padding-block: 0.95rem 0.85rem;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1rem 0.9rem;
 }
 
 .navWrap {
   min-width: 0;
+  justify-self: end;
 }
 
 .brand {
@@ -34,7 +37,7 @@
 }
 
 .nav {
-  @include mix.flex(row, null, center, 0.65rem, wrap);
+  @include mix.flex(row, flex-end, center, 0.8rem, nowrap);
   padding: 0;
   margin: 0;
   list-style: none;
@@ -57,27 +60,14 @@
   color: var(--accent);
 }
 
-@media (min-width: 520px) {
-  .inner {
-    @include mix.flex(row, space-between, start, 1rem);
-    padding-block: 1rem 0.9rem;
-  }
-
-  .nav {
-    justify-content: flex-end;
-    gap: 0.82rem;
-  }
-}
-
 @media (min-width: 768px) {
   .inner {
-    align-items: center;
-    gap: 1.1rem;
-    padding-block: 1.1rem 0.98rem;
+    gap: 1.5rem;
+    padding-block: 1.15rem 1rem;
   }
 
   .nav {
-    gap: 0.95rem;
+    gap: 1rem;
   }
 
   .nav a {
@@ -88,9 +78,6 @@
 
 @media (max-width: 519.98px) {
   .nav {
-    display: grid;
-    grid-template-columns: repeat(3, max-content);
-    gap: 0.28rem 0.72rem;
-    justify-content: start;
+    gap: 0.5rem;
   }
 }

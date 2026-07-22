@@ -1,18 +1,26 @@
 @use '../styles/mixins' as mix;
 
 .root {
-  @include mix.card-surface(1.35rem);
+  display: grid;
+  gap: 0.65rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
 }
 
 .root h2 {
-  margin-top: 0;
+  margin: 0;
   @include mix.type-style(h4);
 }
 
 .meta {
   @include mix.flex(row, null, null, 0.75rem);
+  flex-wrap: wrap;
   color: var(--muted);
   @include mix.type-style(body-sm);
+}
+
+.root p {
+  margin: 0;
 }
 
 .role {

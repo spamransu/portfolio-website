@@ -1,13 +1,17 @@
 @use '../styles/mixins' as mix;
 
 .root {
-  @include mix.card-surface(var(--space-lg));
+  display: grid;
+  gap: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .root h1 {
-  max-width: 12ch;
-  margin-block: 0 1rem;
+  max-width: 18ch;
+  margin: 0;
   @include mix.type-style(h1);
+  text-wrap: balance;
 }
 
 .eyebrow {
@@ -19,6 +23,7 @@
 }
 
 .intro {
+  margin: 0;
   max-width: 70ch;
   color: var(--muted);
   @include mix.type-style(body-lg);
@@ -26,5 +31,5 @@
 
 .actions {
   @include mix.flex(row, null, null, 0.85rem, wrap);
-  margin-top: 1.25rem;
+  margin-top: 0.35rem;
 }

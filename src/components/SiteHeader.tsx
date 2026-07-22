@@ -23,30 +23,32 @@ export function SiteHeader() {
 
   return (
     <header className={sty.root}>
-      <div className={`md-wrapper ${sty.inner}`}>
-        <NavLink to="/" className={sty.brand} aria-label={`${siteContent.site.name} home`}>
-          <span className={sty.brandPrimary}>{brand.primary}</span>
-          {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
-        </NavLink>
+      <div className="lg-wrapper">
+        <div className={sty.inner}>
+          <NavLink to="/" className={sty.brand} aria-label={`${siteContent.site.name} home`}>
+            <span className={sty.brandPrimary}>{brand.primary}</span>
+            {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
+          </NavLink>
 
-        <nav aria-label="Primary" className={sty.navWrap}>
-          <ul className={sty.nav}>
-            {navItems.map((item) => (
-              <li key={item.to}>
-                <NavLink to={item.to} className={({ isActive }) => (isActive ? sty.active : undefined)}>
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
-            {linktreeUrl ? (
-              <li>
-                <a href={linktreeUrl} target="_blank" rel="noreferrer">
-                  Linktree
-                </a>
-              </li>
-            ) : null}
-          </ul>
-        </nav>
+          <nav aria-label="Primary" className={sty.navWrap}>
+            <ul className={sty.nav}>
+              {navItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink to={item.to} className={({ isActive }) => (isActive ? sty.active : undefined)}>
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+              {linktreeUrl ? (
+                <li>
+                  <a href={linktreeUrl} target="_blank" rel="noreferrer">
+                    Linktree
+                  </a>
+                </li>
+              ) : null}
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   )

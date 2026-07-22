@@ -29,51 +29,53 @@ export function SiteFooter() {
 
   return (
     <footer className={sty.root}>
-      <div className={`md-wrapper ${sty.inner}`}>
-        <div className={sty.info}>
-          <p className={sty.brand}>
-            <span>{brand.primary}</span>
-            {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
-          </p>
-          <p className={sty.description}>{siteContent.site.description}</p>
-          <p className={sty.copyright}>© {year} {siteContent.site.name}. All rights reserved.</p>
-        </div>
-
-        <div className={sty.linksWrap}>
-          <div className={sty.linkColumns}>
-            <div>
-              <p className={sty.heading}>General</p>
-              <ul className={sty.linkList}>
-                <li><Link to="/">Home</Link></li>
-                <li><Link to="/about">About</Link></li>
-                <li><Link to="/projects">Projects</Link></li>
-              </ul>
-            </div>
-            <div>
-              <p className={sty.heading}>More</p>
-              <ul className={sty.linkList}>
-                <li><a href="/#contact">Book a call</a></li>
-                <li><Link to="/resume">View CV</Link></li>
-                {linktreeUrl ? (
-                  <li>
-                    <a href={linktreeUrl} target="_blank" rel="noreferrer">
-                      Linktree
-                    </a>
-                  </li>
-                ) : null}
-              </ul>
-            </div>
+      <div className="lg-wrapper">
+        <div className={sty.inner}>
+          <div className={sty.info}>
+            <p className={sty.brand}>
+              <span>{brand.primary}</span>
+              {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
+            </p>
+            <p className={sty.description}>{siteContent.site.description}</p>
+            <p className={sty.copyright}>© {year} {siteContent.site.name}. All rights reserved.</p>
           </div>
 
-          <ul className={sty.socials} aria-label="Social links">
-            {visibleSocials.map((social) => (
-              <li key={social.href}>
-                <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>
-                  <span aria-hidden="true" className={sty.socialIcon}>{getSocialGlyph(social.label)}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          <div className={sty.linksWrap}>
+            <div className={sty.linkColumns}>
+              <div>
+                <p className={sty.heading}>General</p>
+                <ul className={sty.linkList}>
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/about">About</Link></li>
+                  <li><Link to="/projects">Projects</Link></li>
+                </ul>
+              </div>
+              <div>
+                <p className={sty.heading}>More</p>
+                <ul className={sty.linkList}>
+                  <li><a href="/#contact">Book a call</a></li>
+                  <li><Link to="/resume">View CV</Link></li>
+                  {linktreeUrl ? (
+                    <li>
+                      <a href={linktreeUrl} target="_blank" rel="noreferrer">
+                        Linktree
+                      </a>
+                    </li>
+                  ) : null}
+                </ul>
+              </div>
+            </div>
+
+            <ul className={sty.socials} aria-label="Social links">
+              {visibleSocials.map((social) => (
+                <li key={social.href}>
+                  <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>
+                    <span aria-hidden="true" className={sty.socialIcon}>{getSocialGlyph(social.label)}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </footer>

@@ -8,17 +8,17 @@
 
 .hero,
 .section {
-  background: var(--bg);
+  // background: var(--bg);
 }
 
 .hero {
-  padding-block: 2.2rem 2.2rem;
+  // padding-block: 2.2rem 2.2rem;
 }
 
 .heroCopy {
   display: grid;
   gap: 0.72rem;
-  max-width: 38rem;
+  // max-width: 42rem;
 }
 
 .heroEyebrow {
@@ -36,15 +36,15 @@
   @include mix.type-style(h2);
 }
 
-.heroTitle,
+.heroTitle {
+  // max-width: 12ch;
+  @include mix.type-style(h1);
+  text-align: left;
+}
+
 .bioTitle {
   display: grid;
   gap: 0.08em;
-}
-
-.heroTitle {
-  max-width: 9.2ch;
-  @include mix.type-style(h1);
 }
 
 .heroDescription,
@@ -324,7 +324,7 @@
   }
 
   .heroCopy {
-    max-width: 41rem;
+    max-width: 48rem;
   }
 
   .bioSection {
@@ -347,7 +347,7 @@
 @media (max-width: 479.98px) {
   .heroTitle,
   .bioTitle {
-    max-width: 8.2ch;
+    max-width: 10ch;
   }
 
 
