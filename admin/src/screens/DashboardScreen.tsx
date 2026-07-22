@@ -1006,10 +1006,15 @@ export const DashboardScreen = ({
                     <div className="admin-form-grid">
                       <label className="admin-field">
                         <span>Selected gallery image</span>
-                        <select value={selectedProjectGalleryIndex} onChange={(event) => onProjectGallerySelect(Number(event.target.value))}>
-                          {(selectedProject.gallery ?? []).map((image, index) => <option key={`${image.src}-${index}`} value={index}>{index + 1} — {image.alt || image.src || 'Gallery image'}</option>)}
+                        <select value={selectedProjectGalleryIndex} onChange={(event) => onProjectGallerySelect(Number(event.target.value))} disabled={!selectedProjectGalleryTotal}>
+                          {selectedProjectGalleryTotal ? (
+                            (selectedProject.gallery ?? []).map((image, index) => <option key={`${image.src}-${index}`} value={index}>{index + 1} — {image.alt || image.src || 'Gallery image'}</option>)
+                          ) : (
+                            <option value={0}>No gallery images yet</option>
+                          )}
                         </select>
                       </label>
+                      {!selectedProjectGalleryTotal ? <p className="admin-note">No gallery images yet. Use Add gallery image to create one for this project.</p> : null}
                       {selectedProjectGalleryItem ? (
                         <>
                           <label className="admin-field"><span>Gallery image src</span><input value={selectedProjectGalleryItem.src} onChange={(event) => onStructuredFieldChange('projectGallery', 'src', event.target.value, selectedProjectGalleryIndex)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectGallery', 'src', mediaPath, selectedProjectGalleryIndex))}{renderMediaTargetButton({ area: 'projects', slug: selectedProject.slug, key: `projectGallery:${selectedProject.slug}:${selectedProjectGalleryIndex}:src`, kind: 'structured', scope: 'projectGallery', field: 'src', index: selectedProjectGalleryIndex, label: `${selectedProject.title} gallery image ${selectedProjectGalleryIndex + 1}` })}</label>
@@ -1021,7 +1026,7 @@ export const DashboardScreen = ({
                     </div>
                   </div>
                   <div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectSection')}>Add section</button></div>
-                  {selectedProject.sections?.map((section, index) => (
+                  {selectedProject.sections?.length ? selectedProject.sections.map((section, index) => (
                     <div className="admin-subpanel" key={`${selectedProject.slug}-${section.title}-${index}`}>
                       <div className="admin-actions"><p className="admin-note">Section {index + 1}</p><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectSection', index)} disabled={(selectedProject.sections?.length ?? 0) <= 1}>Remove section</button></div>
                       <label className="admin-field"><span>Section kind</span><select value={section.kind} onChange={(event) => onStructuredFieldChange('projectSection', 'kind', event.target.value, index)}><option value="default">default</option><option value="approach">approach</option><option value="outcome">outcome</option></select></label>
@@ -1032,7 +1037,7 @@ export const DashboardScreen = ({
                       <label className="admin-field"><span>Section image caption</span><textarea value={section.image?.caption ?? ''} onChange={(event) => onStructuredFieldChange('projectSection', 'image.caption', event.target.value, index)} /></label>
                       {renderAssignedImagePreview(`${selectedProject.title} section ${index + 1} image`, section.image?.src, section.image?.alt, section.image?.caption)}
                     </div>
-                  ))}
+                  )) : <p className="admin-note">No custom sections yet. Use Add section to create one for this project.</p>}
                 </>
               ) : null}
             </div>
