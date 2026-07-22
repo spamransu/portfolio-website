@@ -10,7 +10,7 @@ export function BlogPage() {
   return (
     <div className={`lg-wrapper ${sty.page}`}>
       <InternalHero
-        eyebrow="Blog"
+        eyebrow={siteContent.blogPage?.eyebrow ?? 'Blog'}
         title={siteContent.blogPage?.title ?? 'Build notes and frontend delivery posts.'}
         intro={siteContent.blogPage?.intro ?? 'Short posts about implementation, content systems, and frontend delivery work.'}
         media={blogHeroImage}

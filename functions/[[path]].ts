@@ -373,17 +373,17 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   if (!isRecord(homeSkills) || typeof homeSkills.title !== 'string' || typeof homeSkills.description !== 'string' || !isStringArray(homeSkills.items)) return false
   if (!isRecord(homeContact) || typeof homeContact.title !== 'string' || typeof homeContact.intro !== 'string' || typeof homeContact.submitLabel !== 'string' || typeof homeContact.messageLimit !== 'number') return false
 
-  if (!['title', 'intro', 'bodySectionTitle', 'processSectionTitle', 'processSectionIntro', 'principlesSectionTitle', 'toolsSectionTitle'].every((key) => typeof about[key] === 'string') || !isStringArray(about.body) || !isStringArray(about.principles) || !Array.isArray(about.process) || !about.process.every((entry) => isRecord(entry) && typeof entry.title === 'string' && typeof entry.description === 'string') || !isStringArray(about.tools)) {
+  if (!['title', 'intro', 'bodySectionTitle', 'processSectionTitle', 'processSectionIntro', 'principlesSectionTitle', 'toolsSectionTitle'].every((key) => typeof about[key] === 'string') || (about.eyebrow !== undefined && typeof about.eyebrow !== 'string') || !isStringArray(about.body) || !isStringArray(about.principles) || !Array.isArray(about.process) || !about.process.every((entry) => isRecord(entry) && typeof entry.title === 'string' && typeof entry.description === 'string') || !isStringArray(about.tools)) {
     return false
   }
   if (about.heroImage !== undefined && !isImageAsset(about.heroImage)) return false
 
-  if (!['headline', 'summary', 'highlightsSectionTitle', 'skillsSectionTitle', 'experienceSectionTitle'].every((key) => typeof resume[key] === 'string') || !isStringArray(resume.skills) || !Array.isArray(resume.experience) || !resume.experience.every((entry) => isRecord(entry) && typeof entry.role === 'string' && typeof entry.company === 'string' && typeof entry.period === 'string' && isStringArray(entry.highlights)) || !Array.isArray(resume.highlights) || !resume.highlights.every((entry) => isRecord(entry) && typeof entry.value === 'string' && typeof entry.label === 'string')) {
+  if (!['headline', 'summary', 'highlightsSectionTitle', 'skillsSectionTitle', 'experienceSectionTitle'].every((key) => typeof resume[key] === 'string') || (resume.eyebrow !== undefined && typeof resume.eyebrow !== 'string') || !isStringArray(resume.skills) || !Array.isArray(resume.experience) || !resume.experience.every((entry) => isRecord(entry) && typeof entry.role === 'string' && typeof entry.company === 'string' && typeof entry.period === 'string' && isStringArray(entry.highlights)) || !Array.isArray(resume.highlights) || !resume.highlights.every((entry) => isRecord(entry) && typeof entry.value === 'string' && typeof entry.label === 'string')) {
     return false
   }
   if (resume.heroImage !== undefined && !isImageAsset(resume.heroImage)) return false
 
-  if (!['title', 'body', 'availability', 'availabilityTitle', 'availabilityStatusLabel', 'availabilityLocationLabel', 'formSectionTitle', 'formSectionIntro', 'methodsSectionTitle', 'methodsSectionIntro'].every((key) => typeof contact[key] === 'string')) return false
+  if (!['title', 'body', 'availability', 'availabilityTitle', 'availabilityStatusLabel', 'availabilityLocationLabel', 'formSectionTitle', 'formSectionIntro', 'methodsSectionTitle', 'methodsSectionIntro'].every((key) => typeof contact[key] === 'string') || (contact.eyebrow !== undefined && typeof contact.eyebrow !== 'string') || (contact.emailCtaPrefix !== undefined && typeof contact.emailCtaPrefix !== 'string')) return false
   if (!isRecord(contact.form) || typeof contact.form.title !== 'string' || typeof contact.form.intro !== 'string' || typeof contact.form.submitLabel !== 'string' || typeof contact.form.messageLimit !== 'number') return false
   if (!Array.isArray(contact.methods) || !contact.methods.every((entry) => isRecord(entry) && ['title', 'label', 'href', 'description'].every((key) => typeof entry[key] === 'string'))) return false
   if (contact.heroImage !== undefined && !isImageAsset(contact.heroImage)) return false
@@ -392,6 +392,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
     value.projectsPage !== undefined
     && (
       !isRecord(value.projectsPage)
+      || (value.projectsPage.eyebrow !== undefined && typeof value.projectsPage.eyebrow !== 'string')
       || typeof value.projectsPage.title !== 'string'
       || typeof value.projectsPage.intro !== 'string'
       || (value.projectsPage.heroImage !== undefined && !isImageAsset(value.projectsPage.heroImage))
@@ -401,9 +402,18 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
     value.blogPage !== undefined
     && (
       !isRecord(value.blogPage)
+      || (value.blogPage.eyebrow !== undefined && typeof value.blogPage.eyebrow !== 'string')
       || typeof value.blogPage.title !== 'string'
       || typeof value.blogPage.intro !== 'string'
       || (value.blogPage.heroImage !== undefined && !isImageAsset(value.blogPage.heroImage))
+    )
+  ) return false
+  const blogPostPage = value.blogPostPage
+  if (
+    blogPostPage !== undefined
+    && (
+      !isRecord(blogPostPage)
+      || !(['eyebrowPrefix', 'notFoundTitle', 'notFoundIntro', 'backToBlogLabel', 'startProjectLabel', 'articleSectionTitle'] as const).every((key) => typeof blogPostPage[key] === 'string')
     )
   ) return false
   const projectDetailPage = value.projectDetailPage
@@ -412,6 +422,14 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
     && (
       !isRecord(projectDetailPage)
       || !(['notFoundTitle', 'notFoundIntro', 'snapshotTitle', 'galleryTitle', 'galleryIntro', 'nextProjectEyebrow', 'similarWorkEyebrow', 'similarWorkTitle', 'similarWorkIntro'] as const).every((key) => typeof projectDetailPage[key] === 'string')
+    )
+  ) return false
+  const notFoundPage = value.notFoundPage
+  if (
+    notFoundPage !== undefined
+    && (
+      !isRecord(notFoundPage)
+      || !(['eyebrow', 'title', 'intro', 'suggestionsEyebrow', 'viewProjectsLabel', 'backHomeLabel'] as const).every((key) => typeof notFoundPage[key] === 'string')
     )
   ) return false
 

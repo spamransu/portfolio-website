@@ -3,18 +3,24 @@ import { InternalHero } from '../components/InternalHero'
 import { Section } from '../components/Section'
 import { parseBlogMarkdownBlocks } from '../content/blogMarkdown'
 import { getBlogPostBySlug } from '../content/blogContent'
+import { siteContent } from '../content/siteContent'
 import sty from './InternalPages.module.scss'
 
 export function BlogPostPage() {
   const { slug } = useParams()
   const post = slug ? getBlogPostBySlug(slug) : undefined
+  const blogPostCopy = siteContent.blogPostPage
 
   if (!post) {
     return (
       <div className={`md-wrapper ${sty.page}`}>
-        <InternalHero eyebrow="Blog" title="Post not found" intro="That post is missing, unpublished, or still in draft." />
+        <InternalHero
+          eyebrow={blogPostCopy?.eyebrowPrefix ?? 'Blog'}
+          title={blogPostCopy?.notFoundTitle ?? 'Post not found'}
+          intro={blogPostCopy?.notFoundIntro ?? 'That post is missing, unpublished, or still in draft.'}
+        />
         <Link className="button button--primary" to="/blog">
-          Back to blog
+          {blogPostCopy?.backToBlogLabel ?? 'Back to blog'}
         </Link>
       </div>
     )
@@ -25,23 +31,23 @@ export function BlogPostPage() {
   return (
     <div className={`lg-wrapper ${sty.page}`}>
       <InternalHero
-        eyebrow={`Blog · ${post.date}`}
+        eyebrow={`${blogPostCopy?.eyebrowPrefix ?? 'Blog'} · ${post.date}`}
         title={post.title}
         intro={post.excerpt ?? post.body.split('\n')[0]}
         media={post.coverImage ? { src: post.coverImage, alt: post.coverAlt ?? post.title } : undefined}
         actions={
           <div className="button-row">
             <Link className="button button--ghost" to="/blog">
-              Back to blog
+              {blogPostCopy?.backToBlogLabel ?? 'Back to blog'}
             </Link>
             <Link className="button button--primary" to="/contact">
-              Start a project
+              {blogPostCopy?.startProjectLabel ?? 'Start a project'}
             </Link>
           </div>
         }
       />
 
-      <Section title="Article">
+      <Section title={blogPostCopy?.articleSectionTitle ?? 'Article'}>
         <div className={sty.sectionStack}>
           {blocks.map((block, index) => {
             if (block.type === 'list') {

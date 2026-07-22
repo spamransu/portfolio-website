@@ -8,13 +8,13 @@ export function ContactPage() {
   return (
     <div className={`lg-wrapper ${sty.page}`}>
       <InternalHero
-        eyebrow="Contact"
+        eyebrow={siteContent.contact.eyebrow ?? 'Contact'}
         title={siteContent.contact.title}
         intro={siteContent.contact.body}
         media={siteContent.contact.heroImage}
         actions={
           <a className="button button--primary" href={`mailto:${siteContent.site.email}`}>
-            Email {siteContent.site.email}
+            {siteContent.contact.emailCtaPrefix ?? 'Email'} {siteContent.site.email}
           </a>
         }
       />

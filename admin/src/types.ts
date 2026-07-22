@@ -111,6 +111,7 @@ export type SiteContent = {
     contact: ContactFormContent
   }
   about: {
+    eyebrow?: string
     title: string
     intro: string
     bodySectionTitle: string
@@ -125,6 +126,7 @@ export type SiteContent = {
     heroImage?: ImageAsset
   }
   resume: {
+    eyebrow?: string
     headline: string
     summary: string
     highlightsSectionTitle: string
@@ -136,8 +138,10 @@ export type SiteContent = {
     experience: Job[]
   }
   contact: {
+    eyebrow?: string
     title: string
     body: string
+    emailCtaPrefix?: string
     availability: string
     availabilityTitle: string
     availabilityStatusLabel: string
@@ -151,14 +155,24 @@ export type SiteContent = {
     heroImage?: ImageAsset
   }
   projectsPage?: {
+    eyebrow?: string
     title: string
     intro: string
     heroImage?: ImageAsset
   }
   blogPage?: {
+    eyebrow?: string
     title: string
     intro: string
     heroImage?: ImageAsset
+  }
+  blogPostPage?: {
+    eyebrowPrefix: string
+    notFoundTitle: string
+    notFoundIntro: string
+    backToBlogLabel: string
+    startProjectLabel: string
+    articleSectionTitle: string
   }
   projectDetailPage?: {
     notFoundTitle: string
@@ -170,6 +184,14 @@ export type SiteContent = {
     similarWorkEyebrow: string
     similarWorkTitle: string
     similarWorkIntro: string
+  }
+  notFoundPage?: {
+    eyebrow: string
+    title: string
+    intro: string
+    suggestionsEyebrow: string
+    viewProjectsLabel: string
+    backHomeLabel: string
   }
   projects: Project[]
 }

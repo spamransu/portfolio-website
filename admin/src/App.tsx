@@ -87,6 +87,9 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'about.title':
       next.about.title = value
       return next
+    case 'about.eyebrow':
+      next.about.eyebrow = value
+      return next
     case 'about.bodySectionTitle':
       next.about.bodySectionTitle = value
       return next
@@ -104,6 +107,9 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'resume.highlightsSectionTitle':
       next.resume.highlightsSectionTitle = value
+      return next
+    case 'resume.eyebrow':
+      next.resume.eyebrow = value
       return next
     case 'resume.skillsSectionTitle':
       next.resume.skillsSectionTitle = value
@@ -186,8 +192,14 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'contact.title':
       next.contact.title = value
       return next
+    case 'contact.eyebrow':
+      next.contact.eyebrow = value
+      return next
     case 'contact.body':
       next.contact.body = value
+      return next
+    case 'contact.emailCtaPrefix':
+      next.contact.emailCtaPrefix = value
       return next
     case 'contact.availability':
       next.contact.availability = value
@@ -224,13 +236,23 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'projectsPage.title':
       next.projectsPage = {
+        eyebrow: next.projectsPage?.eyebrow ?? '',
         title: value,
+        intro: next.projectsPage?.intro ?? '',
+        heroImage: next.projectsPage?.heroImage,
+      }
+      return next
+    case 'projectsPage.eyebrow':
+      next.projectsPage = {
+        eyebrow: value,
+        title: next.projectsPage?.title ?? '',
         intro: next.projectsPage?.intro ?? '',
         heroImage: next.projectsPage?.heroImage,
       }
       return next
     case 'projectsPage.intro':
       next.projectsPage = {
+        eyebrow: next.projectsPage?.eyebrow ?? '',
         title: next.projectsPage?.title ?? '',
         intro: value,
         heroImage: next.projectsPage?.heroImage,
@@ -238,16 +260,86 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'blogPage.title':
       next.blogPage = {
+        eyebrow: next.blogPage?.eyebrow ?? '',
         title: value,
+        intro: next.blogPage?.intro ?? '',
+        heroImage: next.blogPage?.heroImage,
+      }
+      return next
+    case 'blogPage.eyebrow':
+      next.blogPage = {
+        eyebrow: value,
+        title: next.blogPage?.title ?? '',
         intro: next.blogPage?.intro ?? '',
         heroImage: next.blogPage?.heroImage,
       }
       return next
     case 'blogPage.intro':
       next.blogPage = {
+        eyebrow: next.blogPage?.eyebrow ?? '',
         title: next.blogPage?.title ?? '',
         intro: value,
         heroImage: next.blogPage?.heroImage,
+      }
+      return next
+    case 'blogPostPage.eyebrowPrefix':
+      next.blogPostPage = {
+        eyebrowPrefix: value,
+        notFoundTitle: next.blogPostPage?.notFoundTitle ?? '',
+        notFoundIntro: next.blogPostPage?.notFoundIntro ?? '',
+        backToBlogLabel: next.blogPostPage?.backToBlogLabel ?? '',
+        startProjectLabel: next.blogPostPage?.startProjectLabel ?? '',
+        articleSectionTitle: next.blogPostPage?.articleSectionTitle ?? '',
+      }
+      return next
+    case 'blogPostPage.notFoundTitle':
+      next.blogPostPage = {
+        eyebrowPrefix: next.blogPostPage?.eyebrowPrefix ?? '',
+        notFoundTitle: value,
+        notFoundIntro: next.blogPostPage?.notFoundIntro ?? '',
+        backToBlogLabel: next.blogPostPage?.backToBlogLabel ?? '',
+        startProjectLabel: next.blogPostPage?.startProjectLabel ?? '',
+        articleSectionTitle: next.blogPostPage?.articleSectionTitle ?? '',
+      }
+      return next
+    case 'blogPostPage.notFoundIntro':
+      next.blogPostPage = {
+        eyebrowPrefix: next.blogPostPage?.eyebrowPrefix ?? '',
+        notFoundTitle: next.blogPostPage?.notFoundTitle ?? '',
+        notFoundIntro: value,
+        backToBlogLabel: next.blogPostPage?.backToBlogLabel ?? '',
+        startProjectLabel: next.blogPostPage?.startProjectLabel ?? '',
+        articleSectionTitle: next.blogPostPage?.articleSectionTitle ?? '',
+      }
+      return next
+    case 'blogPostPage.backToBlogLabel':
+      next.blogPostPage = {
+        eyebrowPrefix: next.blogPostPage?.eyebrowPrefix ?? '',
+        notFoundTitle: next.blogPostPage?.notFoundTitle ?? '',
+        notFoundIntro: next.blogPostPage?.notFoundIntro ?? '',
+        backToBlogLabel: value,
+        startProjectLabel: next.blogPostPage?.startProjectLabel ?? '',
+        articleSectionTitle: next.blogPostPage?.articleSectionTitle ?? '',
+      }
+      return next
+    case 'blogPostPage.startProjectLabel':
+      next.blogPostPage = {
+        eyebrowPrefix: next.blogPostPage?.eyebrowPrefix ?? '',
+        notFoundTitle: next.blogPostPage?.notFoundTitle ?? '',
+        notFoundIntro: next.blogPostPage?.notFoundIntro ?? '',
+        backToBlogLabel: next.blogPostPage?.backToBlogLabel ?? '',
+        startProjectLabel: value,
+        articleSectionTitle: next.blogPostPage?.articleSectionTitle ?? '',
+      }
+      return next
+    case 'blogPostPage.articleSectionTitle':
+      next.blogPostPage = {
+        eyebrowPrefix: next.blogPostPage?.eyebrowPrefix ?? '',
+        notFoundTitle: next.blogPostPage?.notFoundTitle ?? '',
+        notFoundIntro: next.blogPostPage?.notFoundIntro ?? '',
+        backToBlogLabel: next.blogPostPage?.backToBlogLabel ?? '',
+        startProjectLabel: next.blogPostPage?.startProjectLabel ?? '',
+        articleSectionTitle: value,
       }
       return next
     case 'projectDetailPage.notFoundTitle':
@@ -276,6 +368,66 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'projectDetailPage.similarWorkIntro':
       next.projectDetailPage = { ...next.projectDetailPage, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: value }
+      return next
+    case 'notFoundPage.eyebrow':
+      next.notFoundPage = {
+        eyebrow: value,
+        title: next.notFoundPage?.title ?? '',
+        intro: next.notFoundPage?.intro ?? '',
+        suggestionsEyebrow: next.notFoundPage?.suggestionsEyebrow ?? '',
+        viewProjectsLabel: next.notFoundPage?.viewProjectsLabel ?? '',
+        backHomeLabel: next.notFoundPage?.backHomeLabel ?? '',
+      }
+      return next
+    case 'notFoundPage.title':
+      next.notFoundPage = {
+        eyebrow: next.notFoundPage?.eyebrow ?? '',
+        title: value,
+        intro: next.notFoundPage?.intro ?? '',
+        suggestionsEyebrow: next.notFoundPage?.suggestionsEyebrow ?? '',
+        viewProjectsLabel: next.notFoundPage?.viewProjectsLabel ?? '',
+        backHomeLabel: next.notFoundPage?.backHomeLabel ?? '',
+      }
+      return next
+    case 'notFoundPage.intro':
+      next.notFoundPage = {
+        eyebrow: next.notFoundPage?.eyebrow ?? '',
+        title: next.notFoundPage?.title ?? '',
+        intro: value,
+        suggestionsEyebrow: next.notFoundPage?.suggestionsEyebrow ?? '',
+        viewProjectsLabel: next.notFoundPage?.viewProjectsLabel ?? '',
+        backHomeLabel: next.notFoundPage?.backHomeLabel ?? '',
+      }
+      return next
+    case 'notFoundPage.suggestionsEyebrow':
+      next.notFoundPage = {
+        eyebrow: next.notFoundPage?.eyebrow ?? '',
+        title: next.notFoundPage?.title ?? '',
+        intro: next.notFoundPage?.intro ?? '',
+        suggestionsEyebrow: value,
+        viewProjectsLabel: next.notFoundPage?.viewProjectsLabel ?? '',
+        backHomeLabel: next.notFoundPage?.backHomeLabel ?? '',
+      }
+      return next
+    case 'notFoundPage.viewProjectsLabel':
+      next.notFoundPage = {
+        eyebrow: next.notFoundPage?.eyebrow ?? '',
+        title: next.notFoundPage?.title ?? '',
+        intro: next.notFoundPage?.intro ?? '',
+        suggestionsEyebrow: next.notFoundPage?.suggestionsEyebrow ?? '',
+        viewProjectsLabel: value,
+        backHomeLabel: next.notFoundPage?.backHomeLabel ?? '',
+      }
+      return next
+    case 'notFoundPage.backHomeLabel':
+      next.notFoundPage = {
+        eyebrow: next.notFoundPage?.eyebrow ?? '',
+        title: next.notFoundPage?.title ?? '',
+        intro: next.notFoundPage?.intro ?? '',
+        suggestionsEyebrow: next.notFoundPage?.suggestionsEyebrow ?? '',
+        viewProjectsLabel: next.notFoundPage?.viewProjectsLabel ?? '',
+        backHomeLabel: value,
+      }
       return next
     default:
       return next
@@ -562,6 +714,7 @@ export const App = () => {
           const property = field.split('.')[1] as 'src' | 'alt' | 'caption'
           if (target === 'projectsPage') {
             next.projectsPage = {
+              eyebrow: next.projectsPage?.eyebrow ?? '',
               title: next.projectsPage?.title ?? '',
               intro: next.projectsPage?.intro ?? '',
               heroImage: {
@@ -574,6 +727,7 @@ export const App = () => {
 
           if (target === 'blogPage') {
             next.blogPage = {
+              eyebrow: next.blogPage?.eyebrow ?? '',
               title: next.blogPage?.title ?? '',
               intro: next.blogPage?.intro ?? '',
               heroImage: {

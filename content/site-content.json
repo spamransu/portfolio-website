@@ -26,6 +26,7 @@
     ]
   },
   "about": {
+    "eyebrow": "About",
     "title": "A designer-minded frontend practice.",
     "intro": "I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.",
     "bodySectionTitle": "How I work",
@@ -75,6 +76,7 @@
     }
   },
   "resume": {
+    "eyebrow": "CV / Resume",
     "headline": "Frontend Web Developer and Graphic Designer",
     "summary": "Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.",
     "highlightsSectionTitle": "Quick highlights",
@@ -157,8 +159,10 @@
     }
   },
   "contact": {
+    "eyebrow": "Contact",
     "title": "Let's connect!",
     "body": "If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.",
+    "emailCtaPrefix": "Email",
     "availability": "Available for freelance builds, design-to-code support, and selected frontend roles.",
     "availabilityTitle": "Availability",
     "availabilityStatusLabel": "Status",
@@ -540,6 +544,7 @@
     }
   },
   "projectsPage": {
+    "eyebrow": "Projects",
     "title": "Case studies with enough context to be useful.",
     "intro": "Selected frontend and design-to-code work, presented as short case studies with mock visuals and enough context to explain the thinking behind the build.",
     "heroImage": {
@@ -549,6 +554,7 @@
     }
   },
   "blogPage": {
+    "eyebrow": "Blog",
     "title": "Notes from build, design, and frontend delivery work.",
     "intro": "Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site.",
     "heroImage": {
@@ -567,5 +573,21 @@
     "similarWorkEyebrow": "Need something similar?",
     "similarWorkTitle": "Open for frontend and design-to-code work.",
     "similarWorkIntro": "Available for portfolio sites, landing pages, responsive cleanup, and interface implementation."
+  },
+  "blogPostPage": {
+    "eyebrowPrefix": "Blog",
+    "notFoundTitle": "Post not found",
+    "notFoundIntro": "That post is missing, unpublished, or still in draft.",
+    "backToBlogLabel": "Back to blog",
+    "startProjectLabel": "Start a project",
+    "articleSectionTitle": "Article"
+  },
+  "notFoundPage": {
+    "eyebrow": "404",
+    "title": "Page not found",
+    "intro": "That route does not exist yet, but the rest of the portfolio is still intact.",
+    "suggestionsEyebrow": "Try these instead",
+    "viewProjectsLabel": "View projects",
+    "backHomeLabel": "Back home"
   }
 }

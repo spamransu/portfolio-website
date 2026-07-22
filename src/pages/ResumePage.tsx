@@ -6,7 +6,7 @@ import sty from './InternalPages.module.scss'
 export function ResumePage() {
   return (
     <div className={`lg-wrapper ${sty.page}`}>
-      <InternalHero eyebrow="CV / Resume" title={siteContent.resume.headline} intro={siteContent.resume.summary} media={siteContent.resume.heroImage} />
+      <InternalHero eyebrow={siteContent.resume.eyebrow ?? 'CV / Resume'} title={siteContent.resume.headline} intro={siteContent.resume.summary} media={siteContent.resume.heroImage} />
 
       <Section title={siteContent.resume.highlightsSectionTitle}>
         <div className={sty.statGrid}>

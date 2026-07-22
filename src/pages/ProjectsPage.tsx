@@ -9,7 +9,7 @@ export function ProjectsPage() {
   return (
     <div className={`lg-wrapper ${sty.page}`}>
       <InternalHero
-        eyebrow="Projects"
+        eyebrow={siteContent.projectsPage?.eyebrow ?? 'Projects'}
         title={siteContent.projectsPage?.title ?? 'Case studies with enough context to be useful.'}
         intro={siteContent.projectsPage?.intro ?? 'Selected frontend and design-to-code work presented as concise case studies.'}
         media={projectsHeroImage}

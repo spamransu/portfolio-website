@@ -385,6 +385,7 @@ export const DashboardScreen = ({
           <article className="admin-panel">
             <h2>Projects page</h2>
             <div className="admin-form-grid">
+              <label className="admin-field"><span>Projects eyebrow</span><input value={workingCopy.projectsPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('projectsPage.eyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Projects title</span><input value={workingCopy.projectsPage?.title ?? ''} onChange={(event) => onFieldChange('projectsPage.title', event.target.value)} /></label>
               <label className="admin-field"><span>Projects intro</span><textarea value={workingCopy.projectsPage?.intro ?? ''} onChange={(event) => onFieldChange('projectsPage.intro', event.target.value)} /></label>
               <label className="admin-field"><span>Projects hero image src</span><input value={workingCopy.projectsPage?.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'projectsPage.src', event.target.value)} /></label>
@@ -396,11 +397,36 @@ export const DashboardScreen = ({
           <article className="admin-panel">
             <h2>Blog page</h2>
             <div className="admin-form-grid">
+              <label className="admin-field"><span>Blog eyebrow</span><input value={workingCopy.blogPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('blogPage.eyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Blog title</span><input value={workingCopy.blogPage?.title ?? ''} onChange={(event) => onFieldChange('blogPage.title', event.target.value)} /></label>
               <label className="admin-field"><span>Blog intro</span><textarea value={workingCopy.blogPage?.intro ?? ''} onChange={(event) => onFieldChange('blogPage.intro', event.target.value)} /></label>
               <label className="admin-field"><span>Blog hero image src</span><input value={workingCopy.blogPage?.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.src', event.target.value)} /></label>
               <label className="admin-field"><span>Blog hero image alt</span><input value={workingCopy.blogPage?.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.alt', event.target.value)} /></label>
               <label className="admin-field"><span>Blog hero caption</span><textarea value={workingCopy.blogPage?.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.caption', event.target.value)} /></label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
+            <h2>Blog post page</h2>
+            <div className="admin-form-grid">
+              <label className="admin-field"><span>Blog eyebrow prefix</span><input value={workingCopy.blogPostPage?.eyebrowPrefix ?? ''} onChange={(event) => onFieldChange('blogPostPage.eyebrowPrefix', event.target.value)} /></label>
+              <label className="admin-field"><span>Not found title</span><input value={workingCopy.blogPostPage?.notFoundTitle ?? ''} onChange={(event) => onFieldChange('blogPostPage.notFoundTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Not found intro</span><textarea value={workingCopy.blogPostPage?.notFoundIntro ?? ''} onChange={(event) => onFieldChange('blogPostPage.notFoundIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Back to blog label</span><input value={workingCopy.blogPostPage?.backToBlogLabel ?? ''} onChange={(event) => onFieldChange('blogPostPage.backToBlogLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Start project label</span><input value={workingCopy.blogPostPage?.startProjectLabel ?? ''} onChange={(event) => onFieldChange('blogPostPage.startProjectLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Article section title</span><input value={workingCopy.blogPostPage?.articleSectionTitle ?? ''} onChange={(event) => onFieldChange('blogPostPage.articleSectionTitle', event.target.value)} /></label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
+            <h2>404 page</h2>
+            <div className="admin-form-grid">
+              <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.notFoundPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('notFoundPage.eyebrow', event.target.value)} /></label>
+              <label className="admin-field"><span>Title</span><input value={workingCopy.notFoundPage?.title ?? ''} onChange={(event) => onFieldChange('notFoundPage.title', event.target.value)} /></label>
+              <label className="admin-field"><span>Intro</span><textarea value={workingCopy.notFoundPage?.intro ?? ''} onChange={(event) => onFieldChange('notFoundPage.intro', event.target.value)} /></label>
+              <label className="admin-field"><span>Suggestions eyebrow</span><input value={workingCopy.notFoundPage?.suggestionsEyebrow ?? ''} onChange={(event) => onFieldChange('notFoundPage.suggestionsEyebrow', event.target.value)} /></label>
+              <label className="admin-field"><span>View projects label</span><input value={workingCopy.notFoundPage?.viewProjectsLabel ?? ''} onChange={(event) => onFieldChange('notFoundPage.viewProjectsLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Back home label</span><input value={workingCopy.notFoundPage?.backHomeLabel ?? ''} onChange={(event) => onFieldChange('notFoundPage.backHomeLabel', event.target.value)} /></label>
             </div>
           </article>
 
@@ -426,6 +452,7 @@ export const DashboardScreen = ({
           <article className="admin-panel">
             <h2>About page</h2>
             <div className="admin-form-grid">
+              <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.about.eyebrow ?? ''} onChange={(event) => onFieldChange('about.eyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Title</span><input value={workingCopy.about.title} onChange={(event) => onFieldChange('about.title', event.target.value)} /></label>
               <label className="admin-field"><span>Intro</span><textarea value={workingCopy.about.intro} onChange={(event) => onFieldChange('about.intro', event.target.value)} /></label>
               <label className="admin-field"><span>Body section title</span><input value={workingCopy.about.bodySectionTitle} onChange={(event) => onFieldChange('about.bodySectionTitle', event.target.value)} /></label>
@@ -464,6 +491,7 @@ export const DashboardScreen = ({
           <article className="admin-panel">
             <h2>Resume page</h2>
             <div className="admin-form-grid">
+              <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.resume.eyebrow ?? ''} onChange={(event) => onFieldChange('resume.eyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Headline</span><input value={workingCopy.resume.headline} onChange={(event) => onFieldChange('resume.headline', event.target.value)} /></label>
               <label className="admin-field"><span>Summary</span><textarea value={workingCopy.resume.summary} onChange={(event) => onFieldChange('resume.summary', event.target.value)} /></label>
               <label className="admin-field"><span>Highlights section title</span><input value={workingCopy.resume.highlightsSectionTitle} onChange={(event) => onFieldChange('resume.highlightsSectionTitle', event.target.value)} /></label>
@@ -518,8 +546,10 @@ export const DashboardScreen = ({
           <article className="admin-panel">
             <h2>Contact page</h2>
             <div className="admin-form-grid">
+              <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.contact.eyebrow ?? ''} onChange={(event) => onFieldChange('contact.eyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Contact title</span><input value={workingCopy.contact.title} onChange={(event) => onFieldChange('contact.title', event.target.value)} /></label>
               <label className="admin-field"><span>Contact intro</span><textarea value={workingCopy.contact.body} onChange={(event) => onFieldChange('contact.body', event.target.value)} /></label>
+              <label className="admin-field"><span>Email CTA prefix</span><input value={workingCopy.contact.emailCtaPrefix ?? ''} onChange={(event) => onFieldChange('contact.emailCtaPrefix', event.target.value)} /></label>
               <label className="admin-field"><span>Availability section title</span><input value={workingCopy.contact.availabilityTitle} onChange={(event) => onFieldChange('contact.availabilityTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Availability status label</span><input value={workingCopy.contact.availabilityStatusLabel} onChange={(event) => onFieldChange('contact.availabilityStatusLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Availability location label</span><input value={workingCopy.contact.availabilityLocationLabel} onChange={(event) => onFieldChange('contact.availabilityLocationLabel', event.target.value)} /></label>
