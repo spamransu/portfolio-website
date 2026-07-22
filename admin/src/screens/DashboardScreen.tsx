@@ -1082,7 +1082,20 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || savingBlog}>Discard blog edits</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
+            <div className="admin-panel-header">
+              <div>
+                <h2>Blog editor</h2>
+                <p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p>
+              </div>
+              <div className="admin-actions">
+                {blogLoading ? <span className="admin-status">Loading…</span> : null}
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || savingBlog}>Discard blog edits</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button>
+                <button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button>
+              </div>
+            </div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Published posts + drafts</span>
