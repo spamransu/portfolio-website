@@ -875,6 +875,7 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
   const selectedProject = content.projects.find((project) => project.slug === selectedProjectSlug) ?? content.projects[0] ?? null
   const duplicateSlugs = [...slugCounts.entries()].filter(([, count]) => count > 1).map(([slug]) => slug)
   const missingFeatured = content.home.featuredProjects.slugs.filter((slug) => !slugCounts.has(slug))
+  const invalidProjectSlug = content.projects.find((project) => !project.slug || !PROJECT_SLUG_PATTERN.test(project.slug))
 
   const invalidSocial = content.site.socials.find((entry) => !entry.label.trim() || !isHttpUrl(entry.href.trim()))
   const invalidHeaderNav = content.siteChrome?.headerNav.find((entry) => !entry.label.trim() || !isInternalPath(entry.to.trim()))
@@ -886,13 +887,13 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
   const contactMessageLimit = content.contact.form.messageLimit
 
   return {
-    selectedProject: selectedProject
-      ? !selectedProject.slug || !PROJECT_SLUG_PATTERN.test(selectedProject.slug)
-        ? 'Project slug must use lowercase letters, numbers, and hyphens only.'
-        : duplicateSlugs.includes(selectedProject.slug)
-          ? `Project slug must be unique. Duplicate slug: ${selectedProject.slug}.`
-          : undefined
-      : undefined,
+    selectedProject: invalidProjectSlug
+      ? `Project slug must use lowercase letters, numbers, and hyphens only. Check: ${invalidProjectSlug.slug || '(empty slug)'}.`
+      : selectedProject && duplicateSlugs.includes(selectedProject.slug)
+        ? `Project slug must be unique. Duplicate slug: ${selectedProject.slug}.`
+        : duplicateSlugs[0]
+          ? `Project slug must be unique. Duplicate slug: ${duplicateSlugs[0]}.`
+          : undefined,
     featuredProjects: missingFeatured.length
       ? `Featured project slugs must match existing projects. Missing: ${missingFeatured.join(', ')}.`
       : undefined,
