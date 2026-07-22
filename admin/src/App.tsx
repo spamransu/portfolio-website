@@ -1008,6 +1008,19 @@ const getAuthMessageFromUrl = (): { kind: 'error' | 'success'; message: string }
   return { kind, message }
 }
 
+const getUnsavedChangesSummary = (dirty: boolean, blogDirty: boolean): string => {
+  if (dirty && blogDirty) return 'Site content and blog edits'
+  if (dirty) return 'Site content only'
+  if (blogDirty) return 'Blog edits only'
+  return 'No'
+}
+
+const getLogoutDiscardMessage = (dirty: boolean, blogDirty: boolean): string => {
+  if (dirty && blogDirty) return 'You have unsaved site content and blog edits. Log out and discard them?'
+  if (dirty) return 'You have unsaved site content changes. Log out and discard them?'
+  return 'You have unsaved blog edits. Log out and discard them?'
+}
+
 export const App = () => {
   const initialAuthMessage = getAuthMessageFromUrl()
   const [session, setSession] = useState<AdminSession>(DEFAULT_SESSION)
@@ -1198,7 +1211,7 @@ export const App = () => {
   }
 
   const handleLogout = async () => {
-    if ((dirty || blogDirty) && !confirmDiscardChanges('You have unsaved content changes. Log out and discard them?')) {
+    if ((dirty || blogDirty) && !confirmDiscardChanges(getLogoutDiscardMessage(dirty, blogDirty))) {
       return
     }
 
@@ -1956,6 +1969,7 @@ export const App = () => {
       mediaTargetKey: mediaTarget?.key ?? '',
       mediaTargetLabel: mediaTarget?.label ?? null,
       siteBranch: siteContent?.branch ?? selectedBlogPost?.branch ?? blogList?.branch ?? null,
+      unsavedChangesSummary: getUnsavedChangesSummary(dirty, blogDirty),
       siteUrl: workingCopy?.site.siteUrl ?? siteContent?.content.site.siteUrl ?? '',
       siteConflict,
       onBlogFieldChange: handleBlogFieldChange,

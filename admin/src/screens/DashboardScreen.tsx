@@ -175,6 +175,7 @@ interface DashboardScreenProps {
   saving: boolean
   savingBlog: boolean
   siteBranch: string | null
+  unsavedChangesSummary: string
   siteUrl: string
   selectedBlogSlug: string
   selectedExperience: Job | null
@@ -322,6 +323,7 @@ export const DashboardScreen = ({
   saving,
   savingBlog,
   siteBranch,
+  unsavedChangesSummary,
   siteUrl,
   selectedBlogSlug,
   selectedExperience,
@@ -522,7 +524,7 @@ export const DashboardScreen = ({
             <div><dt>Status</dt><dd>{session?.authenticated ? 'Authenticated' : 'Signed out'}</dd></div>
             <div><dt>GitHub login</dt><dd>{session?.login ?? '—'}</dd></div>
             <div><dt>Expires</dt><dd>{session?.expiresAt ?? '—'}</dd></div>
-            <div><dt>Unsaved changes</dt><dd>{dirty || blogDirty ? 'Yes' : 'No'}</dd></div>
+            <div><dt>Unsaved changes</dt><dd>{unsavedChangesSummary}</dd></div>
           </dl>
         </article>
 
