@@ -228,19 +228,6 @@ $effects: (
   target-min-size: 44px,
 ) !default;
 
-$component-tokens: (
-  button-padding: space(xs) space(sm),
-  button-radius: radius(pill),
-  button-gap: space(xs),
-  card-padding: space(sm),
-  card-radius: radius(lg),
-  form-padding: space(sm),
-  form-field-padding: space(xs),
-  form-field-radius: radius(sm),
-  tag-padding: space(2xs) space(xs),
-  social-icon-padding-inline: space(hairline),
-) !default;
-
 $max-width: 1312px !default;
 
 @function color($key) {
@@ -308,5 +295,45 @@ $max-width: 1312px !default;
 }
 
 @function component-token($key) {
-  @return map.get($component-tokens, $key);
+  @if $key == button-padding {
+    @return space(xs) space(sm);
+  }
+
+  @if $key == button-radius {
+    @return radius(pill);
+  }
+
+  @if $key == button-gap {
+    @return space(xs);
+  }
+
+  @if $key == card-padding {
+    @return space(sm);
+  }
+
+  @if $key == card-radius {
+    @return radius(lg);
+  }
+
+  @if $key == form-padding {
+    @return space(sm);
+  }
+
+  @if $key == form-field-padding {
+    @return space(xs);
+  }
+
+  @if $key == form-field-radius {
+    @return radius(sm);
+  }
+
+  @if $key == tag-padding {
+    @return space(2xs) space(xs);
+  }
+
+  @if $key == social-icon-padding-inline {
+    @return space(hairline);
+  }
+
+  @error 'Unknown component token: #{$key}';
 }
