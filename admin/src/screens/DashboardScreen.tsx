@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { AdminRepoInfo, AdminSession, SiteContentResponse } from '../api/adminApi'
 import { parseBlogMarkdownBlocks } from '../../../src/content/blogMarkdown'
 import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, HomeStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
@@ -11,6 +12,40 @@ export type MediaTargetSelection = {
   field: string
   scope?: string
   index?: number
+}
+
+type AssignedImagePreviewProps = {
+  alt?: string | null
+  caption?: string | null
+  label: string
+  previewUrl: string
+}
+
+const AssignedImagePreview = ({ alt, caption, label, previewUrl }: AssignedImagePreviewProps) => {
+  const [failed, setFailed] = useState(false)
+
+  return (
+    <div className="admin-media-preview admin-media-preview--field">
+      <div className="admin-panel-header">
+        <div>
+          <p className="admin-kicker">Current image preview</p>
+          <h3>{label}</h3>
+        </div>
+        <div className="admin-actions">
+          <a className="admin-button admin-button-secondary" href={previewUrl} target="_blank" rel="noreferrer">Open image</a>
+        </div>
+      </div>
+      {failed ? (
+        <div className="admin-media-preview-error">
+          <p className="admin-note">Preview unavailable for this image path.</p>
+          <p className="admin-note admin-code">{previewUrl}</p>
+        </div>
+      ) : (
+        <img className="admin-media-preview-image" src={previewUrl} alt={alt || label} onError={() => setFailed(true)} />
+      )}
+      {caption ? <p className="admin-note">{caption}</p> : null}
+    </div>
+  )
 }
 
 interface DashboardScreenProps {
@@ -237,21 +272,7 @@ export const DashboardScreen = ({
     const previewUrl = resolvePreviewUrl(src)
     if (!previewUrl) return null
 
-    return (
-      <div className="admin-media-preview admin-media-preview--field">
-        <div className="admin-panel-header">
-          <div>
-            <p className="admin-kicker">Current image preview</p>
-            <h3>{label}</h3>
-          </div>
-          <div className="admin-actions">
-            <a className="admin-button admin-button-secondary" href={previewUrl} target="_blank" rel="noreferrer">Open image</a>
-          </div>
-        </div>
-        <img className="admin-media-preview-image" src={previewUrl} alt={alt || label} />
-        {caption ? <p className="admin-note">{caption}</p> : null}
-      </div>
-    )
+    return <AssignedImagePreview label={label} previewUrl={previewUrl} alt={alt} caption={caption} />
   }
 
   return (

@@ -283,3 +283,13 @@ button {
 .admin-media-preview--field {
   margin-top: 0.5rem;
 }
+
+
+.admin-media-preview-error {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px dashed rgba(255, 205, 92, 0.4);
+  border-radius: 0.9rem;
+  background: rgba(255, 205, 92, 0.08);
+}
