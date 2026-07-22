@@ -386,10 +386,10 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   const homeStats = home.stats
 
   if (!isRecord(homeCta) || typeof homeCta.primaryLabel !== 'string' || typeof homeCta.secondaryLabel !== 'string') return false
-  if (!isRecord(featuredProjects) || !['title', 'intro', 'fallbackLabel', 'fallbackDescription'].every((key) => typeof featuredProjects[key] === 'string') || !isStringArray(featuredProjects.slugs)) return false
+  if (!isRecord(featuredProjects) || !['title', 'intro', 'fallbackLabel', 'fallbackDescription'].every((key) => typeof featuredProjects[key] === 'string') || (featuredProjects.stackAriaTemplate !== undefined && typeof featuredProjects.stackAriaTemplate !== 'string') || !isStringArray(featuredProjects.slugs)) return false
   if (!isRecord(homeBio) || typeof homeBio.eyebrow !== 'string' || typeof homeBio.description !== 'string' || !isStringArray(homeBio.titleLines)) return false
   if (!Array.isArray(homeStats) || !homeStats.every((entry) => isRecord(entry) && typeof entry.value === 'string' && typeof entry.label === 'string' && ['accent', 'accent-2', 'accent-3'].includes(`${entry.tone}`))) return false
-  if (!isRecord(homeSkills) || typeof homeSkills.title !== 'string' || typeof homeSkills.description !== 'string' || !isStringArray(homeSkills.items)) return false
+  if (!isRecord(homeSkills) || typeof homeSkills.title !== 'string' || typeof homeSkills.description !== 'string' || (homeSkills.cloudAriaLabel !== undefined && typeof homeSkills.cloudAriaLabel !== 'string') || !isStringArray(homeSkills.items)) return false
   if (!isRecord(homeContact) || !['title', 'intro', 'submitLabel', 'nameLabel', 'emailLabel', 'messageLabel', 'namePlaceholder', 'emailPlaceholder', 'messagePlaceholder', 'nameRequiredError', 'emailRequiredError', 'emailInvalidError', 'messageRequiredError', 'messageTooLongError', 'messageCountTemplate', 'mailtoSubjectTemplate', 'mailtoNameLabel', 'mailtoEmailLabel', 'mailtoMessageLabel'].every((key) => typeof homeContact[key] === 'string') || typeof homeContact.messageLimit !== 'number') return false
 
   if (!['title', 'intro', 'bodySectionTitle', 'processSectionTitle', 'processSectionIntro', 'principlesSectionTitle', 'toolsSectionTitle'].every((key) => typeof about[key] === 'string') || (about.eyebrow !== undefined && typeof about.eyebrow !== 'string') || !isStringArray(about.body) || !isStringArray(about.principles) || !Array.isArray(about.process) || !about.process.every((entry) => isRecord(entry) && typeof entry.title === 'string' && typeof entry.description === 'string') || !isStringArray(about.tools)) {
@@ -415,6 +415,8 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
       || (value.projectsPage.eyebrow !== undefined && typeof value.projectsPage.eyebrow !== 'string')
       || typeof value.projectsPage.title !== 'string'
       || typeof value.projectsPage.intro !== 'string'
+      || (value.projectsPage.roleLabelPrefix !== undefined && typeof value.projectsPage.roleLabelPrefix !== 'string')
+      || (value.projectsPage.stackAriaTemplate !== undefined && typeof value.projectsPage.stackAriaTemplate !== 'string')
       || (value.projectsPage.heroImage !== undefined && !isImageAsset(value.projectsPage.heroImage))
     )
   ) return false

@@ -375,6 +375,9 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'home.featuredProjects.fallbackDescription':
       next.home.featuredProjects.fallbackDescription = value
       return next
+    case 'home.featuredProjects.stackAriaTemplate':
+      next.home.featuredProjects.stackAriaTemplate = value
+      return next
     case 'home.bio.eyebrow':
       next.home.bio.eyebrow = value
       return next
@@ -392,6 +395,9 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'home.skills.items':
       next.home.skills.items = splitLines(value)
+      return next
+    case 'home.skills.cloudAriaLabel':
+      next.home.skills.cloudAriaLabel = value
       return next
     case 'home.contact.title':
       next.home.contact.title = value
@@ -563,6 +569,8 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
         eyebrow: next.projectsPage?.eyebrow ?? '',
         title: value,
         intro: next.projectsPage?.intro ?? '',
+        roleLabelPrefix: next.projectsPage?.roleLabelPrefix ?? '',
+        stackAriaTemplate: next.projectsPage?.stackAriaTemplate ?? '',
         heroImage: next.projectsPage?.heroImage,
       }
       return next
@@ -571,6 +579,8 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
         eyebrow: value,
         title: next.projectsPage?.title ?? '',
         intro: next.projectsPage?.intro ?? '',
+        roleLabelPrefix: next.projectsPage?.roleLabelPrefix ?? '',
+        stackAriaTemplate: next.projectsPage?.stackAriaTemplate ?? '',
         heroImage: next.projectsPage?.heroImage,
       }
       return next
@@ -579,6 +589,28 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
         eyebrow: next.projectsPage?.eyebrow ?? '',
         title: next.projectsPage?.title ?? '',
         intro: value,
+        roleLabelPrefix: next.projectsPage?.roleLabelPrefix ?? '',
+        stackAriaTemplate: next.projectsPage?.stackAriaTemplate ?? '',
+        heroImage: next.projectsPage?.heroImage,
+      }
+      return next
+    case 'projectsPage.roleLabelPrefix':
+      next.projectsPage = {
+        eyebrow: next.projectsPage?.eyebrow ?? '',
+        title: next.projectsPage?.title ?? '',
+        intro: next.projectsPage?.intro ?? '',
+        roleLabelPrefix: value,
+        stackAriaTemplate: next.projectsPage?.stackAriaTemplate ?? '',
+        heroImage: next.projectsPage?.heroImage,
+      }
+      return next
+    case 'projectsPage.stackAriaTemplate':
+      next.projectsPage = {
+        eyebrow: next.projectsPage?.eyebrow ?? '',
+        title: next.projectsPage?.title ?? '',
+        intro: next.projectsPage?.intro ?? '',
+        roleLabelPrefix: next.projectsPage?.roleLabelPrefix ?? '',
+        stackAriaTemplate: value,
         heroImage: next.projectsPage?.heroImage,
       }
       return next

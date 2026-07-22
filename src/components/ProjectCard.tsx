@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import type { Project } from '../content/siteContent'
+import { siteContent, type Project } from '../content/siteContent'
 import sty from './ProjectCard.module.scss'
 
 type ProjectCardProps = {
@@ -7,6 +7,9 @@ type ProjectCardProps = {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const roleLabelPrefix = siteContent.projectsPage?.roleLabelPrefix ?? 'Role'
+  const stackAriaLabel = (siteContent.projectsPage?.stackAriaTemplate ?? '{title} technologies').replace('{title}', project.title)
+
   return (
     <article className={sty.root}>
       <Link to={`/projects/${project.slug}`} className={sty.imageLink}>
@@ -22,8 +25,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <Link to={`/projects/${project.slug}`}>{project.title}</Link>
         </h2>
         <p>{project.summary}</p>
-        <p className={sty.role}>Role: {project.role}</p>
-        <ul className="tag-list" aria-label={`${project.title} technologies`}>
+        <p className={sty.role}>{roleLabelPrefix}: {project.role}</p>
+        <ul className="tag-list" aria-label={stackAriaLabel}>
           {project.stack.map((item) => (
             <li key={item}>{item}</li>
           ))}

@@ -82,7 +82,7 @@ export function HomePage() {
                       </p>
                       <p className={sty.projectSummary}>{project.summary}</p>
                     </div>
-                    <ul className={sty.stackList} aria-label={`${project.title} stack`}>
+                    <ul className={sty.stackList} aria-label={(siteContent.home.featuredProjects.stackAriaTemplate ?? '{title} stack').replace('{title}', project.title)}>
                       {project.stack.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
@@ -124,7 +124,7 @@ export function HomePage() {
       <section className={sty.section}>
         <div className="lg-wrapper">
           <div className={sty.skillsSection}>
-            <div className={sty.skillsCloud} aria-label="Skills cloud">
+            <div className={sty.skillsCloud} aria-label={siteContent.home.skills.cloudAriaLabel ?? 'Skills cloud'}>
               {skillCloudRows.map((row, rowIndex) => (
                 <div key={`skill-row-${rowIndex}`} className={sty.skillRow}>
                   {row.map((skill, skillIndex) => (

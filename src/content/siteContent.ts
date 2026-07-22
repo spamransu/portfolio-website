@@ -141,6 +141,7 @@ export type SiteContent = {
       slugs: string[]
       fallbackLabel: string
       fallbackDescription: string
+      stackAriaTemplate?: string
     }
     bio: {
       eyebrow: string
@@ -152,6 +153,7 @@ export type SiteContent = {
       title: string
       description: string
       items: string[]
+      cloudAriaLabel?: string
     }
     contact: ContactFormContent
   }
@@ -203,6 +205,8 @@ export type SiteContent = {
     eyebrow?: string
     title: string
     intro: string
+    roleLabelPrefix?: string
+    stackAriaTemplate?: string
     heroImage?: ImageAsset
   }
   blogPage?: {

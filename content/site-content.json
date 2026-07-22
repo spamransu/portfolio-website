@@ -582,7 +582,8 @@
         "tetherly"
       ],
       "fallbackLabel": "",
-      "fallbackDescription": ""
+      "fallbackDescription": "",
+      "stackAriaTemplate": "{title} stack"
     },
     "bio": {
       "eyebrow": "Lance S. Carteciano",
@@ -620,7 +621,8 @@
         "MongoDB",
         "Stripe API",
         "GraphQL"
-      ]
+      ],
+      "cloudAriaLabel": "Skills cloud"
     },
     "contact": {
       "title": "LET'S CONNECT!",
@@ -653,7 +655,9 @@
       "src": "https://picsum.photos/seed/portfolio-projects-grid/1600/1100.jpg",
       "alt": "Mock overview board showing portfolio project cards and visual case-study panels.",
       "caption": "Mock overview for the internal projects archive."
-    }
+    },
+    "roleLabelPrefix": "Role",
+    "stackAriaTemplate": "{title} technologies"
   },
   "blogPage": {
     "eyebrow": "Blog",
