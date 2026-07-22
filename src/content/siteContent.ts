@@ -47,6 +47,10 @@ export type ContactFormContent = {
   messageRequiredError: string
   messageTooLongError: string
   messageCountTemplate: string
+  mailtoSubjectTemplate: string
+  mailtoNameLabel: string
+  mailtoEmailLabel: string
+  mailtoMessageLabel: string
 }
 
 export type HighlightStat = {
@@ -219,6 +223,11 @@ export type SiteContent = {
     backToProjectsLabel: string
     startProjectLabel: string
     snapshotTitle: string
+    roleLabel: string
+    clientLabel: string
+    yearLabel: string
+    stackLabel: string
+    stackAriaTemplate: string
     galleryTitle: string
     galleryIntro: string
     nextProjectEyebrow: string

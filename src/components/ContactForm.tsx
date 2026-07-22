@@ -21,13 +21,13 @@ const initialFormState: ContactFormState = {
   message: '',
 }
 
-function buildMailtoHref(values: ContactFormState, recipientEmail: string) {
-  const subject = `Portfolio inquiry from ${values.name}`
+function buildMailtoHref(values: ContactFormState, recipientEmail: string, contact: ContactFormContent) {
+  const subject = contact.mailtoSubjectTemplate.replace('{name}', values.name)
   const body = [
-    `Name: ${values.name}`,
-    `Email: ${values.email}`,
+    `${contact.mailtoNameLabel}: ${values.name}`,
+    `${contact.mailtoEmailLabel}: ${values.email}`,
     '',
-    'Message:',
+    `${contact.mailtoMessageLabel}:`,
     values.message,
   ].join('\n')
 
@@ -101,6 +101,7 @@ export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
         message: formValues.message.trim(),
       },
       recipientEmail,
+      contact,
     )
   }
 

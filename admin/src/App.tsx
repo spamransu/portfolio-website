@@ -76,6 +76,28 @@ const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse =>
   sha: '',
 })
 
+const normalizeProjectDetailPage = (value?: SiteContent['projectDetailPage']) => ({
+  eyebrow: value?.eyebrow ?? '',
+  notFoundTitle: value?.notFoundTitle ?? '',
+  notFoundIntro: value?.notFoundIntro ?? '',
+  backToProjectsLabel: value?.backToProjectsLabel ?? '',
+  startProjectLabel: value?.startProjectLabel ?? '',
+  snapshotTitle: value?.snapshotTitle ?? '',
+  roleLabel: value?.roleLabel ?? '',
+  clientLabel: value?.clientLabel ?? '',
+  yearLabel: value?.yearLabel ?? '',
+  stackLabel: value?.stackLabel ?? '',
+  stackAriaTemplate: value?.stackAriaTemplate ?? '',
+  galleryTitle: value?.galleryTitle ?? '',
+  galleryIntro: value?.galleryIntro ?? '',
+  nextProjectEyebrow: value?.nextProjectEyebrow ?? '',
+  nextProjectLabel: value?.nextProjectLabel ?? '',
+  similarWorkEyebrow: value?.similarWorkEyebrow ?? '',
+  similarWorkTitle: value?.similarWorkTitle ?? '',
+  similarWorkIntro: value?.similarWorkIntro ?? '',
+  similarWorkLabel: value?.similarWorkLabel ?? '',
+})
+
 const updateWorkingCopy = (content: SiteContent, field: string, value: string): SiteContent => {
   const next = structuredClone(content)
 
@@ -414,6 +436,18 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'home.contact.messageCountTemplate':
       next.home.contact.messageCountTemplate = value
       return next
+    case 'home.contact.mailtoSubjectTemplate':
+      next.home.contact.mailtoSubjectTemplate = value
+      return next
+    case 'home.contact.mailtoNameLabel':
+      next.home.contact.mailtoNameLabel = value
+      return next
+    case 'home.contact.mailtoEmailLabel':
+      next.home.contact.mailtoEmailLabel = value
+      return next
+    case 'home.contact.mailtoMessageLabel':
+      next.home.contact.mailtoMessageLabel = value
+      return next
     case 'about.intro':
       next.about.intro = value
       return next
@@ -494,6 +528,18 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'contact.form.messageCountTemplate':
       next.contact.form.messageCountTemplate = value
+      return next
+    case 'contact.form.mailtoSubjectTemplate':
+      next.contact.form.mailtoSubjectTemplate = value
+      return next
+    case 'contact.form.mailtoNameLabel':
+      next.contact.form.mailtoNameLabel = value
+      return next
+    case 'contact.form.mailtoEmailLabel':
+      next.contact.form.mailtoEmailLabel = value
+      return next
+    case 'contact.form.mailtoMessageLabel':
+      next.contact.form.mailtoMessageLabel = value
       return next
     case 'contact.formSectionTitle':
       next.contact.formSectionTitle = value
@@ -616,46 +662,61 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       }
       return next
     case 'projectDetailPage.notFoundTitle':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: value, notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), notFoundTitle: value }
       return next
     case 'projectDetailPage.eyebrow':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: value, notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), eyebrow: value }
       return next
     case 'projectDetailPage.notFoundIntro':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: value, backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), notFoundIntro: value }
       return next
     case 'projectDetailPage.backToProjectsLabel':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: value, startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), backToProjectsLabel: value }
       return next
     case 'projectDetailPage.startProjectLabel':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: value, snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), startProjectLabel: value }
       return next
     case 'projectDetailPage.snapshotTitle':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: value, galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), snapshotTitle: value }
+      return next
+    case 'projectDetailPage.roleLabel':
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), roleLabel: value }
+      return next
+    case 'projectDetailPage.clientLabel':
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), clientLabel: value }
+      return next
+    case 'projectDetailPage.yearLabel':
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), yearLabel: value }
+      return next
+    case 'projectDetailPage.stackLabel':
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), stackLabel: value }
+      return next
+    case 'projectDetailPage.stackAriaTemplate':
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), stackAriaTemplate: value }
       return next
     case 'projectDetailPage.galleryTitle':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: value, galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), galleryTitle: value }
       return next
     case 'projectDetailPage.galleryIntro':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: value, nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), galleryIntro: value }
       return next
     case 'projectDetailPage.nextProjectEyebrow':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: value, nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), nextProjectEyebrow: value }
       return next
     case 'projectDetailPage.nextProjectLabel':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: value, similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), nextProjectLabel: value }
       return next
     case 'projectDetailPage.similarWorkEyebrow':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: value, similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), similarWorkEyebrow: value }
       return next
     case 'projectDetailPage.similarWorkTitle':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: value, similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), similarWorkTitle: value }
       return next
     case 'projectDetailPage.similarWorkIntro':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: value, similarWorkLabel: next.projectDetailPage?.similarWorkLabel ?? '' }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), similarWorkIntro: value }
       return next
     case 'projectDetailPage.similarWorkLabel':
-      next.projectDetailPage = { ...next.projectDetailPage, eyebrow: next.projectDetailPage?.eyebrow ?? '', notFoundTitle: next.projectDetailPage?.notFoundTitle ?? '', notFoundIntro: next.projectDetailPage?.notFoundIntro ?? '', backToProjectsLabel: next.projectDetailPage?.backToProjectsLabel ?? '', startProjectLabel: next.projectDetailPage?.startProjectLabel ?? '', snapshotTitle: next.projectDetailPage?.snapshotTitle ?? '', galleryTitle: next.projectDetailPage?.galleryTitle ?? '', galleryIntro: next.projectDetailPage?.galleryIntro ?? '', nextProjectEyebrow: next.projectDetailPage?.nextProjectEyebrow ?? '', nextProjectLabel: next.projectDetailPage?.nextProjectLabel ?? '', similarWorkEyebrow: next.projectDetailPage?.similarWorkEyebrow ?? '', similarWorkTitle: next.projectDetailPage?.similarWorkTitle ?? '', similarWorkIntro: next.projectDetailPage?.similarWorkIntro ?? '', similarWorkLabel: value }
+      next.projectDetailPage = { ...normalizeProjectDetailPage(next.projectDetailPage), similarWorkLabel: value }
       return next
     case 'notFoundPage.eyebrow':
       next.notFoundPage = {

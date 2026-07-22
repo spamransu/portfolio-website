@@ -45,21 +45,21 @@ export function ProjectDetailPage() {
       <Section title={detailCopy?.snapshotTitle ?? 'Project snapshot'} intro={project.challenge}>
         <dl className={sty.snapshotGrid}>
           <div className={sty.snapshotCard}>
-            <dt>Role</dt>
+            <dt>{detailCopy?.roleLabel ?? 'Role'}</dt>
             <dd>{project.role}</dd>
           </div>
           <div className={sty.snapshotCard}>
-            <dt>Client</dt>
+            <dt>{detailCopy?.clientLabel ?? 'Client'}</dt>
             <dd>{project.client}</dd>
           </div>
           <div className={sty.snapshotCard}>
-            <dt>Year</dt>
+            <dt>{detailCopy?.yearLabel ?? 'Year'}</dt>
             <dd>{project.year}</dd>
           </div>
           <div className={sty.snapshotCard}>
-            <dt>Stack</dt>
+            <dt>{detailCopy?.stackLabel ?? 'Stack'}</dt>
             <dd>
-              <ul className={sty.snapshotStack} aria-label={`${project.title} stack`}>
+              <ul className={sty.snapshotStack} aria-label={(detailCopy?.stackAriaTemplate ?? '{title} stack').replace('{title}', project.title)}>
                 {project.stack.map((item) => (
                   <li key={item}>{item}</li>
                 ))}

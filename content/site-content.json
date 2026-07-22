@@ -241,7 +241,11 @@
       "emailInvalidError": "Please enter a valid email address.",
       "messageRequiredError": "Please add a short message.",
       "messageTooLongError": "Please keep the message under {limit} characters.",
-      "messageCountTemplate": "{count}/{limit} characters"
+      "messageCountTemplate": "{count}/{limit} characters",
+      "mailtoSubjectTemplate": "Portfolio inquiry from {name}",
+      "mailtoNameLabel": "Name",
+      "mailtoEmailLabel": "Email",
+      "mailtoMessageLabel": "Message"
     },
     "formSectionTitle": "Send a project brief",
     "formSectionIntro": "Use the form if you want to draft the email with the main details already filled in.",
@@ -622,7 +626,11 @@
       "emailInvalidError": "Please enter a valid email address.",
       "messageRequiredError": "Please add a short message.",
       "messageTooLongError": "Please keep the message under {limit} characters.",
-      "messageCountTemplate": "{count}/{limit} characters"
+      "messageCountTemplate": "{count}/{limit} characters",
+      "mailtoSubjectTemplate": "Portfolio inquiry from {name}",
+      "mailtoNameLabel": "Name",
+      "mailtoEmailLabel": "Email",
+      "mailtoMessageLabel": "Message"
     }
   },
   "projectsPage": {
@@ -659,7 +667,12 @@
     "similarWorkEyebrow": "Need something similar?",
     "similarWorkTitle": "Open for frontend and design-to-code work.",
     "similarWorkIntro": "Available for portfolio sites, landing pages, responsive cleanup, and interface implementation.",
-    "similarWorkLabel": "Contact me"
+    "similarWorkLabel": "Contact me",
+    "roleLabel": "Role",
+    "clientLabel": "Client",
+    "yearLabel": "Year",
+    "stackLabel": "Stack",
+    "stackAriaTemplate": "{title} stack"
   },
   "blogPostPage": {
     "eyebrowPrefix": "Blog",
