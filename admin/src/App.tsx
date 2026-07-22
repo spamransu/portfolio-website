@@ -966,13 +966,15 @@ export const App = () => {
     }
   }, [])
 
-  const loadBlogList = useCallback(async () => {
+  const loadBlogList = useCallback(async (preferredSlug?: string) => {
     try {
       const response = await adminApi.getBlogPosts()
       setBlogList(response)
-      const firstSlug = response.posts[0]?.slug ?? ''
-      if (firstSlug) {
-        await loadBlogPost(firstSlug)
+      const nextSlug = (preferredSlug && response.posts.some((post) => post.slug === preferredSlug)
+        ? preferredSlug
+        : response.posts[0]?.slug) ?? ''
+      if (nextSlug) {
+        await loadBlogPost(nextSlug)
       } else {
         setSelectedBlogSlug('')
         setSelectedBlogPost(null)
@@ -1419,7 +1421,14 @@ export const App = () => {
   }, [siteContent, workingCopy])
 
   const handleBlogFieldChange = useCallback((field: string, value: string) => {
-    setSelectedBlogPost((current) => (current ? { ...current, post: updateBlogPost(current.post, field, value) } : current))
+    setSelectedBlogPost((current) => {
+      if (!current) return current
+      const post = updateBlogPost(current.post, field, value)
+      if (field === 'slug') {
+        setMediaSlug(post.slug)
+      }
+      return { ...current, post }
+    })
     setBlogStatus(null)
     setBlogConflict(null)
     setError(null)
@@ -1432,10 +1441,10 @@ export const App = () => {
 
   const blogDirty = useMemo(() => {
     if (!selectedBlogPost) return false
-    const original = blogList?.posts.find((post) => post.slug === selectedBlogPost.post.slug)
+    const original = blogList?.posts.find((post) => post.slug === selectedBlogSlug)
     if (!original) return true
     return JSON.stringify({ ...original, body: selectedBlogPost.post.body }) !== JSON.stringify(selectedBlogPost.post)
-  }, [blogList, selectedBlogPost])
+  }, [blogList, selectedBlogPost, selectedBlogSlug])
 
   const handleBlogSave = useCallback(async () => {
     if (!blogList || !selectedBlogPost) return
@@ -1446,14 +1455,17 @@ export const App = () => {
     setBlogConflict(null)
 
     try {
-      const response = await adminApi.saveBlogPost(selectedBlogPost.post.slug, {
+      const requestSlug = selectedBlogPost.post.sha ? selectedBlogSlug : selectedBlogPost.post.slug
+      const response = await adminApi.saveBlogPost(requestSlug, {
         branch: blogList.branch,
         commitMessage: `feat(blog): update ${selectedBlogPost.post.slug} from admin`,
         post: selectedBlogPost.post,
         sha: selectedBlogPost.post.sha,
       })
 
+      setSelectedBlogSlug(response.post.slug)
       setSelectedBlogPost({ branch: response.branch, post: response.post, repo: response.repo })
+      setMediaSlug(response.post.slug)
       setBlogActivity({
         latestCommitSha: response.latestCommitSha,
         path: response.post.path,
@@ -1461,7 +1473,7 @@ export const App = () => {
         summary: `Saved ${response.post.slug}`,
       })
       setBlogStatus(`Saved blog post at ${response.latestCommitSha ?? response.post.sha}.`)
-      await loadBlogList()
+      await loadBlogList(response.post.slug)
     } catch (saveError) {
       const apiError = saveError as AdminApiError
       setBlogConflict(

@@ -730,6 +730,8 @@ const slugFromBlogFilename = (filename: string): string | null => {
   return match?.[1] ?? null
 }
 
+const buildBlogPostRepoPath = (post: Pick<BlogPost, 'date' | 'slug'>): string => `${BLOG_CONTENT_DIR}/${post.date}-${post.slug}.md`
+
 const loadGitHubBlogPostBySlug = async (env: Env, accessToken: string, branch: string, slug: string): Promise<BlogPostResponse | null> => {
   const entries = await listGitHubBlogEntries(env, accessToken, branch)
   const entry = entries.find((candidate) => slugFromBlogFilename(candidate.name) === slug)
@@ -1093,9 +1095,6 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
   if (!validateBlogPost(body.post)) {
     return jsonResponse({ error: 'Blog post payload failed validation.' }, { status: 400 })
   }
-  if (body.post.slug !== slug) {
-    return jsonResponse({ error: 'Slug renames are not supported yet.' }, { status: 400 })
-  }
 
   const existingPost = await loadGitHubBlogPostBySlug(env, session.accessToken, branch, slug)
   if (existingPost && typeof body.sha !== 'string') {
@@ -1111,12 +1110,24 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
     )
   }
 
-  const targetPath = existingPost?.path ?? `${BLOG_CONTENT_DIR}/${body.post.date}-${body.post.slug}.md`
+  const targetPath = buildBlogPostRepoPath(body.post)
+  const isRename = Boolean(existingPost && existingPost.path !== targetPath)
+
+  if (isRename) {
+    const targetFile = await readGitHubFileIfExists(env, session.accessToken, branch, targetPath)
+    if (targetFile && targetFile.path !== existingPost?.path) {
+      return jsonResponse(
+        { error: 'Another blog post already exists at the target slug/date path.' },
+        { status: 409 },
+      )
+    }
+  }
+
   const updatePayload: GitHubUpdateContentRequest = {
     branch,
     content: toBase64(serializeBlogPost(body.post)),
     message: sanitizeCommitMessage(body.commitMessage, DEFAULT_BLOG_COMMIT_MESSAGE),
-    ...(existingPost ? { sha: existingPost.sha } : {}),
+    ...(existingPost && !isRename ? { sha: existingPost.sha } : {}),
   }
 
   const updateResponse = await fetchGitHubJson<GitHubUpdateContentResponse>(
@@ -1131,14 +1142,40 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
     },
   )
 
+  let latestCommitSha = updateResponse.commit?.sha ?? null
+
+  if (existingPost && isRename) {
+    const deletePayload: GitHubDeleteContentRequest = {
+      branch,
+      message: sanitizeCommitMessage(`feat(blog): rename ${slug} to ${body.post.slug}`, DEFAULT_BLOG_DELETE_COMMIT_MESSAGE),
+      sha: existingPost.sha,
+    }
+
+    const deleteResponse = await fetchGitHubJson<GitHubUpdateContentResponse>(
+      `${getRepoBase(env)}/contents/${existingPost.path}`,
+      {
+        method: 'DELETE',
+        headers: {
+          ...getGitHubHeaders(session.accessToken),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(deletePayload),
+      },
+    )
+
+    latestCommitSha = deleteResponse.commit?.sha ?? latestCommitSha
+  }
+
+  const savedPost = await loadGitHubBlogPostBySlug(env, session.accessToken, branch, body.post.slug)
+
   return jsonResponse({
     branch,
-    post: {
+    post: savedPost ?? {
       ...body.post,
       path: updateResponse.content?.path ?? targetPath,
       sha: updateResponse.content?.sha ?? existingPost?.sha ?? '',
     },
-    latestCommitSha: updateResponse.commit?.sha ?? null,
+    latestCommitSha,
     repo: getAdminRepoInfo(env, branch),
   })
 }
