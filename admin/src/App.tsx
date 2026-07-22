@@ -1561,6 +1561,23 @@ export const App = () => {
     }
   }, [blogList, confirmDiscardChanges, loadBlogList, selectedBlogPost])
 
+  const handleMediaAreaChange = useCallback((value: string) => {
+    setMediaArea(value)
+    setMediaTarget((current) => (current && current.area === value ? current : null))
+    setMediaStatus(null)
+  }, [])
+
+  const handleMediaSlugChange = useCallback((value: string) => {
+    setMediaSlug(value)
+    setMediaTarget((current) => (current && current.slug === value ? current : null))
+    setMediaStatus(null)
+  }, [])
+
+  const handleMediaTargetClear = useCallback(() => {
+    setMediaTarget(null)
+    setMediaStatus(null)
+  }, [])
+
   const handleMediaTargetSelect = useCallback((target: MediaTargetSelection) => {
     setMediaArea(target.area)
     setMediaSlug(target.slug)
@@ -1686,9 +1703,10 @@ export const App = () => {
       onLogout: () => {
         void handleLogout()
       },
-      onMediaAreaChange: setMediaArea,
+      onMediaAreaChange: handleMediaAreaChange,
       onMediaFileChange: setMediaFile,
-      onMediaSlugChange: setMediaSlug,
+      onMediaSlugChange: handleMediaSlugChange,
+      onMediaTargetClear: handleMediaTargetClear,
       onMediaTargetSelect: handleMediaTargetSelect,
       onMediaUpload: () => {
         void handleMediaUpload()
@@ -1755,6 +1773,9 @@ export const App = () => {
       handleBlogDelete,
       handleBlogSave,
       handleFieldChange,
+      handleMediaAreaChange,
+      handleMediaSlugChange,
+      handleMediaTargetClear,
       handleMediaTargetSelect,
       handleMediaUpload,
       handleStructuredAdd,

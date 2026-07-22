@@ -56,6 +56,7 @@ interface DashboardScreenProps {
   onMediaAreaChange: (value: string) => void
   onMediaFileChange: (file: File | null) => void
   onMediaSlugChange: (value: string) => void
+  onMediaTargetClear: () => void
   onMediaTargetSelect: (target: MediaTargetSelection) => void
   onMediaUpload: () => void
   onProcessSelect: (value: number) => void
@@ -145,6 +146,7 @@ export const DashboardScreen = ({
   onMediaAreaChange,
   onMediaFileChange,
   onMediaSlugChange,
+  onMediaTargetClear,
   onMediaTargetSelect,
   onMediaUpload,
   onProcessSelect,
@@ -748,13 +750,13 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !mediaSlug.trim()}>{uploadingMedia ? 'Uploading…' : 'Upload media'}</button></div>
+            <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !mediaSlug.trim()}>{uploadingMedia ? 'Uploading…' : 'Upload media'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Area</span><select value={mediaArea} onChange={(event) => onMediaAreaChange(event.target.value)}>{mediaAreas.map((area) => <option key={area} value={area}>{area}</option>)}</select></label>
               <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
               <label className="admin-field"><span>Image file</span><input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} /></label>
               {mediaPath ? <label className="admin-field"><span>Last uploaded path</span><input readOnly value={mediaPath} /></label> : null}
-              <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span>{mediaTargetLabel ? ` — ${mediaTargetLabel}` : ''}</p>
+              <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span>{mediaTargetLabel ? ` — ${mediaTargetLabel}` : ' — manual selection'}</p>
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
             </div>
           </article>
