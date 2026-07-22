@@ -373,7 +373,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   if (!isRecord(homeSkills) || typeof homeSkills.title !== 'string' || typeof homeSkills.description !== 'string' || !isStringArray(homeSkills.items)) return false
   if (!isRecord(homeContact) || typeof homeContact.title !== 'string' || typeof homeContact.intro !== 'string' || typeof homeContact.submitLabel !== 'string' || typeof homeContact.messageLimit !== 'number') return false
 
-  if (typeof about.title !== 'string' || typeof about.intro !== 'string' || !isStringArray(about.body) || !isStringArray(about.principles) || !Array.isArray(about.process) || !about.process.every((entry) => isRecord(entry) && typeof entry.title === 'string' && typeof entry.description === 'string') || !isStringArray(about.tools)) {
+  if (!['title', 'intro', 'bodySectionTitle', 'processSectionTitle', 'processSectionIntro', 'principlesSectionTitle', 'toolsSectionTitle'].every((key) => typeof about[key] === 'string') || !isStringArray(about.body) || !isStringArray(about.principles) || !Array.isArray(about.process) || !about.process.every((entry) => isRecord(entry) && typeof entry.title === 'string' && typeof entry.description === 'string') || !isStringArray(about.tools)) {
     return false
   }
   if (about.heroImage !== undefined && !isImageAsset(about.heroImage)) return false

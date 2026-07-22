@@ -28,6 +28,11 @@
   "about": {
     "title": "A designer-minded frontend practice.",
     "intro": "I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.",
+    "bodySectionTitle": "How I work",
+    "processSectionTitle": "Process",
+    "processSectionIntro": "A simple working rhythm that keeps pages readable and maintainable.",
+    "principlesSectionTitle": "Working principles",
+    "toolsSectionTitle": "Tools and delivery stack",
     "body": [
       "My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.",
       "I care about visual rhythm, content hierarchy, and practical structure. That usually means reusable sections, token-driven styling, and layouts that still feel deliberate on smaller screens.",

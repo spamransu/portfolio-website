@@ -115,6 +115,11 @@ export type SiteContent = {
   about: {
     title: string
     intro: string
+    bodySectionTitle: string
+    processSectionTitle: string
+    processSectionIntro: string
+    principlesSectionTitle: string
+    toolsSectionTitle: string
     body: string[]
     principles: string[]
     process: ProcessStep[]

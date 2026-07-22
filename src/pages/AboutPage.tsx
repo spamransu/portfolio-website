@@ -13,7 +13,7 @@ export function AboutPage() {
         media={siteContent.about.heroImage}
       />
 
-      <Section title="How I work">
+      <Section title={siteContent.about.bodySectionTitle}>
         <div className={sty.mediaSplit}>
           <div className="prose-flow">
             {siteContent.about.body.map((paragraph) => (
@@ -30,7 +30,7 @@ export function AboutPage() {
         </div>
       </Section>
 
-      <Section title="Process" intro="A simple working rhythm that keeps pages readable and maintainable.">
+      <Section title={siteContent.about.processSectionTitle} intro={siteContent.about.processSectionIntro}>
         <div className={sty.cardGrid}>
           {siteContent.about.process.map((step) => (
             <article className={sty.card} key={step.title}>
@@ -41,7 +41,7 @@ export function AboutPage() {
         </div>
       </Section>
 
-      <Section title="Working principles">
+      <Section title={siteContent.about.principlesSectionTitle}>
         <div className={sty.cardGrid}>
           {siteContent.about.principles.map((principle) => (
             <article className={sty.card} key={principle}>
@@ -51,7 +51,7 @@ export function AboutPage() {
         </div>
       </Section>
 
-      <Section title="Tools and delivery stack">
+      <Section title={siteContent.about.toolsSectionTitle}>
         <div className={sty.toolCloud}>
           {siteContent.about.tools.map((tool) => (
             <span key={tool}>{tool}</span>

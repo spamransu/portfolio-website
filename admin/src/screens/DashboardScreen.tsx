@@ -359,6 +359,11 @@ export const DashboardScreen = ({
             <div className="admin-form-grid">
               <label className="admin-field"><span>Title</span><input value={workingCopy.about.title} onChange={(event) => onFieldChange('about.title', event.target.value)} /></label>
               <label className="admin-field"><span>Intro</span><textarea value={workingCopy.about.intro} onChange={(event) => onFieldChange('about.intro', event.target.value)} /></label>
+              <label className="admin-field"><span>Body section title</span><input value={workingCopy.about.bodySectionTitle} onChange={(event) => onFieldChange('about.bodySectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Process section title</span><input value={workingCopy.about.processSectionTitle} onChange={(event) => onFieldChange('about.processSectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Process section intro</span><textarea value={workingCopy.about.processSectionIntro} onChange={(event) => onFieldChange('about.processSectionIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Principles section title</span><input value={workingCopy.about.principlesSectionTitle} onChange={(event) => onFieldChange('about.principlesSectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Tools section title</span><input value={workingCopy.about.toolsSectionTitle} onChange={(event) => onFieldChange('about.toolsSectionTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Body paragraphs (one per line)</span><textarea value={toLines(workingCopy.about.body)} onChange={(event) => onFieldChange('about.body', event.target.value)} /></label>
               <label className="admin-field"><span>Principles (one per line)</span><textarea value={toLines(workingCopy.about.principles)} onChange={(event) => onFieldChange('about.principles', event.target.value)} /></label>
               <label className="admin-field"><span>Tools (one per line)</span><textarea value={toLines(workingCopy.about.tools)} onChange={(event) => onFieldChange('about.tools', event.target.value)} /></label>

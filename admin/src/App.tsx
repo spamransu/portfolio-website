@@ -82,6 +82,21 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'about.title':
       next.about.title = value
       return next
+    case 'about.bodySectionTitle':
+      next.about.bodySectionTitle = value
+      return next
+    case 'about.processSectionTitle':
+      next.about.processSectionTitle = value
+      return next
+    case 'about.processSectionIntro':
+      next.about.processSectionIntro = value
+      return next
+    case 'about.principlesSectionTitle':
+      next.about.principlesSectionTitle = value
+      return next
+    case 'about.toolsSectionTitle':
+      next.about.toolsSectionTitle = value
+      return next
     case 'home.hero.eyebrow':
       next.home.hero.eyebrow = value
       return next
