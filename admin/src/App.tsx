@@ -1654,6 +1654,7 @@ export const App = () => {
 
   const blogValidationError = useMemo(() => getBlogValidationError(selectedBlogPost?.post ?? null), [selectedBlogPost])
   const mediaValidationError = useMemo(() => getMediaValidationError(mediaFile), [mediaFile])
+  const normalizedMediaSlug = useMemo(() => normalizeSlug(mediaSlug), [mediaSlug])
 
   const handleBlogSave = useCallback(async () => {
     if (!blogList || !selectedBlogPost || blogValidationError) return
@@ -1781,7 +1782,7 @@ export const App = () => {
 
   const handleMediaSlugChange = useCallback((value: string) => {
     setMediaSlug(value)
-    setMediaTarget((current) => (current && current.slug === value ? current : null))
+    setMediaTarget((current) => (current && current.slug === normalizeSlug(value) ? current : null))
     setMediaStatus(null)
   }, [])
 
@@ -1799,7 +1800,7 @@ export const App = () => {
   }, [])
 
   const handleMediaUpload = useCallback(async () => {
-    if (!mediaFile || !mediaArea || !mediaSlug.trim() || mediaValidationError) return
+    if (!mediaFile || !mediaArea || !normalizedMediaSlug || mediaValidationError) return
 
     setUploadingMedia(true)
     setError(null)
@@ -1808,11 +1809,11 @@ export const App = () => {
     try {
       const response = await adminApi.uploadMedia({
         area: mediaArea,
-        slug: mediaSlug,
+        slug: normalizedMediaSlug,
         file: mediaFile,
       })
 
-      if (mediaTarget && mediaTarget.area === mediaArea && mediaTarget.slug === mediaSlug) {
+      if (mediaTarget && mediaTarget.area === mediaArea && mediaTarget.slug === normalizedMediaSlug) {
         if (mediaTarget.kind === 'blog') {
           handleBlogFieldChange(mediaTarget.field, response.path)
         } else if (mediaTarget.scope) {
@@ -1823,7 +1824,7 @@ export const App = () => {
       setMediaResult(response)
       void loadActivity()
       setMediaStatus(
-        mediaTarget && mediaTarget.area === mediaArea && mediaTarget.slug === mediaSlug
+        mediaTarget && mediaTarget.area === mediaArea && mediaTarget.slug === normalizedMediaSlug
           ? `Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha} and applied it to ${mediaTarget.label}.`
           : `Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha}.`,
       )
@@ -1834,7 +1835,7 @@ export const App = () => {
     } finally {
       setUploadingMedia(false)
     }
-  }, [handleBlogFieldChange, handleStructuredFieldChange, loadActivity, mediaArea, mediaFile, mediaSlug, mediaTarget, mediaValidationError])
+  }, [handleBlogFieldChange, handleStructuredFieldChange, loadActivity, mediaArea, mediaFile, mediaTarget, mediaValidationError, normalizedMediaSlug])
 
   const selectedBlogMeta = useMemo<BlogPostMeta | null>(() => {
     return blogList?.posts.find((post) => post.slug === selectedBlogSlug) ?? null
