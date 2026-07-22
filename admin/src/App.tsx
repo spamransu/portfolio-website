@@ -26,6 +26,9 @@ const splitLines = (value: string): string[] =>
     .map((entry) => entry.trim())
     .filter(Boolean)
 
+const updateRecordAtIndex = <T,>(items: T[], index: number, updater: (item: T) => T): T[] =>
+  items.map((item, itemIndex) => (itemIndex === index ? updater(item) : item))
+
 const updateWorkingCopy = (content: SiteContent, field: string, value: string): SiteContent => {
   const next = structuredClone(content)
 
@@ -156,6 +159,12 @@ export const App = () => {
   const [blogList, setBlogList] = useState<BlogListResponse | null>(null)
   const [selectedBlogSlug, setSelectedBlogSlug] = useState<string>('')
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogDetailResponse | null>(null)
+  const [selectedProjectSlug, setSelectedProjectSlug] = useState<string>('')
+  const [selectedSocialIndex, setSelectedSocialIndex] = useState(0)
+  const [selectedProcessIndex, setSelectedProcessIndex] = useState(0)
+  const [selectedHighlightIndex, setSelectedHighlightIndex] = useState(0)
+  const [selectedExperienceIndex, setSelectedExperienceIndex] = useState(0)
+  const [selectedMethodIndex, setSelectedMethodIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [loadingContent, setLoadingContent] = useState(false)
   const [loadingBlog, setLoadingBlog] = useState(false)
@@ -178,6 +187,12 @@ export const App = () => {
       const response = await adminApi.getSiteContent()
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
+      setSelectedProjectSlug(response.content.projects[0]?.slug ?? '')
+      setSelectedSocialIndex(0)
+      setSelectedProcessIndex(0)
+      setSelectedHighlightIndex(0)
+      setSelectedExperienceIndex(0)
+      setSelectedMethodIndex(0)
       setError(null)
       setSaveStatus(null)
     } catch (loadError) {
@@ -297,6 +312,81 @@ export const App = () => {
     setError(null)
   }, [])
 
+  const handleStructuredFieldChange = useCallback((scope: string, field: string, value: string, index?: number) => {
+    setWorkingCopy((current) => {
+      if (!current) return current
+
+      const next = structuredClone(current)
+
+      switch (scope) {
+        case 'social':
+          if (index === undefined) return next
+          next.site.socials = updateRecordAtIndex(next.site.socials, index, (item) => ({
+            ...item,
+            [field]: value,
+          }))
+          return next
+        case 'process':
+          if (index === undefined) return next
+          next.about.process = updateRecordAtIndex(next.about.process, index, (item) => ({
+            ...item,
+            [field]: value,
+          }))
+          return next
+        case 'highlight':
+          if (index === undefined) return next
+          next.resume.highlights = updateRecordAtIndex(next.resume.highlights, index, (item) => ({
+            ...item,
+            [field]: value,
+          }))
+          return next
+        case 'experience':
+          if (index === undefined) return next
+          next.resume.experience = updateRecordAtIndex(next.resume.experience, index, (item) => ({
+            ...item,
+            [field]: field === 'highlights' ? splitLines(value) : value,
+          }))
+          return next
+        case 'method':
+          if (index === undefined) return next
+          next.contact.methods = updateRecordAtIndex(next.contact.methods, index, (item) => ({
+            ...item,
+            [field]: value,
+          }))
+          return next
+        case 'project': {
+          if (!selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
+            ...project,
+            [field]: field === 'stack' || field === 'approach' || field === 'outcome' ? splitLines(value) : value,
+          }))
+          return next
+        }
+        case 'projectSection': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const project = next.projects[projectIndex]
+          const sections = project.sections ?? []
+          next.projects = updateRecordAtIndex(next.projects, projectIndex, (currentProject) => ({
+            ...currentProject,
+            sections: updateRecordAtIndex(sections, index, (section) => ({
+              ...section,
+              [field]: value,
+            })),
+          }))
+          return next
+        }
+        default:
+          return next
+      }
+    })
+    setSaveStatus(null)
+    setError(null)
+  }, [selectedProjectSlug])
+
   const handleSave = useCallback(async () => {
     if (!siteContent || !workingCopy) return
 
@@ -403,6 +493,16 @@ export const App = () => {
     return blogList?.posts.find((post) => post.slug === selectedBlogSlug) ?? null
   }, [blogList, selectedBlogSlug])
 
+  const selectedProject = useMemo(() => {
+    return workingCopy?.projects.find((project) => project.slug === selectedProjectSlug) ?? workingCopy?.projects[0] ?? null
+  }, [selectedProjectSlug, workingCopy])
+
+  const selectedSocial = workingCopy?.site.socials[selectedSocialIndex] ?? null
+  const selectedProcess = workingCopy?.about.process[selectedProcessIndex] ?? null
+  const selectedHighlight = workingCopy?.resume.highlights[selectedHighlightIndex] ?? null
+  const selectedExperience = workingCopy?.resume.experience[selectedExperienceIndex] ?? null
+  const selectedMethod = workingCopy?.contact.methods[selectedMethodIndex] ?? null
+
   const dashboardProps = useMemo(
     () => ({
       blogDirty,
@@ -430,6 +530,7 @@ export const App = () => {
         void loadBlogPost(slug)
       },
       onFieldChange: handleFieldChange,
+      onStructuredFieldChange: handleStructuredFieldChange,
       onLogin: handleLogin,
       onLogout: () => {
         void handleLogout()
@@ -440,6 +541,30 @@ export const App = () => {
       onMediaUpload: () => {
         void handleMediaUpload()
       },
+      onProjectSelect: setSelectedProjectSlug,
+      onSocialSelect: setSelectedSocialIndex,
+      onProcessSelect: setSelectedProcessIndex,
+      onHighlightSelect: setSelectedHighlightIndex,
+      onExperienceSelect: setSelectedExperienceIndex,
+      onMethodSelect: setSelectedMethodIndex,
+      projectOptions: workingCopy?.projects.map((project) => ({ slug: project.slug, title: project.title })) ?? [],
+      selectedProject,
+      selectedProjectSlug,
+      selectedSocial,
+      selectedSocialIndex,
+      selectedSocialTotal: workingCopy?.site.socials.length ?? 0,
+      selectedProcess,
+      selectedProcessIndex,
+      selectedProcessTotal: workingCopy?.about.process.length ?? 0,
+      selectedHighlight,
+      selectedHighlightIndex,
+      selectedHighlightTotal: workingCopy?.resume.highlights.length ?? 0,
+      selectedExperience,
+      selectedExperienceIndex,
+      selectedExperienceTotal: workingCopy?.resume.experience.length ?? 0,
+      selectedMethod,
+      selectedMethodIndex,
+      selectedMethodTotal: workingCopy?.contact.methods.length ?? 0,
       onReload: () => {
         void loadSiteContent()
       },
@@ -465,6 +590,7 @@ export const App = () => {
       handleBlogSave,
       handleFieldChange,
       handleMediaUpload,
+      handleStructuredFieldChange,
       handleSave,
       loadBlogPost,
       loadSiteContent,
@@ -479,6 +605,18 @@ export const App = () => {
       saving,
       savingBlog,
       selectedBlogMeta,
+      selectedExperience,
+      selectedExperienceIndex,
+      selectedHighlight,
+      selectedHighlightIndex,
+      selectedMethod,
+      selectedMethodIndex,
+      selectedProcess,
+      selectedProcessIndex,
+      selectedProject,
+      selectedProjectSlug,
+      selectedSocial,
+      selectedSocialIndex,
       selectedBlogPost,
       selectedBlogSlug,
       session,
