@@ -125,10 +125,18 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       next.contact.form.submitLabel = value
       return next
     case 'blogPage.title':
-      next.blogPage = { title: value, intro: next.blogPage?.intro ?? '' }
+      next.blogPage = {
+        title: value,
+        intro: next.blogPage?.intro ?? '',
+        heroImage: next.blogPage?.heroImage,
+      }
       return next
     case 'blogPage.intro':
-      next.blogPage = { title: next.blogPage?.title ?? '', intro: value }
+      next.blogPage = {
+        title: next.blogPage?.title ?? '',
+        intro: value,
+        heroImage: next.blogPage?.heroImage,
+      }
       return next
     default:
       return next
@@ -402,8 +410,20 @@ export const App = () => {
           }))
           return next
         case 'heroImage': {
-          const target = field.split('.')[0] as 'about' | 'resume' | 'contact'
+          const target = field.split('.')[0] as 'about' | 'resume' | 'contact' | 'blogPage'
           const property = field.split('.')[1] as 'src' | 'alt' | 'caption'
+          if (target === 'blogPage') {
+            next.blogPage = {
+              title: next.blogPage?.title ?? '',
+              intro: next.blogPage?.intro ?? '',
+              heroImage: {
+                ...(next.blogPage?.heroImage ?? { src: '', alt: '' }),
+                [property]: value || (property === 'caption' ? undefined : ''),
+              },
+            }
+            return next
+          }
+
           const currentImage = next[target].heroImage ?? { src: '', alt: '' }
           next[target].heroImage = {
             ...currentImage,

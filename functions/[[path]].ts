@@ -389,7 +389,15 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   if (contact.heroImage !== undefined && !isImageAsset(contact.heroImage)) return false
 
   if (value.projectsPage !== undefined && (!isRecord(value.projectsPage) || typeof value.projectsPage.intro !== 'string')) return false
-  if (value.blogPage !== undefined && (!isRecord(value.blogPage) || typeof value.blogPage.title !== 'string' || typeof value.blogPage.intro !== 'string')) return false
+  if (
+    value.blogPage !== undefined
+    && (
+      !isRecord(value.blogPage)
+      || typeof value.blogPage.title !== 'string'
+      || typeof value.blogPage.intro !== 'string'
+      || (value.blogPage.heroImage !== undefined && !isImageAsset(value.blogPage.heroImage))
+    )
+  ) return false
 
   return projects.every((entry) => {
     if (!isRecord(entry)) return false

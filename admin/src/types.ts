@@ -140,6 +140,7 @@ export type SiteContent = {
   blogPage?: {
     title: string
     intro: string
+    heroImage?: ImageAsset
   }
   projects: Project[]
 }

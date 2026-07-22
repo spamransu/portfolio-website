@@ -5,17 +5,15 @@ import { siteContent } from '../content/siteContent'
 import sty from './InternalPages.module.scss'
 
 export function BlogPage() {
+  const blogHeroImage = siteContent.blogPage?.heroImage
+
   return (
     <div className={`lg-wrapper ${sty.page}`}>
       <InternalHero
         eyebrow="Blog"
         title={siteContent.blogPage?.title ?? 'Build notes and frontend delivery posts.'}
         intro={siteContent.blogPage?.intro ?? 'Short posts about implementation, content systems, and frontend delivery work.'}
-        media={{
-          src: 'https://picsum.photos/seed/portfolio-blog-index/1600/1100.jpg',
-          alt: 'Mock editorial collage showing article cards, a content editor, and development notes.',
-          caption: 'Published notes pulled from content/blog markdown files.',
-        }}
+        media={blogHeroImage}
       />
 
       <div className={sty.cardGrid}>
