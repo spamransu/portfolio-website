@@ -90,6 +90,7 @@ interface DashboardScreenProps {
     sha: string
     url: string | null
   }>
+  activityError: string | null
   activityLoadedAt: string | null
   blogActivity: {
     latestCommitSha: string | null
@@ -251,6 +252,7 @@ const resolveMediaFilename = (originalName: string, mimeType: string): string =>
 
 export const DashboardScreen = ({
   activity,
+  activityError,
   activityLoadedAt,
   blogActivity,
   blogConflict,
@@ -562,6 +564,7 @@ export const DashboardScreen = ({
               </button>
             </div>
           </div>
+          {activityError ? <p className="admin-note admin-note-warning">{activityError}</p> : null}
           {activity.length ? (
             <div className="admin-form-grid">
               {activity.map((item) => (

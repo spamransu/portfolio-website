@@ -1044,6 +1044,7 @@ export const App = () => {
   const [blogConflict, setBlogConflict] = useState<ConflictState>(null)
   const [blogActivity, setBlogActivity] = useState<BlogActivity>(null)
   const [activity, setActivity] = useState<AdminActivityResponse | null>(null)
+  const [activityError, setActivityError] = useState<string | null>(null)
   const [activityLoadedAt, setActivityLoadedAt] = useState<string | null>(null)
 
   const loadSiteContent = useCallback(async () => {
@@ -1075,13 +1076,15 @@ export const App = () => {
 
   const loadActivity = useCallback(async () => {
     setLoadingActivity(true)
+    setActivityError(null)
 
     try {
       const response = await adminApi.getActivity()
       setActivity(response)
       setActivityLoadedAt(new Date().toISOString())
+      setActivityError(null)
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : 'Failed to load recent activity.')
+      setActivityError(loadError instanceof Error ? loadError.message : 'Failed to load recent activity.')
     } finally {
       setLoadingActivity(false)
     }
@@ -1155,6 +1158,7 @@ export const App = () => {
         setSelectedBlogPost(null)
         setSelectedBlogBaseline(null)
         setActivity(null)
+        setActivityError(null)
         setActivityLoadedAt(null)
       }
     } catch (sessionError) {
@@ -1166,6 +1170,7 @@ export const App = () => {
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
       setActivity(null)
+      setActivityError(null)
       setActivityLoadedAt(null)
       setError(sessionError instanceof Error ? sessionError.message : 'Failed to load session.')
     } finally {
@@ -1212,6 +1217,7 @@ export const App = () => {
       setBlogConflict(null)
       setBlogActivity(null)
       setActivity(null)
+      setActivityError(null)
       setActivityLoadedAt(null)
     } catch (logoutError) {
       setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
@@ -1908,6 +1914,7 @@ export const App = () => {
   const dashboardProps = useMemo(
     () => ({
       activity: activity?.commits ?? [],
+      activityError,
       activityLoadedAt,
       blogActivity,
       blogDirty,
@@ -2030,6 +2037,7 @@ export const App = () => {
     }),
     [
       activity,
+      activityError,
       activityLoadedAt,
       blogActivity,
       blogDirty,
