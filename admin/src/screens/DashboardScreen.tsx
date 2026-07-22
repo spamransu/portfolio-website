@@ -1106,10 +1106,10 @@ export const DashboardScreen = ({
               <div className="admin-actions">
                 {blogLoading ? <span className="admin-status">Loading…</span> : null}
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate} disabled={blogLoading || savingBlog}>New draft</button>
-                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || savingBlog}>Discard blog edits</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || blogLoading || savingBlog}>Discard blog edits</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button>
-                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button>
-                <button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || blogLoading || savingBlog}>Delete post</button>
+                <button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || blogLoading || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button>
               </div>
             </div>
             <div className="admin-form-grid">
@@ -1131,7 +1131,7 @@ export const DashboardScreen = ({
                 </div>
               ) : null}
               {blogPost ? (
-                <>
+                <fieldset disabled={blogLoading || savingBlog} style={{ border: 0, margin: 0, padding: 0 }}>
                   <label className="admin-field"><span>Title</span><input value={blogPost.title} onChange={(event) => onBlogFieldChange('title', event.target.value)} /></label>
                   <label className="admin-field"><span>Slug</span><input value={blogPost.slug} onChange={(event) => onBlogFieldChange('slug', event.target.value)} /></label>
                   <label className="admin-field"><span>Date</span><input value={blogPost.date} onChange={(event) => onBlogFieldChange('date', event.target.value)} /></label>
@@ -1193,7 +1193,7 @@ export const DashboardScreen = ({
                       }) : <p className="admin-note">Write the article body to preview how the post content renders.</p>}
                     </div>
                   </div>
-                </>
+                </fieldset>
               ) : null}
             </div>
           </article>
