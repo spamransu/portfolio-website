@@ -148,6 +148,7 @@ interface DashboardScreenProps {
   onMediaAreaChange: (value: string) => void
   onMediaFileClear: () => void
   onMediaFileChange: (file: File | null) => void
+  onMediaSlugCommit: () => void
   onMediaSlugChange: (value: string) => void
   onMediaTargetClear: () => void
   onMediaTargetSelect: (target: MediaTargetSelection) => void
@@ -287,6 +288,7 @@ export const DashboardScreen = ({
   onMediaAreaChange,
   onMediaFileClear,
   onMediaFileChange,
+  onMediaSlugCommit,
   onMediaSlugChange,
   onMediaTargetClear,
   onMediaTargetSelect,
@@ -985,7 +987,7 @@ export const DashboardScreen = ({
             <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button><button type="button" className="admin-button admin-button-secondary" onClick={onMediaFileClear} disabled={!mediaFile || uploadingMedia}>Clear file</button><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !sanitizedMediaSlug || !mediaFile || Boolean(mediaValidationError)}>{uploadingMedia ? 'Uploading…' : mediaValidationError ? 'Fix validation errors' : 'Upload media'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Area</span><select value={mediaArea} onChange={(event) => onMediaAreaChange(event.target.value)}>{mediaAreas.map((area) => <option key={area} value={area}>{area}</option>)}</select></label>
-              <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
+              <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} onBlur={onMediaSlugCommit} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
               <label className="admin-field"><span>Image file</span><input key={mediaFileInputKey} type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} /></label>
               {mediaFile ? <p className="admin-note">Ready to upload: <span className="admin-code">{mediaFile.name}</span></p> : <p className="admin-note">Choose an image file before uploading.</p>}
               {mediaValidationError ? <p className="admin-note admin-note-warning">{mediaValidationError}</p> : null}
