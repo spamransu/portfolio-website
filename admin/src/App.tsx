@@ -21,6 +21,8 @@ const DEFAULT_SESSION: AdminSession = {
 }
 
 const DEFAULT_MEDIA_AREA = 'blog'
+const MAX_MEDIA_FILE_BYTES = 5 * 1024 * 1024
+const ALLOWED_MEDIA_TYPES = ['image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'] as const
 
 type ConflictState = {
   currentSha?: string
@@ -942,6 +944,17 @@ const getBlogValidationError = (post: BlogPostResponse | null): string | null =>
   return null
 }
 
+const getMediaValidationError = (file: File | null): string | null => {
+  if (!file) return null
+  if (!(ALLOWED_MEDIA_TYPES as readonly string[]).includes(file.type)) {
+    return 'Unsupported media type. Use png, jpg, webp, gif, or svg.'
+  }
+  if (file.size > MAX_MEDIA_FILE_BYTES) {
+    return 'Media file is too large. Maximum size is 5 MB.'
+  }
+  return null
+}
+
 const updateBlogPost = (post: BlogPostResponse, field: string, value: string): BlogPostResponse => {
   const next = structuredClone(post)
 
@@ -1640,6 +1653,7 @@ export const App = () => {
   }, [selectedBlogBaseline, selectedBlogPost])
 
   const blogValidationError = useMemo(() => getBlogValidationError(selectedBlogPost?.post ?? null), [selectedBlogPost])
+  const mediaValidationError = useMemo(() => getMediaValidationError(mediaFile), [mediaFile])
 
   const handleBlogSave = useCallback(async () => {
     if (!blogList || !selectedBlogPost || blogValidationError) return
@@ -1785,7 +1799,7 @@ export const App = () => {
   }, [])
 
   const handleMediaUpload = useCallback(async () => {
-    if (!mediaFile || !mediaArea || !mediaSlug.trim()) return
+    if (!mediaFile || !mediaArea || !mediaSlug.trim() || mediaValidationError) return
 
     setUploadingMedia(true)
     setError(null)
@@ -1820,7 +1834,7 @@ export const App = () => {
     } finally {
       setUploadingMedia(false)
     }
-  }, [handleBlogFieldChange, handleStructuredFieldChange, loadActivity, mediaArea, mediaFile, mediaSlug, mediaTarget])
+  }, [handleBlogFieldChange, handleStructuredFieldChange, loadActivity, mediaArea, mediaFile, mediaSlug, mediaTarget, mediaValidationError])
 
   const selectedBlogMeta = useMemo<BlogPostMeta | null>(() => {
     return blogList?.posts.find((post) => post.slug === selectedBlogSlug) ?? null
@@ -1876,6 +1890,7 @@ export const App = () => {
       mediaPath: mediaResult?.path ?? '',
       mediaSlug,
       mediaStatus,
+      mediaValidationError,
       mediaTargetKey: mediaTarget?.key ?? '',
       mediaTargetLabel: mediaTarget?.label ?? null,
       siteUrl: workingCopy?.site.siteUrl ?? siteContent?.content.site.siteUrl ?? '',
@@ -2003,9 +2018,11 @@ export const App = () => {
       siteValidationError,
       loadingContent,
       mediaArea,
+      mediaFile,
       mediaResult,
       mediaSlug,
       mediaStatus,
+      mediaValidationError,
       mediaTarget,
       siteContent,
       siteConflict,

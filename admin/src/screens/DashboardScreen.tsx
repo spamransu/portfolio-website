@@ -131,6 +131,7 @@ interface DashboardScreenProps {
   mediaPath: string
   mediaSlug: string
   mediaStatus: string | null
+  mediaValidationError: string | null
   mediaTargetKey: string
   mediaTargetLabel: string | null
   onBlogFieldChange: (field: string, value: string) => void
@@ -268,6 +269,7 @@ export const DashboardScreen = ({
   mediaPath,
   mediaSlug,
   mediaStatus,
+  mediaValidationError,
   mediaTargetKey,
   mediaTargetLabel,
   onBlogFieldChange,
@@ -972,6 +974,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
               <label className="admin-field"><span>Image file</span><input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} /></label>
               {mediaFile ? <p className="admin-note">Ready to upload: <span className="admin-code">{mediaFile.name}</span></p> : <p className="admin-note">Choose an image file before uploading.</p>}
+              {mediaValidationError ? <p className="admin-note admin-note-warning">{mediaValidationError}</p> : null}
               {mediaSlug.trim() && !sanitizedMediaSlug ? <p className="admin-note admin-note-warning">Media slug must include letters or numbers after sanitization.</p> : null}
               {uploadSlugWillChange ? <p className="admin-note">Slug will upload as <span className="admin-code">{sanitizedMediaSlug}</span>.</p> : null}
               {uploadFilenameWillChange ? <p className="admin-note">Filename will upload as <span className="admin-code">{resolvedUploadFilename}</span>.</p> : null}
