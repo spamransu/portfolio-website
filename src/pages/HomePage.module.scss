@@ -18,7 +18,7 @@
 
 .root {
   gap: 0;
-  background: var(--bg);
+  background: var(--color-background-page);
 }
 
 .hero {
@@ -69,7 +69,7 @@
 .bioDescription,
 .skillsCopy p,
 .statLabel {
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .heroEyebrow {
@@ -112,12 +112,12 @@
   align-items: center;
   justify-content: center;
   padding: var(--space-button-pad);
-  color: var(--ink);
+  color: var(--color-text-inverse);
   font-weight: 600;
   @include mix.type-style(body-xs, 600);
   text-decoration: none;
-  background: var(--accent);
-  border: 1px solid transparent;
+  background: var(--color-action-primary);
+  border: 1px solid var(--color-transparent);
   transition: transform 140ms ease, opacity 140ms ease, border-color 140ms ease, background-color 140ms ease;
 }
 
@@ -142,7 +142,7 @@
   display: block;
   overflow: hidden;
   aspect-ratio: 1.13;
-  background: var(--surface);
+  background: var(--color-background-surface);
 }
 
 .projectImage {
@@ -153,7 +153,7 @@
 }
 
 .projectTitle {
-  color: var(--accent);
+  color: var(--color-action-primary);
   @include mix.type-style(body-lg, 600);
 }
 
@@ -182,8 +182,8 @@
 }
 
 .stackList li {
-  color: var(--muted);
-  background: rgba(252, 255, 246, 0.04);
+  color: var(--color-text-muted);
+  background: var(--color-surface-overlay);
 }
 
 .bioDescription {
@@ -195,7 +195,7 @@
   gap: var(--space-2xs);
   padding: var(--space-card-pad);
   text-align: center;
-  border: 1px solid rgba(252, 255, 246, 0.35);
+  border: 1px solid var(--color-border-strong);
 }
 
 .statValue {
@@ -204,15 +204,15 @@
 }
 
 .statAccent {
-  color: var(--accent);
+  color: var(--color-action-primary);
 }
 
 .statAccent2 {
-  color: var(--accent-2);
+  color: var(--color-action-secondary);
 }
 
 .statAccent3 {
-  color: var(--accent-3);
+  color: var(--color-accent-violet);
 }
 
 .statLabel {
@@ -226,15 +226,15 @@
 
 .skillPill {
   @include mix.flex(row, null, center, var(--space-xs));
-  color: var(--text);
-  border: 1px solid rgba(252, 255, 246, 0.28);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-medium);
 }
 
 .skillPill::before {
   width: var(--space-xs);
   aspect-ratio: 1;
   content: '';
-  background: var(--accent);
+  background: var(--color-action-primary);
   border-radius: 50%;
 }
 
@@ -248,7 +248,7 @@
 
 .contactSection {
   padding-block: var(--space-section-compact);
-  background: var(--accent);
+  background: var(--color-action-primary);
 }
 
 @include mix.mq(md) {

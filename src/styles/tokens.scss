@@ -136,19 +136,61 @@ $line-height: (
   h6: map.get(map.get($type-styles, h6), line-height),
 ) !default;
 
-$colors: (
-  bg: #161614,
-  surface: #222220,
-  surface-2: #1b1b19,
-  surface-light: #fcfff6,
-  text: #fcfff6,
-  text-dark: #161614,
-  muted: #a1a1a1,
-  line: rgba(252, 255, 246, 0.24),
-  accent: #b6cf4f,
-  accent-2: #ff5e32,
-  accent-3: #7154eb,
-  ink: #161614,
+$color-primitives: (
+  ink-900: #161614,
+  ink-800: #1b1b19,
+  ink-700: #222220,
+  cream-50: #fcfff6,
+  neutral-500: #a1a1a1,
+  lime-500: #b6cf4f,
+  orange-500: #ff5e32,
+  violet-500: #7154eb,
+  red-600: #b42318,
+  transparent: transparent,
+) !default;
+
+$color-semantic: (
+  background-page: ink-900,
+  background-surface: ink-700,
+  background-surface-subtle: ink-800,
+  background-inverse: cream-50,
+  text-primary: cream-50,
+  text-inverse: ink-900,
+  text-muted: neutral-500,
+  action-primary: lime-500,
+  action-secondary: orange-500,
+  accent-violet: violet-500,
+  feedback-error: red-600,
+) !default;
+
+$color-alpha: (
+  border-default: rgba(252, 255, 246, 0.24),
+  border-medium: rgba(252, 255, 246, 0.28),
+  border-hover: rgba(255, 255, 255, 0.28),
+  border-subtle: rgba(252, 255, 246, 0.12),
+  border-strong: rgba(252, 255, 246, 0.35),
+  surface-overlay: rgba(252, 255, 246, 0.04),
+  surface-card: rgba(255, 255, 255, 0.03),
+  focus-ring: rgba(182, 207, 79, 0.24),
+  form-border: rgba(22, 22, 20, 0.14),
+  form-placeholder: rgba(22, 22, 20, 0.28),
+  form-helper: rgba(22, 22, 20, 0.5),
+  shadow-card: rgba(0, 0, 0, 0.2),
+) !default;
+
+$color-legacy-aliases: (
+  bg: background-page,
+  surface: background-surface,
+  surface-2: background-surface-subtle,
+  surface-light: background-inverse,
+  text: text-primary,
+  text-dark: text-inverse,
+  muted: text-muted,
+  line: border-default,
+  accent: action-primary,
+  accent-2: action-secondary,
+  accent-3: accent-violet,
+  ink: text-inverse,
 ) !default;
 
 $space: (
@@ -175,12 +217,36 @@ $radii: (
   pill: 999px,
 ) !default;
 
-$shadow-card: 0 20px 50px rgba(0, 0, 0, 0.2) !default;
+$shadow-card: 0 20px 50px map.get($color-alpha, shadow-card) !default;
 $transition-fast: 140ms ease !default;
 $max-width: 1312px !default;
 
 @function color($key) {
-  @return map.get($colors, $key);
+  $legacy-key: map.get($color-legacy-aliases, $key);
+
+  @if $legacy-key {
+    @return color($legacy-key);
+  }
+
+  $semantic-key: map.get($color-semantic, $key);
+
+  @if $semantic-key {
+    @return color($semantic-key);
+  }
+
+  $primitive: map.get($color-primitives, $key);
+
+  @if $primitive {
+    @return $primitive;
+  }
+
+  $alpha: map.get($color-alpha, $key);
+
+  @if $alpha {
+    @return $alpha;
+  }
+
+  @error 'Unknown color token: #{$key}';
 }
 
 @function type-style($role) {

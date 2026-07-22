@@ -3,18 +3,41 @@
 
 :root {
   color-scheme: dark;
-  --bg: #{tokens.color(bg)};
-  --surface: #{tokens.color(surface)};
-  --surface-2: #{tokens.color(surface-2)};
-  --surface-light: #{tokens.color(surface-light)};
-  --text: #{tokens.color(text)};
-  --text-dark: #{tokens.color(text-dark)};
-  --muted: #{tokens.color(muted)};
-  --line: #{tokens.color(line)};
-  --accent: #{tokens.color(accent)};
-  --accent-2: #{tokens.color(accent-2)};
-  --accent-3: #{tokens.color(accent-3)};
-  --ink: #{tokens.color(ink)};
+  --color-background-page: #{tokens.color(background-page)};
+  --color-background-surface: #{tokens.color(background-surface)};
+  --color-background-surface-subtle: #{tokens.color(background-surface-subtle)};
+  --color-background-inverse: #{tokens.color(background-inverse)};
+  --color-text-primary: #{tokens.color(text-primary)};
+  --color-text-inverse: #{tokens.color(text-inverse)};
+  --color-text-muted: #{tokens.color(text-muted)};
+  --color-action-primary: #{tokens.color(action-primary)};
+  --color-action-secondary: #{tokens.color(action-secondary)};
+  --color-accent-violet: #{tokens.color(accent-violet)};
+  --color-feedback-error: #{tokens.color(feedback-error)};
+  --color-transparent: #{tokens.color(transparent)};
+  --color-border-default: #{tokens.color(border-default)};
+  --color-border-medium: #{tokens.color(border-medium)};
+  --color-border-hover: #{tokens.color(border-hover)};
+  --color-border-subtle: #{tokens.color(border-subtle)};
+  --color-border-strong: #{tokens.color(border-strong)};
+  --color-surface-overlay: #{tokens.color(surface-overlay)};
+  --color-surface-card: #{tokens.color(surface-card)};
+  --color-focus-ring: #{tokens.color(focus-ring)};
+  --color-form-border: #{tokens.color(form-border)};
+  --color-form-placeholder: #{tokens.color(form-placeholder)};
+  --color-form-helper: #{tokens.color(form-helper)};
+  --bg: var(--color-background-page);
+  --surface: var(--color-background-surface);
+  --surface-2: var(--color-background-surface-subtle);
+  --surface-light: var(--color-background-inverse);
+  --text: var(--color-text-primary);
+  --text-dark: var(--color-text-inverse);
+  --muted: var(--color-text-muted);
+  --line: var(--color-border-default);
+  --accent: var(--color-action-primary);
+  --accent-2: var(--color-action-secondary);
+  --accent-3: var(--color-accent-violet);
+  --ink: var(--color-text-inverse);
   --max-width: #{tokens.$max-width};
   --radius: #{tokens.radius(lg)};
   --radius-md: #{tokens.radius(md)};
@@ -82,8 +105,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--color-background-page);
+  color: var(--color-text-primary);
   @include mix.type-style(body-md);
 }
 

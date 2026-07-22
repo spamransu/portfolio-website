@@ -8,7 +8,8 @@
     "build": "pnpm run prebuild && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prebuild": "node ./scripts/generate-agent-files.mjs"
+    "prebuild": "node ./scripts/generate-agent-files.mjs",
+    "lint:colors": "node scripts/check-color-tokens.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

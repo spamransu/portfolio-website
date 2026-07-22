@@ -2,7 +2,7 @@
 
 .site-shell {
   min-height: 100vh;
-  background: var(--bg);
+  background: var(--color-background-page);
 }
 
 .site-main {
@@ -41,7 +41,7 @@
 
 .bordered-start {
   padding-block-start: var(--space-stack);
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-border-default);
 }
 
 .project-grid,

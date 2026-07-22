@@ -4,7 +4,7 @@
   display: grid;
   gap: var(--space-stack);
   padding-block-start: var(--space-stack);
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-border-default);
 }
 
 .root > :last-child {
@@ -26,5 +26,5 @@
 }
 
 .heading p {
-  color: var(--muted);
+  color: var(--color-text-muted);
 }

@@ -4,8 +4,8 @@
   display: grid;
   gap: var(--space-stack);
   padding: var(--space-form-pad);
-  background: var(--surface-light);
-  color: var(--text-dark);
+  background: var(--color-background-inverse);
+  color: var(--color-text-inverse);
   border-radius: var(--space-hairline);
 }
 
@@ -40,7 +40,7 @@
 
 .intro p,
 .count {
-  color: rgba(22, 22, 20, 0.5);
+  color: var(--color-form-helper);
 }
 
 .field label {
@@ -51,9 +51,9 @@
 .field textarea {
   width: 100%;
   padding: var(--space-xs);
-  color: var(--text-dark);
-  background: transparent;
-  border: 1px solid rgba(22, 22, 20, 0.14);
+  color: var(--color-text-inverse);
+  background: var(--color-transparent);
+  border: 1px solid var(--color-form-border);
   border-radius: var(--space-hairline);
 }
 
@@ -68,7 +68,7 @@
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: rgba(22, 22, 20, 0.28);
+  color: var(--color-form-placeholder);
 }
 
 .count,
@@ -77,7 +77,7 @@
 }
 
 .error {
-  color: #b42318;
+  color: var(--color-feedback-error);
 }
 
 .submitButton {
@@ -87,11 +87,11 @@
   width: 100%;
   min-height: calc(var(--space-md) + var(--space-xs));
   padding: var(--space-button-pad);
-  color: var(--text);
+  color: var(--color-text-primary);
   @include mix.type-style(body-xs, 600);
   text-decoration: none;
-  background: var(--ink);
-  border: 1px solid transparent;
+  background: var(--color-text-inverse);
+  border: 1px solid var(--color-transparent);
   transition: transform 140ms ease, opacity 140ms ease, border-color 140ms ease, background-color 140ms ease;
 }
 

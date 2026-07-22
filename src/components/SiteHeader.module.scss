@@ -1,8 +1,8 @@
 @use '../styles/mixins' as mix;
 
 .root {
-  border-bottom: 1px solid rgba(252, 255, 246, 0.12);
-  background: var(--bg);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-background-page);
 }
 
 .inner {
@@ -29,11 +29,11 @@
 }
 
 .brandPrimary {
-  color: var(--accent);
+  color: var(--color-action-primary);
 }
 
 .brandSecondary {
-  color: var(--text);
+  color: var(--color-text-primary);
 }
 
 .nav {
@@ -44,7 +44,7 @@
 }
 
 .nav a {
-  color: var(--text);
+  color: var(--color-text-primary);
   display: inline-flex;
   padding-block: var(--space-hairline);
   font-size: var(--type-body-xs-size);
@@ -57,7 +57,7 @@
 
 .nav a:hover,
 .nav .active {
-  color: var(--accent);
+  color: var(--color-action-primary);
 }
 
 @media (max-width: 519.98px) {

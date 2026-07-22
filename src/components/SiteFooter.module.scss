@@ -1,8 +1,8 @@
 @use '../styles/mixins' as mix;
 
 .root {
-  border-top: 1px solid rgba(252, 255, 246, 0.12);
-  background: var(--bg);
+  border-top: 1px solid var(--color-border-subtle);
+  background: var(--color-background-page);
 }
 
 .inner {
@@ -23,19 +23,19 @@
   margin: 0;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--color-action-primary);
   @include mix.type-style(h5);
   line-height: 1;
 }
 
 .brandSecondary {
-  color: var(--text);
+  color: var(--color-text-primary);
 }
 
 .description,
 .copyright,
 .linkList a {
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .description,
@@ -66,7 +66,7 @@
 
 .heading {
   margin-block-end: var(--space-2xs);
-  color: var(--text);
+  color: var(--color-text-primary);
   @include mix.type-style(body-xs, 600);
   letter-spacing: 0.03em;
   text-transform: none;
@@ -85,7 +85,7 @@
 
 .linkList a:hover,
 .socials a:hover {
-  color: var(--text);
+  color: var(--color-text-primary);
 }
 
 .socials {
@@ -103,8 +103,8 @@
   min-width: var(--space-md);
   height: var(--space-md);
   padding-inline: var(--space-hairline);
-  color: var(--text);
-  border: 1px solid rgba(252, 255, 246, 0.24);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-pill);
   font-size: var(--space-xs);
   font-weight: 700;
