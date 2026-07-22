@@ -1720,6 +1720,16 @@ export const App = () => {
       const post = updateBlogPost(current.post, field, value)
       if (field === 'slug') {
         setMediaSlug(post.slug)
+        setMediaTarget((activeTarget) => (
+          activeTarget && activeTarget.kind === 'blog' && activeTarget.slug === current.post.slug
+            ? {
+                ...activeTarget,
+                key: `blog:${post.slug}:${activeTarget.field}`,
+                label: `${post.title || post.slug} cover image`,
+                slug: post.slug,
+              }
+            : activeTarget
+        ))
       }
       return { ...current, post }
     })
