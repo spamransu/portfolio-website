@@ -135,7 +135,9 @@ export type SiteContent = {
     heroImage?: ImageAsset
   }
   projectsPage?: {
+    title: string
     intro: string
+    heroImage?: ImageAsset
   }
   blogPage?: {
     title: string

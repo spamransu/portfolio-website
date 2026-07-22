@@ -523,7 +523,13 @@
     }
   },
   "projectsPage": {
-    "intro": "Selected frontend and design-to-code work, presented as short case studies with mock visuals and enough context to explain the thinking behind the build."
+    "title": "Case studies with enough context to be useful.",
+    "intro": "Selected frontend and design-to-code work, presented as short case studies with mock visuals and enough context to explain the thinking behind the build.",
+    "heroImage": {
+      "src": "https://picsum.photos/seed/portfolio-projects-grid/1600/1100.jpg",
+      "alt": "Mock overview board showing portfolio project cards and visual case-study panels.",
+      "caption": "Mock overview for the internal projects archive."
+    }
   },
   "blogPage": {
     "title": "Notes from build, design, and frontend delivery work.",

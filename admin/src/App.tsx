@@ -124,6 +124,20 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'contact.form.submitLabel':
       next.contact.form.submitLabel = value
       return next
+    case 'projectsPage.title':
+      next.projectsPage = {
+        title: value,
+        intro: next.projectsPage?.intro ?? '',
+        heroImage: next.projectsPage?.heroImage,
+      }
+      return next
+    case 'projectsPage.intro':
+      next.projectsPage = {
+        title: next.projectsPage?.title ?? '',
+        intro: value,
+        heroImage: next.projectsPage?.heroImage,
+      }
+      return next
     case 'blogPage.title':
       next.blogPage = {
         title: value,
@@ -410,8 +424,20 @@ export const App = () => {
           }))
           return next
         case 'heroImage': {
-          const target = field.split('.')[0] as 'about' | 'resume' | 'contact' | 'blogPage'
+          const target = field.split('.')[0] as 'about' | 'resume' | 'contact' | 'projectsPage' | 'blogPage'
           const property = field.split('.')[1] as 'src' | 'alt' | 'caption'
+          if (target === 'projectsPage') {
+            next.projectsPage = {
+              title: next.projectsPage?.title ?? '',
+              intro: next.projectsPage?.intro ?? '',
+              heroImage: {
+                ...(next.projectsPage?.heroImage ?? { src: '', alt: '' }),
+                [property]: value || (property === 'caption' ? undefined : ''),
+              },
+            }
+            return next
+          }
+
           if (target === 'blogPage') {
             next.blogPage = {
               title: next.blogPage?.title ?? '',
