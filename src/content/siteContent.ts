@@ -30,6 +30,13 @@ export type ContactMethod = {
   description: string
 }
 
+export type ContactFormContent = {
+  title: string
+  intro: string
+  submitLabel: string
+  messageLimit: number
+}
+
 export type HighlightStat = {
   value: string
   label: string
@@ -103,12 +110,7 @@ export type SiteContent = {
       description: string
       items: string[]
     }
-    contact: {
-      title: string
-      intro: string
-      submitLabel: string
-      messageLimit: number
-    }
+    contact: ContactFormContent
   }
   about: {
     intro: string
@@ -130,6 +132,7 @@ export type SiteContent = {
     title: string
     body: string
     availability: string
+    form: ContactFormContent
     methods: ContactMethod[]
     heroImage?: ImageAsset
   }

@@ -150,6 +150,12 @@
     "title": "Let's connect!",
     "body": "If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.",
     "availability": "Available for freelance builds, design-to-code support, and selected frontend roles.",
+    "form": {
+      "title": "Start the conversation",
+      "intro": "Share a few details about the project, page, or frontend cleanup you need help with and I will reply by email.",
+      "submitLabel": "Draft email inquiry",
+      "messageLimit": 800
+    },
     "methods": [
       {
         "title": "Email",

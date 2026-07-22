@@ -1,9 +1,9 @@
 import { useId, useState, type ChangeEvent, type FormEvent } from 'react'
-import type { SiteContent } from '../content/siteContent'
+import type { ContactFormContent } from '../content/siteContent'
 import sty from './ContactForm.module.scss'
 
 type ContactFormProps = {
-  contact: SiteContent['home']['contact']
+  contact: ContactFormContent
   recipientEmail: string
 }
 

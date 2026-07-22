@@ -1,4 +1,5 @@
 import { InternalHero } from '../components/InternalHero'
+import { ContactForm } from '../components/ContactForm'
 import { Section } from '../components/Section'
 import { siteContent } from '../content/siteContent'
 import sty from './InternalPages.module.scss'
@@ -28,6 +29,12 @@ export function ContactPage() {
             <h3>Location</h3>
             <p>{siteContent.site.location}</p>
           </article>
+        </div>
+      </Section>
+
+      <Section title="Send a project brief" intro="Use the form if you want to draft the email with the main details already filled in.">
+        <div className="md-wrapper">
+          <ContactForm contact={siteContent.contact.form} recipientEmail={siteContent.site.email} />
         </div>
       </Section>
 
