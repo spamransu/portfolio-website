@@ -935,6 +935,12 @@ const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 const getBlogValidationError = (post: BlogPostResponse | null): string | null => {
   if (!post) return null
+  if (!post.title.trim()) {
+    return 'Blog title is required.'
+  }
+  if (!post.body.trim()) {
+    return 'Blog body is required.'
+  }
   if (!post.slug || !BLOG_SLUG_PATTERN.test(post.slug)) {
     return 'Blog slug must use lowercase letters, numbers, and hyphens only.'
   }
