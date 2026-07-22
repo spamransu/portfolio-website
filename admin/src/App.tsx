@@ -1259,6 +1259,8 @@ export const App = () => {
         setSelectedBlogSlug('')
         setSelectedBlogPost(null)
         setSelectedBlogBaseline(null)
+        setMediaSlug('')
+        setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       }
     } catch (loadError) {
       if (handleUnauthorizedError(loadError, 'Your admin session expired. Sign in again.')) return
@@ -1359,6 +1361,7 @@ export const App = () => {
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
       setMediaSlug(fallbackSlug)
+      setMediaTarget((current) => (current && current.kind === 'blog' && !fallbackSlug ? null : current))
       setBlogStatus(null)
       setBlogConflict(null)
       setError(null)
