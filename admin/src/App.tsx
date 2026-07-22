@@ -1169,10 +1169,22 @@ export const App = () => {
           if (!selectedProjectSlug) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
           if (projectIndex === -1) return next
+          const currentProject = next.projects[projectIndex]
+          const nextValue =
+            field === 'slug'
+              ? normalizeSlug(value) || currentProject.slug
+              : field === 'stack' || field === 'approach' || field === 'outcome'
+                ? splitLines(value)
+                : value
           next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
             ...project,
-            [field]: field === 'stack' || field === 'approach' || field === 'outcome' ? splitLines(value) : value,
+            [field]: nextValue,
           }))
+          if (field === 'slug' && typeof nextValue === 'string' && nextValue !== currentProject.slug) {
+            setSelectedProjectSlug(nextValue)
+            setMediaSlug((current) => (current === currentProject.slug ? nextValue : current))
+            setMediaTarget((current) => (current && current.area === 'projects' && current.slug === currentProject.slug ? null : current))
+          }
           return next
         }
         case 'projectImage': {
