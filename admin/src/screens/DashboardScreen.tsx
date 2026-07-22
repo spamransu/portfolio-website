@@ -387,6 +387,9 @@ export const DashboardScreen = ({
   const activityRefreshLabel = formatRefreshTimestamp(activityLoadedAt)
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
   const isUnsavedLocalBlogDraft = Boolean(blogPost && !blogPost.sha)
+  const unsavedLocalDraftOptionLabel = blogPost
+    ? `${blogPost.date} — ${blogPost.title || blogPost.slug || 'Unsaved draft'} (unsaved draft)`
+    : 'Unsaved draft'
   const sanitizedMediaSlug = sanitizePathSegment(mediaSlug)
   const resolvedUploadFilename = mediaFile ? resolveMediaFilename(mediaFile.name, mediaFile.type) : ''
   const nextUploadRepoPath = mediaFile && sanitizedMediaSlug ? `public/images/${mediaArea}/${sanitizedMediaSlug}/${resolvedUploadFilename}` : ''
@@ -1121,6 +1124,9 @@ export const DashboardScreen = ({
               <label className="admin-field">
                 <span>Published posts + drafts</span>
                 <select value={selectedBlogSlug} onChange={(event) => onBlogSelect(event.target.value)} disabled={!blogList.length || blogLoading || savingBlog}>
+                  {isUnsavedLocalBlogDraft ? (
+                    <option value={selectedBlogSlug}>{unsavedLocalDraftOptionLabel}</option>
+                  ) : null}
                   {blogList.length ? (
                     blogList.map((post) => <option key={post.slug} value={post.slug}>{post.date} — {post.title}</option>)
                   ) : (
