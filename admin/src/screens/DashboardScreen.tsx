@@ -1144,7 +1144,17 @@ export const DashboardScreen = ({
           </article>
 
           <section className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Live JSON preview</h2><p className="admin-copy">The save action commits this full structured object back to content/site-content.json.</p></div>{loadingContent ? <span className="admin-status">Loading…</span> : null}</div>
+            <div className="admin-panel-header">
+              <div>
+                <h2>Live JSON preview</h2>
+                <p className="admin-copy">The save action commits this full structured object back to content/site-content.json.</p>
+              </div>
+              <div className="admin-actions">
+                {siteContent?.path ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(siteContent.path, 'Site JSON path')}>Copy file path</button> : null}
+                {formattedJson ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(formattedJson, 'Live JSON')}>Copy JSON</button> : null}
+                {loadingContent ? <span className="admin-status">Loading…</span> : null}
+              </div>
+            </div>
             <textarea readOnly value={formattedJson} className="admin-code-viewer" spellCheck={false} />
           </section>
         </section>
