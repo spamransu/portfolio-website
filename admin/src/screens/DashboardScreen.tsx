@@ -92,6 +92,7 @@ interface DashboardScreenProps {
   }>
   activityError: string | null
   activityLoadedAt: string | null
+  authStatus: string | null
   blogActivity: {
     latestCommitSha: string | null
     path: string
@@ -254,6 +255,7 @@ export const DashboardScreen = ({
   activity,
   activityError,
   activityLoadedAt,
+  authStatus,
   blogActivity,
   blogConflict,
   blogDirty,
@@ -468,6 +470,7 @@ export const DashboardScreen = ({
       </section>
 
       {error ? <section className="admin-panel admin-error">{error}</section> : null}
+      {authStatus ? <section className="admin-panel admin-success">{authStatus}</section> : null}
       {siteValidationError ? <section className="admin-panel admin-warning">{siteValidationError}</section> : null}
       {siteConflict ? (
         <section className="admin-panel admin-warning">

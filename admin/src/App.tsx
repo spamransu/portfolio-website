@@ -992,7 +992,7 @@ const updateBlogPost = (post: BlogPostResponse, field: string, value: string): B
   }
 }
 
-const getAuthMessageFromUrl = (): string | null => {
+const getAuthMessageFromUrl = (): { kind: 'error' | 'success'; message: string } | null => {
   const hash = window.location.hash
   const queryIndex = hash.indexOf('?')
   if (queryIndex === -1) return null
@@ -1001,13 +1001,15 @@ const getAuthMessageFromUrl = (): string | null => {
   const auth = params.get('auth')
   if (!auth) return null
 
+  const kind = auth === 'success' ? 'success' : 'error'
   const message = auth === 'success' ? 'GitHub login successful.' : 'GitHub login failed.'
   const nextHash = hash.slice(0, queryIndex) || '#/'
   window.history.replaceState({}, document.title, `${window.location.pathname}${nextHash}`)
-  return message
+  return { kind, message }
 }
 
 export const App = () => {
+  const initialAuthMessage = getAuthMessageFromUrl()
   const [session, setSession] = useState<AdminSession>(DEFAULT_SESSION)
   const [siteContent, setSiteContent] = useState<SiteContentResponse | null>(null)
   const [workingCopy, setWorkingCopy] = useState<SiteContent | null>(null)
@@ -1036,7 +1038,8 @@ export const App = () => {
   const [mediaFileInputKey, setMediaFileInputKey] = useState(0)
   const [mediaResult, setMediaResult] = useState<MediaUploadResponse | null>(null)
   const [mediaTarget, setMediaTarget] = useState<MediaTargetSelection | null>(null)
-  const [error, setError] = useState<string | null>(getAuthMessageFromUrl())
+  const [error, setError] = useState<string | null>(initialAuthMessage?.kind === 'error' ? initialAuthMessage.message : null)
+  const [authStatus, setAuthStatus] = useState<string | null>(initialAuthMessage?.kind === 'success' ? initialAuthMessage.message : null)
   const [saveStatus, setSaveStatus] = useState<string | null>(null)
   const [blogStatus, setBlogStatus] = useState<string | null>(null)
   const [mediaStatus, setMediaStatus] = useState<string | null>(null)
@@ -1063,6 +1066,7 @@ export const App = () => {
       setSelectedExperienceIndex(0)
       setSelectedMethodIndex(0)
       setError(null)
+      setAuthStatus(null)
       setSaveStatus(null)
       setSiteConflict(null)
     } catch (loadError) {
@@ -1109,6 +1113,7 @@ export const App = () => {
       setBlogStatus(null)
       setBlogConflict(null)
       setError(null)
+      setAuthStatus(null)
     } catch (loadError) {
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
@@ -1122,6 +1127,7 @@ export const App = () => {
     try {
       const response = await adminApi.getBlogPosts()
       setBlogList(response)
+      setAuthStatus(null)
       const nextSlug = (preferredSlug && response.posts.some((post) => post.slug === preferredSlug)
         ? preferredSlug
         : response.posts[0]?.slug) ?? ''
@@ -1172,6 +1178,7 @@ export const App = () => {
       setActivity(null)
       setActivityError(null)
       setActivityLoadedAt(null)
+      setAuthStatus(null)
       setError(sessionError instanceof Error ? sessionError.message : 'Failed to load session.')
     } finally {
       setLoading(false)
@@ -1219,6 +1226,7 @@ export const App = () => {
       setActivity(null)
       setActivityError(null)
       setActivityLoadedAt(null)
+      setAuthStatus(null)
     } catch (logoutError) {
       setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
     }
@@ -1229,6 +1237,7 @@ export const App = () => {
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
+    setAuthStatus(null)
   }, [])
 
   const handleDiscardSiteChanges = useCallback(() => {
@@ -1250,6 +1259,7 @@ export const App = () => {
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
+    setAuthStatus(null)
   }, [confirmDiscardChanges, siteContent])
 
   const handleDiscardBlogChanges = useCallback(() => {
@@ -1262,6 +1272,7 @@ export const App = () => {
     setBlogStatus(null)
     setBlogConflict(null)
     setError(null)
+    setAuthStatus(null)
   }, [confirmDiscardChanges, selectedBlogBaseline, selectedBlogPost])
 
   const handleStructuredFieldChange = useCallback((scope: string, field: string, value: string, index?: number) => {
@@ -1661,6 +1672,7 @@ export const App = () => {
     setBlogStatus(null)
     setBlogConflict(null)
     setError(null)
+    setAuthStatus(null)
   }, [])
 
   const blogDirty = useMemo(() => {
@@ -1916,6 +1928,7 @@ export const App = () => {
       activity: activity?.commits ?? [],
       activityError,
       activityLoadedAt,
+      authStatus,
       blogActivity,
       blogDirty,
       blogList: blogList?.posts ?? [],
@@ -2039,6 +2052,7 @@ export const App = () => {
       activity,
       activityError,
       activityLoadedAt,
+      authStatus,
       blogActivity,
       blogDirty,
       blogConflict,
