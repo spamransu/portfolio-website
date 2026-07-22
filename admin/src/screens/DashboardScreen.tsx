@@ -386,6 +386,7 @@ export const DashboardScreen = ({
   const publicProjectUrl = normalizedSiteUrl && selectedProject?.slug ? `${normalizedSiteUrl}/projects/${selectedProject.slug}` : null
   const activityRefreshLabel = formatRefreshTimestamp(activityLoadedAt)
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
+  const isUnsavedLocalBlogDraft = Boolean(blogPost && !blogPost.sha)
   const sanitizedMediaSlug = sanitizePathSegment(mediaSlug)
   const resolvedUploadFilename = mediaFile ? resolveMediaFilename(mediaFile.name, mediaFile.type) : ''
   const nextUploadRepoPath = mediaFile && sanitizedMediaSlug ? `public/images/${mediaArea}/${sanitizedMediaSlug}/${resolvedUploadFilename}` : ''
@@ -503,7 +504,7 @@ export const DashboardScreen = ({
               <h2>Blog conflict</h2>
               <p className="admin-copy">This post changed in GitHub after it was loaded. Reload the post before saving or deleting.</p>
             </div>
-            <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>
+            <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || !blogPost?.sha || blogLoading || savingBlog}>
               Reload post
             </button>
           </div>
@@ -1111,7 +1112,7 @@ export const DashboardScreen = ({
                 {blogLoading ? <span className="admin-status">Loading…</span> : null}
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate} disabled={blogLoading || savingBlog}>New draft</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || blogLoading || savingBlog}>Discard blog edits</button>
-                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || !blogPost?.sha || blogLoading || savingBlog}>Reload post</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || blogLoading || savingBlog}>Delete post</button>
                 <button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || blogLoading || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button>
               </div>
@@ -1141,6 +1142,7 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Date</span><input value={blogPost.date} onChange={(event) => onBlogFieldChange('date', event.target.value)} /></label>
                   <label className="admin-field"><span>Status</span><select value={blogPost.status} onChange={(event) => onBlogFieldChange('status', event.target.value)}><option value="draft">draft</option><option value="published">published</option></select></label>
                   {blogValidationError ? <p className="admin-note admin-note-warning">{blogValidationError}</p> : null}
+                  {isUnsavedLocalBlogDraft ? <p className="admin-note">This is a local draft. Save it once to create the markdown file in GitHub.</p> : null}
                   {blogPost.sha ? <p className="admin-note">Changing the slug or date will rename the markdown file on the next save.</p> : null}
                   <label className="admin-field"><span>Cover image</span><input value={blogPost.coverImage ?? ''} onChange={(event) => onBlogFieldChange('coverImage', event.target.value)} />{renderUseLastUploadButton(() => onBlogFieldChange('coverImage', mediaPath))}{renderMediaTargetButton({ area: 'blog', slug: blogPost.slug, key: `blog:${blogPost.slug}:coverImage`, kind: 'blog', field: 'coverImage', label: `${blogPost.title || blogPost.slug} cover image` })}</label>
                   <label className="admin-field"><span>Cover alt</span><input value={blogPost.coverAlt ?? ''} onChange={(event) => onBlogFieldChange('coverAlt', event.target.value)} /></label>

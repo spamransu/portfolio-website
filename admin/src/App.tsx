@@ -1278,8 +1278,31 @@ export const App = () => {
   }, [confirmDiscardChanges, siteContent])
 
   const handleDiscardBlogChanges = useCallback(() => {
-    if (!selectedBlogPost || !selectedBlogBaseline) return
-    if (!confirmDiscardChanges('Discard unsaved blog edits and restore the last loaded post state?')) return
+    if (!selectedBlogPost) return
+
+    const isUnsavedLocalDraft = !selectedBlogPost.post.sha
+    const message = isUnsavedLocalDraft
+      ? 'Discard this unsaved local draft and return to saved blog posts?'
+      : 'Discard unsaved blog edits and restore the last loaded post state?'
+    if (!confirmDiscardChanges(message)) return
+
+    if (isUnsavedLocalDraft) {
+      const fallbackSlug = blogList?.posts[0]?.slug ?? ''
+      setSelectedBlogSlug(fallbackSlug)
+      setSelectedBlogPost(null)
+      setSelectedBlogBaseline(null)
+      setMediaSlug(fallbackSlug)
+      setBlogStatus(null)
+      setBlogConflict(null)
+      setError(null)
+      setAuthStatus(null)
+      if (fallbackSlug) {
+        void loadBlogPost(fallbackSlug)
+      }
+      return
+    }
+
+    if (!selectedBlogBaseline) return
 
     setSelectedBlogPost((current) => (current ? { ...current, post: structuredClone(selectedBlogBaseline) } : current))
     setSelectedBlogSlug(selectedBlogBaseline.slug)
@@ -1288,7 +1311,7 @@ export const App = () => {
     setBlogConflict(null)
     setError(null)
     setAuthStatus(null)
-  }, [confirmDiscardChanges, selectedBlogBaseline, selectedBlogPost])
+  }, [blogList?.posts, confirmDiscardChanges, loadBlogPost, selectedBlogBaseline, selectedBlogPost])
 
   const handleStructuredFieldChange = useCallback((scope: string, field: string, value: string, index?: number) => {
     setWorkingCopy((current) => {
@@ -1692,7 +1715,9 @@ export const App = () => {
   }, [])
 
   const blogDirty = useMemo(() => {
-    if (!selectedBlogPost || !selectedBlogBaseline) return false
+    if (!selectedBlogPost) return false
+    if (!selectedBlogPost.post.sha) return true
+    if (!selectedBlogBaseline) return false
     return JSON.stringify(selectedBlogBaseline) !== JSON.stringify(selectedBlogPost.post)
   }, [selectedBlogBaseline, selectedBlogPost])
 
