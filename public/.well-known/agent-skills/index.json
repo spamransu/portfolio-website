@@ -4,9 +4,9 @@
     {
       "name": "site-navigation",
       "type": "skill-md",
-      "description": "Navigate this portfolio website quickly, prefer markdown mirrors, and understand where case studies, resume details, and contact information live.",
+      "description": "Navigate this portfolio website quickly, prefer markdown mirrors, and understand where blog posts, case studies, resume details, and contact information live.",
       "url": "/.well-known/agent-skills/site-navigation/SKILL.md",
-      "digest": "sha256:0faade147a668be360f55e6fdf24c8fe8d020a510f220081fe9066549286a089"
+      "digest": "sha256:e5640a1cab77b30b5d13c463e5807f51820e1823759eb968fcc90f9a3ade78c5"
     }
   ]
 }

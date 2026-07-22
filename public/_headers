@@ -12,6 +12,9 @@
 /about
   Link: </about.md>; rel="alternate"; type="text/markdown"
 
+/blog
+  Link: </blog.md>; rel="alternate"; type="text/markdown"
+
 /projects
   Link: </projects.md>; rel="alternate"; type="text/markdown"
 
@@ -20,3 +23,7 @@
 
 /resume
   Link: </resume.md>; rel="alternate"; type="text/markdown"
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store

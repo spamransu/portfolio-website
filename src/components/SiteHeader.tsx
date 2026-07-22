@@ -4,6 +4,7 @@ import sty from './SiteHeader.module.scss'
 
 const navItems = [
   { to: '/projects', label: 'Projects' },
+  { to: '/blog', label: 'Blog' },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
   { to: '/resume', label: 'CV' },

@@ -1,21 +1,13 @@
-import rawContent from '../../content/site-content.json'
-
 export type SocialLink = {
   label: string
   href: string
 }
 
-export type Job = {
-  role: string
-  company: string
-  period: string
-  highlights: string[]
-}
-
-export type ImageAsset = {
-  src: string
-  alt: string
-  caption?: string
+export type ContactFormContent = {
+  title: string
+  intro: string
+  submitLabel: string
+  messageLimit: number
 }
 
 export type ProcessStep = {
@@ -30,16 +22,30 @@ export type ContactMethod = {
   description: string
 }
 
-export type ContactFormContent = {
-  title: string
-  intro: string
-  submitLabel: string
-  messageLimit: number
+export type HomeStatTone = 'accent' | 'accent-2' | 'accent-3'
+
+export type HomeStat = {
+  value: string
+  label: string
+  tone: HomeStatTone
 }
 
 export type HighlightStat = {
   value: string
   label: string
+}
+
+export type ImageAsset = {
+  src: string
+  alt: string
+  caption?: string
+}
+
+export type Job = {
+  role: string
+  company: string
+  period: string
+  highlights: string[]
 }
 
 export type ProjectSection = {
@@ -62,14 +68,6 @@ export type Project = {
   image?: ImageAsset
   gallery?: ImageAsset[]
   sections?: ProjectSection[]
-}
-
-export type HomeStatTone = 'accent' | 'accent-2' | 'accent-3'
-
-export type HomeStat = {
-  value: string
-  label: string
-  tone: HomeStatTone
 }
 
 export type SiteContent = {
@@ -146,8 +144,24 @@ export type SiteContent = {
   projects: Project[]
 }
 
-export const siteContent = rawContent as SiteContent
+export type BlogStatus = 'draft' | 'published'
 
-export function getLinktreeUrl() {
-  return siteContent.site.socials.find((social) => /linktree/i.test(social.label) || /linktr\.ee/i.test(social.href))?.href
+export type BlogPost = {
+  title: string
+  slug: string
+  date: string
+  status: BlogStatus
+  coverImage?: string
+  coverAlt?: string
+  excerpt?: string
+  body: string
+}
+
+export type BlogPostMeta = Omit<BlogPost, 'body'> & {
+  path: string
+  sha: string
+}
+
+export type BlogPostResponse = BlogPostMeta & {
+  body: string
 }

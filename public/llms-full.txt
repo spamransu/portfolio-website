@@ -22,6 +22,7 @@ HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
 ## Main pages
 - [Home](https://lancecarteciano.com/index.md) — Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.
 - [About](https://lancecarteciano.com/about.md) — I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.
+- [Blog](https://lancecarteciano.com/blog.md) — Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site.
 - [Projects](https://lancecarteciano.com/projects.md) — Project index and case-study summaries.
 - [Contact](https://lancecarteciano.com/contact.md) — If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
 - [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
@@ -61,6 +62,37 @@ Most of the projects I enjoy combine interface polish with real delivery work: s
 - Reusable layout systems beat one-off page fixes.
 - Mockups matter, but shipped code has to stay editable.
 - Frontend polish should improve trust, not add noise.
+
+## Blog
+# Blog
+
+Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site.
+
+## [Lightweight Git-backed portfolio CMS](https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms.md)
+
+- Date: 2026-07-22
+
+Why the portfolio admin is being built around GitHub, Cloudflare Pages Functions, and structured content files instead of a database CMS.
+
+# Lightweight Git-backed portfolio CMS
+
+- Date: 2026-07-22
+- Excerpt: Why the portfolio admin is being built around GitHub, Cloudflare Pages Functions, and structured content files instead of a database CMS.
+- Cover image: /images/home/featured-project-1.png
+
+A portfolio does not need a heavy CMS just to edit a few durable content types.
+
+The better fit here is a small admin layer that writes back to the repository, keeps content reviewable in Git, and still deploys through the existing Cloudflare Pages pipeline.
+
+## Why this direction
+
+- The site already treats structured content files as the source of truth.
+- Git history is enough for audit, rollback, and change review.
+- Cloudflare Pages Functions can proxy the authenticated write flow without exposing a token to the browser.
+
+## What this unlocks
+
+The admin app can stay focused on the actual editing surfaces: site settings, projects, blog posts, and media references. It does not need roles, workflow engines, or a separate database layer to ship useful updates.
 
 ## Resume
 # Resume

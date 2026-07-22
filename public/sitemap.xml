@@ -11,6 +11,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lancecarteciano.com/blog</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://lancecarteciano.com/projects</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
@@ -22,6 +27,11 @@
   </url>
   <url>
     <loc>https://lancecarteciano.com/resume</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

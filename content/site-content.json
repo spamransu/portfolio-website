@@ -524,5 +524,9 @@
   },
   "projectsPage": {
     "intro": "Selected frontend and design-to-code work, presented as short case studies with mock visuals and enough context to explain the thinking behind the build."
+  },
+  "blogPage": {
+    "title": "Notes from build, design, and frontend delivery work.",
+    "intro": "Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site."
   }
 }
