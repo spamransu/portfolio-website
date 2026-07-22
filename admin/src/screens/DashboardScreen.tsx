@@ -71,7 +71,16 @@ interface DashboardScreenProps {
   blogValidationError: string | null
   dirty: boolean
   error: string | null
-  projectValidation: { featuredProjects?: string; selectedProject?: string }
+  siteValidation: {
+    featuredProjects?: string
+    selectedProject?: string
+    site?: string
+    socials?: string
+    siteChrome?: string
+    homeContact?: string
+    contactForm?: string
+    contactMethods?: string
+  }
   siteValidationError: string | null
   loading: boolean
   loadingContent: boolean
@@ -164,7 +173,7 @@ export const DashboardScreen = ({
   blogValidationError,
   dirty,
   error,
-  projectValidation,
+  siteValidation,
   siteValidationError,
   loading,
   loadingContent,
@@ -411,7 +420,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Featured projects title</span><input value={workingCopy.home.featuredProjects.title} onChange={(event) => onFieldChange('home.featuredProjects.title', event.target.value)} /></label>
               <label className="admin-field"><span>Featured projects intro</span><textarea value={workingCopy.home.featuredProjects.intro} onChange={(event) => onFieldChange('home.featuredProjects.intro', event.target.value)} /></label>
               <label className="admin-field"><span>Featured project slugs (one per line)</span><textarea value={toLines(workingCopy.home.featuredProjects.slugs)} onChange={(event) => onFieldChange('home.featuredProjects.slugs', event.target.value)} /></label>
-              {projectValidation.featuredProjects ? <p className="admin-note admin-note-warning">{projectValidation.featuredProjects}</p> : null}
+              {siteValidation.featuredProjects ? <p className="admin-note admin-note-warning">{siteValidation.featuredProjects}</p> : null}
               <label className="admin-field"><span>Featured fallback label</span><input value={workingCopy.home.featuredProjects.fallbackLabel} onChange={(event) => onFieldChange('home.featuredProjects.fallbackLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Featured fallback description</span><textarea value={workingCopy.home.featuredProjects.fallbackDescription} onChange={(event) => onFieldChange('home.featuredProjects.fallbackDescription', event.target.value)} /></label>
               <label className="admin-field"><span>Featured stack aria template</span><input value={workingCopy.home.featuredProjects.stackAriaTemplate ?? ''} onChange={(event) => onFieldChange('home.featuredProjects.stackAriaTemplate', event.target.value)} /></label>
@@ -463,6 +472,7 @@ export const DashboardScreen = ({
                 </>
               ) : null}
             </div>
+            {siteValidation.homeContact ? <p className="admin-note admin-note-warning">{siteValidation.homeContact}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -475,6 +485,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Location</span><input value={workingCopy.site.location} onChange={(event) => onFieldChange('site.location', event.target.value)} /></label>
               <label className="admin-field"><span>Site URL</span><input value={workingCopy.site.siteUrl} onChange={(event) => onFieldChange('site.siteUrl', event.target.value)} /></label>
             </div>
+            {siteValidation.site ? <p className="admin-note admin-note-warning">{siteValidation.site}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -492,6 +503,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Footer more links (path | label)</span><textarea value={(workingCopy.siteChrome?.footer.moreLinks ?? []).map((link) => `${link.to} | ${link.label}`).join('\n')} onChange={(event) => onFieldChange('siteChrome.footer.moreLinks', event.target.value)} /></label>
               <label className="admin-field"><span>Footer Linktree label</span><input value={workingCopy.siteChrome?.footer.linktreeLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.linktreeLabel', event.target.value)} /></label>
             </div>
+            {siteValidation.siteChrome ? <p className="admin-note admin-note-warning">{siteValidation.siteChrome}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -588,6 +600,7 @@ export const DashboardScreen = ({
                 </>
               ) : null}
             </div>
+            {siteValidation.socials ? <p className="admin-note admin-note-warning">{siteValidation.socials}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -725,6 +738,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Contact hero image caption</span><textarea value={workingCopy.contact.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('Contact hero image', workingCopy.contact.heroImage?.src, workingCopy.contact.heroImage?.alt, workingCopy.contact.heroImage?.caption)}
             </div>
+            {siteValidation.contactForm ? <p className="admin-note admin-note-warning">{siteValidation.contactForm}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -746,6 +760,7 @@ export const DashboardScreen = ({
                 </>
               ) : null}
             </div>
+            {siteValidation.contactMethods ? <p className="admin-note admin-note-warning">{siteValidation.contactMethods}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -761,7 +776,7 @@ export const DashboardScreen = ({
                 <>
                   <label className="admin-field"><span>Title</span><input value={selectedProject.title} onChange={(event) => onStructuredFieldChange('project', 'title', event.target.value)} /></label>
                   <label className="admin-field"><span>Slug</span><input value={selectedProject.slug} onChange={(event) => onStructuredFieldChange('project', 'slug', event.target.value)} /></label>
-                  {projectValidation.selectedProject ? <p className="admin-note admin-note-warning">{projectValidation.selectedProject}</p> : null}
+                  {siteValidation.selectedProject ? <p className="admin-note admin-note-warning">{siteValidation.selectedProject}</p> : null}
                   <label className="admin-field"><span>Year</span><input value={selectedProject.year} onChange={(event) => onStructuredFieldChange('project', 'year', event.target.value)} /></label>
                   <label className="admin-field"><span>Client</span><input value={selectedProject.client} onChange={(event) => onStructuredFieldChange('project', 'client', event.target.value)} /></label>
                   <label className="admin-field"><span>Role</span><input value={selectedProject.role} onChange={(event) => onStructuredFieldChange('project', 'role', event.target.value)} /></label>

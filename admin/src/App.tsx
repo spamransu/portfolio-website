@@ -26,9 +26,15 @@ type ConflictState = {
   latestCommitSha?: string | null
 } | null
 
-type ProjectValidationState = {
+type SiteValidationState = {
   featuredProjects?: string
   selectedProject?: string
+  site?: string
+  socials?: string
+  siteChrome?: string
+  homeContact?: string
+  contactForm?: string
+  contactMethods?: string
 }
 
 type BlogActivity = {
@@ -836,8 +842,26 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
 
 const BLOG_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 const PROJECT_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const getProjectValidationState = (content: SiteContent | null, selectedProjectSlug: string): ProjectValidationState => {
+const isHttpUrl = (value: string): boolean => {
+  try {
+    const url = new URL(value)
+    return url.protocol === 'http:' || url.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
+const isContactHref = (value: string): boolean => {
+  if (value.startsWith('mailto:')) return EMAIL_PATTERN.test(value.slice('mailto:'.length).trim())
+  if (value.startsWith('tel:')) return value.slice('tel:'.length).trim().length > 0
+  return isHttpUrl(value)
+}
+
+const isInternalPath = (value: string): boolean => value.startsWith('/')
+
+const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug: string): SiteValidationState => {
   if (!content) return {}
 
   const slugCounts = new Map<string, number>()
@@ -849,6 +873,15 @@ const getProjectValidationState = (content: SiteContent | null, selectedProjectS
   const duplicateSlugs = [...slugCounts.entries()].filter(([, count]) => count > 1).map(([slug]) => slug)
   const missingFeatured = content.home.featuredProjects.slugs.filter((slug) => !slugCounts.has(slug))
 
+  const invalidSocial = content.site.socials.find((entry) => !entry.label.trim() || !isHttpUrl(entry.href.trim()))
+  const invalidHeaderNav = content.siteChrome?.headerNav.find((entry) => !entry.label.trim() || !isInternalPath(entry.to.trim()))
+  const invalidGeneralLink = content.siteChrome?.footer.generalLinks.find((entry) => !entry.label.trim() || !isInternalPath(entry.to.trim()))
+  const invalidMoreLink = content.siteChrome?.footer.moreLinks.find((entry) => !entry.label.trim() || !isInternalPath(entry.to.trim()))
+  const invalidMethod = content.contact.methods.find((entry) => !entry.title.trim() || !entry.label.trim() || !entry.description.trim() || !isContactHref(entry.href.trim()))
+
+  const homeMessageLimit = content.home.contact.messageLimit
+  const contactMessageLimit = content.contact.form.messageLimit
+
   return {
     selectedProject: selectedProject
       ? !selectedProject.slug || !PROJECT_SLUG_PATTERN.test(selectedProject.slug)
@@ -859,6 +892,38 @@ const getProjectValidationState = (content: SiteContent | null, selectedProjectS
       : undefined,
     featuredProjects: missingFeatured.length
       ? `Featured project slugs must match existing projects. Missing: ${missingFeatured.join(', ')}.`
+      : undefined,
+    site: !EMAIL_PATTERN.test(content.site.email.trim())
+      ? 'Site email must use a valid email address.'
+      : !isHttpUrl(content.site.siteUrl.trim())
+        ? 'Site URL must use a full http or https URL.'
+        : undefined,
+    socials: invalidSocial
+      ? `Social links must have a label and a full http or https URL. Check: ${invalidSocial.label || invalidSocial.href}.`
+      : undefined,
+    siteChrome: invalidHeaderNav
+      ? `Header nav links must use internal paths that start with /. Check: ${invalidHeaderNav.to || invalidHeaderNav.label}.`
+      : invalidGeneralLink
+        ? `Footer general links must use internal paths that start with /. Check: ${invalidGeneralLink.to || invalidGeneralLink.label}.`
+        : invalidMoreLink
+          ? `Footer more links must use internal paths that start with /. Check: ${invalidMoreLink.to || invalidMoreLink.label}.`
+          : undefined,
+    homeContact: !Number.isInteger(homeMessageLimit) || homeMessageLimit <= 0
+      ? 'Home contact message limit must be a whole number greater than 0.'
+      : !content.home.contact.messageCountTemplate.includes('{count}') || !content.home.contact.messageCountTemplate.includes('{limit}')
+        ? 'Home contact count template must include both {count} and {limit}.'
+        : !content.home.contact.messageTooLongError.includes('{limit}')
+          ? 'Home contact message-too-long error must include {limit}.'
+          : undefined,
+    contactForm: !Number.isInteger(contactMessageLimit) || contactMessageLimit <= 0
+      ? 'Contact form message limit must be a whole number greater than 0.'
+      : !content.contact.form.messageCountTemplate.includes('{count}') || !content.contact.form.messageCountTemplate.includes('{limit}')
+        ? 'Contact form count template must include both {count} and {limit}.'
+        : !content.contact.form.messageTooLongError.includes('{limit}')
+          ? 'Contact form message-too-long error must include {limit}.'
+          : undefined,
+    contactMethods: invalidMethod
+      ? `Contact methods must have title, label, description, and a valid mailto, tel, or http/https URL. Check: ${invalidMethod.title || invalidMethod.href}.`
       : undefined,
   }
 }
@@ -1447,8 +1512,16 @@ export const App = () => {
     return JSON.stringify(siteContent.content) !== JSON.stringify(workingCopy)
   }, [siteContent, workingCopy])
 
-  const projectValidation = useMemo(() => getProjectValidationState(workingCopy, selectedProjectSlug), [selectedProjectSlug, workingCopy])
-  const siteValidationError = projectValidation.selectedProject ?? projectValidation.featuredProjects ?? null
+  const siteValidation = useMemo(() => getSiteValidationState(workingCopy, selectedProjectSlug), [selectedProjectSlug, workingCopy])
+  const siteValidationError = siteValidation.selectedProject
+    ?? siteValidation.featuredProjects
+    ?? siteValidation.site
+    ?? siteValidation.socials
+    ?? siteValidation.siteChrome
+    ?? siteValidation.homeContact
+    ?? siteValidation.contactForm
+    ?? siteValidation.contactMethods
+    ?? null
 
   const handleSave = useCallback(async () => {
     if (!siteContent || !workingCopy || siteValidationError) return
@@ -1731,7 +1804,7 @@ export const App = () => {
       blogConflict,
       dirty,
       error,
-      projectValidation,
+      siteValidation,
       siteValidationError,
       loading,
       loadingContent,
@@ -1854,7 +1927,7 @@ export const App = () => {
       loadSiteContent,
       loading,
       loadingBlog,
-      projectValidation,
+      siteValidation,
       siteValidationError,
       loadingContent,
       mediaArea,
