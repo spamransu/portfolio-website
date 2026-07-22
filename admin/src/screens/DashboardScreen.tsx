@@ -387,6 +387,7 @@ export const DashboardScreen = ({
   const activityRefreshLabel = formatRefreshTimestamp(activityLoadedAt)
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
   const isUnsavedLocalBlogDraft = Boolean(blogPost && !blogPost.sha)
+  const canSelectBlogEntry = Boolean(blogList.length || isUnsavedLocalBlogDraft)
   const unsavedLocalDraftOptionLabel = blogPost
     ? `${blogPost.date} — ${blogPost.title || blogPost.slug || 'Unsaved draft'} (unsaved draft)`
     : 'Unsaved draft'
@@ -1123,18 +1124,18 @@ export const DashboardScreen = ({
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Published posts + drafts</span>
-                <select value={selectedBlogSlug} onChange={(event) => onBlogSelect(event.target.value)} disabled={!blogList.length || blogLoading || savingBlog}>
+                <select value={selectedBlogSlug} onChange={(event) => onBlogSelect(event.target.value)} disabled={!canSelectBlogEntry || blogLoading || savingBlog}>
                   {isUnsavedLocalBlogDraft ? (
                     <option value={selectedBlogSlug}>{unsavedLocalDraftOptionLabel}</option>
                   ) : null}
                   {blogList.length ? (
                     blogList.map((post) => <option key={post.slug} value={post.slug}>{post.date} — {post.title}</option>)
-                  ) : (
+                  ) : !isUnsavedLocalBlogDraft ? (
                     <option value="">No saved blog posts yet</option>
-                  )}
+                  ) : null}
                 </select>
               </label>
-              {!blogList.length ? <p className="admin-note">No saved posts yet. Use New draft to start a post, then save it to create the markdown file.</p> : null}
+              {!blogList.length && !isUnsavedLocalBlogDraft ? <p className="admin-note">No saved posts yet. Use New draft to start a post, then save it to create the markdown file.</p> : null}
               {blogMeta ? (
                 <div className="admin-actions">
                   <p className="admin-note">Selected file: <span className="admin-code">{blogMeta.path}</span></p>
