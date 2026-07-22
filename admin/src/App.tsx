@@ -1001,6 +1001,7 @@ export const App = () => {
   const [blogList, setBlogList] = useState<BlogListResponse | null>(null)
   const [selectedBlogSlug, setSelectedBlogSlug] = useState<string>('')
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogDetailResponse | null>(null)
+  const [selectedBlogBaseline, setSelectedBlogBaseline] = useState<BlogPostResponse | null>(null)
   const [selectedProjectSlug, setSelectedProjectSlug] = useState<string>('')
   const [selectedProjectGalleryIndex, setSelectedProjectGalleryIndex] = useState(0)
   const [selectedHomeStatIndex, setSelectedHomeStatIndex] = useState(0)
@@ -1069,6 +1070,7 @@ export const App = () => {
   const loadBlogPost = useCallback(async (slug: string) => {
     if (!slug) {
       setSelectedBlogPost(null)
+      setSelectedBlogBaseline(null)
       return
     }
 
@@ -1077,6 +1079,7 @@ export const App = () => {
     try {
       const response = await adminApi.getBlogPost(slug)
       setSelectedBlogPost(response)
+      setSelectedBlogBaseline(structuredClone(response.post))
       setSelectedBlogSlug(slug)
       setMediaArea('blog')
       setMediaSlug(slug)
@@ -1085,6 +1088,7 @@ export const App = () => {
       setError(null)
     } catch (loadError) {
       setSelectedBlogPost(null)
+      setSelectedBlogBaseline(null)
       setError(loadError instanceof Error ? loadError.message : 'Failed to load blog post.')
     } finally {
       setLoadingBlog(false)
@@ -1103,11 +1107,13 @@ export const App = () => {
       } else {
         setSelectedBlogSlug('')
         setSelectedBlogPost(null)
+        setSelectedBlogBaseline(null)
       }
     } catch (loadError) {
       setBlogList(null)
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
+      setSelectedBlogBaseline(null)
       setError(loadError instanceof Error ? loadError.message : 'Failed to load blog posts.')
     }
   }, [loadBlogPost])
@@ -1127,6 +1133,7 @@ export const App = () => {
         setBlogList(null)
         setSelectedBlogSlug('')
         setSelectedBlogPost(null)
+        setSelectedBlogBaseline(null)
         setActivity(null)
       }
     } catch (sessionError) {
@@ -1136,6 +1143,7 @@ export const App = () => {
       setBlogList(null)
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
+      setSelectedBlogBaseline(null)
       setActivity(null)
       setError(sessionError instanceof Error ? sessionError.message : 'Failed to load session.')
     } finally {
@@ -1168,6 +1176,7 @@ export const App = () => {
       setBlogList(null)
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
+      setSelectedBlogBaseline(null)
       setMediaArea(DEFAULT_MEDIA_AREA)
       setMediaSlug('')
       setMediaFile(null)
@@ -1192,6 +1201,39 @@ export const App = () => {
     setSiteConflict(null)
     setError(null)
   }, [])
+
+  const handleDiscardSiteChanges = useCallback(() => {
+    if (!siteContent) return
+    if (!confirmDiscardChanges('Discard unsaved content changes and restore the last loaded site content?')) return
+
+    setWorkingCopy(structuredClone(siteContent.content))
+    setSelectedProjectSlug((current) => {
+      if (current && siteContent.content.projects.some((project) => project.slug === current)) return current
+      return siteContent.content.projects[0]?.slug ?? ''
+    })
+    setSelectedProjectGalleryIndex(0)
+    setSelectedHomeStatIndex(0)
+    setSelectedSocialIndex(0)
+    setSelectedProcessIndex(0)
+    setSelectedHighlightIndex(0)
+    setSelectedExperienceIndex(0)
+    setSelectedMethodIndex(0)
+    setSaveStatus(null)
+    setSiteConflict(null)
+    setError(null)
+  }, [confirmDiscardChanges, siteContent])
+
+  const handleDiscardBlogChanges = useCallback(() => {
+    if (!selectedBlogPost || !selectedBlogBaseline) return
+    if (!confirmDiscardChanges('Discard unsaved blog edits and restore the last loaded post state?')) return
+
+    setSelectedBlogPost((current) => (current ? { ...current, post: structuredClone(selectedBlogBaseline) } : current))
+    setSelectedBlogSlug(selectedBlogBaseline.slug)
+    setMediaSlug(selectedBlogBaseline.slug)
+    setBlogStatus(null)
+    setBlogConflict(null)
+    setError(null)
+  }, [confirmDiscardChanges, selectedBlogBaseline, selectedBlogPost])
 
   const handleStructuredFieldChange = useCallback((scope: string, field: string, value: string, index?: number) => {
     setWorkingCopy((current) => {
@@ -1593,11 +1635,9 @@ export const App = () => {
   }, [])
 
   const blogDirty = useMemo(() => {
-    if (!selectedBlogPost) return false
-    const original = blogList?.posts.find((post) => post.slug === selectedBlogSlug)
-    if (!original) return true
-    return JSON.stringify({ ...original, body: selectedBlogPost.post.body }) !== JSON.stringify(selectedBlogPost.post)
-  }, [blogList, selectedBlogPost, selectedBlogSlug])
+    if (!selectedBlogPost || !selectedBlogBaseline) return false
+    return JSON.stringify(selectedBlogBaseline) !== JSON.stringify(selectedBlogPost.post)
+  }, [selectedBlogBaseline, selectedBlogPost])
 
   const blogValidationError = useMemo(() => getBlogValidationError(selectedBlogPost?.post ?? null), [selectedBlogPost])
 
@@ -1620,6 +1660,7 @@ export const App = () => {
 
       setSelectedBlogSlug(response.post.slug)
       setSelectedBlogPost({ branch: response.branch, post: response.post, repo: response.repo })
+      setSelectedBlogBaseline(structuredClone(response.post))
       setMediaSlug(response.post.slug)
       setBlogActivity({
         latestCommitSha: response.latestCommitSha,
@@ -1663,6 +1704,7 @@ export const App = () => {
       post,
       repo: blogList?.repo ?? siteContent?.repo ?? { branchUrl: '', owner: '', repo: '', repoUrl: '' },
     })
+    setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
     setMediaSlug(slug)
     setBlogStatus('New draft created locally. Save it to create the markdown file.')
@@ -1695,6 +1737,7 @@ export const App = () => {
       })
       void loadActivity()
       setBlogStatus(`Deleted ${response.path} at ${response.latestCommitSha ?? 'latest commit'}.`)
+      setSelectedBlogBaseline(null)
       await loadBlogList()
     } catch (deleteError) {
       const apiError = deleteError as AdminApiError
@@ -1843,6 +1886,7 @@ export const App = () => {
       onBlogDelete: () => {
         void handleBlogDelete()
       },
+      onBlogDiscard: handleDiscardBlogChanges,
       onBlogReload: () => {
         if (blogDirty && !confirmDiscardChanges('Discard unsaved blog edits and reload this post from GitHub?')) return
         if (selectedBlogSlug) void loadBlogPost(selectedBlogSlug)
@@ -1907,6 +1951,7 @@ export const App = () => {
         if (dirty && !confirmDiscardChanges('Discard unsaved content changes and reload from GitHub?')) return
         void loadSiteContent()
       },
+      onDiscard: handleDiscardSiteChanges,
       onSave: () => {
         void handleSave()
       },
@@ -1932,6 +1977,8 @@ export const App = () => {
       error,
       handleBlogFieldChange,
       handleBlogCreate,
+      handleDiscardBlogChanges,
+      handleDiscardSiteChanges,
       handleBlogDelete,
       handleBlogSave,
       handleFieldChange,

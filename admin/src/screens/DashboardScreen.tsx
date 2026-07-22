@@ -72,6 +72,7 @@ interface DashboardScreenProps {
   blogRepo: AdminRepoInfo | null
   blogLoading: boolean
   onBlogCreate: () => void
+  onBlogDiscard: () => void
   onBlogDelete: () => void
   blogMeta: BlogPostMeta | null
   blogPost: BlogPostResponse | null
@@ -123,6 +124,7 @@ interface DashboardScreenProps {
   onExperienceSelect: (value: number) => void
   onMethodSelect: (value: number) => void
   onReload: () => void
+  onDiscard: () => void
   onSave: () => void
   projectOptions: Array<{ slug: string; title: string }>
   saveStatus: string | null
@@ -175,6 +177,7 @@ export const DashboardScreen = ({
   blogRepo,
   blogLoading,
   onBlogCreate,
+  onBlogDiscard,
   onBlogDelete,
   blogMeta,
   blogPost,
@@ -217,6 +220,7 @@ export const DashboardScreen = ({
   onExperienceSelect,
   onMethodSelect,
   onReload,
+  onDiscard,
   onSave,
   projectOptions,
   saveStatus,
@@ -322,6 +326,9 @@ export const DashboardScreen = ({
             <>
               <button type="button" className="admin-button admin-button-secondary" onClick={onReload} disabled={loadingContent || saving}>
                 Reload content
+              </button>
+              <button type="button" className="admin-button admin-button-secondary" onClick={onDiscard} disabled={!dirty || saving || !workingCopy}>
+                Discard content edits
               </button>
               <button type="button" className="admin-button" onClick={onSave} disabled={!dirty || saving || !workingCopy || Boolean(siteValidationError)}>
                 {saving ? 'Saving…' : siteValidationError ? 'Fix validation errors' : dirty ? 'Save content' : 'Content saved'}
@@ -904,7 +911,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
+            <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || savingBlog}>Discard blog edits</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Published posts + drafts</span><select value={selectedBlogSlug} onChange={(event) => onBlogSelect(event.target.value)}>{blogList.map((post) => <option key={post.slug} value={post.slug}>{post.date} — {post.title}</option>)}</select></label>
               {blogMeta ? <p className="admin-note">{blogMeta.path}</p> : null}
