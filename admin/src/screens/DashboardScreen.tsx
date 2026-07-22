@@ -202,6 +202,45 @@ interface DashboardScreenProps {
 
 const mediaAreas = ['blog', 'home', 'projects', 'about', 'resume', 'contact']
 const toLines = (value: string[]): string => value.join('\n')
+const sanitizePathSegment = (value: string): string =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+const sanitizeFilename = (value: string): string => {
+  const normalized = value.toLowerCase().trim()
+  const dotIndex = normalized.lastIndexOf('.')
+  const name = dotIndex === -1 ? normalized : normalized.slice(0, dotIndex)
+  const extension = dotIndex === -1 ? '' : normalized.slice(dotIndex + 1)
+  const safeName = sanitizePathSegment(name) || 'upload'
+  const safeExtension = extension.replace(/[^a-z0-9]+/g, '')
+  return safeExtension ? `${safeName}.${safeExtension}` : safeName
+}
+
+const extensionForMimeType = (mimeType: string): string => {
+  switch (mimeType) {
+    case 'image/jpeg':
+      return 'jpg'
+    case 'image/png':
+      return 'png'
+    case 'image/webp':
+      return 'webp'
+    case 'image/gif':
+      return 'gif'
+    case 'image/svg+xml':
+      return 'svg'
+    default:
+      return 'bin'
+  }
+}
+
+const resolveMediaFilename = (originalName: string, mimeType: string): string => {
+  const filename = sanitizeFilename(originalName)
+  if (filename.includes('.')) return filename
+  return `${filename}.${extensionForMimeType(mimeType)}`
+}
 
 export const DashboardScreen = ({
   activity,
@@ -311,6 +350,12 @@ export const DashboardScreen = ({
   const publicBlogUrl = normalizedSiteUrl ? `${normalizedSiteUrl}/blog` : null
   const publicPostUrl = normalizedSiteUrl && blogPost?.status === 'published' ? `${normalizedSiteUrl}/blog/${blogPost.slug}` : null
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
+  const sanitizedMediaSlug = sanitizePathSegment(mediaSlug)
+  const resolvedUploadFilename = mediaFile ? resolveMediaFilename(mediaFile.name, mediaFile.type) : ''
+  const nextUploadRepoPath = mediaFile && sanitizedMediaSlug ? `public/images/${mediaArea}/${sanitizedMediaSlug}/${resolvedUploadFilename}` : ''
+  const nextUploadPublicPath = nextUploadRepoPath ? `/${nextUploadRepoPath.replace(/^public\//, '')}` : ''
+  const uploadSlugWillChange = Boolean(mediaSlug.trim() && sanitizedMediaSlug && mediaSlug.trim() !== sanitizedMediaSlug)
+  const uploadFilenameWillChange = Boolean(mediaFile && mediaFile.name !== resolvedUploadFilename)
   const formatCommitDate = (value: string | null) => {
     if (!value) return '—'
     try {
@@ -921,14 +966,19 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button><button type="button" className="admin-button admin-button-secondary" onClick={onMediaFileClear} disabled={!mediaFile || uploadingMedia}>Clear file</button><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !mediaSlug.trim() || !mediaFile}>{uploadingMedia ? 'Uploading…' : 'Upload media'}</button></div></div>
+            <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button><button type="button" className="admin-button admin-button-secondary" onClick={onMediaFileClear} disabled={!mediaFile || uploadingMedia}>Clear file</button><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !sanitizedMediaSlug || !mediaFile}>{uploadingMedia ? 'Uploading…' : 'Upload media'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Area</span><select value={mediaArea} onChange={(event) => onMediaAreaChange(event.target.value)}>{mediaAreas.map((area) => <option key={area} value={area}>{area}</option>)}</select></label>
               <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
               <label className="admin-field"><span>Image file</span><input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} /></label>
               {mediaFile ? <p className="admin-note">Ready to upload: <span className="admin-code">{mediaFile.name}</span></p> : <p className="admin-note">Choose an image file before uploading.</p>}
+              {mediaSlug.trim() && !sanitizedMediaSlug ? <p className="admin-note admin-note-warning">Media slug must include letters or numbers after sanitization.</p> : null}
+              {uploadSlugWillChange ? <p className="admin-note">Slug will upload as <span className="admin-code">{sanitizedMediaSlug}</span>.</p> : null}
+              {uploadFilenameWillChange ? <p className="admin-note">Filename will upload as <span className="admin-code">{resolvedUploadFilename}</span>.</p> : null}
               {mediaPath ? <label className="admin-field"><span>Last uploaded path</span><input readOnly value={mediaPath} /></label> : null}
               <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span>{mediaTargetLabel ? ` — ${mediaTargetLabel}` : ' — manual selection'}</p>
+              {nextUploadRepoPath ? <p className="admin-note">Next upload repo path: <span className="admin-code">{nextUploadRepoPath}</span></p> : null}
+              {nextUploadPublicPath ? <p className="admin-note">Next upload public path: <span className="admin-code">{nextUploadPublicPath}</span></p> : null}
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
               {mediaFile ? <SelectedMediaPreview file={mediaFile} /> : null}
               {mediaPath ? (
