@@ -3,7 +3,7 @@
 .root {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-sm);
+  gap: var(--gap-grid);
   margin: 0;
 
   @include mix.mq(md) {
@@ -12,14 +12,14 @@
 }
 
 .item {
-  padding: var(--space-sm) 1.25rem;
+  padding: var(--space-card-pad);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
 
 .item dt {
-  margin-bottom: 0.35rem;
+  margin-block-end: var(--space-xs);
   color: var(--muted);
 }
 

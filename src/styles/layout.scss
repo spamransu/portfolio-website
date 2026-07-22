@@ -10,16 +10,38 @@
 }
 
 .site-main--inner {
-  padding-block: 2.25rem 5rem;
+  padding-block: var(--space-lg) var(--space-2xl);
 }
 
 .site-main--home {
-  padding: 0 0 4.5rem;
+  padding-block-end: var(--space-xl);
 }
 
-.page-stack {
+.page-stack,
+.stack {
   display: grid;
-  gap: var(--space-md);
+  gap: var(--space-stack-loose);
+}
+
+.stack--tight {
+  gap: var(--space-stack-tight);
+}
+
+.stack--loose {
+  gap: var(--space-lg);
+}
+
+.section-block {
+  padding-block-end: var(--space-section);
+}
+
+.section-block--accent {
+  padding-block: var(--space-section-compact);
+}
+
+.bordered-start {
+  padding-block-start: var(--space-stack);
+  border-top: 1px solid var(--line);
 }
 
 .project-grid,
@@ -27,7 +49,7 @@
 .detail-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-sm);
+  gap: var(--gap-grid);
 }
 
 @include mix.mq(md) {

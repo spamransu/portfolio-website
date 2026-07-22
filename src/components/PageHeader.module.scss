@@ -2,8 +2,8 @@
 
 .root {
   display: grid;
-  gap: 0.75rem;
-  padding-bottom: 0.35rem;
+  gap: var(--space-stack-tight);
+  padding-block-end: var(--space-xs);
   border-bottom: 1px solid var(--line);
 }
 
@@ -15,7 +15,7 @@
 }
 
 .eyebrow {
-  margin-top: 0;
+  margin-block-start: 0;
   color: var(--accent);
   @include mix.type-style(body-xs, 600);
   letter-spacing: 0.12em;
@@ -24,12 +24,12 @@
 
 .intro {
   margin: 0;
-  max-width: 70ch;
+  max-width: var(--measure-intro);
   color: var(--muted);
   @include mix.type-style(body-lg);
 }
 
 .actions {
-  @include mix.flex(row, null, null, 0.85rem, wrap);
-  margin-top: 0.35rem;
+  @include mix.flex(row, null, null, var(--gap-inline), wrap);
+  margin-block-start: var(--space-xs);
 }

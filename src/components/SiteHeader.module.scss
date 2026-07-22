@@ -9,8 +9,8 @@
   display: grid;
   grid-template-columns: minmax(0, auto) minmax(0, 1fr);
   align-items: center;
-  gap: 1rem;
-  padding-block: 1rem 0.9rem;
+  gap: var(--gap-inline);
+  padding-block: var(--space-chrome-block);
 }
 
 .navWrap {
@@ -20,7 +20,7 @@
 
 .brand {
   display: inline-flex;
-  gap: 0.12rem;
+  gap: var(--space-hairline);
   text-decoration: none;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -37,7 +37,7 @@
 }
 
 .nav {
-  @include mix.flex(row, flex-end, center, 0.8rem, nowrap);
+  @include mix.flex(row, flex-end, center, var(--gap-inline), nowrap);
   padding: 0;
   margin: 0;
   list-style: none;
@@ -46,10 +46,10 @@
 .nav a {
   color: var(--text);
   display: inline-flex;
-  padding-block: 0.1rem;
+  padding-block: var(--space-hairline);
   font-size: var(--type-body-xs-size);
   text-decoration: none;
-  letter-spacing: 0.11em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: color 140ms ease, opacity 140ms ease;
   white-space: nowrap;
@@ -60,24 +60,8 @@
   color: var(--accent);
 }
 
-@media (min-width: 768px) {
-  .inner {
-    gap: 1.5rem;
-    padding-block: 1.15rem 1rem;
-  }
-
-  .nav {
-    gap: 1rem;
-  }
-
-  .nav a {
-    font-size: var(--type-body-xs-size);
-    letter-spacing: 0.12em;
-  }
-}
-
 @media (max-width: 519.98px) {
   .nav {
-    gap: 0.5rem;
+    gap: var(--space-xs);
   }
 }

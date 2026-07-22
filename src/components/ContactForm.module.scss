@@ -2,40 +2,45 @@
 
 .root {
   display: grid;
-  gap: 0.82rem;
-  width: min(100%, 19rem);
-  padding: 0.88rem 0.82rem 0.82rem;
-  margin-inline: auto;
+  gap: var(--space-stack);
+  padding: var(--space-form-pad);
   background: var(--surface-light);
   color: var(--text-dark);
-  border-radius: 0.15rem;
+  border-radius: var(--space-hairline);
 }
 
-.intro {
+.intro,
+.form,
+.field,
+.metaRow {
   display: grid;
-  gap: 0.28rem;
+}
+
+.intro,
+.field,
+.metaRow {
+  gap: var(--space-2xs);
+}
+
+.form {
+  gap: var(--space-xs);
+}
+
+.intro h2,
+.intro p,
+.count,
+.error {
+  margin: 0;
 }
 
 .intro h2 {
-  margin: 0;
   text-transform: uppercase;
   @include mix.type-style(h3);
 }
 
 .intro p,
 .count {
-  margin: 0;
   color: rgba(22, 22, 20, 0.5);
-}
-
-.form {
-  display: grid;
-  gap: 0.62rem;
-}
-
-.field {
-  display: grid;
-  gap: 0.22rem;
 }
 
 .field label {
@@ -45,19 +50,19 @@
 .field input,
 .field textarea {
   width: 100%;
-  padding: 0.54rem 0.68rem;
+  padding: var(--space-xs);
   color: var(--text-dark);
   background: transparent;
   border: 1px solid rgba(22, 22, 20, 0.14);
-  border-radius: 0.15rem;
+  border-radius: var(--space-hairline);
 }
 
 .field input {
-  min-height: 2.35rem;
+  min-height: calc(var(--space-lg) + var(--space-xs));
 }
 
 .field textarea {
-  min-height: 5.25rem;
+  min-height: calc(var(--space-2xl) + var(--space-md));
   resize: vertical;
 }
 
@@ -66,18 +71,12 @@
   color: rgba(22, 22, 20, 0.28);
 }
 
-.metaRow {
-  display: grid;
-  gap: 0.2rem;
-}
-
 .count,
 .error {
   @include mix.type-style(body-xs);
 }
 
 .error {
-  margin: 0;
   color: #b42318;
 }
 
@@ -86,8 +85,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 1.9rem;
-  padding: 0.48rem 1rem;
+  min-height: calc(var(--space-md) + var(--space-xs));
+  padding: var(--space-button-pad);
   color: var(--text);
   @include mix.type-style(body-xs, 600);
   text-decoration: none;
@@ -98,17 +97,4 @@
 
 .submitButton:hover {
   transform: translateY(-1px);
-}
-
-@media (min-width: 768px) {
-  .root {
-    width: min(100%, 18.4rem);
-    padding: 0.9rem 0.85rem 0.85rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .root {
-    width: min(100%, 16.8rem);
-  }
 }

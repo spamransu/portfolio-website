@@ -152,11 +152,13 @@ $colors: (
 ) !default;
 
 $space: (
+  2xs: fluid(0.25rem, 0.35rem),
   xs: fluid(0.5rem, 0.65rem),
   sm: fluid(0.85rem, 1rem),
   md: fluid(1.2rem, 1.5rem),
   lg: fluid(1.8rem, 2.6rem),
   xl: fluid(3rem, 4.5rem),
+  2xl: fluid(4.5rem, 6rem),
 ) !default;
 
 $breakpoints: (

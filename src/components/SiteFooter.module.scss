@@ -7,19 +7,19 @@
 
 .inner {
   display: grid;
-  gap: 1.6rem;
-  padding-block: 1.8rem 1.55rem;
+  gap: var(--space-lg);
+  padding-block: var(--space-footer-block);
 }
 
 .info {
   display: grid;
-  gap: 0.7rem;
-  max-width: 18rem;
+  gap: var(--space-xs);
+  max-width: var(--measure-copy);
 }
 
 .brand {
   display: inline-flex;
-  gap: 0.1rem;
+  gap: var(--space-hairline);
   margin: 0;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -52,28 +52,28 @@
   @include mix.type-style(body-xs);
 }
 
-.linksWrap {
+.linksWrap,
+.linkList {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-xs);
 }
 
 .linkColumns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.1rem 1.8rem;
+  gap: var(--gap-inline) var(--space-lg);
 }
 
 .heading {
-  margin-bottom: 0.42rem;
+  margin-block-end: var(--space-2xs);
   color: var(--text);
   @include mix.type-style(body-xs, 600);
   letter-spacing: 0.03em;
   text-transform: none;
 }
 
-.linkList {
-  display: grid;
-  gap: 0.38rem;
+.linkList,
+.socials {
   padding: 0;
   list-style: none;
 }
@@ -89,43 +89,33 @@
 }
 
 .socials {
-  @include mix.flex(row, flex-start, center, 0.45rem, wrap);
-  padding: 0;
-  list-style: none;
+  @include mix.flex(row, flex-start, center, var(--space-xs), wrap);
 }
 
-.socials a {
+.socials a,
+.socialIcon {
   display: inline-flex;
 }
 
 .socialIcon {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 1.1rem;
-  height: 1.1rem;
-  padding-inline: 0.18rem;
+  min-width: var(--space-md);
+  height: var(--space-md);
+  padding-inline: var(--space-hairline);
   color: var(--text);
   border: 1px solid rgba(252, 255, 246, 0.24);
-  border-radius: 999px;
-  font-size: 0.5rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--space-xs);
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
-@include mix.mq(sm) {
-  .inner {
-    gap: 1.35rem;
-  }
-}
-
 @include mix.mq(md) {
   .inner {
-    grid-template-columns: minmax(0, 1fr) minmax(20rem, 24rem);
+    grid-template-columns: minmax(0, 1fr) minmax(var(--measure-copy), calc(var(--measure-copy) + var(--space-2xl)));
     align-items: start;
-    gap: 2rem;
-    padding-block: 1.9rem 1.65rem;
   }
 
   .linksWrap {
@@ -134,18 +124,6 @@
 
   .linkColumns {
     width: 100%;
-    max-width: 18rem;
-    gap: 1rem 2.2rem;
-  }
-
-  .socials {
-    justify-content: flex-start;
-    gap: 0.42rem;
-  }
-}
-
-@media (max-width: 479.98px) {
-  .linkColumns {
-    gap: 1rem 1rem;
+    max-width: var(--measure-copy);
   }
 }

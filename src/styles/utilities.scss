@@ -14,13 +14,12 @@
 }
 
 .eyebrow {
-  margin-top: 0;
+  margin-block-start: 0;
   color: var(--accent);
   @include mix.type-style(body-xs, 600);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
-
 
 .text-h1 { @include mix.type-style(h1); }
 .text-h2 { @include mix.type-style(h2); }
@@ -37,19 +36,19 @@
 .inline-links,
 .tag-list,
 .check-list {
-  @include mix.flex(row, null, null, var(--space-sm), wrap);
+  @include mix.flex(row, null, null, var(--gap-inline), wrap);
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
 .button {
-  @include mix.flex(row, center, center, 0.5rem);
-  padding: 0.9rem 1.2rem;
+  @include mix.flex(row, center, center, var(--space-xs));
+  padding: var(--space-button-pad);
   color: inherit;
   text-decoration: none;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   @include mix.type-style(body-sm, 600);
   transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
 
@@ -71,21 +70,21 @@
 
 .tag-list li,
 .check-list li {
-  padding: 0.45rem 0.75rem;
+  padding: var(--space-pill-pad);
   @include mix.type-style(body-sm);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .tag-list--large li {
-  padding: 0.65rem 0.95rem;
+  padding: var(--space-xs) var(--space-sm);
 }
 
 .prose-flow {
   display: grid;
-  max-width: 75ch;
-  gap: var(--space-sm);
+  max-width: var(--measure-prose);
+  gap: var(--space-stack);
 
   p {
     margin: 0;

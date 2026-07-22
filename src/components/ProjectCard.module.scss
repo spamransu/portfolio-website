@@ -2,25 +2,24 @@
 
 .root {
   display: grid;
-  gap: 0.65rem;
-  padding-top: 1rem;
+  gap: var(--space-stack-tight);
+  padding-block-start: var(--space-stack);
   border-top: 1px solid var(--line);
 }
 
-.root h2 {
+.root h2,
+.root p {
   margin: 0;
+}
+
+.root h2 {
   @include mix.type-style(h4);
 }
 
 .meta {
-  @include mix.flex(row, null, null, 0.75rem);
-  flex-wrap: wrap;
+  @include mix.flex(row, null, null, var(--gap-inline), wrap);
   color: var(--muted);
   @include mix.type-style(body-sm);
-}
-
-.root p {
-  margin: 0;
 }
 
 .role {

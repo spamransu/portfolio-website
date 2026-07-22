@@ -2,17 +2,12 @@
 
 .callout-card,
 .contact-card,
-.timeline__item {
-  padding: 1rem 0 0;
-  background: transparent;
-  border-top: 1px solid var(--line);
-}
-
-.callout-card,
-.contact-card,
 .timeline__item,
 .detail-grid div {
   min-width: 0;
+  padding-block-start: var(--space-stack);
+  background: transparent;
+  border-top: 1px solid var(--line);
 }
 
 .callout-card p,
@@ -29,22 +24,16 @@
 
 .contact-card h3,
 .timeline__item h3 {
-  margin-top: 0;
+  margin-block-start: 0;
 }
 
 .timeline {
   display: grid;
-  gap: var(--space-sm);
+  gap: var(--space-stack);
 }
 
 .detail-grid {
   margin: 0;
-}
-
-.detail-grid div {
-  padding: 0.95rem 0 0;
-  border: 1px solid var(--line);
-  border-width: 1px 0 0;
 }
 
 .detail-grid dt,
@@ -56,13 +45,21 @@
   color: var(--muted);
 }
 
+.measure-prose {
+  max-width: var(--measure-prose);
+}
+
+.measure-intro {
+  max-width: var(--measure-intro);
+}
+
 .not-found {
-  width: min(calc(100% - 2rem), 720px);
-  margin: 5rem auto;
+  width: min(calc(100% - var(--space-lg)), var(--measure-intro));
+  margin: var(--space-2xl) auto;
   text-align: center;
 
   h1 {
-    margin-top: 0;
+    margin-block-start: 0;
     @include mix.type-style(h1);
   }
 
