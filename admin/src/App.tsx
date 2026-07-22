@@ -980,12 +980,12 @@ const updateBlogPost = (post: BlogPostResponse, field: string, value: string): B
     case 'slug': {
       const normalizedSlug = normalizeSlug(value)
       next.slug = normalizedSlug
-      if (!next.sha) next.path = buildBlogPostPath(next.date, normalizedSlug || 'draft')
+      next.path = buildBlogPostPath(next.date, normalizedSlug || 'draft')
       return next
     }
     case 'date':
       next.date = value
-      if (!next.sha) next.path = buildBlogPostPath(value, next.slug || 'draft')
+      next.path = buildBlogPostPath(value, next.slug || 'draft')
       return next
     case 'status':
       next.status = value === 'draft' ? 'draft' : 'published'
