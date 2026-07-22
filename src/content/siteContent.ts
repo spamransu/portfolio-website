@@ -58,7 +58,10 @@ export type HighlightStat = {
   label: string
 }
 
+export type ProjectSectionKind = 'default' | 'approach' | 'outcome'
+
 export type ProjectSection = {
+  kind: ProjectSectionKind
   title: string
   body: string
   image?: ImageAsset

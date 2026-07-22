@@ -324,7 +324,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
             "alt": "Mock layout showing the challenge phase for ABCDE Creative with uneven blocks being reorganized."
-          }
+          },
+          "kind": "default"
         },
         {
           "title": "Approach",
@@ -332,7 +333,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
             "alt": "Mock layout demonstrating the reusable section system and visual cleanup for ABCDE Creative."
-          }
+          },
+          "kind": "approach"
         },
         {
           "title": "Outcome",
@@ -340,7 +342,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
             "alt": "Mock layout representing the final polished project presentation for ABCDE Creative."
-          }
+          },
+          "kind": "outcome"
         }
       ]
     },
@@ -391,7 +394,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
             "alt": "Mock product page illustrating the challenge of unexplained interface visuals."
-          }
+          },
+          "kind": "default"
         },
         {
           "title": "Approach",
@@ -399,7 +403,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
             "alt": "Mock product page showing the clearer approach for Insight Index."
-          }
+          },
+          "kind": "approach"
         },
         {
           "title": "Outcome",
@@ -407,7 +412,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
             "alt": "Mock product page showing the final polished case-study presentation for Insight Index."
-          }
+          },
+          "kind": "outcome"
         }
       ]
     },
@@ -458,7 +464,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
             "alt": "Mock storyboard showing the motion challenge for the GSAP Animation project."
-          }
+          },
+          "kind": "default"
         },
         {
           "title": "Approach",
@@ -466,7 +473,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
             "alt": "Mock storyboard showing the motion approach for the GSAP Animation project."
-          }
+          },
+          "kind": "approach"
         },
         {
           "title": "Outcome",
@@ -474,7 +482,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
             "alt": "Mock storyboard showing the finished motion-led presentation for the GSAP Animation project."
-          }
+          },
+          "kind": "outcome"
         }
       ]
     },
@@ -525,7 +534,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
             "alt": "Mock product marketing page showing the initial consistency challenge for Tetherly."
-          }
+          },
+          "kind": "default"
         },
         {
           "title": "Approach",
@@ -533,7 +543,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
             "alt": "Mock product marketing page showing the cleaner section and card approach for Tetherly."
-          }
+          },
+          "kind": "approach"
         },
         {
           "title": "Outcome",
@@ -541,7 +552,8 @@
           "image": {
             "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
             "alt": "Mock product marketing page showing the final cohesive presentation for Tetherly."
-          }
+          },
+          "kind": "outcome"
         }
       ]
     }

@@ -85,14 +85,14 @@ export function ProjectDetailPage() {
 
               <div className={sty.copyStack}>
                 <p>{section.body}</p>
-                {section.title === 'Approach' ? (
+                {section.kind === 'approach' ? (
                   <ul className="check-list">
                     {project.approach.map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
                 ) : null}
-                {section.title === 'Outcome' ? (
+                {section.kind === 'outcome' ? (
                   <ul className="check-list">
                     {project.outcome.map((item) => (
                       <li key={item}>{item}</li>

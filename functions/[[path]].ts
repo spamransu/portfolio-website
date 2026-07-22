@@ -460,7 +460,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
     if (!isStringArray(entry.stack) || !isStringArray(entry.approach) || !isStringArray(entry.outcome)) return false
     if (entry.image !== undefined && !isImageAsset(entry.image)) return false
     if (entry.gallery !== undefined && (!Array.isArray(entry.gallery) || !entry.gallery.every(isImageAsset))) return false
-    if (entry.sections !== undefined && (!Array.isArray(entry.sections) || !entry.sections.every((section) => isRecord(section) && typeof section.title === 'string' && typeof section.body === 'string' && (section.image === undefined || isImageAsset(section.image))))) return false
+    if (entry.sections !== undefined && (!Array.isArray(entry.sections) || !entry.sections.every((section) => isRecord(section) && ['default', 'approach', 'outcome'].includes(`${section.kind}`) && typeof section.title === 'string' && typeof section.body === 'string' && (section.image === undefined || isImageAsset(section.image))))) return false
     return true
   })
 }

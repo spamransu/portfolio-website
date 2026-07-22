@@ -61,6 +61,11 @@ const normalizeTone = (value: string): 'accent' | 'accent-2' | 'accent-3' => {
   return 'accent'
 }
 
+const normalizeProjectSectionKind = (value: string): 'default' | 'approach' | 'outcome' => {
+  if (value === 'approach' || value === 'outcome') return value
+  return 'default'
+}
+
 const todayDate = () => new Date().toISOString().slice(0, 10)
 
 const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse => ({
@@ -1141,7 +1146,7 @@ export const App = () => {
             ...currentProject,
             sections: updateRecordAtIndex(sections, index, (section) => ({
               ...section,
-              [field]: value,
+              [field]: field === 'kind' ? normalizeProjectSectionKind(value) : value,
             })),
           }))
           return next
@@ -1198,7 +1203,7 @@ export const App = () => {
             challenge: '',
             approach: [],
             outcome: [],
-            sections: [{ title: 'Overview', body: '' }],
+            sections: [{ kind: 'default', title: 'Overview', body: '' }],
           })
           setSelectedProjectSlug(next.projects[next.projects.length - 1].slug)
           setSelectedProjectGalleryIndex(0)
@@ -1215,7 +1220,7 @@ export const App = () => {
           if (!selectedProjectSlug) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
           if (projectIndex === -1) return next
-          next.projects[projectIndex].sections = [...(next.projects[projectIndex].sections ?? []), { title: 'New section', body: '' }]
+          next.projects[projectIndex].sections = [...(next.projects[projectIndex].sections ?? []), { kind: 'default', title: 'New section', body: '' }]
           return next
         }
         default:
