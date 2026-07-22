@@ -1,42 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
 import { InternalHero } from '../components/InternalHero'
 import { Section } from '../components/Section'
+import { parseBlogMarkdownBlocks } from '../content/blogMarkdown'
 import { getBlogPostBySlug } from '../content/blogContent'
 import sty from './InternalPages.module.scss'
-
-function renderMarkdownBlock(block: string, key: string) {
-  const lines = block.split('\n').map((line) => line.trim()).filter(Boolean)
-  if (!lines.length) return null
-
-  if (lines.every((line) => line.startsWith('- '))) {
-    return (
-      <ul key={key} className="check-list">
-        {lines.map((line) => (
-          <li key={line}>{line.slice(2)}</li>
-        ))}
-      </ul>
-    )
-  }
-
-  if (lines[0].startsWith('## ')) {
-    return (
-      <div key={key} className={sty.copyStack}>
-        <h3>{lines[0].slice(3)}</h3>
-        {lines.slice(1).map((line) => (
-          <p key={line}>{line}</p>
-        ))}
-      </div>
-    )
-  }
-
-  return (
-    <div key={key} className={sty.copyStack}>
-      {lines.map((line) => (
-        <p key={line}>{line}</p>
-      ))}
-    </div>
-  )
-}
 
 export function BlogPostPage() {
   const { slug } = useParams()
@@ -53,7 +20,7 @@ export function BlogPostPage() {
     )
   }
 
-  const blocks = post.body.split(/\n\s*\n/).filter(Boolean)
+  const blocks = parseBlogMarkdownBlocks(post.body)
 
   return (
     <div className={`lg-wrapper ${sty.page}`}>
@@ -75,7 +42,38 @@ export function BlogPostPage() {
       />
 
       <Section title="Article">
-        <div className={sty.sectionStack}>{blocks.map((block, index) => renderMarkdownBlock(block, `${post.slug}-${index}`))}</div>
+        <div className={sty.sectionStack}>
+          {blocks.map((block, index) => {
+            if (block.type === 'list') {
+              return (
+                <ul key={`${post.slug}-${index}`} className="check-list">
+                  {block.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              )
+            }
+
+            if (block.type === 'section') {
+              return (
+                <div key={`${post.slug}-${index}`} className={sty.copyStack}>
+                  <h3>{block.heading}</h3>
+                  {block.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              )
+            }
+
+            return (
+              <div key={`${post.slug}-${index}`} className={sty.copyStack}>
+                {block.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            )
+          })}
+        </div>
       </Section>
     </div>
   )

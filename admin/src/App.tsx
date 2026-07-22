@@ -865,6 +865,7 @@ export const App = () => {
       mediaPath: mediaResult?.path ?? '',
       mediaSlug,
       mediaStatus,
+      siteUrl: workingCopy?.site.siteUrl ?? siteContent?.content.site.siteUrl ?? '',
       siteConflict,
       onBlogFieldChange: handleBlogFieldChange,
       onBlogCreate: () => {
@@ -971,6 +972,7 @@ export const App = () => {
       mediaResult,
       mediaSlug,
       mediaStatus,
+      siteContent,
       siteConflict,
       saveStatus,
       saving,
@@ -993,7 +995,6 @@ export const App = () => {
       selectedBlogPost,
       selectedBlogSlug,
       session,
-      siteContent,
       uploadingMedia,
       workingCopy,
     ],

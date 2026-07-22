@@ -1,4 +1,5 @@
 import type { AdminRepoInfo, AdminSession, SiteContentResponse } from '../api/adminApi'
+import { parseBlogMarkdownBlocks } from '../../../src/content/blogMarkdown'
 import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
 
 interface DashboardScreenProps {
@@ -56,6 +57,7 @@ interface DashboardScreenProps {
   saveStatus: string | null
   saving: boolean
   savingBlog: boolean
+  siteUrl: string
   selectedBlogSlug: string
   selectedExperience: Job | null
   selectedExperienceIndex: number
@@ -137,6 +139,7 @@ export const DashboardScreen = ({
   saveStatus,
   saving,
   savingBlog,
+  siteUrl,
   selectedBlogSlug,
   selectedExperience,
   selectedExperienceIndex,
@@ -176,6 +179,10 @@ export const DashboardScreen = ({
   const siteContentUrl = createBlobUrl(siteContent?.repo ?? null, siteContent?.branch ?? null, siteContent?.path ?? null)
   const selectedBlogUrl = createBlobUrl(blogRepo, siteContent?.branch ?? null, selectedBlogPath)
   const uploadedMediaUrl = createBlobUrl(mediaPath ? activeRepo : null, siteContent?.branch ?? null, mediaRepoPath)
+  const normalizedSiteUrl = siteUrl.trim().replace(/\/+$/, '')
+  const publicBlogUrl = normalizedSiteUrl ? `${normalizedSiteUrl}/blog` : null
+  const publicPostUrl = normalizedSiteUrl && blogPost?.status === 'published' ? `${normalizedSiteUrl}/blog/${blogPost.slug}` : null
+  const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
 
   return (
     <main className="admin-shell">
@@ -280,6 +287,8 @@ export const DashboardScreen = ({
               </a>
             ) : null}
             {selectedBlogUrl ? <a className="admin-button admin-button-secondary" href={selectedBlogUrl} target="_blank" rel="noreferrer">Open selected post</a> : null}
+            {publicBlogUrl ? <a className="admin-button admin-button-secondary" href={publicBlogUrl} target="_blank" rel="noreferrer">Open public blog</a> : null}
+            {publicPostUrl ? <a className="admin-button admin-button-secondary" href={publicPostUrl} target="_blank" rel="noreferrer">Open published post</a> : null}
             {blogActivity && createCommitUrl(blogActivity.repo, blogActivity.latestCommitSha) ? (
               <a className="admin-button admin-button-secondary" href={createCommitUrl(blogActivity.repo, blogActivity.latestCommitSha) ?? undefined} target="_blank" rel="noreferrer">
                 {blogActivity.summary} commit
@@ -502,6 +511,54 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Cover alt</span><input value={blogPost.coverAlt ?? ''} onChange={(event) => onBlogFieldChange('coverAlt', event.target.value)} /></label>
                   <label className="admin-field"><span>Excerpt</span><textarea value={blogPost.excerpt ?? ''} onChange={(event) => onBlogFieldChange('excerpt', event.target.value)} /></label>
                   <label className="admin-field"><span>Markdown body</span><textarea className="admin-markdown" value={blogPost.body} onChange={(event) => onBlogFieldChange('body', event.target.value)} /></label>
+                  <div className="admin-subpanel admin-preview">
+                    <div className="admin-panel-header">
+                      <div>
+                        <p className="admin-kicker">Live preview</p>
+                        <h3>Rendered article preview</h3>
+                        <p className="admin-copy">
+                          {blogPost.status === 'published'
+                            ? 'This post is published and should match the public route styling closely.'
+                            : 'This draft preview shows the current article rendering before the post is published.'}
+                        </p>
+                      </div>
+                      <div className="admin-actions">
+                        {publicPostUrl ? <a className="admin-button admin-button-secondary" href={publicPostUrl} target="_blank" rel="noreferrer">Open public route</a> : null}
+                        {!publicPostUrl ? <p className="admin-note">Publish the post to open the public route.</p> : null}
+                      </div>
+                    </div>
+                    <div className="admin-preview-hero">
+                      <p className="admin-kicker">{blogPost.status} · {blogPost.date}</p>
+                      <h3>{blogPost.title || 'Untitled post'}</h3>
+                      <p className="admin-copy">{blogPost.excerpt ?? blogPost.body.split('\n').find(Boolean) ?? 'Add an excerpt or start writing to preview the intro.'}</p>
+                    </div>
+                    <div className="admin-preview-body">
+                      {previewBlocks.length ? previewBlocks.map((block, index) => {
+                        if (block.type === 'list') {
+                          return (
+                            <ul key={`${blogPost.slug}-${index}`} className="admin-preview-list">
+                              {block.items.map((item) => <li key={item}>{item}</li>)}
+                            </ul>
+                          )
+                        }
+
+                        if (block.type === 'section') {
+                          return (
+                            <div key={`${blogPost.slug}-${index}`} className="admin-preview-copy">
+                              <h4>{block.heading}</h4>
+                              {block.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                            </div>
+                          )
+                        }
+
+                        return (
+                          <div key={`${blogPost.slug}-${index}`} className="admin-preview-copy">
+                            {block.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                          </div>
+                        )
+                      }) : <p className="admin-note">Write the article body to preview how the post content renders.</p>}
+                    </div>
+                  </div>
                 </>
               ) : null}
             </div>
