@@ -995,8 +995,8 @@ export const DashboardScreen = ({
               {mediaPath ? <label className="admin-field"><span>Last uploaded path</span><input readOnly value={mediaPath} /></label> : null}
               {mediaPath ? <div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(mediaPath, 'Uploaded path')}>Copy uploaded path</button></div> : null}
               <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span>{mediaTargetLabel ? ` — ${mediaTargetLabel}` : ' — manual selection'}</p>
-              {nextUploadRepoPath ? <p className="admin-note">Next upload repo path: <span className="admin-code">{nextUploadRepoPath}</span></p> : null}
-              {nextUploadPublicPath ? <p className="admin-note">Next upload public path: <span className="admin-code">{nextUploadPublicPath}</span></p> : null}
+              {nextUploadRepoPath ? <div className="admin-actions"><p className="admin-note">Next upload repo path: <span className="admin-code">{nextUploadRepoPath}</span></p><button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(nextUploadRepoPath, 'Next repo path')}>Copy next repo path</button></div> : null}
+              {nextUploadPublicPath ? <div className="admin-actions"><p className="admin-note">Next upload public path: <span className="admin-code">{nextUploadPublicPath}</span></p><button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(nextUploadPublicPath, 'Next public path')}>Copy next public path</button></div> : null}
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
               {copyStatus ? <p className="admin-note">{copyStatus}</p> : null}
               {mediaFile ? <SelectedMediaPreview file={mediaFile} /> : null}
