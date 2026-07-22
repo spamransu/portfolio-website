@@ -1146,7 +1146,16 @@ export const App = () => {
             ...currentProject,
             sections: updateRecordAtIndex(sections, index, (section) => ({
               ...section,
-              [field]: field === 'kind' ? normalizeProjectSectionKind(value) : value,
+              ...(field.startsWith('image.')
+                ? {
+                    image: {
+                      ...(section.image ?? { src: '', alt: '' }),
+                      [field.slice(6)]: value || (field.endsWith('caption') ? undefined : ''),
+                    },
+                  }
+                : {
+                    [field]: field === 'kind' ? normalizeProjectSectionKind(value) : value,
+                  }),
             })),
           }))
           return next
@@ -1220,7 +1229,7 @@ export const App = () => {
           if (!selectedProjectSlug) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
           if (projectIndex === -1) return next
-          next.projects[projectIndex].sections = [...(next.projects[projectIndex].sections ?? []), { kind: 'default', title: 'New section', body: '' }]
+          next.projects[projectIndex].sections = [...(next.projects[projectIndex].sections ?? []), { kind: 'default', title: 'New section', body: '', image: { src: '', alt: '', caption: '' } }]
           return next
         }
         default:
