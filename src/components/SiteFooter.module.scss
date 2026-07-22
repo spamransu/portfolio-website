@@ -100,9 +100,9 @@
 .socialIcon {
   align-items: center;
   justify-content: center;
-  min-width: var(--space-md);
-  height: var(--space-md);
-  padding-inline: var(--space-hairline);
+  min-width: var(--footer-icon-size);
+  min-height: var(--footer-icon-size);
+  padding-inline: var(--footer-icon-padding-inline);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-pill);

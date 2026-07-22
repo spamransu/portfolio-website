@@ -3,6 +3,8 @@
 
 :root {
   color-scheme: dark;
+
+  /* Color semantics */
   --color-background-page: #{tokens.color(background-page)};
   --color-background-surface: #{tokens.color(background-surface)};
   --color-background-surface-subtle: #{tokens.color(background-surface-subtle)};
@@ -26,6 +28,8 @@
   --color-form-border: #{tokens.color(form-border)};
   --color-form-placeholder: #{tokens.color(form-placeholder)};
   --color-form-helper: #{tokens.color(form-helper)};
+
+  /* Legacy aliases */
   --bg: var(--color-background-page);
   --surface: var(--color-background-surface);
   --surface-2: var(--color-background-surface-subtle);
@@ -38,12 +42,25 @@
   --accent-2: var(--color-action-secondary);
   --accent-3: var(--color-accent-violet);
   --ink: var(--color-text-inverse);
+
+  /* Measures and wrappers */
   --max-width: #{tokens.$max-width};
+
+  /* Radii and effects */
   --radius: #{tokens.radius(lg)};
   --radius-md: #{tokens.radius(md)};
   --radius-sm: #{tokens.radius(sm)};
   --radius-pill: #{tokens.radius(pill)};
-  --shadow: #{tokens.$shadow-card};
+  --shadow: #{tokens.effect(shadow-card)};
+  --motion-fast: #{tokens.effect(motion-fast)};
+  --motion-standard: #{tokens.effect(motion-standard)};
+  --motion-emphasized: #{tokens.effect(motion-emphasized)};
+  --motion-ease-standard: #{tokens.effect(motion-ease-standard)};
+  --motion-ease-emphasized: #{tokens.effect(motion-ease-emphasized)};
+  --interactive-lift: #{tokens.effect(interactive-lift)};
+  --target-min-size: #{tokens.effect(target-min-size)};
+
+  /* Spacing scale */
   --space-2xs: #{tokens.space(2xs)};
   --space-xs: #{tokens.space(xs)};
   --space-sm: #{tokens.space(sm)};
@@ -51,7 +68,9 @@
   --space-lg: #{tokens.space(lg)};
   --space-xl: #{tokens.space(xl)};
   --space-2xl: #{tokens.space(2xl)};
-  --space-hairline: #{tokens.fluid(0.125rem, 0.25rem)};
+  --space-hairline: #{tokens.space(hairline)};
+
+  /* Semantic layout spacing */
   --space-stack-tight: var(--space-xs);
   --space-stack: var(--space-sm);
   --space-stack-loose: var(--space-md);
@@ -61,10 +80,6 @@
   --space-section-hero-end: #{tokens.fluid(2.75rem, 3.1rem)};
   --space-chrome-block: #{tokens.fluid(1rem, 1.15rem)} #{tokens.fluid(0.9rem, 1rem)};
   --space-footer-block: #{tokens.fluid(1.8rem, 1.9rem)} #{tokens.fluid(1.55rem, 1.65rem)};
-  --space-card-pad: var(--space-sm);
-  --space-button-pad: var(--space-xs) var(--space-sm);
-  --space-pill-pad: var(--space-2xs) var(--space-xs);
-  --space-form-pad: var(--space-sm);
   --gap-grid: var(--space-sm);
   --gap-inline: var(--space-sm);
   --gap-pair: var(--space-xs);
@@ -73,6 +88,8 @@
   --measure-copy: 30rem;
   --measure-sidebar: 12rem;
   --measure-form: #{tokens.fluid(16.8rem, 19rem)};
+
+  /* Typography roles */
   --type-h1-size: #{tokens.type-prop(h1, size)};
   --type-h1-line: #{tokens.type-prop(h1, line-height)};
   --type-h2-size: #{tokens.type-prop(h2, size)};
@@ -93,6 +110,33 @@
   --type-body-sm-line: #{tokens.type-prop(body-sm, line-height)};
   --type-body-xs-size: #{tokens.type-prop(body-xs, size)};
   --type-body-xs-line: #{tokens.type-prop(body-xs, line-height)};
+
+  /* Component tokens */
+  --button-padding: #{tokens.component-token(button-padding)};
+  --button-gap: #{tokens.component-token(button-gap)};
+  --button-radius: #{tokens.component-token(button-radius)};
+  --button-min-block-size: var(--target-min-size);
+  --button-border-hover: var(--color-border-hover);
+  --button-transition: transform var(--motion-fast) var(--motion-ease-standard),
+    opacity var(--motion-fast) var(--motion-ease-standard),
+    border-color var(--motion-fast) var(--motion-ease-standard),
+    background-color var(--motion-fast) var(--motion-ease-standard),
+    color var(--motion-fast) var(--motion-ease-standard);
+  --card-padding: #{tokens.component-token(card-padding)};
+  --card-radius: #{tokens.component-token(card-radius)};
+  --card-border: 1px solid var(--color-border-default);
+  --form-padding: #{tokens.component-token(form-padding)};
+  --form-field-padding: #{tokens.component-token(form-field-padding)};
+  --form-field-radius: #{tokens.component-token(form-field-radius)};
+  --form-field-min-block-size: var(--target-min-size);
+  --tag-padding: #{tokens.component-token(tag-padding)};
+  --tag-radius: var(--radius-pill);
+  --tag-border-color: var(--color-border-default);
+  --header-link-min-block-size: var(--target-min-size);
+  --footer-icon-size: var(--target-min-size);
+  --footer-icon-padding-inline: #{tokens.component-token(social-icon-padding-inline)};
+  --project-card-image-ratio: 1.13;
+  --project-card-image-transition: transform var(--motion-standard) var(--motion-ease-emphasized);
 }
 
 * {
@@ -179,4 +223,19 @@ img {
 
 :focus-visible {
   @include mix.focus-ring;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
