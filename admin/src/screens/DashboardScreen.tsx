@@ -614,6 +614,7 @@ export const DashboardScreen = ({
 
       {workingCopy ? (
         <section className="admin-edit-grid">
+          <fieldset disabled={loadingContent || saving} style={{ border: 0, margin: 0, padding: 0, display: 'contents' }}>
           <article className="admin-panel">
             <h2>Home page</h2>
             <div className="admin-form-grid">
@@ -1046,6 +1047,7 @@ export const DashboardScreen = ({
               ) : null}
             </div>
           </article>
+          </fieldset>
 
           <article className="admin-panel">
             <div className="admin-panel-header">
