@@ -934,7 +934,10 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
 
 const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
-const getBlogValidationError = (post: BlogPostResponse | null): string | null => {
+const getBlogValidationError = (
+  post: BlogPostResponse | null,
+  existingPosts: BlogPostMeta[],
+): string | null => {
   if (!post) return null
   if (!post.title.trim()) {
     return 'Blog title is required.'
@@ -947,6 +950,11 @@ const getBlogValidationError = (post: BlogPostResponse | null): string | null =>
   }
   if (!BLOG_DATE_PATTERN.test(post.date)) {
     return 'Blog date must use the YYYY-MM-DD format.'
+  }
+  const candidatePath = buildBlogPostPath(post.date, post.slug)
+  const conflictingPost = existingPosts.find((entry) => entry.path === candidatePath && entry.sha !== post.sha)
+  if (conflictingPost) {
+    return `Another blog post already exists at ${candidatePath}. Change the slug or date before saving.`
   }
   return null
 }
@@ -1728,7 +1736,10 @@ export const App = () => {
     return JSON.stringify(selectedBlogBaseline) !== JSON.stringify(selectedBlogPost.post)
   }, [selectedBlogBaseline, selectedBlogPost])
 
-  const blogValidationError = useMemo(() => getBlogValidationError(selectedBlogPost?.post ?? null), [selectedBlogPost])
+  const blogValidationError = useMemo(
+    () => getBlogValidationError(selectedBlogPost?.post ?? null, blogList?.posts ?? []),
+    [blogList?.posts, selectedBlogPost],
+  )
   const mediaValidationError = useMemo(() => getMediaValidationError(mediaFile), [mediaFile])
   const normalizedMediaSlug = useMemo(() => normalizeSlug(mediaSlug), [mediaSlug])
 
