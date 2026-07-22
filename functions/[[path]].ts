@@ -334,6 +334,40 @@ const isStringRecordArray = (value: unknown, keys: string[]): value is Array<Rec
 const isImageAsset = (value: unknown): boolean =>
   isRecord(value) && typeof value.src === 'string' && typeof value.alt === 'string' && (value.caption === undefined || typeof value.caption === 'string')
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const BLOG_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+const isHttpUrl = (value: string): boolean => {
+  try {
+    const url = new URL(value)
+    return url.protocol === 'http:' || url.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
+const isInternalPath = (value: string): boolean => value.startsWith('/')
+
+const isContactHref = (value: string): boolean => {
+  if (value.startsWith('mailto:')) return EMAIL_PATTERN.test(value.slice('mailto:'.length).trim())
+  if (value.startsWith('tel:')) return value.slice('tel:'.length).trim().length > 0
+  return isHttpUrl(value)
+}
+
+const validateContactFormConfig = (value: Record<string, unknown>, label: string): string | null => {
+  if (!Number.isInteger(value.messageLimit) || Number(value.messageLimit) <= 0) {
+    return `${label} message limit must be a whole number greater than 0.`
+  }
+  if (!`${value.messageCountTemplate}`.includes('{count}') || !`${value.messageCountTemplate}`.includes('{limit}')) {
+    return `${label} count template must include both {count} and {limit}.`
+  }
+  if (!`${value.messageTooLongError}`.includes('{limit}')) {
+    return `${label} message-too-long error must include {limit}.`
+  }
+  return null
+}
+
 const validateSiteContent = (value: unknown): value is Record<string, unknown> => {
   if (!isRecord(value)) return false
 
@@ -467,6 +501,81 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   })
 }
 
+const getSiteContentValidationError = (value: unknown): string | null => {
+  if (!validateSiteContent(value)) return 'site-content.json failed validation.'
+
+  const content = value as Record<string, unknown>
+  const site = content.site as Record<string, unknown>
+  const siteChrome = content.siteChrome as Record<string, unknown> | undefined
+  const home = content.home as Record<string, unknown>
+  const contact = content.contact as Record<string, unknown>
+  const projects = content.projects as Array<Record<string, unknown>>
+
+  if (!EMAIL_PATTERN.test(`${site.email}`.trim())) return 'Site email must use a valid email address.'
+  if (!isHttpUrl(`${site.siteUrl}`.trim())) return 'Site URL must use a full http or https URL.'
+
+  const invalidSocial = (site.socials as Array<Record<string, unknown>>)
+    .find((entry) => !`${entry.label}`.trim() || !isHttpUrl(`${entry.href}`.trim()))
+  if (invalidSocial) {
+    return `Social links must have a label and a full http or https URL. Check: ${`${invalidSocial.label}` || `${invalidSocial.href}`}.`
+  }
+
+  if (siteChrome) {
+    const invalidHeaderNav = (siteChrome.headerNav as Array<Record<string, unknown>>)
+      .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
+    if (invalidHeaderNav) {
+      return `Header nav links must use internal paths that start with /. Check: ${`${invalidHeaderNav.to}` || `${invalidHeaderNav.label}`}.`
+    }
+
+    const footer = siteChrome.footer as Record<string, unknown>
+    const invalidGeneralLink = (footer.generalLinks as Array<Record<string, unknown>>)
+      .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
+    if (invalidGeneralLink) {
+      return `Footer general links must use internal paths that start with /. Check: ${`${invalidGeneralLink.to}` || `${invalidGeneralLink.label}`}.`
+    }
+
+    const invalidMoreLink = (footer.moreLinks as Array<Record<string, unknown>>)
+      .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
+    if (invalidMoreLink) {
+      return `Footer more links must use internal paths that start with /. Check: ${`${invalidMoreLink.to}` || `${invalidMoreLink.label}`}.`
+    }
+  }
+
+  const projectSlugs = new Map<string, number>()
+  for (const project of projects) {
+    const slug = `${project.slug}`
+    projectSlugs.set(slug, (projectSlugs.get(slug) ?? 0) + 1)
+    if (!slug || !SLUG_PATTERN.test(slug)) {
+      return `Project slug must use lowercase letters, numbers, and hyphens only. Check: ${slug || '(empty slug)'}.`
+    }
+  }
+
+  const duplicateProjectSlug = [...projectSlugs.entries()].find(([, count]) => count > 1)?.[0]
+  if (duplicateProjectSlug) {
+    return `Project slug must be unique. Duplicate slug: ${duplicateProjectSlug}.`
+  }
+
+  const featuredProjects = (home.featuredProjects as Record<string, unknown>).slugs as string[]
+  const missingFeatured = featuredProjects.filter((slug) => !projectSlugs.has(slug))
+  if (missingFeatured.length) {
+    return `Featured project slugs must match existing projects. Missing: ${missingFeatured.join(', ')}.`
+  }
+
+  const homeContactError = validateContactFormConfig(home.contact as Record<string, unknown>, 'Home contact')
+  if (homeContactError) return homeContactError
+
+  const contactFormError = validateContactFormConfig(contact.form as Record<string, unknown>, 'Contact form')
+  if (contactFormError) return contactFormError
+
+  const invalidMethod = (contact.methods as Array<Record<string, unknown>>)
+    .find((entry) => !`${entry.title}`.trim() || !`${entry.label}`.trim() || !`${entry.description}`.trim() || !isContactHref(`${entry.href}`.trim()))
+  if (invalidMethod) {
+    return `Contact methods must have title, label, description, and a valid mailto, tel, or http/https URL. Check: ${`${invalidMethod.title}` || `${invalidMethod.href}`}.`
+  }
+
+  return null
+}
+
 const isBlogStatus = (value: unknown): value is BlogStatus => value === 'draft' || value === 'published'
 const isAllowedMediaArea = (value: string): value is (typeof ALLOWED_MEDIA_AREAS)[number] =>
   (ALLOWED_MEDIA_AREAS as readonly string[]).includes(value)
@@ -479,12 +588,23 @@ const validateBlogPost = (value: unknown): value is BlogPost => {
   if (!isRecord(value)) return false
   if (typeof value.title !== 'string' || typeof value.slug !== 'string' || typeof value.date !== 'string' || typeof value.body !== 'string') return false
   if (!isBlogStatus(value.status)) return false
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value.date)) return false
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.slug)) return false
+  if (!BLOG_DATE_PATTERN.test(value.date)) return false
+  if (!SLUG_PATTERN.test(value.slug)) return false
   if (value.coverImage !== undefined && typeof value.coverImage !== 'string') return false
   if (value.coverAlt !== undefined && typeof value.coverAlt !== 'string') return false
   if (value.excerpt !== undefined && typeof value.excerpt !== 'string') return false
   return true
+}
+
+const getBlogPostValidationError = (value: unknown): string | null => {
+  if (!validateBlogPost(value)) return 'Blog post payload failed validation.'
+
+  const post = value as BlogPost
+  if (!post.title.trim()) return 'Blog title is required.'
+  if (!post.body.trim()) return 'Blog body is required.'
+  if (!SLUG_PATTERN.test(post.slug)) return 'Blog slug must use lowercase letters, numbers, and hyphens only.'
+  if (!BLOG_DATE_PATTERN.test(post.date)) return 'Blog date must use the YYYY-MM-DD format.'
+  return null
 }
 
 const sanitizePathSegment = (value: string): string =>
@@ -922,8 +1042,9 @@ const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Pro
   if (typeof body.sha !== 'string' || !body.sha.trim()) {
     return jsonResponse({ error: 'A base file SHA is required before saving.' }, { status: 400 })
   }
-  if (!validateSiteContent(body.content)) {
-    return jsonResponse({ error: 'site-content.json failed validation.' }, { status: 400 })
+  const siteValidationError = getSiteContentValidationError(body.content)
+  if (siteValidationError) {
+    return jsonResponse({ error: siteValidationError }, { status: 400 })
   }
 
   const current = await loadGitHubSiteContent(env, session.accessToken, branch)
@@ -1092,8 +1213,9 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
   if (body.branch !== undefined && body.branch !== branch) {
     return jsonResponse({ error: `Only the ${branch} branch is allowed for admin CMS writes.` }, { status: 403 })
   }
-  if (!validateBlogPost(body.post)) {
-    return jsonResponse({ error: 'Blog post payload failed validation.' }, { status: 400 })
+  const blogValidationError = getBlogPostValidationError(body.post)
+  if (blogValidationError) {
+    return jsonResponse({ error: blogValidationError }, { status: 400 })
   }
 
   const existingPost = await loadGitHubBlogPostBySlug(env, session.accessToken, branch, slug)
