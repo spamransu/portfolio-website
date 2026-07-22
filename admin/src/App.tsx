@@ -26,6 +26,11 @@ type ConflictState = {
   latestCommitSha?: string | null
 } | null
 
+type ProjectValidationState = {
+  featuredProjects?: string
+  selectedProject?: string
+}
+
 type BlogActivity = {
   latestCommitSha: string | null
   path: string
@@ -830,6 +835,34 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
 }
 
 const BLOG_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+const PROJECT_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+const getProjectValidationState = (content: SiteContent | null, selectedProjectSlug: string): ProjectValidationState => {
+  if (!content) return {}
+
+  const slugCounts = new Map<string, number>()
+  for (const project of content.projects) {
+    slugCounts.set(project.slug, (slugCounts.get(project.slug) ?? 0) + 1)
+  }
+
+  const selectedProject = content.projects.find((project) => project.slug === selectedProjectSlug) ?? content.projects[0] ?? null
+  const duplicateSlugs = [...slugCounts.entries()].filter(([, count]) => count > 1).map(([slug]) => slug)
+  const missingFeatured = content.home.featuredProjects.slugs.filter((slug) => !slugCounts.has(slug))
+
+  return {
+    selectedProject: selectedProject
+      ? !selectedProject.slug || !PROJECT_SLUG_PATTERN.test(selectedProject.slug)
+        ? 'Project slug must use lowercase letters, numbers, and hyphens only.'
+        : duplicateSlugs.includes(selectedProject.slug)
+          ? `Project slug must be unique. Duplicate slug: ${selectedProject.slug}.`
+          : undefined
+      : undefined,
+    featuredProjects: missingFeatured.length
+      ? `Featured project slugs must match existing projects. Missing: ${missingFeatured.join(', ')}.`
+      : undefined,
+  }
+}
+
 const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 const getBlogValidationError = (post: BlogPostResponse | null): string | null => {
@@ -1409,8 +1442,16 @@ export const App = () => {
     setError(null)
   }, [confirmDiscardChanges, selectedProjectSlug])
 
+  const dirty = useMemo(() => {
+    if (!siteContent || !workingCopy) return false
+    return JSON.stringify(siteContent.content) !== JSON.stringify(workingCopy)
+  }, [siteContent, workingCopy])
+
+  const projectValidation = useMemo(() => getProjectValidationState(workingCopy, selectedProjectSlug), [selectedProjectSlug, workingCopy])
+  const siteValidationError = projectValidation.selectedProject ?? projectValidation.featuredProjects ?? null
+
   const handleSave = useCallback(async () => {
-    if (!siteContent || !workingCopy) return
+    if (!siteContent || !workingCopy || siteValidationError) return
 
     setSaving(true)
     setError(null)
@@ -1446,7 +1487,7 @@ export const App = () => {
     } finally {
       setSaving(false)
     }
-  }, [siteContent, workingCopy])
+  }, [siteContent, siteValidationError, workingCopy])
 
   const handleBlogFieldChange = useCallback((field: string, value: string) => {
     setSelectedBlogPost((current) => {
@@ -1461,11 +1502,6 @@ export const App = () => {
     setBlogConflict(null)
     setError(null)
   }, [])
-
-  const dirty = useMemo(() => {
-    if (!siteContent || !workingCopy) return false
-    return JSON.stringify(siteContent.content) !== JSON.stringify(workingCopy)
-  }, [siteContent, workingCopy])
 
   const blogDirty = useMemo(() => {
     if (!selectedBlogPost) return false
@@ -1695,6 +1731,8 @@ export const App = () => {
       blogConflict,
       dirty,
       error,
+      projectValidation,
+      siteValidationError,
       loading,
       loadingContent,
       mediaArea,
@@ -1816,6 +1854,8 @@ export const App = () => {
       loadSiteContent,
       loading,
       loadingBlog,
+      projectValidation,
+      siteValidationError,
       loadingContent,
       mediaArea,
       mediaResult,

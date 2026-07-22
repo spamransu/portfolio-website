@@ -71,6 +71,8 @@ interface DashboardScreenProps {
   blogValidationError: string | null
   dirty: boolean
   error: string | null
+  projectValidation: { featuredProjects?: string; selectedProject?: string }
+  siteValidationError: string | null
   loading: boolean
   loadingContent: boolean
   mediaArea: string
@@ -162,6 +164,8 @@ export const DashboardScreen = ({
   blogValidationError,
   dirty,
   error,
+  projectValidation,
+  siteValidationError,
   loading,
   loadingContent,
   mediaArea,
@@ -293,8 +297,8 @@ export const DashboardScreen = ({
               <button type="button" className="admin-button admin-button-secondary" onClick={onReload} disabled={loadingContent || saving}>
                 Reload content
               </button>
-              <button type="button" className="admin-button" onClick={onSave} disabled={!dirty || saving || !workingCopy}>
-                {saving ? 'Saving…' : dirty ? 'Save content' : 'Content saved'}
+              <button type="button" className="admin-button" onClick={onSave} disabled={!dirty || saving || !workingCopy || Boolean(siteValidationError)}>
+                {saving ? 'Saving…' : siteValidationError ? 'Fix validation errors' : dirty ? 'Save content' : 'Content saved'}
               </button>
               <button type="button" className="admin-button admin-button-secondary" onClick={onLogout} disabled={saving || savingBlog || uploadingMedia}>
                 Log out
@@ -309,6 +313,7 @@ export const DashboardScreen = ({
       </section>
 
       {error ? <section className="admin-panel admin-error">{error}</section> : null}
+      {siteValidationError ? <section className="admin-panel admin-warning">{siteValidationError}</section> : null}
       {siteConflict ? (
         <section className="admin-panel admin-warning">
           <div className="admin-panel-header">
@@ -406,6 +411,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Featured projects title</span><input value={workingCopy.home.featuredProjects.title} onChange={(event) => onFieldChange('home.featuredProjects.title', event.target.value)} /></label>
               <label className="admin-field"><span>Featured projects intro</span><textarea value={workingCopy.home.featuredProjects.intro} onChange={(event) => onFieldChange('home.featuredProjects.intro', event.target.value)} /></label>
               <label className="admin-field"><span>Featured project slugs (one per line)</span><textarea value={toLines(workingCopy.home.featuredProjects.slugs)} onChange={(event) => onFieldChange('home.featuredProjects.slugs', event.target.value)} /></label>
+              {projectValidation.featuredProjects ? <p className="admin-note admin-note-warning">{projectValidation.featuredProjects}</p> : null}
               <label className="admin-field"><span>Featured fallback label</span><input value={workingCopy.home.featuredProjects.fallbackLabel} onChange={(event) => onFieldChange('home.featuredProjects.fallbackLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Featured fallback description</span><textarea value={workingCopy.home.featuredProjects.fallbackDescription} onChange={(event) => onFieldChange('home.featuredProjects.fallbackDescription', event.target.value)} /></label>
               <label className="admin-field"><span>Featured stack aria template</span><input value={workingCopy.home.featuredProjects.stackAriaTemplate ?? ''} onChange={(event) => onFieldChange('home.featuredProjects.stackAriaTemplate', event.target.value)} /></label>
@@ -755,6 +761,7 @@ export const DashboardScreen = ({
                 <>
                   <label className="admin-field"><span>Title</span><input value={selectedProject.title} onChange={(event) => onStructuredFieldChange('project', 'title', event.target.value)} /></label>
                   <label className="admin-field"><span>Slug</span><input value={selectedProject.slug} onChange={(event) => onStructuredFieldChange('project', 'slug', event.target.value)} /></label>
+                  {projectValidation.selectedProject ? <p className="admin-note admin-note-warning">{projectValidation.selectedProject}</p> : null}
                   <label className="admin-field"><span>Year</span><input value={selectedProject.year} onChange={(event) => onStructuredFieldChange('project', 'year', event.target.value)} /></label>
                   <label className="admin-field"><span>Client</span><input value={selectedProject.client} onChange={(event) => onStructuredFieldChange('project', 'client', event.target.value)} /></label>
                   <label className="admin-field"><span>Role</span><input value={selectedProject.role} onChange={(event) => onStructuredFieldChange('project', 'role', event.target.value)} /></label>
