@@ -1955,6 +1955,7 @@ export const App = () => {
       mediaValidationError,
       mediaTargetKey: mediaTarget?.key ?? '',
       mediaTargetLabel: mediaTarget?.label ?? null,
+      siteBranch: siteContent?.branch ?? selectedBlogPost?.branch ?? blogList?.branch ?? null,
       siteUrl: workingCopy?.site.siteUrl ?? siteContent?.content.site.siteUrl ?? '',
       siteConflict,
       onBlogFieldChange: handleBlogFieldChange,

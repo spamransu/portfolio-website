@@ -174,6 +174,7 @@ interface DashboardScreenProps {
   saveStatus: string | null
   saving: boolean
   savingBlog: boolean
+  siteBranch: string | null
   siteUrl: string
   selectedBlogSlug: string
   selectedExperience: Job | null
@@ -320,6 +321,7 @@ export const DashboardScreen = ({
   saveStatus,
   saving,
   savingBlog,
+  siteBranch,
   siteUrl,
   selectedBlogSlug,
   selectedExperience,
@@ -372,9 +374,9 @@ export const DashboardScreen = ({
   }
   const mediaRepoPath = mediaPath ? `public/${mediaPath.replace(/^\//, '')}` : null
   const selectedBlogPath = blogPost?.path ?? blogMeta?.path ?? null
-  const siteContentUrl = createBlobUrl(siteContent?.repo ?? null, siteContent?.branch ?? null, siteContent?.path ?? null)
-  const selectedBlogUrl = createBlobUrl(blogRepo, siteContent?.branch ?? null, selectedBlogPath)
-  const uploadedMediaUrl = createBlobUrl(mediaPath ? activeRepo : null, siteContent?.branch ?? null, mediaRepoPath)
+  const siteContentUrl = createBlobUrl(siteContent?.repo ?? null, siteBranch, siteContent?.path ?? null)
+  const selectedBlogUrl = createBlobUrl(blogRepo, siteBranch, selectedBlogPath)
+  const uploadedMediaUrl = createBlobUrl(mediaPath ? activeRepo : null, siteBranch, mediaRepoPath)
   const normalizedSiteUrl = siteUrl.trim().replace(/\/+$/, '')
   const publicMediaUrl = normalizedSiteUrl && mediaPath ? `${normalizedSiteUrl}${mediaPath}` : null
   const publicBlogUrl = normalizedSiteUrl ? `${normalizedSiteUrl}/blog` : null
