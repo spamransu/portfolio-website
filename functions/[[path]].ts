@@ -378,7 +378,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   }
   if (about.heroImage !== undefined && !isImageAsset(about.heroImage)) return false
 
-  if (typeof resume.headline !== 'string' || typeof resume.summary !== 'string' || !isStringArray(resume.skills) || !Array.isArray(resume.experience) || !resume.experience.every((entry) => isRecord(entry) && typeof entry.role === 'string' && typeof entry.company === 'string' && typeof entry.period === 'string' && isStringArray(entry.highlights)) || !Array.isArray(resume.highlights) || !resume.highlights.every((entry) => isRecord(entry) && typeof entry.value === 'string' && typeof entry.label === 'string')) {
+  if (!['headline', 'summary', 'highlightsSectionTitle', 'skillsSectionTitle', 'experienceSectionTitle'].every((key) => typeof resume[key] === 'string') || !isStringArray(resume.skills) || !Array.isArray(resume.experience) || !resume.experience.every((entry) => isRecord(entry) && typeof entry.role === 'string' && typeof entry.company === 'string' && typeof entry.period === 'string' && isStringArray(entry.highlights)) || !Array.isArray(resume.highlights) || !resume.highlights.every((entry) => isRecord(entry) && typeof entry.value === 'string' && typeof entry.label === 'string')) {
     return false
   }
   if (resume.heroImage !== undefined && !isImageAsset(resume.heroImage)) return false

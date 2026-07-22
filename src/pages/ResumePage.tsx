@@ -8,7 +8,7 @@ export function ResumePage() {
     <div className={`lg-wrapper ${sty.page}`}>
       <InternalHero eyebrow="CV / Resume" title={siteContent.resume.headline} intro={siteContent.resume.summary} media={siteContent.resume.heroImage} />
 
-      <Section title="Quick highlights">
+      <Section title={siteContent.resume.highlightsSectionTitle}>
         <div className={sty.statGrid}>
           {siteContent.resume.highlights.map((item) => (
             <article className={sty.statCard} key={item.label}>
@@ -19,7 +19,7 @@ export function ResumePage() {
         </div>
       </Section>
 
-      <Section title="Core skills">
+      <Section title={siteContent.resume.skillsSectionTitle}>
         <ul className="tag-list tag-list--large">
           {siteContent.resume.skills.map((skill) => (
             <li key={skill}>{skill}</li>
@@ -27,7 +27,7 @@ export function ResumePage() {
         </ul>
       </Section>
 
-      <Section title="Experience">
+      <Section title={siteContent.resume.experienceSectionTitle}>
         <div className={sty.timeline}>
           {siteContent.resume.experience.map((item) => (
             <article className={sty.timelineCard} key={`${item.company}-${item.role}`}>

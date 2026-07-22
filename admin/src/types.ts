@@ -127,6 +127,9 @@ export type SiteContent = {
   resume: {
     headline: string
     summary: string
+    highlightsSectionTitle: string
+    skillsSectionTitle: string
+    experienceSectionTitle: string
     skills: string[]
     highlights: HighlightStat[]
     heroImage?: ImageAsset

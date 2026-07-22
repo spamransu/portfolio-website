@@ -77,6 +77,9 @@
   "resume": {
     "headline": "Frontend Web Developer and Graphic Designer",
     "summary": "Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.",
+    "highlightsSectionTitle": "Quick highlights",
+    "skillsSectionTitle": "Core skills",
+    "experienceSectionTitle": "Experience",
     "skills": [
       "React",
       "TypeScript",

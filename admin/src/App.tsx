@@ -97,6 +97,15 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'about.toolsSectionTitle':
       next.about.toolsSectionTitle = value
       return next
+    case 'resume.highlightsSectionTitle':
+      next.resume.highlightsSectionTitle = value
+      return next
+    case 'resume.skillsSectionTitle':
+      next.resume.skillsSectionTitle = value
+      return next
+    case 'resume.experienceSectionTitle':
+      next.resume.experienceSectionTitle = value
+      return next
     case 'home.hero.eyebrow':
       next.home.hero.eyebrow = value
       return next

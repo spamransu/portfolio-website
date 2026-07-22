@@ -393,6 +393,20 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
+            <h2>Resume page</h2>
+            <div className="admin-form-grid">
+              <label className="admin-field"><span>Headline</span><input value={workingCopy.resume.headline} onChange={(event) => onFieldChange('resume.headline', event.target.value)} /></label>
+              <label className="admin-field"><span>Summary</span><textarea value={workingCopy.resume.summary} onChange={(event) => onFieldChange('resume.summary', event.target.value)} /></label>
+              <label className="admin-field"><span>Highlights section title</span><input value={workingCopy.resume.highlightsSectionTitle} onChange={(event) => onFieldChange('resume.highlightsSectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Skills section title</span><input value={workingCopy.resume.skillsSectionTitle} onChange={(event) => onFieldChange('resume.skillsSectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Experience section title</span><input value={workingCopy.resume.experienceSectionTitle} onChange={(event) => onFieldChange('resume.experienceSectionTitle', event.target.value)} /></label>
+              <label className="admin-field"><span>Resume hero image src</span><input value={workingCopy.resume.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.src', event.target.value)} /></label>
+              <label className="admin-field"><span>Resume hero image alt</span><input value={workingCopy.resume.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.alt', event.target.value)} /></label>
+              <label className="admin-field"><span>Resume hero image caption</span><textarea value={workingCopy.resume.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.caption', event.target.value)} /></label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
             <div className="admin-panel-header"><div><h2>Resume highlights</h2><p className="admin-copy">Edit headline stat cards shown on the resume page.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('highlight')}>Add highlight</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('highlight', selectedHighlightIndex)} disabled={selectedHighlightTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -408,8 +422,6 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Label</span><input value={selectedHighlight.label} onChange={(event) => onStructuredFieldChange('highlight', 'label', event.target.value, selectedHighlightIndex)} /></label>
                 </>
               ) : null}
-              <label className="admin-field"><span>Resume hero image src</span><input value={workingCopy.resume.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.src', event.target.value)} /></label>
-              <label className="admin-field"><span>Resume hero image alt</span><input value={workingCopy.resume.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.alt', event.target.value)} /></label>
             </div>
           </article>
 
