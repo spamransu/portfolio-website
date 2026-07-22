@@ -25,6 +25,17 @@
 - SCSS reference notes live at `agent-generated-docs/project-scss-reference.md`.
 - Prefer clear descriptive filenames in `agent-generated-docs/` so the root stays focused on source files and primary project docs.
 
+## Styling system
+
+- Prefer token-driven SCSS over repeated local spacing and sizing literals.
+- Centralize spacing in `src/styles/tokens.scss` and expose reusable semantic custom properties from `src/styles/base.scss`.
+- Use the existing `tokens.fluid()` helper for responsive clamp values; keep the approved 767px to 1366px interpolation range.
+- Reuse top-level variables for section spacing, chrome/header/footer spacing, card padding, button padding, pill padding, form padding, grid gaps, and content measures before adding one-off values in modules.
+- Keep wrapper widths owned by `.sm-wrapper`, `.md-wrapper`, and `.lg-wrapper`; do not duplicate wrapper `max-width` rules in page or component modules.
+- Prefer snapping to the nearest established `--space-*` or semantic spacing variable over pixel-perfect preservation when cleaning CSS.
+- Structural sizing is allowed when it carries layout intent: `width: 100%`, `height: 100%`, `min-width: 0`, image sizing, accessibility-only sizing, text measures in `ch`, and grid wrapper max-widths.
+- Recent baseline: `7489841 refactor(styles): consolidate spacing tokens` established the current spacing-token cleanup direction.
+
 ## Playwright file hygiene
 
 - Do not write Playwright screenshots, snapshot markdown, MCP output, or other generated verification files into the project root.
