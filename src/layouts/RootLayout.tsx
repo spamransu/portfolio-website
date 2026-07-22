@@ -8,8 +8,9 @@ export function RootLayout() {
 
   return (
     <div className="site-shell">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <SiteHeader />
-      <main className={isHomePage ? 'site-main site-main--home' : 'site-main site-main--inner'}>
+      <main id="main-content" className={isHomePage ? 'site-main site-main--home' : 'site-main site-main--inner'}>
         <Outlet />
       </main>
       <SiteFooter />

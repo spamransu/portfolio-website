@@ -20,7 +20,9 @@
 
 .brand {
   display: inline-flex;
+  align-items: center;
   gap: var(--space-hairline);
+  min-height: var(--header-link-min-block-size);
   text-decoration: none;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -46,12 +48,14 @@
 .nav a {
   color: var(--color-text-primary);
   display: inline-flex;
-  padding-block: var(--space-hairline);
+  align-items: center;
+  min-height: var(--header-link-min-block-size);
+  padding-inline: var(--space-2xs);
   font-size: var(--type-body-xs-size);
   text-decoration: none;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  transition: color 140ms ease, opacity 140ms ease;
+  transition: color var(--motion-fast) var(--motion-ease-standard), opacity var(--motion-fast) var(--motion-ease-standard);
   white-space: nowrap;
 }
 

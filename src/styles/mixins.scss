@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use 'sass:map';
 @use './tokens' as tokens;
 
@@ -64,7 +65,7 @@
   padding: $padding;
   background: var(--color-surface-card);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--radius);
+  border-radius: var(--card-radius);
   box-shadow: var(--shadow);
 }
 
@@ -72,4 +73,56 @@
   outline: 2px solid var(--color-transparent);
   outline-offset: 3px;
   box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+@mixin interactive-transition($properties: (transform, border-color, background-color, color, opacity)) {
+  $transitions: ();
+
+  @each $property in $properties {
+    $transitions: list.append($transitions, #{$property} var(--motion-fast) var(--motion-ease-standard), comma);
+  }
+
+  transition: $transitions;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin touch-target($min-size: var(--target-min-size)) {
+  min-width: $min-size;
+  min-height: $min-size;
+}
+
+@mixin button-base($role: body-sm, $weight: 600) {
+  @include flex(row, center, center, var(--button-gap));
+  min-block-size: var(--button-min-block-size);
+  padding: var(--button-padding);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid var(--button-border-color, var(--color-border-default));
+  border-radius: var(--button-radius);
+  @include type-style($role, $weight);
+  @include interactive-transition;
+
+  &:hover {
+    transform: translateY(var(--interactive-lift));
+    border-color: var(--button-border-hover, var(--color-border-hover));
+  }
+
+  @include reduced-motion {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+@mixin pill-base($role: body-sm, $weight: null) {
+  padding: var(--tag-padding);
+  border: 1px solid var(--tag-border-color, var(--color-border-default));
+  border-radius: var(--tag-radius);
+  @include type-style($role, $weight);
 }

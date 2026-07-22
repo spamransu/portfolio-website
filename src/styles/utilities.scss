@@ -21,6 +21,24 @@
   text-transform: uppercase;
 }
 
+.skip-link {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  z-index: 100;
+  padding: var(--button-padding);
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  background: var(--color-action-primary);
+  border-radius: var(--button-radius);
+  transform: translateY(calc(-100% - var(--space-xs)));
+  transition: transform var(--motion-fast) var(--motion-ease-standard);
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+}
+
 .text-h1 { @include mix.type-style(h1); }
 .text-h2 { @include mix.type-style(h2); }
 .text-h3 { @include mix.type-style(h3); }
@@ -43,22 +61,12 @@
 }
 
 .button {
-  @include mix.flex(row, center, center, var(--space-xs));
-  padding: var(--space-button-pad);
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-pill);
-  @include mix.type-style(body-sm, 600);
-  transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    border-color: var(--color-border-hover);
-  }
+  @include mix.button-base;
 }
 
 .button--primary {
+  --button-border-color: var(--color-transparent);
+
   background: var(--color-action-primary);
   color: var(--color-text-inverse);
   font-weight: 700;
@@ -70,11 +78,8 @@
 
 .tag-list li,
 .check-list li {
-  padding: var(--space-pill-pad);
-  @include mix.type-style(body-sm);
+  @include mix.pill-base;
   background: var(--color-surface-overlay);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-pill);
 }
 
 .tag-list--large li {

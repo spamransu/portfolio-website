@@ -217,8 +217,30 @@ $radii: (
   pill: 999px,
 ) !default;
 
-$shadow-card: 0 20px 50px map.get($color-alpha, shadow-card) !default;
-$transition-fast: 140ms ease !default;
+$effects: (
+  shadow-card: 0 20px 50px map.get($color-alpha, shadow-card),
+  motion-fast: 140ms,
+  motion-standard: 180ms,
+  motion-emphasized: 240ms,
+  motion-ease-standard: ease,
+  motion-ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1),
+  interactive-lift: -1px,
+  target-min-size: 44px,
+) !default;
+
+$component-tokens: (
+  button-padding: space(xs) space(sm),
+  button-radius: radius(pill),
+  button-gap: space(xs),
+  card-padding: space(sm),
+  card-radius: radius(lg),
+  form-padding: space(sm),
+  form-field-padding: space(xs),
+  form-field-radius: radius(sm),
+  tag-padding: space(2xs) space(xs),
+  social-icon-padding-inline: space(hairline),
+) !default;
+
 $max-width: 1312px !default;
 
 @function color($key) {
@@ -270,9 +292,21 @@ $max-width: 1312px !default;
 }
 
 @function space($key) {
+  @if $key == hairline {
+    @return fluid(0.125rem, 0.25rem);
+  }
+
   @return map.get($space, $key);
 }
 
 @function font-family($key) {
   @return map.get($font-families, $key);
+}
+
+@function effect($key) {
+  @return map.get($effects, $key);
+}
+
+@function component-token($key) {
+  @return map.get($component-tokens, $key);
 }

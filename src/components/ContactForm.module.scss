@@ -3,10 +3,10 @@
 .root {
   display: grid;
   gap: var(--space-stack);
-  padding: var(--space-form-pad);
+  padding: var(--form-padding);
   background: var(--color-background-inverse);
   color: var(--color-text-inverse);
-  border-radius: var(--space-hairline);
+  border-radius: var(--form-field-radius);
 }
 
 .intro,
@@ -50,15 +50,15 @@
 .field input,
 .field textarea {
   width: 100%;
-  padding: var(--space-xs);
+  padding: var(--form-field-padding);
   color: var(--color-text-inverse);
   background: var(--color-transparent);
   border: 1px solid var(--color-form-border);
-  border-radius: var(--space-hairline);
+  border-radius: var(--form-field-radius);
 }
 
 .field input {
-  min-height: calc(var(--space-lg) + var(--space-xs));
+  min-height: var(--form-field-min-block-size);
 }
 
 .field textarea {
@@ -81,20 +81,10 @@
 }
 
 .submitButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: calc(var(--space-md) + var(--space-xs));
-  padding: var(--space-button-pad);
-  color: var(--color-text-primary);
-  @include mix.type-style(body-xs, 600);
-  text-decoration: none;
-  background: var(--color-text-inverse);
-  border: 1px solid var(--color-transparent);
-  transition: transform 140ms ease, opacity 140ms ease, border-color 140ms ease, background-color 140ms ease;
-}
+  --button-border-color: var(--color-transparent);
 
-.submitButton:hover {
-  transform: translateY(-1px);
+  @include mix.button-base(body-xs);
+  width: 100%;
+  color: var(--color-text-primary);
+  background: var(--color-text-inverse);
 }
