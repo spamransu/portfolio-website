@@ -29,6 +29,21 @@ const splitLines = (value: string): string[] =>
 const updateRecordAtIndex = <T,>(items: T[], index: number, updater: (item: T) => T): T[] =>
   items.map((item, itemIndex) => (itemIndex === index ? updater(item) : item))
 
+const todayDate = () => new Date().toISOString().slice(0, 10)
+
+const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse => ({
+  title: 'Untitled draft',
+  slug,
+  date: todayDate(),
+  status: 'draft',
+  body: '',
+  coverAlt: '',
+  coverImage: '',
+  excerpt: '',
+  path: `content/blog/${todayDate()}-${slug}.md`,
+  sha: '',
+})
+
 const updateWorkingCopy = (content: SiteContent, field: string, value: string): SiteContent => {
   const next = structuredClone(content)
 
@@ -387,6 +402,121 @@ export const App = () => {
     setError(null)
   }, [selectedProjectSlug])
 
+  const handleStructuredAdd = useCallback((scope: string) => {
+    setWorkingCopy((current) => {
+      if (!current) return current
+
+      const next = structuredClone(current)
+
+      switch (scope) {
+        case 'social':
+          next.site.socials.push({ label: 'New social', href: 'https://' })
+          setSelectedSocialIndex(next.site.socials.length - 1)
+          return next
+        case 'process':
+          next.about.process.push({ title: 'New step', description: '' })
+          setSelectedProcessIndex(next.about.process.length - 1)
+          return next
+        case 'highlight':
+          next.resume.highlights.push({ value: '0', label: 'New highlight' })
+          setSelectedHighlightIndex(next.resume.highlights.length - 1)
+          return next
+        case 'experience':
+          next.resume.experience.push({ role: 'New role', company: 'Company', period: todayDate(), highlights: [] })
+          setSelectedExperienceIndex(next.resume.experience.length - 1)
+          return next
+        case 'method':
+          next.contact.methods.push({ title: 'New method', label: 'Label', href: 'https://', description: '' })
+          setSelectedMethodIndex(next.contact.methods.length - 1)
+          return next
+        case 'project':
+          next.projects.push({
+            slug: `new-project-${next.projects.length + 1}`,
+            title: 'New project',
+            year: todayDate().slice(0, 4),
+            client: 'Client',
+            summary: '',
+            role: '',
+            stack: [],
+            challenge: '',
+            approach: [],
+            outcome: [],
+            sections: [{ title: 'Overview', body: '' }],
+          })
+          setSelectedProjectSlug(next.projects[next.projects.length - 1].slug)
+          return next
+        case 'projectSection': {
+          if (!selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects[projectIndex].sections = [...(next.projects[projectIndex].sections ?? []), { title: 'New section', body: '' }]
+          return next
+        }
+        default:
+          return next
+      }
+    })
+    setSaveStatus(null)
+    setError(null)
+  }, [selectedProjectSlug])
+
+  const handleStructuredRemove = useCallback((scope: string, index?: number) => {
+    setWorkingCopy((current) => {
+      if (!current) return current
+
+      const next = structuredClone(current)
+
+      switch (scope) {
+        case 'social':
+          if (index === undefined || next.site.socials.length <= 1) return next
+          next.site.socials.splice(index, 1)
+          setSelectedSocialIndex(Math.max(0, Math.min(index, next.site.socials.length - 1)))
+          return next
+        case 'process':
+          if (index === undefined || next.about.process.length <= 1) return next
+          next.about.process.splice(index, 1)
+          setSelectedProcessIndex(Math.max(0, Math.min(index, next.about.process.length - 1)))
+          return next
+        case 'highlight':
+          if (index === undefined || next.resume.highlights.length <= 1) return next
+          next.resume.highlights.splice(index, 1)
+          setSelectedHighlightIndex(Math.max(0, Math.min(index, next.resume.highlights.length - 1)))
+          return next
+        case 'experience':
+          if (index === undefined || next.resume.experience.length <= 1) return next
+          next.resume.experience.splice(index, 1)
+          setSelectedExperienceIndex(Math.max(0, Math.min(index, next.resume.experience.length - 1)))
+          return next
+        case 'method':
+          if (index === undefined || next.contact.methods.length <= 1) return next
+          next.contact.methods.splice(index, 1)
+          setSelectedMethodIndex(Math.max(0, Math.min(index, next.contact.methods.length - 1)))
+          return next
+        case 'project':
+          if (!selectedProjectSlug || next.projects.length <= 1) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects.splice(projectIndex, 1)
+          setSelectedProjectSlug(next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? '')
+          return next
+        case 'projectSection': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const sections = next.projects[projectIndex].sections ?? []
+          if (sections.length <= 1) return next
+          sections.splice(index, 1)
+          next.projects[projectIndex].sections = sections
+          return next
+        }
+        default:
+          return next
+      }
+    })
+    setSaveStatus(null)
+    setError(null)
+  }, [selectedProjectSlug])
+
   const handleSave = useCallback(async () => {
     if (!siteContent || !workingCopy) return
 
@@ -453,6 +583,20 @@ export const App = () => {
     }
   }, [blogList, loadBlogList, selectedBlogPost])
 
+  const handleBlogCreate = useCallback(() => {
+    const slug = `draft-${Date.now()}`
+    const post = createEmptyBlogPost(slug)
+    setSelectedBlogSlug(slug)
+    setSelectedBlogPost({
+      branch: blogList?.branch ?? siteContent?.branch ?? 'main',
+      post,
+    })
+    setMediaArea('blog')
+    setMediaSlug(slug)
+    setBlogStatus('New draft created locally. Save it to create the markdown file.')
+    setError(null)
+  }, [blogList?.branch, siteContent?.branch])
+
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !mediaSlug.trim()) return
 
@@ -486,7 +630,8 @@ export const App = () => {
   const blogDirty = useMemo(() => {
     if (!selectedBlogPost) return false
     const original = blogList?.posts.find((post) => post.slug === selectedBlogPost.post.slug)
-    return Boolean(original) && JSON.stringify({ ...original, body: selectedBlogPost.post.body }) !== JSON.stringify(selectedBlogPost.post)
+    if (!original) return true
+    return JSON.stringify({ ...original, body: selectedBlogPost.post.body }) !== JSON.stringify(selectedBlogPost.post)
   }, [blogList, selectedBlogPost])
 
   const selectedBlogMeta = useMemo<BlogPostMeta | null>(() => {
@@ -520,6 +665,9 @@ export const App = () => {
       mediaSlug,
       mediaStatus,
       onBlogFieldChange: handleBlogFieldChange,
+      onBlogCreate: () => {
+        handleBlogCreate()
+      },
       onBlogReload: () => {
         if (selectedBlogSlug) void loadBlogPost(selectedBlogSlug)
       },
@@ -530,7 +678,9 @@ export const App = () => {
         void loadBlogPost(slug)
       },
       onFieldChange: handleFieldChange,
+      onStructuredAdd: handleStructuredAdd,
       onStructuredFieldChange: handleStructuredFieldChange,
+      onStructuredRemove: handleStructuredRemove,
       onLogin: handleLogin,
       onLogout: () => {
         void handleLogout()
@@ -587,10 +737,13 @@ export const App = () => {
       dirty,
       error,
       handleBlogFieldChange,
+      handleBlogCreate,
       handleBlogSave,
       handleFieldChange,
       handleMediaUpload,
+      handleStructuredAdd,
       handleStructuredFieldChange,
+      handleStructuredRemove,
       handleSave,
       loadBlogPost,
       loadSiteContent,
