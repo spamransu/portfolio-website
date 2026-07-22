@@ -1079,7 +1079,6 @@ export const App = () => {
       const response = await adminApi.getActivity()
       setActivity(response)
     } catch (loadError) {
-      setActivity(null)
       setError(loadError instanceof Error ? loadError.message : 'Failed to load recent activity.')
     } finally {
       setLoadingActivity(false)
