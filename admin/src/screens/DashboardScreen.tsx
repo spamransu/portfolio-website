@@ -207,6 +207,7 @@ export const DashboardScreen = ({
   const selectedBlogUrl = createBlobUrl(blogRepo, siteContent?.branch ?? null, selectedBlogPath)
   const uploadedMediaUrl = createBlobUrl(mediaPath ? activeRepo : null, siteContent?.branch ?? null, mediaRepoPath)
   const normalizedSiteUrl = siteUrl.trim().replace(/\/+$/, '')
+  const publicMediaUrl = normalizedSiteUrl && mediaPath ? `${normalizedSiteUrl}${mediaPath}` : null
   const publicBlogUrl = normalizedSiteUrl ? `${normalizedSiteUrl}/blog` : null
   const publicPostUrl = normalizedSiteUrl && blogPost?.status === 'published' ? `${normalizedSiteUrl}/blog/${blogPost.slug}` : null
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
@@ -338,6 +339,7 @@ export const DashboardScreen = ({
               </a>
             ) : null}
             {uploadedMediaUrl ? <a className="admin-button admin-button-secondary" href={uploadedMediaUrl} target="_blank" rel="noreferrer">Open uploaded asset</a> : null}
+            {publicMediaUrl ? <a className="admin-button admin-button-secondary" href={publicMediaUrl} target="_blank" rel="noreferrer">Open public asset</a> : null}
           </div>
         </article>
       </section>
@@ -758,6 +760,21 @@ export const DashboardScreen = ({
               {mediaPath ? <label className="admin-field"><span>Last uploaded path</span><input readOnly value={mediaPath} /></label> : null}
               <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span>{mediaTargetLabel ? ` — ${mediaTargetLabel}` : ' — manual selection'}</p>
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
+              {mediaPath ? (
+                <div className="admin-media-preview">
+                  <div className="admin-panel-header">
+                    <div>
+                      <p className="admin-kicker">Uploaded asset preview</p>
+                      <h3>{mediaPath}</h3>
+                    </div>
+                    <div className="admin-actions">
+                      {publicMediaUrl ? <a className="admin-button admin-button-secondary" href={publicMediaUrl} target="_blank" rel="noreferrer">Open public asset</a> : null}
+                      {uploadedMediaUrl ? <a className="admin-button admin-button-secondary" href={uploadedMediaUrl} target="_blank" rel="noreferrer">Open repo blob</a> : null}
+                    </div>
+                  </div>
+                  {publicMediaUrl ? <img className="admin-media-preview-image" src={publicMediaUrl} alt={mediaTargetLabel ?? mediaPath} /> : null}
+                </div>
+              ) : null}
             </div>
           </article>
 
