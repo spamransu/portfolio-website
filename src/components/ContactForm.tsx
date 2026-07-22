@@ -34,23 +34,23 @@ function buildMailtoHref(values: ContactFormState, recipientEmail: string) {
   return `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
-function validateForm(values: ContactFormState, messageLimit: number) {
+function validateForm(values: ContactFormState, contact: ContactFormContent) {
   const errors: ContactFormErrors = {}
 
   if (!values.name.trim()) {
-    errors.name = 'Please enter your name.'
+    errors.name = contact.nameRequiredError
   }
 
   if (!values.email.trim()) {
-    errors.email = 'Please enter your email.'
+    errors.email = contact.emailRequiredError
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
-    errors.email = 'Please enter a valid email address.'
+    errors.email = contact.emailInvalidError
   }
 
   if (!values.message.trim()) {
-    errors.message = 'Please add a short message.'
-  } else if (values.message.length > messageLimit) {
-    errors.message = `Please keep the message under ${messageLimit} characters.`
+    errors.message = contact.messageRequiredError
+  } else if (values.message.length > contact.messageLimit) {
+    errors.message = contact.messageTooLongError.replace('{limit}', String(contact.messageLimit))
   }
 
   return errors
@@ -87,7 +87,7 @@ export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const errors = validateForm(formValues, messageLimit)
+    const errors = validateForm(formValues, contact)
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors)
@@ -113,12 +113,12 @@ export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
 
       <form className={sty.form} onSubmit={handleSubmit} noValidate>
         <div className={sty.field}>
-          <label htmlFor={nameInputId}>Name *</label>
+          <label htmlFor={nameInputId}>{contact.nameLabel} *</label>
           <input
             id={nameInputId}
             name="name"
             type="text"
-            placeholder="Your full name"
+            placeholder={contact.namePlaceholder}
             value={formValues.name}
             onChange={handleFieldChange}
             aria-invalid={Boolean(formErrors.name)}
@@ -133,12 +133,12 @@ export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
         </div>
 
         <div className={sty.field}>
-          <label htmlFor={emailInputId}>Email *</label>
+          <label htmlFor={emailInputId}>{contact.emailLabel} *</label>
           <input
             id={emailInputId}
             name="email"
             type="email"
-            placeholder="your.email@example.com"
+            placeholder={contact.emailPlaceholder}
             value={formValues.email}
             onChange={handleFieldChange}
             aria-invalid={Boolean(formErrors.email)}
@@ -153,11 +153,11 @@ export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
         </div>
 
         <div className={sty.field}>
-          <label htmlFor={messageInputId}>Message *</label>
+          <label htmlFor={messageInputId}>{contact.messageLabel} *</label>
           <textarea
             id={messageInputId}
             name="message"
-            placeholder="Tell me about your project or just say hello..."
+            placeholder={contact.messagePlaceholder}
             value={formValues.message}
             onChange={handleFieldChange}
             aria-invalid={Boolean(formErrors.message)}
@@ -167,7 +167,9 @@ export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
           />
           <div className={sty.metaRow}>
             <p className={sty.count} id={messageCountId}>
-              {formValues.message.length}/{messageLimit} characters
+              {contact.messageCountTemplate
+                .replace('{count}', String(formValues.message.length))
+                .replace('{limit}', String(messageLimit))}
             </p>
             {formErrors.message ? (
               <p className={sty.error} id={messageErrorId}>

@@ -30,25 +30,55 @@
     "headerNavAriaLabel": "Primary",
     "footerSocialsAriaLabel": "Social links",
     "headerNav": [
-      { "to": "/projects", "label": "Projects" },
-      { "to": "/blog", "label": "Blog" },
-      { "to": "/about", "label": "About" },
-      { "to": "/contact", "label": "Contact" },
-      { "to": "/resume", "label": "CV" }
+      {
+        "to": "/projects",
+        "label": "Projects"
+      },
+      {
+        "to": "/blog",
+        "label": "Blog"
+      },
+      {
+        "to": "/about",
+        "label": "About"
+      },
+      {
+        "to": "/contact",
+        "label": "Contact"
+      },
+      {
+        "to": "/resume",
+        "label": "CV"
+      }
     ],
     "headerLinktreeLabel": "Linktree",
     "footer": {
-      "copyrightTemplate": "© {year} {siteName}. All rights reserved.",
+      "copyrightTemplate": "\u00a9 {year} {siteName}. All rights reserved.",
       "generalHeading": "General",
       "moreHeading": "More",
       "generalLinks": [
-        { "to": "/", "label": "Home" },
-        { "to": "/about", "label": "About" },
-        { "to": "/projects", "label": "Projects" }
+        {
+          "to": "/",
+          "label": "Home"
+        },
+        {
+          "to": "/about",
+          "label": "About"
+        },
+        {
+          "to": "/projects",
+          "label": "Projects"
+        }
       ],
       "moreLinks": [
-        { "to": "/#contact", "label": "Book a call" },
-        { "to": "/resume", "label": "View CV" }
+        {
+          "to": "/#contact",
+          "label": "Book a call"
+        },
+        {
+          "to": "/resume",
+          "label": "View CV"
+        }
       ],
       "linktreeLabel": "Linktree"
     }
@@ -199,7 +229,19 @@
       "title": "Start the conversation",
       "intro": "Share a few details about the project, page, or frontend cleanup you need help with and I will reply by email.",
       "submitLabel": "Draft email inquiry",
-      "messageLimit": 800
+      "messageLimit": 800,
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "messageLabel": "Message",
+      "namePlaceholder": "Your full name",
+      "emailPlaceholder": "your.email@example.com",
+      "messagePlaceholder": "Tell me about your project or just say hello...",
+      "nameRequiredError": "Please enter your name.",
+      "emailRequiredError": "Please enter your email.",
+      "emailInvalidError": "Please enter a valid email address.",
+      "messageRequiredError": "Please add a short message.",
+      "messageTooLongError": "Please keep the message under {limit} characters.",
+      "messageCountTemplate": "{count}/{limit} characters"
     },
     "formSectionTitle": "Send a project brief",
     "formSectionIntro": "Use the form if you want to draft the email with the main details already filled in.",
@@ -568,7 +610,19 @@
       "title": "LET'S CONNECT!",
       "intro": "",
       "submitLabel": "Send message",
-      "messageLimit": 500
+      "messageLimit": 500,
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "messageLabel": "Message",
+      "namePlaceholder": "Your full name",
+      "emailPlaceholder": "your.email@example.com",
+      "messagePlaceholder": "Tell me about your project or just say hello...",
+      "nameRequiredError": "Please enter your name.",
+      "emailRequiredError": "Please enter your email.",
+      "emailInvalidError": "Please enter a valid email address.",
+      "messageRequiredError": "Please add a short message.",
+      "messageTooLongError": "Please keep the message under {limit} characters.",
+      "messageCountTemplate": "{count}/{limit} characters"
     }
   },
   "projectsPage": {

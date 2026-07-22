@@ -390,7 +390,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   if (!isRecord(homeBio) || typeof homeBio.eyebrow !== 'string' || typeof homeBio.description !== 'string' || !isStringArray(homeBio.titleLines)) return false
   if (!Array.isArray(homeStats) || !homeStats.every((entry) => isRecord(entry) && typeof entry.value === 'string' && typeof entry.label === 'string' && ['accent', 'accent-2', 'accent-3'].includes(`${entry.tone}`))) return false
   if (!isRecord(homeSkills) || typeof homeSkills.title !== 'string' || typeof homeSkills.description !== 'string' || !isStringArray(homeSkills.items)) return false
-  if (!isRecord(homeContact) || typeof homeContact.title !== 'string' || typeof homeContact.intro !== 'string' || typeof homeContact.submitLabel !== 'string' || typeof homeContact.messageLimit !== 'number') return false
+  if (!isRecord(homeContact) || !['title', 'intro', 'submitLabel', 'nameLabel', 'emailLabel', 'messageLabel', 'namePlaceholder', 'emailPlaceholder', 'messagePlaceholder', 'nameRequiredError', 'emailRequiredError', 'emailInvalidError', 'messageRequiredError', 'messageTooLongError', 'messageCountTemplate'].every((key) => typeof homeContact[key] === 'string') || typeof homeContact.messageLimit !== 'number') return false
 
   if (!['title', 'intro', 'bodySectionTitle', 'processSectionTitle', 'processSectionIntro', 'principlesSectionTitle', 'toolsSectionTitle'].every((key) => typeof about[key] === 'string') || (about.eyebrow !== undefined && typeof about.eyebrow !== 'string') || !isStringArray(about.body) || !isStringArray(about.principles) || !Array.isArray(about.process) || !about.process.every((entry) => isRecord(entry) && typeof entry.title === 'string' && typeof entry.description === 'string') || !isStringArray(about.tools)) {
     return false
@@ -403,7 +403,8 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   if (resume.heroImage !== undefined && !isImageAsset(resume.heroImage)) return false
 
   if (!['title', 'body', 'availability', 'availabilityTitle', 'availabilityStatusLabel', 'availabilityLocationLabel', 'formSectionTitle', 'formSectionIntro', 'methodsSectionTitle', 'methodsSectionIntro'].every((key) => typeof contact[key] === 'string') || (contact.eyebrow !== undefined && typeof contact.eyebrow !== 'string') || (contact.emailCtaPrefix !== undefined && typeof contact.emailCtaPrefix !== 'string')) return false
-  if (!isRecord(contact.form) || typeof contact.form.title !== 'string' || typeof contact.form.intro !== 'string' || typeof contact.form.submitLabel !== 'string' || typeof contact.form.messageLimit !== 'number') return false
+  const contactForm = contact.form
+  if (!isRecord(contactForm) || !['title', 'intro', 'submitLabel', 'nameLabel', 'emailLabel', 'messageLabel', 'namePlaceholder', 'emailPlaceholder', 'messagePlaceholder', 'nameRequiredError', 'emailRequiredError', 'emailInvalidError', 'messageRequiredError', 'messageTooLongError', 'messageCountTemplate'].every((key) => typeof contactForm[key] === 'string') || typeof contactForm.messageLimit !== 'number') return false
   if (!Array.isArray(contact.methods) || !contact.methods.every((entry) => isRecord(entry) && ['title', 'label', 'href', 'description'].every((key) => typeof entry[key] === 'string'))) return false
   if (contact.heroImage !== undefined && !isImageAsset(contact.heroImage)) return false
 

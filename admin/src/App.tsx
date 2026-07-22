@@ -378,6 +378,42 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'home.contact.messageLimit':
       next.home.contact.messageLimit = Number(value) || 0
       return next
+    case 'home.contact.nameLabel':
+      next.home.contact.nameLabel = value
+      return next
+    case 'home.contact.emailLabel':
+      next.home.contact.emailLabel = value
+      return next
+    case 'home.contact.messageLabel':
+      next.home.contact.messageLabel = value
+      return next
+    case 'home.contact.namePlaceholder':
+      next.home.contact.namePlaceholder = value
+      return next
+    case 'home.contact.emailPlaceholder':
+      next.home.contact.emailPlaceholder = value
+      return next
+    case 'home.contact.messagePlaceholder':
+      next.home.contact.messagePlaceholder = value
+      return next
+    case 'home.contact.nameRequiredError':
+      next.home.contact.nameRequiredError = value
+      return next
+    case 'home.contact.emailRequiredError':
+      next.home.contact.emailRequiredError = value
+      return next
+    case 'home.contact.emailInvalidError':
+      next.home.contact.emailInvalidError = value
+      return next
+    case 'home.contact.messageRequiredError':
+      next.home.contact.messageRequiredError = value
+      return next
+    case 'home.contact.messageTooLongError':
+      next.home.contact.messageTooLongError = value
+      return next
+    case 'home.contact.messageCountTemplate':
+      next.home.contact.messageCountTemplate = value
+      return next
     case 'about.intro':
       next.about.intro = value
       return next
@@ -422,6 +458,42 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'contact.form.submitLabel':
       next.contact.form.submitLabel = value
+      return next
+    case 'contact.form.nameLabel':
+      next.contact.form.nameLabel = value
+      return next
+    case 'contact.form.emailLabel':
+      next.contact.form.emailLabel = value
+      return next
+    case 'contact.form.messageLabel':
+      next.contact.form.messageLabel = value
+      return next
+    case 'contact.form.namePlaceholder':
+      next.contact.form.namePlaceholder = value
+      return next
+    case 'contact.form.emailPlaceholder':
+      next.contact.form.emailPlaceholder = value
+      return next
+    case 'contact.form.messagePlaceholder':
+      next.contact.form.messagePlaceholder = value
+      return next
+    case 'contact.form.nameRequiredError':
+      next.contact.form.nameRequiredError = value
+      return next
+    case 'contact.form.emailRequiredError':
+      next.contact.form.emailRequiredError = value
+      return next
+    case 'contact.form.emailInvalidError':
+      next.contact.form.emailInvalidError = value
+      return next
+    case 'contact.form.messageRequiredError':
+      next.contact.form.messageRequiredError = value
+      return next
+    case 'contact.form.messageTooLongError':
+      next.contact.form.messageTooLongError = value
+      return next
+    case 'contact.form.messageCountTemplate':
+      next.contact.form.messageCountTemplate = value
       return next
     case 'contact.formSectionTitle':
       next.contact.formSectionTitle = value

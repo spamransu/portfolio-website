@@ -35,6 +35,18 @@ export type ContactFormContent = {
   intro: string
   submitLabel: string
   messageLimit: number
+  nameLabel: string
+  emailLabel: string
+  messageLabel: string
+  namePlaceholder: string
+  emailPlaceholder: string
+  messagePlaceholder: string
+  nameRequiredError: string
+  emailRequiredError: string
+  emailInvalidError: string
+  messageRequiredError: string
+  messageTooLongError: string
+  messageCountTemplate: string
 }
 
 export type HighlightStat = {
