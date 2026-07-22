@@ -1055,13 +1055,14 @@ export const DashboardScreen = ({
               </div>
               <div className="admin-actions">
                 {uploadingMedia ? <span className="admin-status">Uploading…</span> : null}
-                <button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey || uploadingMedia}>Clear target</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onMediaFileClear} disabled={!mediaFile || uploadingMedia}>Clear file</button>
-                <button type="button" className="admin-button admin-button-secondary" onClick={onMediaResultClear} disabled={!mediaPath}>Clear uploaded result</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onMediaResultClear} disabled={!mediaPath || uploadingMedia}>Clear uploaded result</button>
                 <button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !sanitizedMediaSlug || !mediaFile || Boolean(mediaValidationError)}>{uploadingMedia ? 'Uploading…' : mediaValidationError ? 'Fix validation errors' : 'Upload media'}</button>
               </div>
             </div>
-            <div className="admin-form-grid">
+            <fieldset disabled={uploadingMedia} style={{ border: 0, margin: 0, padding: 0 }}>
+              <div className="admin-form-grid">
               <label className="admin-field"><span>Area</span><select value={mediaArea} onChange={(event) => onMediaAreaChange(event.target.value)}>{mediaAreas.map((area) => <option key={area} value={area}>{area}</option>)}</select></label>
               <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} onBlur={onMediaSlugCommit} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
               <label className="admin-field"><span>Image file</span><input key={mediaFileInputKey} type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} /></label>
@@ -1094,7 +1095,8 @@ export const DashboardScreen = ({
                   {publicMediaUrl ? <img className="admin-media-preview-image" src={publicMediaUrl} alt={mediaTargetLabel ?? mediaPath} /> : null}
                 </div>
               ) : null}
-            </div>
+              </div>
+            </fieldset>
           </article>
 
           <article className="admin-panel">
