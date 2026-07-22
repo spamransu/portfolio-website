@@ -136,6 +136,17 @@ const retargetProjectMediaSelection = (
   }
 }
 
+const retargetBlogMediaSelection = (
+  target: MediaTargetSelection,
+  nextSlug: string,
+  postTitle: string,
+): MediaTargetSelection => ({
+  ...target,
+  key: `blog:${nextSlug}:${target.field}`,
+  label: `${postTitle || nextSlug} cover image`,
+  slug: nextSlug,
+})
+
 const normalizeProjectDetailPage = (value?: SiteContent['projectDetailPage']) => ({
   eyebrow: value?.eyebrow ?? '',
   notFoundTitle: value?.notFoundTitle ?? '',
@@ -1215,6 +1226,11 @@ export const App = () => {
       setSelectedBlogSlug(slug)
       setMediaArea('blog')
       setMediaSlug(slug)
+      setMediaTarget((current) => (
+        current && current.kind === 'blog'
+          ? retargetBlogMediaSelection(current, response.post.slug, response.post.title)
+          : current
+      ))
       setBlogStatus(null)
       setBlogConflict(null)
       setError(null)
@@ -1762,12 +1778,7 @@ export const App = () => {
         setMediaSlug(post.slug)
         setMediaTarget((activeTarget) => (
           activeTarget && activeTarget.kind === 'blog' && activeTarget.slug === current.post.slug
-            ? {
-                ...activeTarget,
-                key: `blog:${post.slug}:${activeTarget.field}`,
-                label: `${post.title || post.slug} cover image`,
-                slug: post.slug,
-              }
+            ? retargetBlogMediaSelection(activeTarget, post.slug, post.title)
             : activeTarget
         ))
       }
@@ -1861,6 +1872,11 @@ export const App = () => {
     setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
     setMediaSlug(slug)
+    setMediaTarget((current) => (
+      current && current.kind === 'blog'
+        ? retargetBlogMediaSelection(current, post.slug, post.title)
+        : current
+    ))
     setBlogStatus('New draft created locally. Save it to create the markdown file.')
     setBlogConflict(null)
     setBlogActivity(null)
