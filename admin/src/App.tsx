@@ -104,6 +104,38 @@ const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse =>
   sha: '',
 })
 
+const retargetProjectMediaSelection = (
+  target: MediaTargetSelection,
+  nextSlug: string,
+  projectTitle: string,
+): MediaTargetSelection => {
+  switch (target.scope) {
+    case 'projectImage':
+      return {
+        ...target,
+        key: `project:${nextSlug}:image.src`,
+        label: `${projectTitle} lead image`,
+        slug: nextSlug,
+      }
+    case 'projectGallery':
+      return {
+        ...target,
+        key: `projectGallery:${nextSlug}:${target.index ?? 0}:src`,
+        label: `${projectTitle} gallery image ${(target.index ?? 0) + 1}`,
+        slug: nextSlug,
+      }
+    case 'projectSection':
+      return {
+        ...target,
+        key: `projectSection:${nextSlug}:${target.index ?? 0}:image.src`,
+        label: `${projectTitle} section ${(target.index ?? 0) + 1} image`,
+        slug: nextSlug,
+      }
+    default:
+      return target
+  }
+}
+
 const normalizeProjectDetailPage = (value?: SiteContent['projectDetailPage']) => ({
   eyebrow: value?.eyebrow ?? '',
   notFoundTitle: value?.notFoundTitle ?? '',
@@ -1435,7 +1467,11 @@ export const App = () => {
           if (field === 'slug' && typeof nextValue === 'string' && nextValue !== currentProject.slug) {
             setSelectedProjectSlug(nextValue)
             setMediaSlug((current) => (current === currentProject.slug ? nextValue : current))
-            setMediaTarget((current) => (current && current.area === 'projects' && current.slug === currentProject.slug ? null : current))
+            setMediaTarget((current) => (
+              current && current.area === 'projects' && current.slug === currentProject.slug
+                ? retargetProjectMediaSelection(current, nextValue, currentProject.title)
+                : current
+            ))
           }
           return next
         }
