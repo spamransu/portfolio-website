@@ -1194,13 +1194,14 @@ export const App = () => {
         setSelectedBlogBaseline(null)
       }
     } catch (loadError) {
+      if (handleUnauthorizedError(loadError, 'Your admin session expired. Sign in again.')) return
       setBlogList(null)
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
-      setError(loadError instanceof Error ? loadError.message : 'Failed to load blog posts.')
+      setError(getApiErrorMessage(loadError, 'Failed to load blog posts.'))
     }
-  }, [loadBlogPost])
+  }, [getApiErrorMessage, handleUnauthorizedError, loadBlogPost])
 
   const loadSession = useCallback(async () => {
     setLoading(true)
