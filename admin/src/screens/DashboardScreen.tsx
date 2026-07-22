@@ -1044,7 +1044,19 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button><button type="button" className="admin-button admin-button-secondary" onClick={onMediaFileClear} disabled={!mediaFile || uploadingMedia}>Clear file</button><button type="button" className="admin-button admin-button-secondary" onClick={onMediaResultClear} disabled={!mediaPath}>Clear uploaded result</button><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !sanitizedMediaSlug || !mediaFile || Boolean(mediaValidationError)}>{uploadingMedia ? 'Uploading…' : mediaValidationError ? 'Fix validation errors' : 'Upload media'}</button></div></div>
+            <div className="admin-panel-header">
+              <div>
+                <h2>Media uploader</h2>
+                <p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p>
+              </div>
+              <div className="admin-actions">
+                {uploadingMedia ? <span className="admin-status">Uploading…</span> : null}
+                <button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onMediaFileClear} disabled={!mediaFile || uploadingMedia}>Clear file</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onMediaResultClear} disabled={!mediaPath}>Clear uploaded result</button>
+                <button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !sanitizedMediaSlug || !mediaFile || Boolean(mediaValidationError)}>{uploadingMedia ? 'Uploading…' : mediaValidationError ? 'Fix validation errors' : 'Upload media'}</button>
+              </div>
+            </div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Area</span><select value={mediaArea} onChange={(event) => onMediaAreaChange(event.target.value)}>{mediaAreas.map((area) => <option key={area} value={area}>{area}</option>)}</select></label>
               <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} onBlur={onMediaSlugCommit} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
