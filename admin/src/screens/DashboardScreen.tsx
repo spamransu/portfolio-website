@@ -125,6 +125,7 @@ interface DashboardScreenProps {
   }
   siteValidationError: string | null
   loading: boolean
+  loadingActivity: boolean
   loadingContent: boolean
   mediaArea: string
   mediaFile: File | null
@@ -154,6 +155,7 @@ interface DashboardScreenProps {
   onMediaTargetClear: () => void
   onMediaTargetSelect: (target: MediaTargetSelection) => void
   onMediaUpload: () => void
+  onReloadActivity: () => void
   onProcessSelect: (value: number) => void
   onProjectGallerySelect: (value: number) => void
   onProjectSelect: (value: string) => void
@@ -266,6 +268,7 @@ export const DashboardScreen = ({
   siteValidation,
   siteValidationError,
   loading,
+  loadingActivity,
   loadingContent,
   mediaArea,
   mediaFile,
@@ -295,6 +298,7 @@ export const DashboardScreen = ({
   onMediaTargetClear,
   onMediaTargetSelect,
   onMediaUpload,
+  onReloadActivity,
   onProcessSelect,
   onProjectGallerySelect,
   onProjectSelect,
@@ -533,7 +537,14 @@ export const DashboardScreen = ({
         </article>
 
         <article className="admin-panel">
-          <h2>Recent activity</h2>
+          <div className="admin-panel-header">
+            <div><h2>Recent activity</h2></div>
+            <div className="admin-actions">
+              <button type="button" className="admin-button admin-button-secondary" onClick={onReloadActivity} disabled={loadingActivity}>
+                {loadingActivity ? 'Refreshing…' : 'Refresh activity'}
+              </button>
+            </div>
+          </div>
           {activity.length ? (
             <div className="admin-form-grid">
               {activity.map((item) => (

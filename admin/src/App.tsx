@@ -1026,6 +1026,7 @@ export const App = () => {
   const [loading, setLoading] = useState(true)
   const [loadingContent, setLoadingContent] = useState(false)
   const [loadingBlog, setLoadingBlog] = useState(false)
+  const [loadingActivity, setLoadingActivity] = useState(false)
   const [saving, setSaving] = useState(false)
   const [savingBlog, setSavingBlog] = useState(false)
   const [uploadingMedia, setUploadingMedia] = useState(false)
@@ -1072,12 +1073,16 @@ export const App = () => {
   }, [])
 
   const loadActivity = useCallback(async () => {
+    setLoadingActivity(true)
+
     try {
       const response = await adminApi.getActivity()
       setActivity(response)
     } catch (loadError) {
       setActivity(null)
       setError(loadError instanceof Error ? loadError.message : 'Failed to load recent activity.')
+    } finally {
+      setLoadingActivity(false)
     }
   }, [])
 
@@ -1914,6 +1919,7 @@ export const App = () => {
       siteValidation,
       siteValidationError,
       loading,
+      loadingActivity,
       loadingContent,
       mediaArea,
       mediaFile,
@@ -1964,6 +1970,9 @@ export const App = () => {
       onMediaTargetSelect: handleMediaTargetSelect,
       onMediaUpload: () => {
         void handleMediaUpload()
+      },
+      onReloadActivity: () => {
+        void loadActivity()
       },
       onProjectSelect: setSelectedProjectSlug,
       onHomeStatSelect: setSelectedHomeStatIndex,
@@ -2046,8 +2055,10 @@ export const App = () => {
       handleStructuredRemove,
       handleSave,
       loadBlogPost,
+      loadActivity,
       loadSiteContent,
       loading,
+      loadingActivity,
       loadingBlog,
       siteValidation,
       siteValidationError,
