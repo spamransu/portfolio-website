@@ -42,6 +42,11 @@ const splitLines = (value: string): string[] =>
 const updateRecordAtIndex = <T,>(items: T[], index: number, updater: (item: T) => T): T[] =>
   items.map((item, itemIndex) => (itemIndex === index ? updater(item) : item))
 
+const normalizeTone = (value: string): 'accent' | 'accent-2' | 'accent-3' => {
+  if (value === 'accent-2' || value === 'accent-3') return value
+  return 'accent'
+}
+
 const todayDate = () => new Date().toISOString().slice(0, 10)
 
 const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse => ({
@@ -120,6 +125,51 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
       return next
     case 'home.cta.secondaryLabel':
       next.home.cta.secondaryLabel = value
+      return next
+    case 'home.featuredProjects.title':
+      next.home.featuredProjects.title = value
+      return next
+    case 'home.featuredProjects.intro':
+      next.home.featuredProjects.intro = value
+      return next
+    case 'home.featuredProjects.slugs':
+      next.home.featuredProjects.slugs = splitLines(value)
+      return next
+    case 'home.featuredProjects.fallbackLabel':
+      next.home.featuredProjects.fallbackLabel = value
+      return next
+    case 'home.featuredProjects.fallbackDescription':
+      next.home.featuredProjects.fallbackDescription = value
+      return next
+    case 'home.bio.eyebrow':
+      next.home.bio.eyebrow = value
+      return next
+    case 'home.bio.titleLines':
+      next.home.bio.titleLines = splitLines(value)
+      return next
+    case 'home.bio.description':
+      next.home.bio.description = value
+      return next
+    case 'home.skills.title':
+      next.home.skills.title = value
+      return next
+    case 'home.skills.description':
+      next.home.skills.description = value
+      return next
+    case 'home.skills.items':
+      next.home.skills.items = splitLines(value)
+      return next
+    case 'home.contact.title':
+      next.home.contact.title = value
+      return next
+    case 'home.contact.intro':
+      next.home.contact.intro = value
+      return next
+    case 'home.contact.submitLabel':
+      next.home.contact.submitLabel = value
+      return next
+    case 'home.contact.messageLimit':
+      next.home.contact.messageLimit = Number(value) || 0
       return next
     case 'about.intro':
       next.about.intro = value
@@ -259,6 +309,7 @@ export const App = () => {
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogDetailResponse | null>(null)
   const [selectedProjectSlug, setSelectedProjectSlug] = useState<string>('')
   const [selectedProjectGalleryIndex, setSelectedProjectGalleryIndex] = useState(0)
+  const [selectedHomeStatIndex, setSelectedHomeStatIndex] = useState(0)
   const [selectedSocialIndex, setSelectedSocialIndex] = useState(0)
   const [selectedProcessIndex, setSelectedProcessIndex] = useState(0)
   const [selectedHighlightIndex, setSelectedHighlightIndex] = useState(0)
@@ -291,6 +342,7 @@ export const App = () => {
       setWorkingCopy(structuredClone(response.content))
       setSelectedProjectSlug(response.content.projects[0]?.slug ?? '')
       setSelectedProjectGalleryIndex(0)
+      setSelectedHomeStatIndex(0)
       setSelectedSocialIndex(0)
       setSelectedProcessIndex(0)
       setSelectedHighlightIndex(0)
@@ -457,6 +509,13 @@ export const App = () => {
             [field]: value,
           }))
           return next
+        case 'homeStat':
+          if (index === undefined) return next
+          next.home.stats = updateRecordAtIndex(next.home.stats, index, (item) => ({
+            ...item,
+            [field]: field === 'tone' ? normalizeTone(value) : value,
+          }))
+          return next
         case 'experience':
           if (index === undefined) return next
           next.resume.experience = updateRecordAtIndex(next.resume.experience, index, (item) => ({
@@ -585,6 +644,10 @@ export const App = () => {
           next.resume.highlights.push({ value: '0', label: 'New highlight' })
           setSelectedHighlightIndex(next.resume.highlights.length - 1)
           return next
+        case 'homeStat':
+          next.home.stats.push({ value: '0', label: 'New stat', tone: 'accent' })
+          setSelectedHomeStatIndex(next.home.stats.length - 1)
+          return next
         case 'experience':
           next.resume.experience.push({ role: 'New role', company: 'Company', period: todayDate(), highlights: [] })
           setSelectedExperienceIndex(next.resume.experience.length - 1)
@@ -639,6 +702,7 @@ export const App = () => {
       social: 'Remove this social link?',
       process: 'Remove this process step?',
       highlight: 'Remove this highlight card?',
+      homeStat: 'Remove this home stat card?',
       experience: 'Remove this experience entry?',
       method: 'Remove this contact method?',
       project: 'Remove this project from site content?',
@@ -669,6 +733,11 @@ export const App = () => {
           if (index === undefined || next.resume.highlights.length <= 1) return next
           next.resume.highlights.splice(index, 1)
           setSelectedHighlightIndex(Math.max(0, Math.min(index, next.resume.highlights.length - 1)))
+          return next
+        case 'homeStat':
+          if (index === undefined || next.home.stats.length <= 1) return next
+          next.home.stats.splice(index, 1)
+          setSelectedHomeStatIndex(Math.max(0, Math.min(index, next.home.stats.length - 1)))
           return next
         case 'experience':
           if (index === undefined || next.resume.experience.length <= 1) return next
@@ -922,6 +991,7 @@ export const App = () => {
 
   const selectedSocial = workingCopy?.site.socials[selectedSocialIndex] ?? null
   const selectedProcess = workingCopy?.about.process[selectedProcessIndex] ?? null
+  const selectedHomeStat = workingCopy?.home.stats[selectedHomeStatIndex] ?? null
   const selectedHighlight = workingCopy?.resume.highlights[selectedHighlightIndex] ?? null
   const selectedExperience = workingCopy?.resume.experience[selectedExperienceIndex] ?? null
   const selectedMethod = workingCopy?.contact.methods[selectedMethodIndex] ?? null
@@ -995,6 +1065,7 @@ export const App = () => {
         void handleMediaUpload()
       },
       onProjectSelect: setSelectedProjectSlug,
+      onHomeStatSelect: setSelectedHomeStatIndex,
       onSocialSelect: setSelectedSocialIndex,
       onProcessSelect: setSelectedProcessIndex,
       onHighlightSelect: setSelectedHighlightIndex,
@@ -1013,6 +1084,9 @@ export const App = () => {
       selectedProcess,
       selectedProcessIndex,
       selectedProcessTotal: workingCopy?.about.process.length ?? 0,
+      selectedHomeStat,
+      selectedHomeStatIndex,
+      selectedHomeStatTotal: workingCopy?.home.stats.length ?? 0,
       selectedHighlight,
       selectedHighlightIndex,
       selectedHighlightTotal: workingCopy?.resume.highlights.length ?? 0,
@@ -1080,6 +1154,8 @@ export const App = () => {
       selectedMethodIndex,
       selectedProcess,
       selectedProcessIndex,
+      selectedHomeStat,
+      selectedHomeStatIndex,
       selectedProject,
       selectedProjectGalleryIndex,
       selectedProjectGalleryItem,

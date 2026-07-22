@@ -1,6 +1,6 @@
 import type { AdminRepoInfo, AdminSession, SiteContentResponse } from '../api/adminApi'
 import { parseBlogMarkdownBlocks } from '../../../src/content/blogMarkdown'
-import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
+import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, HomeStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
 
 interface DashboardScreenProps {
   blogActivity: {
@@ -47,6 +47,7 @@ interface DashboardScreenProps {
   onProcessSelect: (value: number) => void
   onProjectGallerySelect: (value: number) => void
   onProjectSelect: (value: string) => void
+  onHomeStatSelect: (value: number) => void
   onSocialSelect: (value: number) => void
   onHighlightSelect: (value: number) => void
   onExperienceSelect: (value: number) => void
@@ -65,6 +66,9 @@ interface DashboardScreenProps {
   selectedHighlight: HighlightStat | null
   selectedHighlightIndex: number
   selectedHighlightTotal: number
+  selectedHomeStat: HomeStat | null
+  selectedHomeStatIndex: number
+  selectedHomeStatTotal: number
   selectedMethod: ContactMethod | null
   selectedMethodIndex: number
   selectedMethodTotal: number
@@ -129,6 +133,7 @@ export const DashboardScreen = ({
   onProcessSelect,
   onProjectGallerySelect,
   onProjectSelect,
+  onHomeStatSelect,
   onSocialSelect,
   onHighlightSelect,
   onExperienceSelect,
@@ -147,6 +152,9 @@ export const DashboardScreen = ({
   selectedHighlight,
   selectedHighlightIndex,
   selectedHighlightTotal,
+  selectedHomeStat,
+  selectedHomeStatIndex,
+  selectedHomeStatTotal,
   selectedMethod,
   selectedMethodIndex,
   selectedMethodTotal,
@@ -301,6 +309,52 @@ export const DashboardScreen = ({
 
       {workingCopy ? (
         <section className="admin-edit-grid">
+          <article className="admin-panel">
+            <h2>Home page</h2>
+            <div className="admin-form-grid">
+              <label className="admin-field"><span>Hero eyebrow</span><input value={workingCopy.home.hero.eyebrow} onChange={(event) => onFieldChange('home.hero.eyebrow', event.target.value)} /></label>
+              <label className="admin-field"><span>Hero title lines (one per line)</span><textarea value={toLines(workingCopy.home.hero.titleLines)} onChange={(event) => onFieldChange('home.hero.titleLines', event.target.value)} /></label>
+              <label className="admin-field"><span>Hero description</span><textarea value={workingCopy.home.hero.description} onChange={(event) => onFieldChange('home.hero.description', event.target.value)} /></label>
+              <label className="admin-field"><span>Primary CTA label</span><input value={workingCopy.home.cta.primaryLabel} onChange={(event) => onFieldChange('home.cta.primaryLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Secondary CTA label</span><input value={workingCopy.home.cta.secondaryLabel} onChange={(event) => onFieldChange('home.cta.secondaryLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Featured projects title</span><input value={workingCopy.home.featuredProjects.title} onChange={(event) => onFieldChange('home.featuredProjects.title', event.target.value)} /></label>
+              <label className="admin-field"><span>Featured projects intro</span><textarea value={workingCopy.home.featuredProjects.intro} onChange={(event) => onFieldChange('home.featuredProjects.intro', event.target.value)} /></label>
+              <label className="admin-field"><span>Featured project slugs (one per line)</span><textarea value={toLines(workingCopy.home.featuredProjects.slugs)} onChange={(event) => onFieldChange('home.featuredProjects.slugs', event.target.value)} /></label>
+              <label className="admin-field"><span>Featured fallback label</span><input value={workingCopy.home.featuredProjects.fallbackLabel} onChange={(event) => onFieldChange('home.featuredProjects.fallbackLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Featured fallback description</span><textarea value={workingCopy.home.featuredProjects.fallbackDescription} onChange={(event) => onFieldChange('home.featuredProjects.fallbackDescription', event.target.value)} /></label>
+              <label className="admin-field"><span>Bio eyebrow</span><input value={workingCopy.home.bio.eyebrow} onChange={(event) => onFieldChange('home.bio.eyebrow', event.target.value)} /></label>
+              <label className="admin-field"><span>Bio title lines (one per line)</span><textarea value={toLines(workingCopy.home.bio.titleLines)} onChange={(event) => onFieldChange('home.bio.titleLines', event.target.value)} /></label>
+              <label className="admin-field"><span>Bio description</span><textarea value={workingCopy.home.bio.description} onChange={(event) => onFieldChange('home.bio.description', event.target.value)} /></label>
+              <label className="admin-field"><span>Skills title</span><input value={workingCopy.home.skills.title} onChange={(event) => onFieldChange('home.skills.title', event.target.value)} /></label>
+              <label className="admin-field"><span>Skills description</span><textarea value={workingCopy.home.skills.description} onChange={(event) => onFieldChange('home.skills.description', event.target.value)} /></label>
+              <label className="admin-field"><span>Skills items (one per line)</span><textarea value={toLines(workingCopy.home.skills.items)} onChange={(event) => onFieldChange('home.skills.items', event.target.value)} /></label>
+              <label className="admin-field"><span>Home contact title</span><input value={workingCopy.home.contact.title} onChange={(event) => onFieldChange('home.contact.title', event.target.value)} /></label>
+              <label className="admin-field"><span>Home contact intro</span><textarea value={workingCopy.home.contact.intro} onChange={(event) => onFieldChange('home.contact.intro', event.target.value)} /></label>
+              <label className="admin-field"><span>Home contact submit label</span><input value={workingCopy.home.contact.submitLabel} onChange={(event) => onFieldChange('home.contact.submitLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Home contact message limit</span><input type="number" min={0} value={workingCopy.home.contact.messageLimit} onChange={(event) => onFieldChange('home.contact.messageLimit', event.target.value)} /></label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
+            <div className="admin-panel-header"><div><h2>Home stats</h2><p className="admin-copy">Edit the stat cards shown on the homepage bio section.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('homeStat')}>Add stat</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('homeStat', selectedHomeStatIndex)} disabled={selectedHomeStatTotal <= 1}>Remove selected</button></div></div>
+            <div className="admin-form-grid">
+              <label className="admin-field">
+                <span>Selected stat</span>
+                <select value={selectedHomeStatIndex} onChange={(event) => onHomeStatSelect(Number(event.target.value))}>
+                  {workingCopy.home.stats.map((item, index) => <option key={`${item.label}-${index}`} value={index}>{index + 1} — {item.label}</option>)}
+                </select>
+              </label>
+              <p className="admin-note">{selectedHomeStatTotal} home stats available.</p>
+              {selectedHomeStat ? (
+                <>
+                  <label className="admin-field"><span>Value</span><input value={selectedHomeStat.value} onChange={(event) => onStructuredFieldChange('homeStat', 'value', event.target.value, selectedHomeStatIndex)} /></label>
+                  <label className="admin-field"><span>Label</span><input value={selectedHomeStat.label} onChange={(event) => onStructuredFieldChange('homeStat', 'label', event.target.value, selectedHomeStatIndex)} /></label>
+                  <label className="admin-field"><span>Tone</span><select value={selectedHomeStat.tone} onChange={(event) => onStructuredFieldChange('homeStat', 'tone', event.target.value, selectedHomeStatIndex)}><option value="accent">accent</option><option value="accent-2">accent-2</option><option value="accent-3">accent-3</option></select></label>
+                </>
+              ) : null}
+            </div>
+          </article>
+
           <article className="admin-panel">
             <h2>Site settings</h2>
             <div className="admin-form-grid">
