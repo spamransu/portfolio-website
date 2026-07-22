@@ -511,6 +511,7 @@ export const DashboardScreen = ({
       {saveStatus ? <section className="admin-panel admin-success">{saveStatus}</section> : null}
       {blogStatus ? <section className="admin-panel admin-success">{blogStatus}</section> : null}
       {mediaStatus ? <section className="admin-panel admin-success">{mediaStatus}</section> : null}
+      {copyStatus ? <section className="admin-panel admin-success">{copyStatus}</section> : null}
 
       <section className="admin-grid">
         <article className="admin-panel">
@@ -533,6 +534,13 @@ export const DashboardScreen = ({
             <div><dt>Projects</dt><dd>{projectOptions.length}</dd></div>
             <div><dt>Blog posts</dt><dd>{blogList.length}</dd></div>
           </dl>
+          <div className="admin-actions admin-actions--links">
+            {siteContent?.branch ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(siteContent.branch, 'Branch name')}>Copy branch</button> : null}
+            {siteContent?.sha ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(siteContent.sha, 'Blob SHA')}>Copy blob SHA</button> : null}
+            {siteContent?.latestCommitSha ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(siteContent.latestCommitSha ?? '', 'Latest commit SHA')}>Copy latest commit SHA</button> : null}
+            {selectedBlogPath ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(selectedBlogPath, 'Selected post path')}>Copy post path</button> : null}
+            {publicPostUrl ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(publicPostUrl, 'Published post URL')}>Copy post URL</button> : null}
+          </div>
           <div className="admin-actions admin-actions--links">
             {activeRepo ? <a className="admin-button admin-button-secondary" href={activeRepo.repoUrl} target="_blank" rel="noreferrer">Open repo</a> : null}
             {siteContent?.repo ? <a className="admin-button admin-button-secondary" href={siteContent.repo.branchUrl} target="_blank" rel="noreferrer">Open branch</a> : null}
@@ -1036,7 +1044,6 @@ export const DashboardScreen = ({
               {nextUploadRepoPath ? <div className="admin-actions"><p className="admin-note">Next upload repo path: <span className="admin-code">{nextUploadRepoPath}</span></p><button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(nextUploadRepoPath, 'Next repo path')}>Copy next repo path</button></div> : null}
               {nextUploadPublicPath ? <div className="admin-actions"><p className="admin-note">Next upload public path: <span className="admin-code">{nextUploadPublicPath}</span></p><button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(nextUploadPublicPath, 'Next public path')}>Copy next public path</button></div> : null}
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
-              {copyStatus ? <p className="admin-note">{copyStatus}</p> : null}
               {mediaFile ? <SelectedMediaPreview file={mediaFile} /> : null}
               {mediaPath ? (
                 <div className="admin-media-preview">
