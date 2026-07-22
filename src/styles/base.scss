@@ -135,6 +135,10 @@
   --header-link-min-block-size: var(--target-min-size);
   --footer-icon-size: var(--target-min-size);
   --footer-icon-padding-inline: #{tokens.component-token(social-icon-padding-inline)};
+  --section-divider: 1px solid var(--color-border-default);
+  --section-stack-gap: var(--space-stack);
+  --page-header-title-measure: 18ch;
+  --project-card-title-color: var(--color-action-primary);
   --project-card-image-ratio: 1.13;
   --project-card-image-transition: transform var(--motion-standard) var(--motion-ease-emphasized);
 }
@@ -200,6 +204,7 @@ select {
 
 button {
   color: inherit;
+  cursor: pointer;
 }
 
 body,

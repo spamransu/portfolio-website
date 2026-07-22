@@ -7,7 +7,7 @@
   min-width: 0;
   padding-block-start: var(--space-stack);
   background: var(--color-transparent);
-  border-top: 1px solid var(--color-border-default);
+  border-top: var(--section-divider);
 }
 
 .callout-card p,

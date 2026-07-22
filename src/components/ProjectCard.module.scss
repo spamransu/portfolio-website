@@ -2,9 +2,9 @@
 
 .root {
   display: grid;
-  gap: var(--space-stack-tight);
+  gap: var(--section-stack-gap);
   padding-block-start: var(--space-stack);
-  border-top: 1px solid var(--color-border-default);
+  border-top: var(--section-divider);
 }
 
 .root h2,
@@ -14,6 +14,16 @@
 
 .root h2 {
   @include mix.type-style(h4);
+}
+
+.root h2 a {
+  color: var(--project-card-title-color);
+  text-decoration: none;
+  @include mix.interactive-transition((color, opacity));
+}
+
+.root h2 a:hover {
+  opacity: 0.82;
 }
 
 .meta {

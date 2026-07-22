@@ -101,6 +101,7 @@
   min-block-size: var(--button-min-block-size);
   padding: var(--button-padding);
   color: inherit;
+  cursor: pointer;
   text-decoration: none;
   border: 1px solid var(--button-border-color, var(--color-border-default));
   border-radius: var(--button-radius);

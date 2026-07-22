@@ -2,13 +2,13 @@
 
 .root {
   display: grid;
-  gap: var(--space-stack-tight);
+  gap: var(--section-stack-gap);
   padding-block-end: var(--space-xs);
-  border-bottom: 1px solid var(--color-border-default);
+  border-bottom: var(--section-divider);
 }
 
 .root h1 {
-  max-width: 18ch;
+  max-width: var(--page-header-title-measure);
   margin: 0;
   @include mix.type-style(h1);
   text-wrap: balance;
