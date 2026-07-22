@@ -26,6 +26,7 @@
     ]
   },
   "about": {
+    "title": "A designer-minded frontend practice.",
     "intro": "I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.",
     "body": [
       "My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.",

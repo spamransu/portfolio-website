@@ -111,6 +111,7 @@ export type SiteContent = {
     contact: ContactFormContent
   }
   about: {
+    title: string
     intro: string
     body: string[]
     principles: string[]

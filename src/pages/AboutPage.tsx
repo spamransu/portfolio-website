@@ -8,7 +8,7 @@ export function AboutPage() {
     <div className={`lg-wrapper ${sty.page}`}>
       <InternalHero
         eyebrow="About"
-        title="A designer-minded frontend practice."
+        title={siteContent.about.title}
         intro={siteContent.about.intro}
         media={siteContent.about.heroImage}
       />

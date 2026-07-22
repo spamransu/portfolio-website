@@ -79,6 +79,9 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
     case 'site.siteUrl':
       next.site.siteUrl = value
       return next
+    case 'about.title':
+      next.about.title = value
+      return next
     case 'home.hero.eyebrow':
       next.home.hero.eyebrow = value
       return next
