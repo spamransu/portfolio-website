@@ -337,6 +337,7 @@ export const DashboardScreen = ({
   uploadingMedia,
   workingCopy,
 }: DashboardScreenProps) => {
+  const [copyStatus, setCopyStatus] = useState<string>('')
   const formattedJson = workingCopy ? JSON.stringify(workingCopy, null, 2) : ''
   const sectionNames = workingCopy ? Object.keys(workingCopy) : []
   const activeRepo = siteContent?.repo ?? blogRepo ?? blogActivity?.repo ?? null
@@ -395,6 +396,17 @@ export const DashboardScreen = ({
     if (!previewUrl) return null
 
     return <AssignedImagePreview label={label} previewUrl={previewUrl} alt={alt} caption={caption} />
+  }
+  const handleCopy = async (value: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(value)
+      setCopyStatus(`${label} copied.`)
+      window.setTimeout(() => {
+        setCopyStatus((current) => (current === `${label} copied.` ? '' : current))
+      }, 2000)
+    } catch {
+      setCopyStatus(`Could not copy ${label.toLowerCase()}.`)
+    }
   }
 
   return (
@@ -981,10 +993,12 @@ export const DashboardScreen = ({
               {uploadSlugWillChange ? <p className="admin-note">Slug will upload as <span className="admin-code">{sanitizedMediaSlug}</span>.</p> : null}
               {uploadFilenameWillChange ? <p className="admin-note">Filename will upload as <span className="admin-code">{resolvedUploadFilename}</span>.</p> : null}
               {mediaPath ? <label className="admin-field"><span>Last uploaded path</span><input readOnly value={mediaPath} /></label> : null}
+              {mediaPath ? <div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(mediaPath, 'Uploaded path')}>Copy uploaded path</button></div> : null}
               <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span>{mediaTargetLabel ? ` — ${mediaTargetLabel}` : ' — manual selection'}</p>
               {nextUploadRepoPath ? <p className="admin-note">Next upload repo path: <span className="admin-code">{nextUploadRepoPath}</span></p> : null}
               {nextUploadPublicPath ? <p className="admin-note">Next upload public path: <span className="admin-code">{nextUploadPublicPath}</span></p> : null}
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
+              {copyStatus ? <p className="admin-note">{copyStatus}</p> : null}
               {mediaFile ? <SelectedMediaPreview file={mediaFile} /> : null}
               {mediaPath ? (
                 <div className="admin-media-preview">
@@ -994,7 +1008,9 @@ export const DashboardScreen = ({
                       <h3>{mediaPath}</h3>
                     </div>
                     <div className="admin-actions">
+                      <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(mediaPath, 'Uploaded path')}>Copy path</button>
                       {publicMediaUrl ? <a className="admin-button admin-button-secondary" href={publicMediaUrl} target="_blank" rel="noreferrer">Open public asset</a> : null}
+                      {publicMediaUrl ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(publicMediaUrl, 'Public URL')}>Copy public URL</button> : null}
                       {uploadedMediaUrl ? <a className="admin-button admin-button-secondary" href={uploadedMediaUrl} target="_blank" rel="noreferrer">Open repo blob</a> : null}
                     </div>
                   </div>
