@@ -858,6 +858,15 @@ const loadGitHubRecentActivity = async (env: Env, accessToken: string, branch: s
   }))
 }
 
+const loadGitHubBranchHeadSha = async (env: Env, accessToken: string, branch: string): Promise<string | null> => {
+  const branchResponse = await fetchGitHubJson<GitHubBranchResponse>(
+    `${getRepoBase(env)}/branches/${encodeURIComponent(branch)}`,
+    { headers: getGitHubHeaders(accessToken) },
+  )
+
+  return branchResponse.commit?.sha ?? null
+}
+
 const listGitHubBlogEntries = async (env: Env, accessToken: string, branch: string): Promise<GitHubDirEntry[]> => {
   const entries = await fetchGitHubJson<GitHubDirEntry[]>(
     `${getRepoBase(env)}/contents/${BLOG_CONTENT_DIR}?ref=${encodeURIComponent(branch)}`,
@@ -1338,10 +1347,12 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
     return jsonResponse({ error: 'A base file SHA is required before updating an existing blog post.' }, { status: 400 })
   }
   if (existingPost && body.sha !== existingPost.sha) {
+    const latestCommitSha = await loadGitHubBranchHeadSha(env, session.accessToken, branch)
     return jsonResponse(
       {
         error: 'Blog post changed since you opened it. Reload before saving again.',
         currentSha: existingPost.sha,
+        latestCommitSha,
       },
       { status: 409 },
     )
@@ -1446,10 +1457,12 @@ const handleAdminBlogDelete = async (context: PagesContext, slug: string): Promi
   }
 
   if (body.sha !== existingPost.sha) {
+    const latestCommitSha = await loadGitHubBranchHeadSha(env, session.accessToken, branch)
     return jsonResponse(
       {
         error: 'Blog post changed since you opened it. Reload before deleting.',
         currentSha: existingPost.sha,
+        latestCommitSha,
       },
       { status: 409 },
     )
