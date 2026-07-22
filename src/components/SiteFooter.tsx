@@ -26,6 +26,20 @@ export function SiteFooter() {
   const linktreeUrl = getLinktreeUrl()
   const year = new Date().getFullYear()
   const visibleSocials = siteContent.site.socials.filter((social) => social.label !== 'Linktree')
+  const footerCopy = siteContent.siteChrome?.footer
+  const generalLinks = footerCopy?.generalLinks ?? [
+    { to: '/', label: 'Home' },
+    { to: '/about', label: 'About' },
+    { to: '/projects', label: 'Projects' },
+  ]
+  const moreLinks = footerCopy?.moreLinks ?? [
+    { to: '/#contact', label: 'Book a call' },
+    { to: '/resume', label: 'View CV' },
+  ]
+  const copyrightTemplate = footerCopy?.copyrightTemplate ?? '© {year} {siteName}. All rights reserved.'
+  const copyright = copyrightTemplate
+    .replace('{year}', String(year))
+    .replace('{siteName}', siteContent.site.name)
 
   return (
     <footer className={sty.root}>
@@ -37,28 +51,35 @@ export function SiteFooter() {
               {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
             </p>
             <p className={sty.description}>{siteContent.site.description}</p>
-            <p className={sty.copyright}>© {year} {siteContent.site.name}. All rights reserved.</p>
+            <p className={sty.copyright}>{copyright}</p>
           </div>
 
           <div className={sty.linksWrap}>
             <div className={sty.linkColumns}>
               <div>
-                <p className={sty.heading}>General</p>
+                <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
                 <ul className={sty.linkList}>
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/about">About</Link></li>
-                  <li><Link to="/projects">Projects</Link></li>
+                  {generalLinks.map((link) => (
+                    <li key={`${link.to}-${link.label}`}>
+                      <Link to={link.to}>{link.label}</Link>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div>
-                <p className={sty.heading}>More</p>
+                <p className={sty.heading}>{footerCopy?.moreHeading ?? 'More'}</p>
                 <ul className={sty.linkList}>
-                  <li><a href="/#contact">Book a call</a></li>
-                  <li><Link to="/resume">View CV</Link></li>
+                  {moreLinks.map((link) => (
+                    <li key={`${link.to}-${link.label}`}>
+                      {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')
+                        ? <a href={link.to}>{link.label}</a>
+                        : <Link to={link.to}>{link.label}</Link>}
+                    </li>
+                  ))}
                   {linktreeUrl ? (
                     <li>
                       <a href={linktreeUrl} target="_blank" rel="noreferrer">
-                        Linktree
+                        {footerCopy?.linktreeLabel ?? 'Linktree'}
                       </a>
                     </li>
                   ) : null}
@@ -66,7 +87,7 @@ export function SiteFooter() {
               </div>
             </div>
 
-            <ul className={sty.socials} aria-label="Social links">
+            <ul className={sty.socials} aria-label={siteContent.siteChrome?.footerSocialsAriaLabel ?? 'Social links'}>
               {visibleSocials.map((social) => (
                 <li key={social.href}>
                   <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>

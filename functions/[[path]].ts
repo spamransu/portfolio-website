@@ -338,6 +338,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   if (!isRecord(value)) return false
 
   const site = value.site
+  const siteChrome = value.siteChrome
   const home = value.home
   const about = value.about
   const resume = value.resume
@@ -353,6 +354,24 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   }
 
   if (!isStringRecordArray(site.socials, ['label', 'href'])) return false
+  if (
+    siteChrome !== undefined
+    && (
+      !isRecord(siteChrome)
+      || typeof siteChrome.skipToContentLabel !== 'string'
+      || typeof siteChrome.headerNavAriaLabel !== 'string'
+      || typeof siteChrome.footerSocialsAriaLabel !== 'string'
+      || (siteChrome.headerLinktreeLabel !== undefined && typeof siteChrome.headerLinktreeLabel !== 'string')
+      || !isStringRecordArray(siteChrome.headerNav, ['to', 'label'])
+      || !isRecord(siteChrome.footer)
+      || typeof siteChrome.footer.copyrightTemplate !== 'string'
+      || typeof siteChrome.footer.generalHeading !== 'string'
+      || typeof siteChrome.footer.moreHeading !== 'string'
+      || (siteChrome.footer.linktreeLabel !== undefined && typeof siteChrome.footer.linktreeLabel !== 'string')
+      || !isStringRecordArray(siteChrome.footer.generalLinks, ['to', 'label'])
+      || !isStringRecordArray(siteChrome.footer.moreLinks, ['to', 'label'])
+    )
+  ) return false
 
   const homeHero = home.hero
   if (!isRecord(homeHero) || !['eyebrow', 'description'].every((key) => typeof homeHero[key] === 'string') || !isStringArray(homeHero.titleLines)) {
@@ -421,7 +440,8 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
     projectDetailPage !== undefined
     && (
       !isRecord(projectDetailPage)
-      || !(['notFoundTitle', 'notFoundIntro', 'snapshotTitle', 'galleryTitle', 'galleryIntro', 'nextProjectEyebrow', 'similarWorkEyebrow', 'similarWorkTitle', 'similarWorkIntro'] as const).every((key) => typeof projectDetailPage[key] === 'string')
+      || (projectDetailPage.eyebrow !== undefined && typeof projectDetailPage.eyebrow !== 'string')
+      || !(['notFoundTitle', 'notFoundIntro', 'backToProjectsLabel', 'startProjectLabel', 'snapshotTitle', 'galleryTitle', 'galleryIntro', 'nextProjectEyebrow', 'nextProjectLabel', 'similarWorkEyebrow', 'similarWorkTitle', 'similarWorkIntro', 'similarWorkLabel'] as const).every((key) => typeof projectDetailPage[key] === 'string')
     )
   ) return false
   const notFoundPage = value.notFoundPage

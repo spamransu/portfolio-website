@@ -13,9 +13,9 @@ export function ProjectDetailPage() {
   if (!project) {
     return (
       <div className={`md-wrapper ${sty.page}`}>
-        <InternalHero eyebrow="Projects" title={detailCopy?.notFoundTitle ?? 'Project not found'} intro={detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'} />
+        <InternalHero eyebrow={detailCopy?.eyebrow ?? 'Projects'} title={detailCopy?.notFoundTitle ?? 'Project not found'} intro={detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'} />
         <Link className="button button--primary" to="/projects">
-          Back to projects
+          {detailCopy?.backToProjectsLabel ?? 'Back to projects'}
         </Link>
       </div>
     )
@@ -33,10 +33,10 @@ export function ProjectDetailPage() {
         actions={
           <div className="button-row">
             <Link className="button button--primary" to="/contact">
-              Start a project
+              {detailCopy?.startProjectLabel ?? 'Start a project'}
             </Link>
             <Link className="button button--ghost" to="/projects">
-              Back to projects
+              {detailCopy?.backToProjectsLabel ?? 'Back to projects'}
             </Link>
           </div>
         }
@@ -124,7 +124,7 @@ export function ProjectDetailPage() {
           <h2>{nextProject.title}</h2>
           <p>{nextProject.summary}</p>
           <Link className="button button--primary" to={`/projects/${nextProject.slug}`}>
-            View next project
+            {detailCopy?.nextProjectLabel ?? 'View next project'}
           </Link>
         </div>
 
@@ -133,7 +133,7 @@ export function ProjectDetailPage() {
           <h2>{detailCopy?.similarWorkTitle ?? 'Open for frontend and design-to-code work.'}</h2>
           <p>{detailCopy?.similarWorkIntro ?? 'Available for portfolio sites, landing pages, responsive cleanup, and interface implementation.'}</p>
           <Link className="button button--ghost" to="/contact">
-            Contact me
+            {detailCopy?.similarWorkLabel ?? 'Contact me'}
           </Link>
         </div>
       </section>

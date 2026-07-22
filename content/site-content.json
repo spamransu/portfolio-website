@@ -25,6 +25,34 @@
       }
     ]
   },
+  "siteChrome": {
+    "skipToContentLabel": "Skip to main content",
+    "headerNavAriaLabel": "Primary",
+    "footerSocialsAriaLabel": "Social links",
+    "headerNav": [
+      { "to": "/projects", "label": "Projects" },
+      { "to": "/blog", "label": "Blog" },
+      { "to": "/about", "label": "About" },
+      { "to": "/contact", "label": "Contact" },
+      { "to": "/resume", "label": "CV" }
+    ],
+    "headerLinktreeLabel": "Linktree",
+    "footer": {
+      "copyrightTemplate": "© {year} {siteName}. All rights reserved.",
+      "generalHeading": "General",
+      "moreHeading": "More",
+      "generalLinks": [
+        { "to": "/", "label": "Home" },
+        { "to": "/about", "label": "About" },
+        { "to": "/projects", "label": "Projects" }
+      ],
+      "moreLinks": [
+        { "to": "/#contact", "label": "Book a call" },
+        { "to": "/resume", "label": "View CV" }
+      ],
+      "linktreeLabel": "Linktree"
+    }
+  },
   "about": {
     "eyebrow": "About",
     "title": "A designer-minded frontend practice.",
@@ -564,15 +592,20 @@
     }
   },
   "projectDetailPage": {
+    "eyebrow": "Projects",
     "notFoundTitle": "Project not found",
     "notFoundIntro": "That case study is missing or has not been published yet.",
+    "backToProjectsLabel": "Back to projects",
+    "startProjectLabel": "Start a project",
     "snapshotTitle": "Project snapshot",
     "galleryTitle": "Project gallery",
     "galleryIntro": "Mock visuals used to support the case-study narrative.",
     "nextProjectEyebrow": "Next up",
+    "nextProjectLabel": "View next project",
     "similarWorkEyebrow": "Need something similar?",
     "similarWorkTitle": "Open for frontend and design-to-code work.",
-    "similarWorkIntro": "Available for portfolio sites, landing pages, responsive cleanup, and interface implementation."
+    "similarWorkIntro": "Available for portfolio sites, landing pages, responsive cleanup, and interface implementation.",
+    "similarWorkLabel": "Contact me"
   },
   "blogPostPage": {
     "eyebrowPrefix": "Blog",

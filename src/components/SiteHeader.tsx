@@ -2,14 +2,6 @@ import { NavLink } from 'react-router-dom'
 import { getLinktreeUrl, siteContent } from '../content/siteContent'
 import sty from './SiteHeader.module.scss'
 
-const navItems = [
-  { to: '/projects', label: 'Projects' },
-  { to: '/blog', label: 'Blog' },
-  { to: '/about', label: 'About' },
-  { to: '/contact', label: 'Contact' },
-  { to: '/resume', label: 'CV' },
-]
-
 function getBrandParts(name: string) {
   const [primary, ...rest] = name.trim().split(/\s+/)
   return {
@@ -21,6 +13,15 @@ function getBrandParts(name: string) {
 export function SiteHeader() {
   const brand = getBrandParts(siteContent.site.name)
   const linktreeUrl = getLinktreeUrl()
+  const navItems = siteContent.siteChrome?.headerNav ?? [
+    { to: '/projects', label: 'Projects' },
+    { to: '/blog', label: 'Blog' },
+    { to: '/about', label: 'About' },
+    { to: '/contact', label: 'Contact' },
+    { to: '/resume', label: 'CV' },
+  ]
+  const navAriaLabel = siteContent.siteChrome?.headerNavAriaLabel ?? 'Primary'
+  const linktreeLabel = siteContent.siteChrome?.headerLinktreeLabel ?? 'Linktree'
 
   return (
     <header className={sty.root}>
@@ -31,7 +32,7 @@ export function SiteHeader() {
             {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
           </NavLink>
 
-          <nav aria-label="Primary" className={sty.navWrap}>
+          <nav aria-label={navAriaLabel} className={sty.navWrap}>
             <ul className={sty.nav}>
               {navItems.map((item) => (
                 <li key={item.to}>
@@ -43,7 +44,7 @@ export function SiteHeader() {
               {linktreeUrl ? (
                 <li>
                   <a href={linktreeUrl} target="_blank" rel="noreferrer">
-                    Linktree
+                    {linktreeLabel}
                   </a>
                 </li>
               ) : null}

@@ -80,6 +80,30 @@ export type SiteContent = {
     siteUrl: string
     socials: SocialLink[]
   }
+  siteChrome?: {
+    skipToContentLabel: string
+    headerNavAriaLabel: string
+    footerSocialsAriaLabel: string
+    headerNav: Array<{
+      to: string
+      label: string
+    }>
+    headerLinktreeLabel?: string
+    footer: {
+      copyrightTemplate: string
+      generalHeading: string
+      moreHeading: string
+      generalLinks: Array<{
+        to: string
+        label: string
+      }>
+      moreLinks: Array<{
+        to: string
+        label: string
+      }>
+      linktreeLabel?: string
+    }
+  }
   home: {
     hero: {
       eyebrow: string
@@ -175,15 +199,20 @@ export type SiteContent = {
     articleSectionTitle: string
   }
   projectDetailPage?: {
+    eyebrow?: string
     notFoundTitle: string
     notFoundIntro: string
+    backToProjectsLabel: string
+    startProjectLabel: string
     snapshotTitle: string
     galleryTitle: string
     galleryIntro: string
     nextProjectEyebrow: string
+    nextProjectLabel: string
     similarWorkEyebrow: string
     similarWorkTitle: string
     similarWorkIntro: string
+    similarWorkLabel: string
   }
   notFoundPage?: {
     eyebrow: string

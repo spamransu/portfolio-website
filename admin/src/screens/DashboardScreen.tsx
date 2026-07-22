@@ -368,17 +368,39 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
+            <h2>Site chrome</h2>
+            <div className="admin-form-grid">
+              <label className="admin-field"><span>Skip link label</span><input value={workingCopy.siteChrome?.skipToContentLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.skipToContentLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Header nav aria label</span><input value={workingCopy.siteChrome?.headerNavAriaLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.headerNavAriaLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Footer socials aria label</span><input value={workingCopy.siteChrome?.footerSocialsAriaLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.footerSocialsAriaLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Header nav links (path | label)</span><textarea value={(workingCopy.siteChrome?.headerNav ?? []).map((link) => `${link.to} | ${link.label}`).join('\n')} onChange={(event) => onFieldChange('siteChrome.headerNav', event.target.value)} /></label>
+              <label className="admin-field"><span>Header Linktree label</span><input value={workingCopy.siteChrome?.headerLinktreeLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.headerLinktreeLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Footer copyright template</span><input value={workingCopy.siteChrome?.footer.copyrightTemplate ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.copyrightTemplate', event.target.value)} /></label>
+              <label className="admin-field"><span>Footer general heading</span><input value={workingCopy.siteChrome?.footer.generalHeading ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.generalHeading', event.target.value)} /></label>
+              <label className="admin-field"><span>Footer more heading</span><input value={workingCopy.siteChrome?.footer.moreHeading ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.moreHeading', event.target.value)} /></label>
+              <label className="admin-field"><span>Footer general links (path | label)</span><textarea value={(workingCopy.siteChrome?.footer.generalLinks ?? []).map((link) => `${link.to} | ${link.label}`).join('\n')} onChange={(event) => onFieldChange('siteChrome.footer.generalLinks', event.target.value)} /></label>
+              <label className="admin-field"><span>Footer more links (path | label)</span><textarea value={(workingCopy.siteChrome?.footer.moreLinks ?? []).map((link) => `${link.to} | ${link.label}`).join('\n')} onChange={(event) => onFieldChange('siteChrome.footer.moreLinks', event.target.value)} /></label>
+              <label className="admin-field"><span>Footer Linktree label</span><input value={workingCopy.siteChrome?.footer.linktreeLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.linktreeLabel', event.target.value)} /></label>
+            </div>
+          </article>
+
+          <article className="admin-panel">
             <h2>Project detail page</h2>
             <div className="admin-form-grid">
+              <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.projectDetailPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('projectDetailPage.eyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Not found title</span><input value={workingCopy.projectDetailPage?.notFoundTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.notFoundTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Not found intro</span><textarea value={workingCopy.projectDetailPage?.notFoundIntro ?? ''} onChange={(event) => onFieldChange('projectDetailPage.notFoundIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Back to projects label</span><input value={workingCopy.projectDetailPage?.backToProjectsLabel ?? ''} onChange={(event) => onFieldChange('projectDetailPage.backToProjectsLabel', event.target.value)} /></label>
+              <label className="admin-field"><span>Start project label</span><input value={workingCopy.projectDetailPage?.startProjectLabel ?? ''} onChange={(event) => onFieldChange('projectDetailPage.startProjectLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Snapshot section title</span><input value={workingCopy.projectDetailPage?.snapshotTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.snapshotTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Gallery section title</span><input value={workingCopy.projectDetailPage?.galleryTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.galleryTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Gallery section intro</span><textarea value={workingCopy.projectDetailPage?.galleryIntro ?? ''} onChange={(event) => onFieldChange('projectDetailPage.galleryIntro', event.target.value)} /></label>
               <label className="admin-field"><span>Next project eyebrow</span><input value={workingCopy.projectDetailPage?.nextProjectEyebrow ?? ''} onChange={(event) => onFieldChange('projectDetailPage.nextProjectEyebrow', event.target.value)} /></label>
+              <label className="admin-field"><span>Next project label</span><input value={workingCopy.projectDetailPage?.nextProjectLabel ?? ''} onChange={(event) => onFieldChange('projectDetailPage.nextProjectLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Similar work eyebrow</span><input value={workingCopy.projectDetailPage?.similarWorkEyebrow ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkEyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Similar work title</span><input value={workingCopy.projectDetailPage?.similarWorkTitle ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Similar work intro</span><textarea value={workingCopy.projectDetailPage?.similarWorkIntro ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkIntro', event.target.value)} /></label>
+              <label className="admin-field"><span>Similar work label</span><input value={workingCopy.projectDetailPage?.similarWorkLabel ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkLabel', event.target.value)} /></label>
             </div>
           </article>
 
