@@ -1,10 +1,12 @@
 import type { AdminSession, SiteContentResponse } from '../api/adminApi'
-import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
+import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
 
 interface DashboardScreenProps {
   blogDirty: boolean
   blogList: BlogPostMeta[]
   blogLoading: boolean
+  onBlogCreate: () => void
+  onBlogDelete: () => void
   blogMeta: BlogPostMeta | null
   blogPost: BlogPostResponse | null
   blogStatus: string | null
@@ -17,7 +19,6 @@ interface DashboardScreenProps {
   mediaSlug: string
   mediaStatus: string | null
   onBlogFieldChange: (field: string, value: string) => void
-  onBlogCreate: () => void
   onBlogReload: () => void
   onBlogSave: () => void
   onBlogSelect: (slug: string) => void
@@ -32,6 +33,7 @@ interface DashboardScreenProps {
   onMediaSlugChange: (value: string) => void
   onMediaUpload: () => void
   onProcessSelect: (value: number) => void
+  onProjectGallerySelect: (value: number) => void
   onProjectSelect: (value: string) => void
   onSocialSelect: (value: number) => void
   onHighlightSelect: (value: number) => void
@@ -57,6 +59,9 @@ interface DashboardScreenProps {
   selectedProcessIndex: number
   selectedProcessTotal: number
   selectedProject: Project | null
+  selectedProjectGalleryIndex: number
+  selectedProjectGalleryItem: ImageAsset | null
+  selectedProjectGalleryTotal: number
   selectedProjectSlug: string
   selectedSocial: SocialLink | null
   selectedSocialIndex: number
@@ -74,6 +79,8 @@ export const DashboardScreen = ({
   blogDirty,
   blogList,
   blogLoading,
+  onBlogCreate,
+  onBlogDelete,
   blogMeta,
   blogPost,
   blogStatus,
@@ -86,7 +93,6 @@ export const DashboardScreen = ({
   mediaSlug,
   mediaStatus,
   onBlogFieldChange,
-  onBlogCreate,
   onBlogReload,
   onBlogSave,
   onBlogSelect,
@@ -101,6 +107,7 @@ export const DashboardScreen = ({
   onMediaSlugChange,
   onMediaUpload,
   onProcessSelect,
+  onProjectGallerySelect,
   onProjectSelect,
   onSocialSelect,
   onHighlightSelect,
@@ -126,6 +133,9 @@ export const DashboardScreen = ({
   selectedProcessIndex,
   selectedProcessTotal,
   selectedProject,
+  selectedProjectGalleryIndex,
+  selectedProjectGalleryItem,
+  selectedProjectGalleryTotal,
   selectedProjectSlug,
   selectedSocial,
   selectedSocialIndex,
@@ -237,6 +247,8 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Body paragraphs (one per line)</span><textarea value={toLines(workingCopy.about.body)} onChange={(event) => onFieldChange('about.body', event.target.value)} /></label>
               <label className="admin-field"><span>Principles (one per line)</span><textarea value={toLines(workingCopy.about.principles)} onChange={(event) => onFieldChange('about.principles', event.target.value)} /></label>
               <label className="admin-field"><span>Tools (one per line)</span><textarea value={toLines(workingCopy.about.tools)} onChange={(event) => onFieldChange('about.tools', event.target.value)} /></label>
+              <label className="admin-field"><span>Hero image src</span><input value={workingCopy.about.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.src', event.target.value)} /></label>
+              <label className="admin-field"><span>Hero image alt</span><input value={workingCopy.about.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.alt', event.target.value)} /></label>
             </div>
           </article>
 
@@ -275,6 +287,8 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Label</span><input value={selectedHighlight.label} onChange={(event) => onStructuredFieldChange('highlight', 'label', event.target.value, selectedHighlightIndex)} /></label>
                 </>
               ) : null}
+              <label className="admin-field"><span>Resume hero image src</span><input value={workingCopy.resume.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.src', event.target.value)} /></label>
+              <label className="admin-field"><span>Resume hero image alt</span><input value={workingCopy.resume.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.alt', event.target.value)} /></label>
             </div>
           </article>
 
@@ -317,6 +331,8 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Description</span><textarea value={selectedMethod.description} onChange={(event) => onStructuredFieldChange('method', 'description', event.target.value, selectedMethodIndex)} /></label>
                 </>
               ) : null}
+              <label className="admin-field"><span>Contact hero image src</span><input value={workingCopy.contact.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.src', event.target.value)} /></label>
+              <label className="admin-field"><span>Contact hero image alt</span><input value={workingCopy.contact.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.alt', event.target.value)} /></label>
             </div>
           </article>
 
@@ -337,9 +353,35 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Role</span><input value={selectedProject.role} onChange={(event) => onStructuredFieldChange('project', 'role', event.target.value)} /></label>
                   <label className="admin-field"><span>Summary</span><textarea value={selectedProject.summary} onChange={(event) => onStructuredFieldChange('project', 'summary', event.target.value)} /></label>
                   <label className="admin-field"><span>Challenge</span><textarea value={selectedProject.challenge} onChange={(event) => onStructuredFieldChange('project', 'challenge', event.target.value)} /></label>
+                  <label className="admin-field"><span>Lead image src</span><input value={selectedProject.image?.src ?? ''} onChange={(event) => onStructuredFieldChange('projectImage', 'src', event.target.value)} /></label>
+                  <label className="admin-field"><span>Lead image alt</span><input value={selectedProject.image?.alt ?? ''} onChange={(event) => onStructuredFieldChange('projectImage', 'alt', event.target.value)} /></label>
                   <label className="admin-field"><span>Stack (one per line)</span><textarea value={toLines(selectedProject.stack)} onChange={(event) => onStructuredFieldChange('project', 'stack', event.target.value)} /></label>
                   <label className="admin-field"><span>Approach bullets (one per line)</span><textarea value={toLines(selectedProject.approach)} onChange={(event) => onStructuredFieldChange('project', 'approach', event.target.value)} /></label>
                   <label className="admin-field"><span>Outcome bullets (one per line)</span><textarea value={toLines(selectedProject.outcome)} onChange={(event) => onStructuredFieldChange('project', 'outcome', event.target.value)} /></label>
+                  <div className="admin-panel admin-panel--subtle">
+                    <div className="admin-panel-header">
+                      <div><h2>Project gallery</h2><p className="admin-copy">Edit gallery images for the selected project.</p></div>
+                      <div className="admin-actions">
+                        <button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectGallery')}>Add gallery image</button>
+                        <button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectGallery', selectedProjectGalleryIndex)} disabled={selectedProjectGalleryTotal <= 1}>Remove selected</button>
+                      </div>
+                    </div>
+                    <div className="admin-form-grid">
+                      <label className="admin-field">
+                        <span>Selected gallery image</span>
+                        <select value={selectedProjectGalleryIndex} onChange={(event) => onProjectGallerySelect(Number(event.target.value))}>
+                          {(selectedProject.gallery ?? []).map((image, index) => <option key={`${image.src}-${index}`} value={index}>{index + 1} — {image.alt || image.src || 'Gallery image'}</option>)}
+                        </select>
+                      </label>
+                      {selectedProjectGalleryItem ? (
+                        <>
+                          <label className="admin-field"><span>Gallery image src</span><input value={selectedProjectGalleryItem.src} onChange={(event) => onStructuredFieldChange('projectGallery', 'src', event.target.value, selectedProjectGalleryIndex)} /></label>
+                          <label className="admin-field"><span>Gallery image alt</span><input value={selectedProjectGalleryItem.alt} onChange={(event) => onStructuredFieldChange('projectGallery', 'alt', event.target.value, selectedProjectGalleryIndex)} /></label>
+                          <label className="admin-field"><span>Gallery caption</span><textarea value={selectedProjectGalleryItem.caption ?? ''} onChange={(event) => onStructuredFieldChange('projectGallery', 'caption', event.target.value, selectedProjectGalleryIndex)} /></label>
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
                   <div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectSection')}>Add section</button></div>
                   {selectedProject.sections?.map((section, index) => (
                     <div className="admin-subpanel" key={`${selectedProject.slug}-${section.title}-${index}`}>
@@ -364,7 +406,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog}>{savingBlog ? 'Saving…' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
+            <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog}>{savingBlog ? 'Saving…' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Published posts + drafts</span><select value={selectedBlogSlug} onChange={(event) => onBlogSelect(event.target.value)}>{blogList.map((post) => <option key={post.slug} value={post.slug}>{post.date} — {post.title}</option>)}</select></label>
               {blogMeta ? <p className="admin-note">{blogMeta.path}</p> : null}

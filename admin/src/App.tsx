@@ -175,6 +175,7 @@ export const App = () => {
   const [selectedBlogSlug, setSelectedBlogSlug] = useState<string>('')
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogDetailResponse | null>(null)
   const [selectedProjectSlug, setSelectedProjectSlug] = useState<string>('')
+  const [selectedProjectGalleryIndex, setSelectedProjectGalleryIndex] = useState(0)
   const [selectedSocialIndex, setSelectedSocialIndex] = useState(0)
   const [selectedProcessIndex, setSelectedProcessIndex] = useState(0)
   const [selectedHighlightIndex, setSelectedHighlightIndex] = useState(0)
@@ -203,6 +204,7 @@ export const App = () => {
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
       setSelectedProjectSlug(response.content.projects[0]?.slug ?? '')
+      setSelectedProjectGalleryIndex(0)
       setSelectedSocialIndex(0)
       setSelectedProcessIndex(0)
       setSelectedHighlightIndex(0)
@@ -369,6 +371,16 @@ export const App = () => {
             [field]: value,
           }))
           return next
+        case 'heroImage': {
+          const target = field.split('.')[0] as 'about' | 'resume' | 'contact'
+          const property = field.split('.')[1] as 'src' | 'alt' | 'caption'
+          const currentImage = next[target].heroImage ?? { src: '', alt: '' }
+          next[target].heroImage = {
+            ...currentImage,
+            [property]: value || (property === 'caption' ? undefined : ''),
+          }
+          return next
+        }
         case 'project': {
           if (!selectedProjectSlug) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
@@ -376,6 +388,33 @@ export const App = () => {
           next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
             ...project,
             [field]: field === 'stack' || field === 'approach' || field === 'outcome' ? splitLines(value) : value,
+          }))
+          return next
+        }
+        case 'projectImage': {
+          if (!selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
+            ...project,
+            image: {
+              ...(project.image ?? { src: '', alt: '' }),
+              [field]: value || '',
+            },
+          }))
+          return next
+        }
+        case 'projectGallery': {
+          if (!selectedProjectSlug || index === undefined) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const gallery = next.projects[projectIndex].gallery ?? []
+          next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
+            ...project,
+            gallery: updateRecordAtIndex(gallery, index, (image) => ({
+              ...image,
+              [field]: value || (field === 'caption' ? undefined : ''),
+            })),
           }))
           return next
         }
@@ -444,7 +483,16 @@ export const App = () => {
             sections: [{ title: 'Overview', body: '' }],
           })
           setSelectedProjectSlug(next.projects[next.projects.length - 1].slug)
+          setSelectedProjectGalleryIndex(0)
           return next
+        case 'projectGallery': {
+          if (!selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects[projectIndex].gallery = [...(next.projects[projectIndex].gallery ?? []), { src: '', alt: '', caption: '' }]
+          setSelectedProjectGalleryIndex((next.projects[projectIndex].gallery?.length ?? 1) - 1)
+          return next
+        }
         case 'projectSection': {
           if (!selectedProjectSlug) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
@@ -498,7 +546,19 @@ export const App = () => {
           if (projectIndex === -1) return next
           next.projects.splice(projectIndex, 1)
           setSelectedProjectSlug(next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? '')
+          setSelectedProjectGalleryIndex(0)
           return next
+        case 'projectGallery': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const gallery = next.projects[projectIndex].gallery ?? []
+          if (gallery.length <= 1) return next
+          gallery.splice(index, 1)
+          next.projects[projectIndex].gallery = gallery
+          setSelectedProjectGalleryIndex(Math.max(0, Math.min(index, gallery.length - 1)))
+          return next
+        }
         case 'projectSection': {
           if (index === undefined || !selectedProjectSlug) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
@@ -597,6 +657,34 @@ export const App = () => {
     setError(null)
   }, [blogList?.branch, siteContent?.branch])
 
+  const handleBlogDelete = useCallback(async () => {
+    if (!blogList || !selectedBlogPost?.post.sha) return
+
+    setSavingBlog(true)
+    setError(null)
+    setBlogStatus(null)
+
+    try {
+      const response = await adminApi.deleteBlogPost(selectedBlogPost.post.slug, {
+        branch: blogList.branch,
+        commitMessage: `feat(blog): delete ${selectedBlogPost.post.slug} from admin`,
+        sha: selectedBlogPost.post.sha,
+      })
+
+      setBlogStatus(`Deleted ${response.path} at ${response.latestCommitSha ?? 'latest commit'}.`)
+      await loadBlogList()
+    } catch (deleteError) {
+      const apiError = deleteError as AdminApiError
+      setError(
+        apiError.status === 409
+          ? 'Blog delete conflict: reload the post before deleting.'
+          : apiError.message || 'Failed to delete blog post.',
+      )
+    } finally {
+      setSavingBlog(false)
+    }
+  }, [blogList, loadBlogList, selectedBlogPost])
+
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !mediaSlug.trim()) return
 
@@ -641,6 +729,7 @@ export const App = () => {
   const selectedProject = useMemo(() => {
     return workingCopy?.projects.find((project) => project.slug === selectedProjectSlug) ?? workingCopy?.projects[0] ?? null
   }, [selectedProjectSlug, workingCopy])
+  const selectedProjectGalleryItem = selectedProject?.gallery?.[selectedProjectGalleryIndex] ?? null
 
   const selectedSocial = workingCopy?.site.socials[selectedSocialIndex] ?? null
   const selectedProcess = workingCopy?.about.process[selectedProcessIndex] ?? null
@@ -667,6 +756,9 @@ export const App = () => {
       onBlogFieldChange: handleBlogFieldChange,
       onBlogCreate: () => {
         handleBlogCreate()
+      },
+      onBlogDelete: () => {
+        void handleBlogDelete()
       },
       onBlogReload: () => {
         if (selectedBlogSlug) void loadBlogPost(selectedBlogSlug)
@@ -697,8 +789,12 @@ export const App = () => {
       onHighlightSelect: setSelectedHighlightIndex,
       onExperienceSelect: setSelectedExperienceIndex,
       onMethodSelect: setSelectedMethodIndex,
+      onProjectGallerySelect: setSelectedProjectGalleryIndex,
       projectOptions: workingCopy?.projects.map((project) => ({ slug: project.slug, title: project.title })) ?? [],
       selectedProject,
+      selectedProjectGalleryIndex,
+      selectedProjectGalleryItem,
+      selectedProjectGalleryTotal: selectedProject?.gallery?.length ?? 0,
       selectedProjectSlug,
       selectedSocial,
       selectedSocialIndex,
@@ -738,6 +834,7 @@ export const App = () => {
       error,
       handleBlogFieldChange,
       handleBlogCreate,
+      handleBlogDelete,
       handleBlogSave,
       handleFieldChange,
       handleMediaUpload,
@@ -767,6 +864,8 @@ export const App = () => {
       selectedProcess,
       selectedProcessIndex,
       selectedProject,
+      selectedProjectGalleryIndex,
+      selectedProjectGalleryItem,
       selectedProjectSlug,
       selectedSocial,
       selectedSocialIndex,

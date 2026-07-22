@@ -52,6 +52,12 @@ type GitHubUpdateContentResponse = {
   }
 }
 
+type GitHubDeleteContentRequest = {
+  message: string
+  branch: string
+  sha: string
+}
+
 type GitHubOAuthTokenResponse = {
   access_token?: string
 }
@@ -102,6 +108,12 @@ type BlogPostWriteRequest = {
   sha?: unknown
 }
 
+type BlogPostDeleteRequest = {
+  branch?: unknown
+  commitMessage?: unknown
+  sha?: unknown
+}
+
 type MediaUploadResponse = {
   branch: string
   latestCommitSha: string | null
@@ -120,6 +132,7 @@ const SITE_CONTENT_PATH = 'content/site-content.json'
 const BLOG_CONTENT_DIR = 'content/blog'
 const DEFAULT_SITE_CONTENT_COMMIT_MESSAGE = 'chore(content): update site content from admin'
 const DEFAULT_BLOG_COMMIT_MESSAGE = 'chore(blog): update blog post from admin'
+const DEFAULT_BLOG_DELETE_COMMIT_MESSAGE = 'chore(blog): delete blog post from admin'
 const DEFAULT_MEDIA_COMMIT_MESSAGE = 'chore(media): upload asset from admin'
 const MAX_ADMIN_BODY_BYTES = 1024 * 512
 const MAX_MEDIA_FILE_BYTES = 5 * 1024 * 1024
@@ -1043,6 +1056,69 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
   })
 }
 
+const handleAdminBlogDelete = async (context: PagesContext, slug: string): Promise<Response> => {
+  const { request, env } = context
+  const sameOriginError = requireSameOrigin(request)
+  if (sameOriginError) return sameOriginError
+
+  const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
+  if (envCheck instanceof Response) return envCheck
+
+  const session = await readSession(request, env)
+  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+
+  const body = await readJsonBody<BlogPostDeleteRequest>(request)
+  if (body instanceof Response) return body
+
+  const branch = getAllowedCmsBranch(env)
+  if (body.branch !== undefined && body.branch !== branch) {
+    return jsonResponse({ error: `Only the ${branch} branch is allowed for admin CMS writes.` }, { status: 403 })
+  }
+
+  const existingPost = await loadGitHubBlogPostBySlug(env, session.accessToken, branch, slug)
+  if (!existingPost) {
+    return jsonResponse({ error: 'Blog post not found.' }, { status: 404 })
+  }
+
+  if (typeof body.sha !== 'string' || !body.sha.trim()) {
+    return jsonResponse({ error: 'A base file SHA is required before deleting a blog post.' }, { status: 400 })
+  }
+
+  if (body.sha !== existingPost.sha) {
+    return jsonResponse(
+      {
+        error: 'Blog post changed since you opened it. Reload before deleting.',
+        currentSha: existingPost.sha,
+      },
+      { status: 409 },
+    )
+  }
+
+  const deletePayload: GitHubDeleteContentRequest = {
+    branch,
+    message: sanitizeCommitMessage(body.commitMessage, DEFAULT_BLOG_DELETE_COMMIT_MESSAGE),
+    sha: existingPost.sha,
+  }
+
+  const updateResponse = await fetchGitHubJson<GitHubUpdateContentResponse>(
+    `${getRepoBase(env)}/contents/${existingPost.path}`,
+    {
+      method: 'DELETE',
+      headers: {
+        ...getGitHubHeaders(session.accessToken),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(deletePayload),
+    },
+  )
+
+  return jsonResponse({
+    branch,
+    latestCommitSha: updateResponse.commit?.sha ?? null,
+    path: existingPost.path,
+  })
+}
+
 const handleAdminRequest = async (context: PagesContext, pathname: string): Promise<Response | null> => {
   const adminPath = pathname.slice(ADMIN_PREFIX.length)
 
@@ -1058,6 +1134,7 @@ const handleAdminRequest = async (context: PagesContext, pathname: string): Prom
   const blogDetailMatch = adminPath.match(/^\/blog\/([a-z0-9-]+)$/)
   if (blogDetailMatch && context.request.method === 'GET') return handleAdminBlogDetail(context, blogDetailMatch[1])
   if (blogDetailMatch && context.request.method === 'PUT') return handleAdminBlogUpdate(context, blogDetailMatch[1])
+  if (blogDetailMatch && context.request.method === 'DELETE') return handleAdminBlogDelete(context, blogDetailMatch[1])
 
   if (adminPath.startsWith('/')) {
     return jsonResponse({ error: 'Admin endpoint not implemented yet.' }, { status: 501 })

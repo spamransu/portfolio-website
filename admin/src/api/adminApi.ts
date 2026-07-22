@@ -38,6 +38,12 @@ export interface SaveBlogPostRequest {
   sha?: string
 }
 
+export interface DeleteBlogPostRequest {
+  branch: string
+  commitMessage: string
+  sha: string
+}
+
 export interface MediaUploadResponse {
   branch: string
   path: string
@@ -121,6 +127,20 @@ export const adminApi = {
 
     if (!response.ok) throw await toApiError(response)
     return (await response.json()) as BlogDetailResponse & { latestCommitSha: string | null }
+  },
+  deleteBlogPost: async (slug: string, payload: DeleteBlogPostRequest) => {
+    const response = await fetch(`/api/admin/blog/${slug}`, {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+
+    if (!response.ok) throw await toApiError(response)
+    return (await response.json()) as { branch: string; latestCommitSha: string | null; path: string }
   },
   uploadMedia: async (payload: MediaUploadRequest) => {
     const formData = new FormData()
