@@ -20,6 +20,11 @@ const DEFAULT_SESSION: AdminSession = {
 
 const DEFAULT_MEDIA_AREA = 'blog'
 
+type ConflictState = {
+  currentSha?: string
+  latestCommitSha?: string | null
+} | null
+
 const splitLines = (value: string): string[] =>
   value
     .split('\n')
@@ -195,6 +200,8 @@ export const App = () => {
   const [saveStatus, setSaveStatus] = useState<string | null>(null)
   const [blogStatus, setBlogStatus] = useState<string | null>(null)
   const [mediaStatus, setMediaStatus] = useState<string | null>(null)
+  const [siteConflict, setSiteConflict] = useState<ConflictState>(null)
+  const [blogConflict, setBlogConflict] = useState<ConflictState>(null)
 
   const loadSiteContent = useCallback(async () => {
     setLoadingContent(true)
@@ -297,11 +304,19 @@ export const App = () => {
     void loadSession()
   }, [loadSession])
 
+  const confirmDiscardChanges = useCallback((message: string) => {
+    return window.confirm(message)
+  }, [])
+
   const handleLogin = () => {
     window.location.href = '/api/admin/auth/start'
   }
 
   const handleLogout = async () => {
+    if ((dirty || blogDirty) && !confirmDiscardChanges('You have unsaved content changes. Log out and discard them?')) {
+      return
+    }
+
     try {
       await adminApi.logout()
       setSession(DEFAULT_SESSION)
@@ -318,6 +333,8 @@ export const App = () => {
       setSaveStatus(null)
       setBlogStatus(null)
       setMediaStatus(null)
+      setSiteConflict(null)
+      setBlogConflict(null)
     } catch (logoutError) {
       setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
     }
@@ -326,6 +343,7 @@ export const App = () => {
   const handleFieldChange = useCallback((field: string, value: string) => {
     setWorkingCopy((current) => (current ? updateWorkingCopy(current, field, value) : current))
     setSaveStatus(null)
+    setSiteConflict(null)
     setError(null)
   }, [])
 
@@ -438,6 +456,7 @@ export const App = () => {
       }
     })
     setSaveStatus(null)
+    setSiteConflict(null)
     setError(null)
   }, [selectedProjectSlug])
 
@@ -505,10 +524,25 @@ export const App = () => {
       }
     })
     setSaveStatus(null)
+    setSiteConflict(null)
     setError(null)
   }, [selectedProjectSlug])
 
   const handleStructuredRemove = useCallback((scope: string, index?: number) => {
+    const confirmMessageByScope: Record<string, string> = {
+      social: 'Remove this social link?',
+      process: 'Remove this process step?',
+      highlight: 'Remove this highlight card?',
+      experience: 'Remove this experience entry?',
+      method: 'Remove this contact method?',
+      project: 'Remove this project from site content?',
+      projectGallery: 'Remove this gallery image?',
+      projectSection: 'Remove this project section?',
+    }
+
+    const confirmMessage = confirmMessageByScope[scope]
+    if (confirmMessage && !confirmDiscardChanges(confirmMessage)) return
+
     setWorkingCopy((current) => {
       if (!current) return current
 
@@ -574,8 +608,9 @@ export const App = () => {
       }
     })
     setSaveStatus(null)
+    setSiteConflict(null)
     setError(null)
-  }, [selectedProjectSlug])
+  }, [confirmDiscardChanges, selectedProjectSlug])
 
   const handleSave = useCallback(async () => {
     if (!siteContent || !workingCopy) return
@@ -583,6 +618,7 @@ export const App = () => {
     setSaving(true)
     setError(null)
     setSaveStatus(null)
+    setSiteConflict(null)
 
     try {
       const response = await adminApi.saveSiteContent({
@@ -597,6 +633,14 @@ export const App = () => {
       setSaveStatus(`Saved site content to ${response.branch} at ${response.latestCommitSha ?? response.sha}.`)
     } catch (saveError) {
       const apiError = saveError as AdminApiError
+      setSiteConflict(
+        apiError.status === 409
+          ? {
+              currentSha: apiError.currentSha,
+              latestCommitSha: apiError.latestCommitSha,
+            }
+          : null,
+      )
       setError(
         apiError.status === 409
           ? 'Save conflict: content changed in GitHub since this session loaded it. Reload before saving again.'
@@ -610,8 +654,21 @@ export const App = () => {
   const handleBlogFieldChange = useCallback((field: string, value: string) => {
     setSelectedBlogPost((current) => (current ? { ...current, post: updateBlogPost(current.post, field, value) } : current))
     setBlogStatus(null)
+    setBlogConflict(null)
     setError(null)
   }, [])
+
+  const dirty = useMemo(() => {
+    if (!siteContent || !workingCopy) return false
+    return JSON.stringify(siteContent.content) !== JSON.stringify(workingCopy)
+  }, [siteContent, workingCopy])
+
+  const blogDirty = useMemo(() => {
+    if (!selectedBlogPost) return false
+    const original = blogList?.posts.find((post) => post.slug === selectedBlogPost.post.slug)
+    if (!original) return true
+    return JSON.stringify({ ...original, body: selectedBlogPost.post.body }) !== JSON.stringify(selectedBlogPost.post)
+  }, [blogList, selectedBlogPost])
 
   const handleBlogSave = useCallback(async () => {
     if (!blogList || !selectedBlogPost) return
@@ -619,6 +676,7 @@ export const App = () => {
     setSavingBlog(true)
     setError(null)
     setBlogStatus(null)
+    setBlogConflict(null)
 
     try {
       const response = await adminApi.saveBlogPost(selectedBlogPost.post.slug, {
@@ -633,6 +691,14 @@ export const App = () => {
       await loadBlogList()
     } catch (saveError) {
       const apiError = saveError as AdminApiError
+      setBlogConflict(
+        apiError.status === 409
+          ? {
+              currentSha: apiError.currentSha,
+              latestCommitSha: apiError.latestCommitSha,
+            }
+          : null,
+      )
       setError(
         apiError.status === 409
           ? 'Blog save conflict: reload the post before saving again.'
@@ -644,6 +710,10 @@ export const App = () => {
   }, [blogList, loadBlogList, selectedBlogPost])
 
   const handleBlogCreate = useCallback(() => {
+    if (blogDirty && !confirmDiscardChanges('You have unsaved blog edits. Create a new draft and discard them?')) {
+      return
+    }
+
     const slug = `draft-${Date.now()}`
     const post = createEmptyBlogPost(slug)
     setSelectedBlogSlug(slug)
@@ -654,15 +724,18 @@ export const App = () => {
     setMediaArea('blog')
     setMediaSlug(slug)
     setBlogStatus('New draft created locally. Save it to create the markdown file.')
+    setBlogConflict(null)
     setError(null)
-  }, [blogList?.branch, siteContent?.branch])
+  }, [blogDirty, blogList?.branch, confirmDiscardChanges, siteContent?.branch])
 
   const handleBlogDelete = useCallback(async () => {
     if (!blogList || !selectedBlogPost?.post.sha) return
+    if (!confirmDiscardChanges(`Delete blog post "${selectedBlogPost.post.title}"? This commits a file deletion to GitHub.`)) return
 
     setSavingBlog(true)
     setError(null)
     setBlogStatus(null)
+    setBlogConflict(null)
 
     try {
       const response = await adminApi.deleteBlogPost(selectedBlogPost.post.slug, {
@@ -675,6 +748,14 @@ export const App = () => {
       await loadBlogList()
     } catch (deleteError) {
       const apiError = deleteError as AdminApiError
+      setBlogConflict(
+        apiError.status === 409
+          ? {
+              currentSha: apiError.currentSha,
+              latestCommitSha: apiError.latestCommitSha,
+            }
+          : null,
+      )
       setError(
         apiError.status === 409
           ? 'Blog delete conflict: reload the post before deleting.'
@@ -683,7 +764,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, loadBlogList, selectedBlogPost])
+  }, [blogList, confirmDiscardChanges, loadBlogList, selectedBlogPost])
 
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !mediaSlug.trim()) return
@@ -710,18 +791,6 @@ export const App = () => {
     }
   }, [mediaArea, mediaFile, mediaSlug])
 
-  const dirty = useMemo(() => {
-    if (!siteContent || !workingCopy) return false
-    return JSON.stringify(siteContent.content) !== JSON.stringify(workingCopy)
-  }, [siteContent, workingCopy])
-
-  const blogDirty = useMemo(() => {
-    if (!selectedBlogPost) return false
-    const original = blogList?.posts.find((post) => post.slug === selectedBlogPost.post.slug)
-    if (!original) return true
-    return JSON.stringify({ ...original, body: selectedBlogPost.post.body }) !== JSON.stringify(selectedBlogPost.post)
-  }, [blogList, selectedBlogPost])
-
   const selectedBlogMeta = useMemo<BlogPostMeta | null>(() => {
     return blogList?.posts.find((post) => post.slug === selectedBlogSlug) ?? null
   }, [blogList, selectedBlogSlug])
@@ -737,6 +806,20 @@ export const App = () => {
   const selectedExperience = workingCopy?.resume.experience[selectedExperienceIndex] ?? null
   const selectedMethod = workingCopy?.contact.methods[selectedMethodIndex] ?? null
 
+  useEffect(() => {
+    if (!dirty && !blogDirty) return
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [blogDirty, dirty])
+
   const dashboardProps = useMemo(
     () => ({
       blogDirty,
@@ -745,6 +828,7 @@ export const App = () => {
       blogMeta: selectedBlogMeta,
       blogPost: selectedBlogPost?.post ?? null,
       blogStatus,
+      blogConflict,
       dirty,
       error,
       loading,
@@ -753,6 +837,7 @@ export const App = () => {
       mediaPath: mediaResult?.path ?? '',
       mediaSlug,
       mediaStatus,
+      siteConflict,
       onBlogFieldChange: handleBlogFieldChange,
       onBlogCreate: () => {
         handleBlogCreate()
@@ -761,12 +846,15 @@ export const App = () => {
         void handleBlogDelete()
       },
       onBlogReload: () => {
+        if (blogDirty && !confirmDiscardChanges('Discard unsaved blog edits and reload this post from GitHub?')) return
         if (selectedBlogSlug) void loadBlogPost(selectedBlogSlug)
       },
       onBlogSave: () => {
         void handleBlogSave()
       },
       onBlogSelect: (slug: string) => {
+        if (slug === selectedBlogSlug) return
+        if (blogDirty && !confirmDiscardChanges('Discard unsaved blog edits and open another post?')) return
         void loadBlogPost(slug)
       },
       onFieldChange: handleFieldChange,
@@ -812,6 +900,7 @@ export const App = () => {
       selectedMethodIndex,
       selectedMethodTotal: workingCopy?.contact.methods.length ?? 0,
       onReload: () => {
+        if (dirty && !confirmDiscardChanges('Discard unsaved content changes and reload from GitHub?')) return
         void loadSiteContent()
       },
       onSave: () => {
@@ -828,8 +917,10 @@ export const App = () => {
     }),
     [
       blogDirty,
+      blogConflict,
       blogList,
       blogStatus,
+      confirmDiscardChanges,
       dirty,
       error,
       handleBlogFieldChange,
@@ -851,6 +942,7 @@ export const App = () => {
       mediaResult,
       mediaSlug,
       mediaStatus,
+      siteConflict,
       saveStatus,
       saving,
       savingBlog,

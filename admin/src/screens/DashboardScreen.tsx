@@ -2,6 +2,10 @@ import type { AdminSession, SiteContentResponse } from '../api/adminApi'
 import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
 
 interface DashboardScreenProps {
+  blogConflict: {
+    currentSha?: string
+    latestCommitSha?: string | null
+  } | null
   blogDirty: boolean
   blogList: BlogPostMeta[]
   blogLoading: boolean
@@ -67,6 +71,10 @@ interface DashboardScreenProps {
   selectedSocialIndex: number
   selectedSocialTotal: number
   session: AdminSession | null
+  siteConflict: {
+    currentSha?: string
+    latestCommitSha?: string | null
+  } | null
   siteContent: SiteContentResponse | null
   uploadingMedia: boolean
   workingCopy: SiteContent | null
@@ -76,6 +84,7 @@ const mediaAreas = ['blog', 'home', 'projects', 'about', 'resume', 'contact']
 const toLines = (value: string[]): string => value.join('\n')
 
 export const DashboardScreen = ({
+  blogConflict,
   blogDirty,
   blogList,
   blogLoading,
@@ -141,6 +150,7 @@ export const DashboardScreen = ({
   selectedSocialIndex,
   selectedSocialTotal,
   session,
+  siteConflict,
   siteContent,
   uploadingMedia,
   workingCopy,
@@ -180,6 +190,42 @@ export const DashboardScreen = ({
       </section>
 
       {error ? <section className="admin-panel admin-error">{error}</section> : null}
+      {siteConflict ? (
+        <section className="admin-panel admin-warning">
+          <div className="admin-panel-header">
+            <div>
+              <h2>Content conflict</h2>
+              <p className="admin-copy">GitHub changed this content after the admin loaded it. Reload before saving again.</p>
+            </div>
+            <button type="button" className="admin-button admin-button-secondary" onClick={onReload} disabled={loadingContent || saving}>
+              Reload content
+            </button>
+          </div>
+          <dl className="admin-meta-list">
+            <div><dt>Loaded blob SHA</dt><dd className="admin-code">{siteContent?.sha ?? '—'}</dd></div>
+            <div><dt>Current blob SHA</dt><dd className="admin-code">{siteConflict.currentSha ?? '—'}</dd></div>
+            <div><dt>Latest commit</dt><dd className="admin-code">{siteConflict.latestCommitSha ?? '—'}</dd></div>
+          </dl>
+        </section>
+      ) : null}
+      {blogConflict ? (
+        <section className="admin-panel admin-warning">
+          <div className="admin-panel-header">
+            <div>
+              <h2>Blog conflict</h2>
+              <p className="admin-copy">This post changed in GitHub after it was loaded. Reload the post before saving or deleting.</p>
+            </div>
+            <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>
+              Reload post
+            </button>
+          </div>
+          <dl className="admin-meta-list">
+            <div><dt>Loaded blob SHA</dt><dd className="admin-code">{blogPost?.sha ?? '—'}</dd></div>
+            <div><dt>Current blob SHA</dt><dd className="admin-code">{blogConflict.currentSha ?? '—'}</dd></div>
+            <div><dt>Latest commit</dt><dd className="admin-code">{blogConflict.latestCommitSha ?? '—'}</dd></div>
+          </dl>
+        </section>
+      ) : null}
       {saveStatus ? <section className="admin-panel admin-success">{saveStatus}</section> : null}
       {blogStatus ? <section className="admin-panel admin-success">{blogStatus}</section> : null}
       {mediaStatus ? <section className="admin-panel admin-success">{mediaStatus}</section> : null}
@@ -191,6 +237,7 @@ export const DashboardScreen = ({
             <div><dt>Status</dt><dd>{session?.authenticated ? 'Authenticated' : 'Signed out'}</dd></div>
             <div><dt>GitHub login</dt><dd>{session?.login ?? '—'}</dd></div>
             <div><dt>Expires</dt><dd>{session?.expiresAt ?? '—'}</dd></div>
+            <div><dt>Unsaved changes</dt><dd>{dirty || blogDirty ? 'Yes' : 'No'}</dd></div>
           </dl>
         </article>
 
