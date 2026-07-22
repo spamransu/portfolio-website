@@ -41,23 +41,29 @@ export function ProjectDetailPage() {
         }
       />
 
-      <Section title="Project snapshot">
-        <dl className={sty.metaList}>
-          <div>
+      <Section title="Project snapshot" intro={project.challenge}>
+        <dl className={sty.snapshotGrid}>
+          <div className={sty.snapshotCard}>
             <dt>Role</dt>
             <dd>{project.role}</dd>
           </div>
-          <div>
+          <div className={sty.snapshotCard}>
             <dt>Client</dt>
             <dd>{project.client}</dd>
           </div>
-          <div>
+          <div className={sty.snapshotCard}>
             <dt>Year</dt>
             <dd>{project.year}</dd>
           </div>
-          <div>
+          <div className={sty.snapshotCard}>
             <dt>Stack</dt>
-            <dd>{project.stack.join(', ')}</dd>
+            <dd>
+              <ul className={sty.snapshotStack} aria-label={`${project.title} stack`}>
+                {project.stack.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </dd>
           </div>
         </dl>
       </Section>

@@ -192,7 +192,7 @@
 }
 
 .statValue {
-  @include mix.type-style(h3);
+  @include mix.type-style(h1);
   line-height: 1;
 }
 
@@ -214,7 +214,7 @@
 
 .skillsCloud {
   @include mix.flex(row, flex-start, center, var(--space-xs), wrap);
-  max-width: var(--measure-copy);
+  max-width: none;
 }
 
 .skillPill {
@@ -232,11 +232,17 @@
 }
 
 .skillsCopy {
+  align-content: start;
   max-width: var(--measure-sidebar);
 }
 
 .skillsCopy h2 {
   @include mix.type-style(h3);
+}
+
+.skillsSection {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: start;
 }
 
 .contactSection {
@@ -249,9 +255,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .bioColumns,
-  .skillsSection {
-    align-items: end;
+  .bioColumns {
+    align-items: center;
   }
 
   .statsGrid {
@@ -269,7 +274,8 @@
   }
 
   .skillsSection {
-    grid-template-columns: minmax(0, 1fr) var(--measure-sidebar);
+    grid-template-columns: minmax(0, 1.15fr) minmax(var(--measure-sidebar), 0.85fr);
+    align-items: center;
   }
 }
 

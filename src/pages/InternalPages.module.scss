@@ -15,10 +15,13 @@
 .statCard,
 .listBlock,
 .metaList,
+.snapshotGrid,
+.snapshotCard,
 .projectLead,
 .projectCardLink,
 .galleryCard,
-.copyStack {
+.copyStack,
+.snapshotStack {
   display: grid;
 }
 
@@ -33,10 +36,16 @@
   gap: var(--space-stack);
 }
 
+.snapshotGrid,
+.snapshotStack {
+  gap: var(--space-xs);
+}
+
 .cardGrid,
 .infoGrid,
 .gallery,
-.statGrid {
+.statGrid,
+.snapshotGrid {
   gap: var(--gap-grid);
 }
 
@@ -57,6 +66,7 @@
 .statCard,
 .ctaPanel,
 .galleryCard,
+.snapshotCard,
 .projectLead {
   @include mix.card-surface(var(--card-padding));
 }
@@ -68,6 +78,7 @@
 .ctaPanel,
 .galleryCard,
 .projectLead,
+.snapshotCard,
 .projectCardLink {
   gap: var(--space-xs);
 }
@@ -93,7 +104,9 @@
 .projectLead h3,
 .sectionHeading,
 .metaList dt,
-.metaList dd {
+.metaList dd,
+.snapshotCard dt,
+.snapshotCard dd {
   margin: 0;
 }
 
@@ -103,6 +116,7 @@
 .galleryCard p,
 .projectLead p,
 .metaList dd,
+.snapshotCard dd,
 .mediaCaption,
 .muted {
   color: var(--color-text-muted);
@@ -175,6 +189,37 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.snapshotGrid {
+  grid-template-columns: 1fr;
+}
+
+.snapshotCard {
+  align-content: start;
+  min-width: 0;
+}
+
+.snapshotCard dt {
+  color: var(--color-text-muted);
+  @include mix.type-style(body-xs, 600);
+}
+
+.snapshotCard dd {
+  @include mix.type-style(body-sm);
+}
+
+.snapshotStack {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.snapshotStack li {
+  @include mix.pill-base(body-xs);
+  width: fit-content;
+  color: var(--color-text-primary);
+  background: var(--color-surface-overlay);
+}
+
 .metaList dt {
   color: var(--color-text-muted);
   @include mix.type-style(body-xs, 600);
@@ -226,7 +271,8 @@
 
   .infoGrid,
   .gallery,
-  .statGrid {
+  .statGrid,
+  .snapshotGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
