@@ -1799,6 +1799,11 @@ export const App = () => {
     setMediaStatus(null)
   }, [])
 
+  const handleMediaResultClear = useCallback(() => {
+    setMediaResult(null)
+    setMediaStatus(null)
+  }, [])
+
   const handleMediaFileClear = useCallback(() => {
     setMediaFile(null)
     setMediaFileInputKey((current) => current + 1)
@@ -1952,6 +1957,7 @@ export const App = () => {
       onMediaAreaChange: handleMediaAreaChange,
       onMediaFileClear: handleMediaFileClear,
       onMediaFileChange: handleMediaFileChange,
+      onMediaResultClear: handleMediaResultClear,
       onMediaSlugCommit: handleMediaSlugCommit,
       onMediaSlugChange: handleMediaSlugChange,
       onMediaTargetClear: handleMediaTargetClear,
@@ -2029,6 +2035,7 @@ export const App = () => {
       handleMediaAreaChange,
       handleMediaFileChange,
       handleMediaFileClear,
+      handleMediaResultClear,
       handleMediaSlugCommit,
       handleMediaSlugChange,
       handleMediaTargetClear,
