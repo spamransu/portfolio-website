@@ -68,6 +68,15 @@ const normalizeProjectSectionKind = (value: string): 'default' | 'approach' | 'o
 
 const todayDate = () => new Date().toISOString().slice(0, 10)
 
+const normalizeSlug = (value: string): string =>
+  value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+const buildBlogPostPath = (date: string, slug: string): string => `content/blog/${date}-${slug}.md`
+
 const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse => ({
   title: 'Untitled draft',
   slug,
@@ -77,7 +86,7 @@ const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse =>
   coverAlt: '',
   coverImage: '',
   excerpt: '',
-  path: `content/blog/${todayDate()}-${slug}.md`,
+  path: buildBlogPostPath(todayDate(), slug),
   sha: '',
 })
 
@@ -827,8 +836,15 @@ const updateBlogPost = (post: BlogPostResponse, field: string, value: string): B
     case 'title':
       next.title = value
       return next
+    case 'slug': {
+      const normalizedSlug = normalizeSlug(value)
+      next.slug = normalizedSlug
+      if (!next.sha) next.path = buildBlogPostPath(next.date, normalizedSlug || 'draft')
+      return next
+    }
     case 'date':
       next.date = value
+      if (!next.sha) next.path = buildBlogPostPath(value, next.slug || 'draft')
       return next
     case 'status':
       next.status = value === 'draft' ? 'draft' : 'published'

@@ -732,8 +732,10 @@ export const DashboardScreen = ({
               {blogPost ? (
                 <>
                   <label className="admin-field"><span>Title</span><input value={blogPost.title} onChange={(event) => onBlogFieldChange('title', event.target.value)} /></label>
+                  <label className="admin-field"><span>Slug</span><input value={blogPost.slug} onChange={(event) => onBlogFieldChange('slug', event.target.value)} disabled={Boolean(blogPost.sha)} /></label>
                   <label className="admin-field"><span>Date</span><input value={blogPost.date} onChange={(event) => onBlogFieldChange('date', event.target.value)} /></label>
                   <label className="admin-field"><span>Status</span><select value={blogPost.status} onChange={(event) => onBlogFieldChange('status', event.target.value)}><option value="draft">draft</option><option value="published">published</option></select></label>
+                  {blogPost.sha ? <p className="admin-note">Slug editing is only available before the first save. Existing post slug renames are not supported yet.</p> : null}
                   <label className="admin-field"><span>Cover image</span><input value={blogPost.coverImage ?? ''} onChange={(event) => onBlogFieldChange('coverImage', event.target.value)} /></label>
                   <label className="admin-field"><span>Cover alt</span><input value={blogPost.coverAlt ?? ''} onChange={(event) => onBlogFieldChange('coverAlt', event.target.value)} /></label>
                   <label className="admin-field"><span>Excerpt</span><textarea value={blogPost.excerpt ?? ''} onChange={(event) => onBlogFieldChange('excerpt', event.target.value)} /></label>
