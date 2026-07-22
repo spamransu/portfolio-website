@@ -10,7 +10,7 @@ import {
   type MediaUploadResponse,
   type SiteContentResponse,
 } from './api/adminApi'
-import { DashboardScreen } from './screens/DashboardScreen'
+import { DashboardScreen, type MediaTargetSelection } from './screens/DashboardScreen'
 import type { BlogPostMeta, BlogPostResponse, SiteContent } from './types'
 
 const DEFAULT_SESSION: AdminSession = {
@@ -906,6 +906,7 @@ export const App = () => {
   const [mediaSlug, setMediaSlug] = useState('')
   const [mediaFile, setMediaFile] = useState<File | null>(null)
   const [mediaResult, setMediaResult] = useState<MediaUploadResponse | null>(null)
+  const [mediaTarget, setMediaTarget] = useState<MediaTargetSelection | null>(null)
   const [error, setError] = useState<string | null>(getAuthMessageFromUrl())
   const [saveStatus, setSaveStatus] = useState<string | null>(null)
   const [blogStatus, setBlogStatus] = useState<string | null>(null)
@@ -1045,6 +1046,7 @@ export const App = () => {
       setMediaSlug('')
       setMediaFile(null)
       setMediaResult(null)
+      setMediaTarget(null)
       setError(null)
       setSaveStatus(null)
       setBlogStatus(null)
@@ -1559,6 +1561,14 @@ export const App = () => {
     }
   }, [blogList, confirmDiscardChanges, loadBlogList, selectedBlogPost])
 
+  const handleMediaTargetSelect = useCallback((target: MediaTargetSelection) => {
+    setMediaArea(target.area)
+    setMediaSlug(target.slug)
+    setMediaTarget(target)
+    setMediaStatus(null)
+    setError(null)
+  }, [])
+
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !mediaSlug.trim()) return
 
@@ -1573,8 +1583,20 @@ export const App = () => {
         file: mediaFile,
       })
 
+      if (mediaTarget && mediaTarget.area === mediaArea && mediaTarget.slug === mediaSlug) {
+        if (mediaTarget.kind === 'blog') {
+          handleBlogFieldChange(mediaTarget.field, response.path)
+        } else if (mediaTarget.scope) {
+          handleStructuredFieldChange(mediaTarget.scope, mediaTarget.field, response.path, mediaTarget.index)
+        }
+      }
+
       setMediaResult(response)
-      setMediaStatus(`Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha}.`)
+      setMediaStatus(
+        mediaTarget && mediaTarget.area === mediaArea && mediaTarget.slug === mediaSlug
+          ? `Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha} and applied it to ${mediaTarget.label}.`
+          : `Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha}.`,
+      )
       setMediaFile(null)
     } catch (uploadError) {
       const apiError = uploadError as AdminApiError
@@ -1582,7 +1604,7 @@ export const App = () => {
     } finally {
       setUploadingMedia(false)
     }
-  }, [mediaArea, mediaFile, mediaSlug])
+  }, [handleBlogFieldChange, handleStructuredFieldChange, mediaArea, mediaFile, mediaSlug, mediaTarget])
 
   const selectedBlogMeta = useMemo<BlogPostMeta | null>(() => {
     return blogList?.posts.find((post) => post.slug === selectedBlogSlug) ?? null
@@ -1633,6 +1655,8 @@ export const App = () => {
       mediaPath: mediaResult?.path ?? '',
       mediaSlug,
       mediaStatus,
+      mediaTargetKey: mediaTarget?.key ?? '',
+      mediaTargetLabel: mediaTarget?.label ?? null,
       siteUrl: workingCopy?.site.siteUrl ?? siteContent?.content.site.siteUrl ?? '',
       siteConflict,
       onBlogFieldChange: handleBlogFieldChange,
@@ -1665,10 +1689,7 @@ export const App = () => {
       onMediaAreaChange: setMediaArea,
       onMediaFileChange: setMediaFile,
       onMediaSlugChange: setMediaSlug,
-      onMediaTargetSelect: (area: string, slug: string) => {
-        setMediaArea(area)
-        setMediaSlug(slug)
-      },
+      onMediaTargetSelect: handleMediaTargetSelect,
       onMediaUpload: () => {
         void handleMediaUpload()
       },
@@ -1734,6 +1755,7 @@ export const App = () => {
       handleBlogDelete,
       handleBlogSave,
       handleFieldChange,
+      handleMediaTargetSelect,
       handleMediaUpload,
       handleStructuredAdd,
       handleStructuredFieldChange,
@@ -1748,6 +1770,7 @@ export const App = () => {
       mediaResult,
       mediaSlug,
       mediaStatus,
+      mediaTarget,
       siteContent,
       siteConflict,
       saveStatus,
