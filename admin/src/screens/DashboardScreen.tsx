@@ -453,6 +453,7 @@ export const DashboardScreen = ({
         <div className="admin-actions">
           {session?.authenticated ? (
             <>
+              {loadingContent ? <span className="admin-status">Loading…</span> : null}
               <button type="button" className="admin-button admin-button-secondary" onClick={onReload} disabled={loadingContent || saving}>
                 Reload content
               </button>
