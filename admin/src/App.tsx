@@ -1044,6 +1044,7 @@ export const App = () => {
   const [blogConflict, setBlogConflict] = useState<ConflictState>(null)
   const [blogActivity, setBlogActivity] = useState<BlogActivity>(null)
   const [activity, setActivity] = useState<AdminActivityResponse | null>(null)
+  const [activityLoadedAt, setActivityLoadedAt] = useState<string | null>(null)
 
   const loadSiteContent = useCallback(async () => {
     setLoadingContent(true)
@@ -1078,6 +1079,7 @@ export const App = () => {
     try {
       const response = await adminApi.getActivity()
       setActivity(response)
+      setActivityLoadedAt(new Date().toISOString())
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : 'Failed to load recent activity.')
     } finally {
@@ -1153,6 +1155,7 @@ export const App = () => {
         setSelectedBlogPost(null)
         setSelectedBlogBaseline(null)
         setActivity(null)
+        setActivityLoadedAt(null)
       }
     } catch (sessionError) {
       setSession(DEFAULT_SESSION)
@@ -1163,6 +1166,7 @@ export const App = () => {
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
       setActivity(null)
+      setActivityLoadedAt(null)
       setError(sessionError instanceof Error ? sessionError.message : 'Failed to load session.')
     } finally {
       setLoading(false)
@@ -1208,6 +1212,7 @@ export const App = () => {
       setBlogConflict(null)
       setBlogActivity(null)
       setActivity(null)
+      setActivityLoadedAt(null)
     } catch (logoutError) {
       setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
     }
@@ -1903,6 +1908,7 @@ export const App = () => {
   const dashboardProps = useMemo(
     () => ({
       activity: activity?.commits ?? [],
+      activityLoadedAt,
       blogActivity,
       blogDirty,
       blogList: blogList?.posts ?? [],
@@ -2024,6 +2030,7 @@ export const App = () => {
     }),
     [
       activity,
+      activityLoadedAt,
       blogActivity,
       blogDirty,
       blogConflict,

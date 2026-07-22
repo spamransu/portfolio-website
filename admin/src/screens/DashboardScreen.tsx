@@ -90,6 +90,7 @@ interface DashboardScreenProps {
     sha: string
     url: string | null
   }>
+  activityLoadedAt: string | null
   blogActivity: {
     latestCommitSha: string | null
     path: string
@@ -250,6 +251,7 @@ const resolveMediaFilename = (originalName: string, mimeType: string): string =>
 
 export const DashboardScreen = ({
   activity,
+  activityLoadedAt,
   blogActivity,
   blogConflict,
   blogDirty,
@@ -353,6 +355,17 @@ export const DashboardScreen = ({
     repo && sha ? `${repo.repoUrl}/commit/${encodeURIComponent(sha)}` : null
   const createBlobUrl = (repo: AdminRepoInfo | null, branch: string | null | undefined, path: string | null | undefined) =>
     repo && branch && path ? `${repo.repoUrl}/blob/${encodeURIComponent(branch)}/${path}` : null
+  const formatRefreshTimestamp = (value: string | null) => {
+    if (!value) return null
+
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) return null
+
+    return date.toLocaleString(undefined, {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    })
+  }
   const mediaRepoPath = mediaPath ? `public/${mediaPath.replace(/^\//, '')}` : null
   const selectedBlogPath = blogPost?.path ?? blogMeta?.path ?? null
   const siteContentUrl = createBlobUrl(siteContent?.repo ?? null, siteContent?.branch ?? null, siteContent?.path ?? null)
@@ -362,6 +375,7 @@ export const DashboardScreen = ({
   const publicMediaUrl = normalizedSiteUrl && mediaPath ? `${normalizedSiteUrl}${mediaPath}` : null
   const publicBlogUrl = normalizedSiteUrl ? `${normalizedSiteUrl}/blog` : null
   const publicPostUrl = normalizedSiteUrl && blogPost?.status === 'published' ? `${normalizedSiteUrl}/blog/${blogPost.slug}` : null
+  const activityRefreshLabel = formatRefreshTimestamp(activityLoadedAt)
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
   const sanitizedMediaSlug = sanitizePathSegment(mediaSlug)
   const resolvedUploadFilename = mediaFile ? resolveMediaFilename(mediaFile.name, mediaFile.type) : ''
@@ -538,7 +552,10 @@ export const DashboardScreen = ({
 
         <article className="admin-panel">
           <div className="admin-panel-header">
-            <div><h2>Recent activity</h2></div>
+            <div>
+              <h2>Recent activity</h2>
+              {activityRefreshLabel ? <p className="admin-note">Last refreshed {activityRefreshLabel}</p> : null}
+            </div>
             <div className="admin-actions">
               <button type="button" className="admin-button admin-button-secondary" onClick={onReloadActivity} disabled={loadingActivity}>
                 {loadingActivity ? 'Refreshing…' : 'Refresh activity'}
