@@ -951,6 +951,10 @@ const getBlogValidationError = (
   if (!BLOG_DATE_PATTERN.test(post.date)) {
     return 'Blog date must use the YYYY-MM-DD format.'
   }
+  const conflictingSlugPost = existingPosts.find((entry) => entry.slug === post.slug && entry.sha !== post.sha)
+  if (conflictingSlugPost) {
+    return `Blog slug must be unique. Another post already uses slug "${post.slug}".`
+  }
   const candidatePath = buildBlogPostPath(post.date, post.slug)
   const conflictingPost = existingPosts.find((entry) => entry.path === candidatePath && entry.sha !== post.sha)
   if (conflictingPost) {

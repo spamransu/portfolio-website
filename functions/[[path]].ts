@@ -995,6 +995,17 @@ const loadGitHubBlogPostList = async (env: Env, accessToken: string, branch: str
   return posts.sort((left, right) => right.date.localeCompare(left.date))
 }
 
+const findDuplicateBlogSlugEntry = async (
+  env: Env,
+  accessToken: string,
+  branch: string,
+  slug: string,
+  excludedPath?: string,
+): Promise<GitHubDirEntry | null> => {
+  const entries = await listGitHubBlogEntries(env, accessToken, branch)
+  return entries.find((entry) => slugFromBlogFilename(entry.name) === slug && entry.path !== excludedPath) ?? null
+}
+
 const handleAdminAuthStart = async ({ request, env }: PagesContext): Promise<Response> => {
   const envCheck = getRequiredEnv(env, ['GITHUB_CLIENT_ID'])
   if (envCheck instanceof Response) return envCheck
@@ -1360,6 +1371,14 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
 
   const targetPath = buildBlogPostRepoPath(body.post)
   const isRename = Boolean(existingPost && existingPost.path !== targetPath)
+  const duplicateSlugEntry = await findDuplicateBlogSlugEntry(env, session.accessToken, branch, body.post.slug, existingPost?.path)
+
+  if (duplicateSlugEntry) {
+    return jsonResponse(
+      { error: `Blog slug must be unique. Another post already uses slug "${body.post.slug}".` },
+      { status: 409 },
+    )
+  }
 
   if (isRename) {
     const targetFile = await readGitHubFileIfExists(env, session.accessToken, branch, targetPath)
