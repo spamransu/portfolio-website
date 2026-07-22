@@ -829,6 +829,20 @@ const updateWorkingCopy = (content: SiteContent, field: string, value: string): 
   }
 }
 
+const BLOG_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
+const BLOG_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+const getBlogValidationError = (post: BlogPostResponse | null): string | null => {
+  if (!post) return null
+  if (!post.slug || !BLOG_SLUG_PATTERN.test(post.slug)) {
+    return 'Blog slug must use lowercase letters, numbers, and hyphens only.'
+  }
+  if (!BLOG_DATE_PATTERN.test(post.date)) {
+    return 'Blog date must use the YYYY-MM-DD format.'
+  }
+  return null
+}
+
 const updateBlogPost = (post: BlogPostResponse, field: string, value: string): BlogPostResponse => {
   const next = structuredClone(post)
 
@@ -1448,8 +1462,10 @@ export const App = () => {
     return JSON.stringify({ ...original, body: selectedBlogPost.post.body }) !== JSON.stringify(selectedBlogPost.post)
   }, [blogList, selectedBlogPost, selectedBlogSlug])
 
+  const blogValidationError = useMemo(() => getBlogValidationError(selectedBlogPost?.post ?? null), [selectedBlogPost])
+
   const handleBlogSave = useCallback(async () => {
-    if (!blogList || !selectedBlogPost) return
+    if (!blogList || !selectedBlogPost || blogValidationError) return
 
     setSavingBlog(true)
     setError(null)
@@ -1494,7 +1510,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, loadBlogList, selectedBlogPost])
+  }, [blogList, blogValidationError, loadBlogList, selectedBlogPost])
 
   const handleBlogCreate = useCallback(() => {
     if (blogDirty && !confirmDiscardChanges('You have unsaved blog edits. Create a new draft and discard them?')) {
@@ -1663,6 +1679,7 @@ export const App = () => {
       blogMeta: selectedBlogMeta,
       blogPost: selectedBlogPost?.post ?? null,
       blogStatus,
+      blogValidationError,
       blogConflict,
       dirty,
       error,
@@ -1765,6 +1782,7 @@ export const App = () => {
       blogConflict,
       blogList,
       blogStatus,
+      blogValidationError,
       confirmDiscardChanges,
       dirty,
       error,

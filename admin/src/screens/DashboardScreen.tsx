@@ -68,6 +68,7 @@ interface DashboardScreenProps {
   blogMeta: BlogPostMeta | null
   blogPost: BlogPostResponse | null
   blogStatus: string | null
+  blogValidationError: string | null
   dirty: boolean
   error: string | null
   loading: boolean
@@ -158,6 +159,7 @@ export const DashboardScreen = ({
   blogMeta,
   blogPost,
   blogStatus,
+  blogValidationError,
   dirty,
   error,
   loading,
@@ -834,7 +836,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog}>{savingBlog ? 'Saving…' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
+            <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Published posts + drafts</span><select value={selectedBlogSlug} onChange={(event) => onBlogSelect(event.target.value)}>{blogList.map((post) => <option key={post.slug} value={post.slug}>{post.date} — {post.title}</option>)}</select></label>
               {blogMeta ? <p className="admin-note">{blogMeta.path}</p> : null}
@@ -844,6 +846,7 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Slug</span><input value={blogPost.slug} onChange={(event) => onBlogFieldChange('slug', event.target.value)} /></label>
                   <label className="admin-field"><span>Date</span><input value={blogPost.date} onChange={(event) => onBlogFieldChange('date', event.target.value)} /></label>
                   <label className="admin-field"><span>Status</span><select value={blogPost.status} onChange={(event) => onBlogFieldChange('status', event.target.value)}><option value="draft">draft</option><option value="published">published</option></select></label>
+                  {blogValidationError ? <p className="admin-note admin-note-warning">{blogValidationError}</p> : null}
                   {blogPost.sha ? <p className="admin-note">Changing the slug or date will rename the markdown file on the next save.</p> : null}
                   <label className="admin-field"><span>Cover image</span><input value={blogPost.coverImage ?? ''} onChange={(event) => onBlogFieldChange('coverImage', event.target.value)} />{renderUseLastUploadButton(() => onBlogFieldChange('coverImage', mediaPath))}{renderMediaTargetButton({ area: 'blog', slug: blogPost.slug, key: `blog:${blogPost.slug}:coverImage`, kind: 'blog', field: 'coverImage', label: `${blogPost.title || blogPost.slug} cover image` })}</label>
                   <label className="admin-field"><span>Cover alt</span><input value={blogPost.coverAlt ?? ''} onChange={(event) => onBlogFieldChange('coverAlt', event.target.value)} /></label>
