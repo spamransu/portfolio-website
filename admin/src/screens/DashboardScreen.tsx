@@ -1069,7 +1069,12 @@ export const DashboardScreen = ({
             <div className="admin-panel-header"><div><h2>Blog editor</h2><p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate}>New draft</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || savingBlog}>Discard blog edits</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || blogLoading || savingBlog}>Reload post</button><button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || savingBlog}>Delete post</button><button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Published posts + drafts</span><select value={selectedBlogSlug} onChange={(event) => onBlogSelect(event.target.value)}>{blogList.map((post) => <option key={post.slug} value={post.slug}>{post.date} — {post.title}</option>)}</select></label>
-              {blogMeta ? <p className="admin-note">{blogMeta.path}</p> : null}
+              {blogMeta ? (
+                <div className="admin-actions">
+                  <p className="admin-note">Selected file: <span className="admin-code">{blogMeta.path}</span></p>
+                  <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(blogMeta.path, 'Selected blog path')}>Copy file path</button>
+                </div>
+              ) : null}
               {blogPost ? (
                 <>
                   <label className="admin-field"><span>Title</span><input value={blogPost.title} onChange={(event) => onBlogFieldChange('title', event.target.value)} /></label>
@@ -1095,7 +1100,9 @@ export const DashboardScreen = ({
                         </p>
                       </div>
                       <div className="admin-actions">
+                        <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(blogPost.path, 'Blog file path')}>Copy file path</button>
                         {publicPostUrl ? <a className="admin-button admin-button-secondary" href={publicPostUrl} target="_blank" rel="noreferrer">Open public route</a> : null}
+                        {publicPostUrl ? <button type="button" className="admin-button admin-button-secondary" onClick={() => void handleCopy(publicPostUrl, 'Public route URL')}>Copy public route</button> : null}
                         {!publicPostUrl ? <p className="admin-note">Publish the post to open the public route.</p> : null}
                       </div>
                     </div>
