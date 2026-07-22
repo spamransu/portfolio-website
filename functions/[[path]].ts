@@ -72,6 +72,21 @@ type GitHubBranchResponse = {
   }
 }
 
+type GitHubCommitSummary = {
+  commit?: {
+    author?: {
+      date?: string
+      name?: string
+    }
+    message?: string
+  }
+  html_url?: string
+  sha?: string
+  author?: {
+    login?: string
+  } | null
+}
+
 type SiteContentWriteRequest = {
   branch?: unknown
   commitMessage?: unknown
@@ -120,6 +135,15 @@ type MediaUploadResponse = {
   path: string
   repo: AdminRepoInfo
   sha: string
+}
+
+type AdminActivityItem = {
+  authorLogin: string | null
+  authorName: string | null
+  committedAt: string | null
+  message: string
+  sha: string
+  url: string | null
 }
 
 type AdminRepoInfo = {
@@ -770,6 +794,22 @@ const loadGitHubSiteContent = async (env: Env, accessToken: string, branch: stri
   }
 }
 
+const loadGitHubRecentActivity = async (env: Env, accessToken: string, branch: string): Promise<AdminActivityItem[]> => {
+  const commits = await fetchGitHubJson<GitHubCommitSummary[]>(
+    `${getRepoBase(env)}/commits?sha=${encodeURIComponent(branch)}&per_page=8`,
+    { headers: getGitHubHeaders(accessToken) },
+  )
+
+  return commits.map((entry) => ({
+    authorLogin: entry.author?.login ?? null,
+    authorName: entry.commit?.author?.name ?? null,
+    committedAt: entry.commit?.author?.date ?? null,
+    message: entry.commit?.message?.split('\n')[0]?.trim() || 'Untitled commit',
+    sha: entry.sha ?? '',
+    url: entry.html_url ?? null,
+  }))
+}
+
 const listGitHubBlogEntries = async (env: Env, accessToken: string, branch: string): Promise<GitHubDirEntry[]> => {
   const entries = await fetchGitHubJson<GitHubDirEntry[]>(
     `${getRepoBase(env)}/contents/${BLOG_CONTENT_DIR}?ref=${encodeURIComponent(branch)}`,
@@ -1020,6 +1060,23 @@ const handleAdminContentSite = async ({ request, env }: PagesContext): Promise<R
   if (branch instanceof Response) return branch
 
   return jsonResponse(await loadGitHubSiteContent(env, session.accessToken, branch))
+}
+
+const handleAdminActivity = async ({ request, env }: PagesContext): Promise<Response> => {
+  const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
+  if (envCheck instanceof Response) return envCheck
+
+  const session = await readSession(request, env)
+  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+
+  const branch = resolveRequestedBranch(request, env)
+  if (branch instanceof Response) return branch
+
+  return jsonResponse({
+    branch,
+    commits: await loadGitHubRecentActivity(env, session.accessToken, branch),
+    repo: getAdminRepoInfo(env, branch),
+  })
 }
 
 const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Promise<Response> => {
@@ -1374,6 +1431,7 @@ const handleAdminRequest = async (context: PagesContext, pathname: string): Prom
   if (adminPath === '/auth/me' && context.request.method === 'GET') return handleAdminAuthMe(context)
   if (adminPath === '/auth/logout' && context.request.method === 'POST') return handleAdminAuthLogout(context)
   if (adminPath === '/content/site' && context.request.method === 'GET') return handleAdminContentSite(context)
+  if (adminPath === '/activity' && context.request.method === 'GET') return handleAdminActivity(context)
   if (adminPath === '/content/site' && context.request.method === 'PUT') return handleAdminContentSiteUpdate(context)
   if (adminPath === '/media' && context.request.method === 'POST') return handleAdminMediaUpload(context)
   if (adminPath === '/blog' && context.request.method === 'GET') return handleAdminBlogList(context)

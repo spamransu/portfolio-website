@@ -68,6 +68,21 @@ export interface MediaUploadRequest {
   file: File
 }
 
+export interface AdminActivityItem {
+  authorLogin: string | null
+  authorName: string | null
+  committedAt: string | null
+  message: string
+  sha: string
+  url: string | null
+}
+
+export interface AdminActivityResponse {
+  branch: string
+  commits: AdminActivityItem[]
+  repo: AdminRepoInfo
+}
+
 export interface AdminApiError extends Error {
   currentSha?: string
   latestCommitSha?: string | null
@@ -108,6 +123,7 @@ const getJson = async <T>(input: RequestInfo | URL): Promise<T> => {
 
 export const adminApi = {
   getSession: () => getJson<AdminSession>('/api/admin/auth/me'),
+  getActivity: () => getJson<AdminActivityResponse>('/api/admin/activity'),
   getSiteContent: () => getJson<SiteContentResponse>('/api/admin/content/site'),
   saveSiteContent: async (payload: SaveSiteContentRequest) => {
     const response = await fetch('/api/admin/content/site', {

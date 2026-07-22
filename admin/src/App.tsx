@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import {
   adminApi,
+  type AdminActivityResponse,
   type AdminApiError,
   type AdminRepoInfo,
   type AdminSession,
@@ -1026,6 +1027,7 @@ export const App = () => {
   const [siteConflict, setSiteConflict] = useState<ConflictState>(null)
   const [blogConflict, setBlogConflict] = useState<ConflictState>(null)
   const [blogActivity, setBlogActivity] = useState<BlogActivity>(null)
+  const [activity, setActivity] = useState<AdminActivityResponse | null>(null)
 
   const loadSiteContent = useCallback(async () => {
     setLoadingContent(true)
@@ -1051,6 +1053,16 @@ export const App = () => {
       setError(loadError instanceof Error ? loadError.message : 'Failed to load site content.')
     } finally {
       setLoadingContent(false)
+    }
+  }, [])
+
+  const loadActivity = useCallback(async () => {
+    try {
+      const response = await adminApi.getActivity()
+      setActivity(response)
+    } catch (loadError) {
+      setActivity(null)
+      setError(loadError instanceof Error ? loadError.message : 'Failed to load recent activity.')
     }
   }, [])
 
@@ -1108,13 +1120,14 @@ export const App = () => {
       setSession(currentSession)
 
       if (currentSession.authenticated) {
-        await Promise.all([loadSiteContent(), loadBlogList()])
+        await Promise.all([loadSiteContent(), loadBlogList(), loadActivity()])
       } else {
         setSiteContent(null)
         setWorkingCopy(null)
         setBlogList(null)
         setSelectedBlogSlug('')
         setSelectedBlogPost(null)
+        setActivity(null)
       }
     } catch (sessionError) {
       setSession(DEFAULT_SESSION)
@@ -1123,11 +1136,12 @@ export const App = () => {
       setBlogList(null)
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
+      setActivity(null)
       setError(sessionError instanceof Error ? sessionError.message : 'Failed to load session.')
     } finally {
       setLoading(false)
     }
-  }, [loadBlogList, loadSiteContent])
+  }, [loadActivity, loadBlogList, loadSiteContent])
 
   useEffect(() => {
     void loadSession()
@@ -1166,6 +1180,7 @@ export const App = () => {
       setSiteConflict(null)
       setBlogConflict(null)
       setBlogActivity(null)
+      setActivity(null)
     } catch (logoutError) {
       setError(logoutError instanceof Error ? logoutError.message : 'Failed to log out.')
     }
@@ -1541,6 +1556,7 @@ export const App = () => {
 
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
+      void loadActivity()
       setSaveStatus(`Saved site content to ${response.branch} at ${response.latestCommitSha ?? response.sha}.`)
     } catch (saveError) {
       const apiError = saveError as AdminApiError
@@ -1560,7 +1576,7 @@ export const App = () => {
     } finally {
       setSaving(false)
     }
-  }, [siteContent, siteValidationError, workingCopy])
+  }, [loadActivity, siteContent, siteValidationError, workingCopy])
 
   const handleBlogFieldChange = useCallback((field: string, value: string) => {
     setSelectedBlogPost((current) => {
@@ -1611,6 +1627,7 @@ export const App = () => {
         repo: response.repo,
         summary: `Saved ${response.post.slug}`,
       })
+      void loadActivity()
       setBlogStatus(`Saved blog post at ${response.latestCommitSha ?? response.post.sha}.`)
       await loadBlogList(response.post.slug)
     } catch (saveError) {
@@ -1631,7 +1648,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, blogValidationError, loadBlogList, selectedBlogPost])
+  }, [blogList, blogValidationError, loadActivity, loadBlogList, selectedBlogPost])
 
   const handleBlogCreate = useCallback(() => {
     if (blogDirty && !confirmDiscardChanges('You have unsaved blog edits. Create a new draft and discard them?')) {
@@ -1676,6 +1693,7 @@ export const App = () => {
         repo: response.repo,
         summary: `Deleted ${selectedBlogPost.post.slug}`,
       })
+      void loadActivity()
       setBlogStatus(`Deleted ${response.path} at ${response.latestCommitSha ?? 'latest commit'}.`)
       await loadBlogList()
     } catch (deleteError) {
@@ -1696,7 +1714,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, confirmDiscardChanges, loadBlogList, selectedBlogPost])
+  }, [blogList, confirmDiscardChanges, loadActivity, loadBlogList, selectedBlogPost])
 
   const handleMediaAreaChange = useCallback((value: string) => {
     setMediaArea(value)
@@ -1746,6 +1764,7 @@ export const App = () => {
       }
 
       setMediaResult(response)
+      void loadActivity()
       setMediaStatus(
         mediaTarget && mediaTarget.area === mediaArea && mediaTarget.slug === mediaSlug
           ? `Uploaded ${response.path} at ${response.latestCommitSha ?? response.sha} and applied it to ${mediaTarget.label}.`
@@ -1758,7 +1777,7 @@ export const App = () => {
     } finally {
       setUploadingMedia(false)
     }
-  }, [handleBlogFieldChange, handleStructuredFieldChange, mediaArea, mediaFile, mediaSlug, mediaTarget])
+  }, [handleBlogFieldChange, handleStructuredFieldChange, loadActivity, mediaArea, mediaFile, mediaSlug, mediaTarget])
 
   const selectedBlogMeta = useMemo<BlogPostMeta | null>(() => {
     return blogList?.posts.find((post) => post.slug === selectedBlogSlug) ?? null
@@ -1792,6 +1811,7 @@ export const App = () => {
 
   const dashboardProps = useMemo(
     () => ({
+      activity: activity?.commits ?? [],
       blogActivity,
       blogDirty,
       blogList: blogList?.posts ?? [],
@@ -1900,6 +1920,7 @@ export const App = () => {
       workingCopy,
     }),
     [
+      activity,
       blogActivity,
       blogDirty,
       blogConflict,

@@ -49,6 +49,14 @@ const AssignedImagePreview = ({ alt, caption, label, previewUrl }: AssignedImage
 }
 
 interface DashboardScreenProps {
+  activity: Array<{
+    authorLogin: string | null
+    authorName: string | null
+    committedAt: string | null
+    message: string
+    sha: string
+    url: string | null
+  }>
   blogActivity: {
     latestCommitSha: string | null
     path: string
@@ -159,6 +167,7 @@ const mediaAreas = ['blog', 'home', 'projects', 'about', 'resume', 'contact']
 const toLines = (value: string[]): string => value.join('\n')
 
 export const DashboardScreen = ({
+  activity,
   blogActivity,
   blogConflict,
   blogDirty,
@@ -261,6 +270,14 @@ export const DashboardScreen = ({
   const publicBlogUrl = normalizedSiteUrl ? `${normalizedSiteUrl}/blog` : null
   const publicPostUrl = normalizedSiteUrl && blogPost?.status === 'published' ? `${normalizedSiteUrl}/blog/${blogPost.slug}` : null
   const previewBlocks = blogPost ? parseBlogMarkdownBlocks(blogPost.body) : []
+  const formatCommitDate = (value: string | null) => {
+    if (!value) return '—'
+    try {
+      return new Date(value).toLocaleString()
+    } catch {
+      return value
+    }
+  }
   const resolvePreviewUrl = (src?: string | null) => {
     if (!src) return null
     if (/^(https?:|data:|blob:)/.test(src)) return src
@@ -404,6 +421,34 @@ export const DashboardScreen = ({
             {uploadedMediaUrl ? <a className="admin-button admin-button-secondary" href={uploadedMediaUrl} target="_blank" rel="noreferrer">Open uploaded asset</a> : null}
             {publicMediaUrl ? <a className="admin-button admin-button-secondary" href={publicMediaUrl} target="_blank" rel="noreferrer">Open public asset</a> : null}
           </div>
+        </article>
+
+        <article className="admin-panel">
+          <h2>Recent activity</h2>
+          {activity.length ? (
+            <div className="admin-form-grid">
+              {activity.map((item) => (
+                <div key={item.sha} className="admin-subpanel">
+                  <div className="admin-panel-header">
+                    <div>
+                      <h3>{item.message}</h3>
+                      <p className="admin-note">
+                        {item.authorLogin ?? item.authorName ?? 'Unknown author'} · {formatCommitDate(item.committedAt)}
+                      </p>
+                    </div>
+                    {item.url ? (
+                      <div className="admin-actions">
+                        <a className="admin-button admin-button-secondary" href={item.url} target="_blank" rel="noreferrer">Open commit</a>
+                      </div>
+                    ) : null}
+                  </div>
+                  <p className="admin-note admin-code">{item.sha || '—'}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="admin-note">No recent branch activity available yet.</p>
+          )}
         </article>
       </section>
 
