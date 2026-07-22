@@ -1872,6 +1872,7 @@ export const App = () => {
       loading,
       loadingContent,
       mediaArea,
+      mediaFile,
       mediaPath: mediaResult?.path ?? '',
       mediaSlug,
       mediaStatus,
@@ -1908,6 +1909,9 @@ export const App = () => {
         void handleLogout()
       },
       onMediaAreaChange: handleMediaAreaChange,
+      onMediaFileClear: () => {
+        setMediaFile(null)
+      },
       onMediaFileChange: setMediaFile,
       onMediaSlugChange: handleMediaSlugChange,
       onMediaTargetClear: handleMediaTargetClear,

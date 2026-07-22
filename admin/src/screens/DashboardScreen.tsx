@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { AdminRepoInfo, AdminSession, SiteContentResponse } from '../api/adminApi'
 import { parseBlogMarkdownBlocks } from '../../../src/content/blogMarkdown'
 import type { BlogPostMeta, BlogPostResponse, ContactMethod, HighlightStat, HomeStat, ImageAsset, Job, ProcessStep, Project, SiteContent, SocialLink } from '../types'
@@ -19,6 +19,10 @@ type AssignedImagePreviewProps = {
   caption?: string | null
   label: string
   previewUrl: string
+}
+
+type SelectedMediaPreviewProps = {
+  file: File
 }
 
 const AssignedImagePreview = ({ alt, caption, label, previewUrl }: AssignedImagePreviewProps) => {
@@ -44,6 +48,35 @@ const AssignedImagePreview = ({ alt, caption, label, previewUrl }: AssignedImage
         <img className="admin-media-preview-image" src={previewUrl} alt={alt || label} onError={() => setFailed(true)} />
       )}
       {caption ? <p className="admin-note">{caption}</p> : null}
+    </div>
+  )
+}
+
+const SelectedMediaPreview = ({ file }: SelectedMediaPreviewProps) => {
+  const [previewUrl, setPreviewUrl] = useState<string>('')
+
+  useEffect(() => {
+    const objectUrl = URL.createObjectURL(file)
+    setPreviewUrl(objectUrl)
+
+    return () => {
+      URL.revokeObjectURL(objectUrl)
+    }
+  }, [file])
+
+  return (
+    <div className="admin-media-preview admin-media-preview--field">
+      <div className="admin-panel-header">
+        <div>
+          <p className="admin-kicker">Selected upload preview</p>
+          <h3>{file.name}</h3>
+        </div>
+        <div className="admin-actions">
+          <p className="admin-note">{Math.max(1, Math.round(file.size / 1024))} KB</p>
+        </div>
+      </div>
+      <img className="admin-media-preview-image" src={previewUrl} alt={file.name} />
+      <p className="admin-note admin-code">{file.type || 'unknown type'}</p>
     </div>
   )
 }
@@ -94,6 +127,7 @@ interface DashboardScreenProps {
   loading: boolean
   loadingContent: boolean
   mediaArea: string
+  mediaFile: File | null
   mediaPath: string
   mediaSlug: string
   mediaStatus: string | null
@@ -110,6 +144,7 @@ interface DashboardScreenProps {
   onLogin: () => void
   onLogout: () => void
   onMediaAreaChange: (value: string) => void
+  onMediaFileClear: () => void
   onMediaFileChange: (file: File | null) => void
   onMediaSlugChange: (value: string) => void
   onMediaTargetClear: () => void
@@ -190,6 +225,7 @@ export const DashboardScreen = ({
   loading,
   loadingContent,
   mediaArea,
+  mediaFile,
   mediaPath,
   mediaSlug,
   mediaStatus,
@@ -206,6 +242,7 @@ export const DashboardScreen = ({
   onLogin,
   onLogout,
   onMediaAreaChange,
+  onMediaFileClear,
   onMediaFileChange,
   onMediaSlugChange,
   onMediaTargetClear,
@@ -884,14 +921,16 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel">
-            <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !mediaSlug.trim()}>{uploadingMedia ? 'Uploading…' : 'Upload media'}</button></div></div>
+            <div className="admin-panel-header"><div><h2>Media uploader</h2><p className="admin-copy">Upload images into public/images and reuse the returned path in site or blog fields.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={onMediaTargetClear} disabled={!mediaTargetKey}>Clear target</button><button type="button" className="admin-button admin-button-secondary" onClick={onMediaFileClear} disabled={!mediaFile || uploadingMedia}>Clear file</button><button type="button" className="admin-button" onClick={onMediaUpload} disabled={uploadingMedia || !mediaSlug.trim() || !mediaFile}>{uploadingMedia ? 'Uploading…' : 'Upload media'}</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Area</span><select value={mediaArea} onChange={(event) => onMediaAreaChange(event.target.value)}>{mediaAreas.map((area) => <option key={area} value={area}>{area}</option>)}</select></label>
               <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
               <label className="admin-field"><span>Image file</span><input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} /></label>
+              {mediaFile ? <p className="admin-note">Ready to upload: <span className="admin-code">{mediaFile.name}</span></p> : <p className="admin-note">Choose an image file before uploading.</p>}
               {mediaPath ? <label className="admin-field"><span>Last uploaded path</span><input readOnly value={mediaPath} /></label> : null}
               <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span>{mediaTargetLabel ? ` — ${mediaTargetLabel}` : ' — manual selection'}</p>
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
+              {mediaFile ? <SelectedMediaPreview file={mediaFile} /> : null}
               {mediaPath ? (
                 <div className="admin-media-preview">
                   <div className="admin-panel-header">
