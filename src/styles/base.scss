@@ -130,11 +130,12 @@
   --form-field-radius: #{tokens.component-token(form-field-radius)};
   --form-field-min-block-size: var(--target-min-size);
   --tag-padding: #{tokens.component-token(tag-padding)};
-  --tag-radius: var(--radius-pill);
+  --tag-radius: #{tokens.component-token(tag-radius)};
   --tag-border-color: var(--color-border-default);
   --header-link-min-block-size: var(--target-min-size);
   --footer-icon-size: var(--target-min-size);
   --footer-icon-padding-inline: #{tokens.component-token(social-icon-padding-inline)};
+  --footer-icon-radius: #{tokens.component-token(social-icon-radius)};
   --section-divider: 1px solid var(--color-border-default);
   --section-stack-gap: var(--space-stack);
   --page-header-title-measure: 18ch;
