@@ -22,6 +22,10 @@ type AdminSession = {
   login: string
 }
 
+type GitHubAuthenticatedUser = {
+  login: string
+}
+
 type GitHubContentResponse = {
   content: string
   path: string
@@ -762,6 +766,50 @@ const readSession = async (request: Request, env: Env): Promise<AdminSession | n
   return openSession(token, env.ADMIN_SESSION_SECRET)
 }
 
+const validateSessionIdentity = async (env: Env, session: AdminSession): Promise<boolean> => {
+  if (!env.ADMIN_ALLOWED_GITHUB_LOGIN) return true
+
+  try {
+    const user = await fetchGitHubJson<GitHubAuthenticatedUser>(`${GITHUB_API_BASE}/user`, {
+      headers: getGitHubHeaders(session.accessToken),
+    })
+
+    return user.login === env.ADMIN_ALLOWED_GITHUB_LOGIN && user.login === session.login
+  } catch {
+    return false
+  }
+}
+
+const requireAdminSession = async ({ request, env }: PagesContext): Promise<AdminSession | Response> => {
+  const session = await readSession(request, env)
+  if (!session) {
+    return jsonResponse(
+      { error: 'Admin session required.' },
+      {
+        status: 401,
+        headers: {
+          'Set-Cookie': clearCookie(request, ADMIN_SESSION_COOKIE),
+        },
+      },
+    )
+  }
+
+  const validIdentity = await validateSessionIdentity(env, session)
+  if (!validIdentity) {
+    return jsonResponse(
+      { error: 'Admin session is no longer valid. Sign in again.' },
+      {
+        status: 401,
+        headers: {
+          'Set-Cookie': clearCookie(request, ADMIN_SESSION_COOKIE),
+        },
+      },
+    )
+  }
+
+  return session
+}
+
 const buildGitHubCallbackUrl = (request: Request): string => {
   const url = new URL(request.url)
   url.pathname = `${ADMIN_PREFIX}/auth/callback`
@@ -1031,12 +1079,22 @@ const handleAdminAuthCallback = async ({ request, env }: PagesContext): Promise<
 
 const handleAdminAuthMe = async ({ request, env }: PagesContext): Promise<Response> => {
   const session = await readSession(request, env)
+  const authenticated = session ? await validateSessionIdentity(env, session) : false
 
-  return jsonResponse({
-    authenticated: Boolean(session),
-    login: session?.login ?? null,
-    expiresAt: session ? new Date(session.expiresAt).toISOString() : null,
-  })
+  return jsonResponse(
+    {
+      authenticated,
+      login: authenticated ? session?.login ?? null : null,
+      expiresAt: authenticated && session ? new Date(session.expiresAt).toISOString() : null,
+    },
+    authenticated
+      ? {}
+      : {
+          headers: {
+            'Set-Cookie': clearCookie(request, ADMIN_SESSION_COOKIE),
+          },
+        },
+  )
 }
 
 const handleAdminAuthLogout = async ({ request }: PagesContext): Promise<Response> =>
@@ -1053,8 +1111,8 @@ const handleAdminContentSite = async ({ request, env }: PagesContext): Promise<R
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const branch = resolveRequestedBranch(request, env)
   if (branch instanceof Response) return branch
@@ -1066,8 +1124,8 @@ const handleAdminActivity = async ({ request, env }: PagesContext): Promise<Resp
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const branch = resolveRequestedBranch(request, env)
   if (branch instanceof Response) return branch
@@ -1086,8 +1144,8 @@ const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Pro
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const body = await readJsonBody<SiteContentWriteRequest>(request)
   if (body instanceof Response) return body
@@ -1149,8 +1207,8 @@ const handleAdminBlogList = async ({ request, env }: PagesContext): Promise<Resp
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const branch = resolveRequestedBranch(request, env)
   if (branch instanceof Response) return branch
@@ -1167,8 +1225,8 @@ const handleAdminBlogDetail = async (context: PagesContext, slug: string): Promi
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const branch = resolveRequestedBranch(request, env)
   if (branch instanceof Response) return branch
@@ -1188,8 +1246,8 @@ const handleAdminMediaUpload = async ({ request, env }: PagesContext): Promise<R
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const formData = await request.formData()
   const area = `${formData.get('area') ?? ''}`
@@ -1260,8 +1318,8 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const body = await readJsonBody<BlogPostWriteRequest>(request)
   if (body instanceof Response) return body
@@ -1367,8 +1425,8 @@ const handleAdminBlogDelete = async (context: PagesContext, slug: string): Promi
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
-  const session = await readSession(request, env)
-  if (!session) return jsonResponse({ error: 'Admin session required.' }, { status: 401 })
+  const session = await requireAdminSession({ request, env })
+  if (session instanceof Response) return session
 
   const body = await readJsonBody<BlogPostDeleteRequest>(request)
   if (body instanceof Response) return body
