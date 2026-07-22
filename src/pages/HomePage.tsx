@@ -9,6 +9,8 @@ const statToneClassNames: Record<HomeStatTone, string> = {
   'accent-3': sty.statAccent3,
 }
 
+const skillDotToneClassNames = [sty.skillToneAccent, sty.skillToneAccent2, sty.skillToneAccent3]
+
 function getFeaturedProjects() {
   const ordered = siteContent.home.featuredProjects.slugs
     .map((slug) => siteContent.projects.find((project) => project.slug === slug))
@@ -17,8 +19,23 @@ function getFeaturedProjects() {
   return ordered.length ? ordered : siteContent.projects.slice(0, 4)
 }
 
+function getSkillCloudRows(skills: string[]) {
+  const fallback = skills.length ? skills : ['React', 'ASP.NET Core', 'Tailwind CSS', 'MongoDB', 'Stripe API', 'GraphQL']
+  const uniqueSkills = Array.from(new Set(fallback))
+  const hasSkill = (label: string) => uniqueSkills.includes(label)
+  const pick = (label: string, fallbackIndex: number) => (hasSkill(label) ? label : uniqueSkills[fallbackIndex % uniqueSkills.length])
+
+  return [
+    [pick('React', 0), pick('ASP.NET Core', 1)],
+    [pick('Tailwind CSS', 2), pick('MongoDB', 3), pick('Stripe API', 4), pick('ASP.NET Core', 1)],
+    [pick('Tailwind CSS', 2), pick('Stripe API', 4), pick('GraphQL', 5)],
+    [pick('MongoDB', 3), pick('ASP.NET Core', 1)],
+  ]
+}
+
 export function HomePage() {
   const featuredProjects = useMemo(getFeaturedProjects, [])
+  const skillCloudRows = useMemo(() => getSkillCloudRows(siteContent.home.skills.items), [])
 
   return (
     <div className={sty.root}>
@@ -90,18 +107,27 @@ export function HomePage() {
       </section>
 
       <section className={sty.section}>
-        <div className={`md-wrapper ${sty.skillsSection}`}>
-          <div className={sty.skillsCloud}>
-            {siteContent.home.skills.items.map((skill) => (
-              <span key={skill} className={sty.skillPill}>
-                {skill}
-              </span>
-            ))}
-          </div>
+        <div className="lg-wrapper">
+          <div className={sty.skillsSection}>
+            <div className={sty.skillsCloud} aria-label="Skills cloud">
+              {skillCloudRows.map((row, rowIndex) => (
+                <div key={`skill-row-${rowIndex}`} className={sty.skillRow}>
+                  {row.map((skill, skillIndex) => (
+                    <span
+                      key={`${rowIndex}-${skill}-${skillIndex}`}
+                      className={`${sty.skillPill} ${skillDotToneClassNames[(rowIndex + skillIndex) % skillDotToneClassNames.length]}`}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
 
-          <div className={sty.skillsCopy}>
-            <h2>{siteContent.home.skills.title}</h2>
-            <p>{siteContent.home.skills.description}</p>
+            <div className={sty.skillsCopy}>
+              <h2>{siteContent.home.skills.title}</h2>
+              <p>{siteContent.home.skills.description}</p>
+            </div>
           </div>
         </div>
       </section>

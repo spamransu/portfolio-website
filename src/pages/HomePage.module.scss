@@ -12,7 +12,9 @@
 .statsGrid,
 .statCard,
 .skillsSection,
-.skillsCopy {
+.skillsCloud,
+.skillsCopy,
+.skillRow {
   display: grid;
 }
 
@@ -213,22 +215,44 @@
 }
 
 .skillsCloud {
-  @include mix.flex(row, flex-start, center, var(--space-xs), wrap);
+  gap: var(--space-sm);
   max-width: none;
+  align-content: center;
+  justify-items: center;
 }
 
 .skillPill {
   @include mix.flex(row, null, center, var(--space-xs));
+  width: fit-content;
+  padding-inline: var(--space-sm);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-medium);
+  background: var(--color-transparent);
+  box-shadow: none;
 }
 
 .skillPill::before {
-  width: var(--space-xs);
+  width: clamp(0.75rem, 0.65rem + 0.2vw, 0.875rem);
   aspect-ratio: 1;
   content: '';
-  background: var(--color-action-primary);
+  background: currentColor;
   border-radius: 50%;
+}
+
+.skillToneAccent::before {
+  color: var(--color-action-primary);
+}
+
+.skillToneAccent2::before {
+  color: var(--color-action-secondary);
+}
+
+.skillToneAccent3::before {
+  color: var(--color-accent-violet);
+}
+
+.skillRow {
+  @include mix.flex(row, center, center, var(--space-xs), wrap);
 }
 
 .skillsCopy {
@@ -241,13 +265,21 @@
 }
 
 .skillsSection {
+  gap: var(--space-lg);
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  align-items: start;
+  align-items: center;
+  min-width: 0;
 }
 
 .contactSection {
   padding-block: var(--space-section-compact);
   background: var(--color-action-primary);
+}
+
+@include mix.mq(sm) {
+  .skillsSection {
+    grid-template-columns: minmax(0, 1fr) minmax(12rem, 16rem);
+  }
 }
 
 @include mix.mq(md) {
@@ -274,7 +306,8 @@
   }
 
   .skillsSection {
-    grid-template-columns: minmax(0, 1.15fr) minmax(var(--measure-sidebar), 0.85fr);
+    gap: var(--space-xl);
+    grid-template-columns: minmax(0, 1.2fr) minmax(14rem, 18rem);
     align-items: center;
   }
 }
