@@ -24,7 +24,7 @@ export function AboutPage() {
           {siteContent.about.heroImage ? (
             <figure className={sty.galleryCard}>
               <img className={sty.mediaImage} src={siteContent.about.heroImage.src} alt={siteContent.about.heroImage.alt} />
-              <p className={sty.mediaCaption}>A mock workspace view showing the kind of design-to-code system thinking behind the work.</p>
+              {siteContent.about.heroImage.caption ? <p className={sty.mediaCaption}>{siteContent.about.heroImage.caption}</p> : null}
             </figure>
           ) : null}
         </div>

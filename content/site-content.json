@@ -65,7 +65,8 @@
     ],
     "heroImage": {
       "src": "https://picsum.photos/seed/portfolio-about-workspace/1600/1100.jpg",
-      "alt": "Mock workspace scene showing a laptop, interface panels, and layout notes for a design-to-code workflow."
+      "alt": "Mock workspace scene showing a laptop, interface panels, and layout notes for a design-to-code workflow.",
+      "caption": "A mock workspace view showing the kind of design-to-code system thinking behind the work."
     }
   },
   "resume": {

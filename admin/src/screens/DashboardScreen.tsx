@@ -364,6 +364,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Tools (one per line)</span><textarea value={toLines(workingCopy.about.tools)} onChange={(event) => onFieldChange('about.tools', event.target.value)} /></label>
               <label className="admin-field"><span>Hero image src</span><input value={workingCopy.about.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.src', event.target.value)} /></label>
               <label className="admin-field"><span>Hero image alt</span><input value={workingCopy.about.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.alt', event.target.value)} /></label>
+              <label className="admin-field"><span>Hero image caption</span><textarea value={workingCopy.about.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.caption', event.target.value)} /></label>
             </div>
           </article>
 
