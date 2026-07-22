@@ -1682,9 +1682,15 @@ export const App = () => {
           if (!selectedProjectSlug || next.projects.length <= 1) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
           if (projectIndex === -1) return next
+          const removedProjectSlug = next.projects[projectIndex].slug
           next.projects.splice(projectIndex, 1)
-          setSelectedProjectSlug(next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? '')
+          const fallbackProjectSlug = next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? ''
+          setSelectedProjectSlug(fallbackProjectSlug)
           setSelectedProjectGalleryIndex(0)
+          setMediaSlug((current) => (current === removedProjectSlug ? fallbackProjectSlug : current))
+          setMediaTarget((current) => (
+            current && current.area === 'projects' && current.slug === removedProjectSlug ? null : current
+          ))
           return next
         case 'projectGallery': {
           if (index === undefined || !selectedProjectSlug) return next
