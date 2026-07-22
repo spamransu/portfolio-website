@@ -1733,8 +1733,9 @@ export const App = () => {
     } catch (saveError) {
       const apiError = saveError as AdminApiError
       if (handleUnauthorizedError(saveError, 'Your admin session expired. Sign in again.')) return
+      const isReloadConflict = apiError.status === 409 && Boolean(apiError.currentSha)
       setBlogConflict(
-        apiError.status === 409
+        isReloadConflict
           ? {
               currentSha: apiError.currentSha,
               latestCommitSha: apiError.latestCommitSha,
@@ -1742,7 +1743,7 @@ export const App = () => {
           : null,
       )
       setError(
-        apiError.status === 409
+        isReloadConflict
           ? 'Blog save conflict: reload the post before saving again.'
           : apiError.message || 'Failed to save blog post.',
       )
