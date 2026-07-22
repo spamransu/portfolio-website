@@ -43,6 +43,7 @@ interface DashboardScreenProps {
   onMediaAreaChange: (value: string) => void
   onMediaFileChange: (file: File | null) => void
   onMediaSlugChange: (value: string) => void
+  onMediaTargetSelect: (area: string, slug: string) => void
   onMediaUpload: () => void
   onProcessSelect: (value: number) => void
   onProjectGallerySelect: (value: number) => void
@@ -129,6 +130,7 @@ export const DashboardScreen = ({
   onMediaAreaChange,
   onMediaFileChange,
   onMediaSlugChange,
+  onMediaTargetSelect,
   onMediaUpload,
   onProcessSelect,
   onProjectGallerySelect,
@@ -197,6 +199,11 @@ export const DashboardScreen = ({
         Use last upload
       </button>
     ) : null
+  const renderMediaTargetButton = (area: string, slug: string) => (
+    <button type="button" className="admin-button admin-button-secondary" onClick={() => onMediaTargetSelect(area, slug)}>
+      Target uploader here
+    </button>
+  )
 
   return (
     <main className="admin-shell">
@@ -441,7 +448,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Projects intro</span><textarea value={workingCopy.projectsPage?.intro ?? ''} onChange={(event) => onFieldChange('projectsPage.intro', event.target.value)} /></label>
               <label className="admin-field"><span>Project role label prefix</span><input value={workingCopy.projectsPage?.roleLabelPrefix ?? ''} onChange={(event) => onFieldChange('projectsPage.roleLabelPrefix', event.target.value)} /></label>
               <label className="admin-field"><span>Project stack aria template</span><input value={workingCopy.projectsPage?.stackAriaTemplate ?? ''} onChange={(event) => onFieldChange('projectsPage.stackAriaTemplate', event.target.value)} /></label>
-              <label className="admin-field"><span>Projects hero image src</span><input value={workingCopy.projectsPage?.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'projectsPage.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'projectsPage.src', mediaPath))}</label>
+              <label className="admin-field"><span>Projects hero image src</span><input value={workingCopy.projectsPage?.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'projectsPage.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'projectsPage.src', mediaPath))}{renderMediaTargetButton('projects', 'projects-page')}</label>
               <label className="admin-field"><span>Projects hero image alt</span><input value={workingCopy.projectsPage?.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'projectsPage.alt', event.target.value)} /></label>
               <label className="admin-field"><span>Projects hero caption</span><textarea value={workingCopy.projectsPage?.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'projectsPage.caption', event.target.value)} /></label>
             </div>
@@ -453,7 +460,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Blog eyebrow</span><input value={workingCopy.blogPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('blogPage.eyebrow', event.target.value)} /></label>
               <label className="admin-field"><span>Blog title</span><input value={workingCopy.blogPage?.title ?? ''} onChange={(event) => onFieldChange('blogPage.title', event.target.value)} /></label>
               <label className="admin-field"><span>Blog intro</span><textarea value={workingCopy.blogPage?.intro ?? ''} onChange={(event) => onFieldChange('blogPage.intro', event.target.value)} /></label>
-              <label className="admin-field"><span>Blog hero image src</span><input value={workingCopy.blogPage?.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'blogPage.src', mediaPath))}</label>
+              <label className="admin-field"><span>Blog hero image src</span><input value={workingCopy.blogPage?.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'blogPage.src', mediaPath))}{renderMediaTargetButton('blog', 'blog')}</label>
               <label className="admin-field"><span>Blog hero image alt</span><input value={workingCopy.blogPage?.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.alt', event.target.value)} /></label>
               <label className="admin-field"><span>Blog hero caption</span><textarea value={workingCopy.blogPage?.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.caption', event.target.value)} /></label>
             </div>
@@ -516,7 +523,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Body paragraphs (one per line)</span><textarea value={toLines(workingCopy.about.body)} onChange={(event) => onFieldChange('about.body', event.target.value)} /></label>
               <label className="admin-field"><span>Principles (one per line)</span><textarea value={toLines(workingCopy.about.principles)} onChange={(event) => onFieldChange('about.principles', event.target.value)} /></label>
               <label className="admin-field"><span>Tools (one per line)</span><textarea value={toLines(workingCopy.about.tools)} onChange={(event) => onFieldChange('about.tools', event.target.value)} /></label>
-              <label className="admin-field"><span>Hero image src</span><input value={workingCopy.about.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'about.src', mediaPath))}</label>
+              <label className="admin-field"><span>Hero image src</span><input value={workingCopy.about.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'about.src', mediaPath))}{renderMediaTargetButton('about', 'about')}</label>
               <label className="admin-field"><span>Hero image alt</span><input value={workingCopy.about.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.alt', event.target.value)} /></label>
               <label className="admin-field"><span>Hero image caption</span><textarea value={workingCopy.about.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.caption', event.target.value)} /></label>
             </div>
@@ -550,7 +557,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Highlights section title</span><input value={workingCopy.resume.highlightsSectionTitle} onChange={(event) => onFieldChange('resume.highlightsSectionTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Skills section title</span><input value={workingCopy.resume.skillsSectionTitle} onChange={(event) => onFieldChange('resume.skillsSectionTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Experience section title</span><input value={workingCopy.resume.experienceSectionTitle} onChange={(event) => onFieldChange('resume.experienceSectionTitle', event.target.value)} /></label>
-              <label className="admin-field"><span>Resume hero image src</span><input value={workingCopy.resume.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'resume.src', mediaPath))}</label>
+              <label className="admin-field"><span>Resume hero image src</span><input value={workingCopy.resume.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'resume.src', mediaPath))}{renderMediaTargetButton('resume', 'resume')}</label>
               <label className="admin-field"><span>Resume hero image alt</span><input value={workingCopy.resume.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.alt', event.target.value)} /></label>
               <label className="admin-field"><span>Resume hero image caption</span><textarea value={workingCopy.resume.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.caption', event.target.value)} /></label>
             </div>
@@ -630,7 +637,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Form mailto message label</span><input value={workingCopy.contact.form.mailtoMessageLabel} onChange={(event) => onFieldChange('contact.form.mailtoMessageLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Methods section title</span><input value={workingCopy.contact.methodsSectionTitle} onChange={(event) => onFieldChange('contact.methodsSectionTitle', event.target.value)} /></label>
               <label className="admin-field"><span>Methods section intro</span><textarea value={workingCopy.contact.methodsSectionIntro} onChange={(event) => onFieldChange('contact.methodsSectionIntro', event.target.value)} /></label>
-              <label className="admin-field"><span>Contact hero image src</span><input value={workingCopy.contact.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'contact.src', mediaPath))}</label>
+              <label className="admin-field"><span>Contact hero image src</span><input value={workingCopy.contact.heroImage?.src ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('heroImage', 'contact.src', mediaPath))}{renderMediaTargetButton('contact', 'contact')}</label>
               <label className="admin-field"><span>Contact hero image alt</span><input value={workingCopy.contact.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.alt', event.target.value)} /></label>
               <label className="admin-field"><span>Contact hero image caption</span><textarea value={workingCopy.contact.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.caption', event.target.value)} /></label>
             </div>
@@ -674,7 +681,7 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Role</span><input value={selectedProject.role} onChange={(event) => onStructuredFieldChange('project', 'role', event.target.value)} /></label>
                   <label className="admin-field"><span>Summary</span><textarea value={selectedProject.summary} onChange={(event) => onStructuredFieldChange('project', 'summary', event.target.value)} /></label>
                   <label className="admin-field"><span>Challenge</span><textarea value={selectedProject.challenge} onChange={(event) => onStructuredFieldChange('project', 'challenge', event.target.value)} /></label>
-                  <label className="admin-field"><span>Lead image src</span><input value={selectedProject.image?.src ?? ''} onChange={(event) => onStructuredFieldChange('projectImage', 'src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectImage', 'src', mediaPath))}</label>
+                  <label className="admin-field"><span>Lead image src</span><input value={selectedProject.image?.src ?? ''} onChange={(event) => onStructuredFieldChange('projectImage', 'src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectImage', 'src', mediaPath))}{renderMediaTargetButton('projects', selectedProject.slug)}</label>
                   <label className="admin-field"><span>Lead image alt</span><input value={selectedProject.image?.alt ?? ''} onChange={(event) => onStructuredFieldChange('projectImage', 'alt', event.target.value)} /></label>
                   <label className="admin-field"><span>Stack (one per line)</span><textarea value={toLines(selectedProject.stack)} onChange={(event) => onStructuredFieldChange('project', 'stack', event.target.value)} /></label>
                   <label className="admin-field"><span>Approach bullets (one per line)</span><textarea value={toLines(selectedProject.approach)} onChange={(event) => onStructuredFieldChange('project', 'approach', event.target.value)} /></label>
@@ -696,7 +703,7 @@ export const DashboardScreen = ({
                       </label>
                       {selectedProjectGalleryItem ? (
                         <>
-                          <label className="admin-field"><span>Gallery image src</span><input value={selectedProjectGalleryItem.src} onChange={(event) => onStructuredFieldChange('projectGallery', 'src', event.target.value, selectedProjectGalleryIndex)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectGallery', 'src', mediaPath, selectedProjectGalleryIndex))}</label>
+                          <label className="admin-field"><span>Gallery image src</span><input value={selectedProjectGalleryItem.src} onChange={(event) => onStructuredFieldChange('projectGallery', 'src', event.target.value, selectedProjectGalleryIndex)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectGallery', 'src', mediaPath, selectedProjectGalleryIndex))}{renderMediaTargetButton('projects', selectedProject.slug)}</label>
                           <label className="admin-field"><span>Gallery image alt</span><input value={selectedProjectGalleryItem.alt} onChange={(event) => onStructuredFieldChange('projectGallery', 'alt', event.target.value, selectedProjectGalleryIndex)} /></label>
                           <label className="admin-field"><span>Gallery caption</span><textarea value={selectedProjectGalleryItem.caption ?? ''} onChange={(event) => onStructuredFieldChange('projectGallery', 'caption', event.target.value, selectedProjectGalleryIndex)} /></label>
                         </>
@@ -710,7 +717,7 @@ export const DashboardScreen = ({
                       <label className="admin-field"><span>Section kind</span><select value={section.kind} onChange={(event) => onStructuredFieldChange('projectSection', 'kind', event.target.value, index)}><option value="default">default</option><option value="approach">approach</option><option value="outcome">outcome</option></select></label>
                       <label className="admin-field"><span>Section title</span><input value={section.title} onChange={(event) => onStructuredFieldChange('projectSection', 'title', event.target.value, index)} /></label>
                       <label className="admin-field"><span>Section body</span><textarea value={section.body} onChange={(event) => onStructuredFieldChange('projectSection', 'body', event.target.value, index)} /></label>
-                      <label className="admin-field"><span>Section image src</span><input value={section.image?.src ?? ''} onChange={(event) => onStructuredFieldChange('projectSection', 'image.src', event.target.value, index)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectSection', 'image.src', mediaPath, index))}</label>
+                      <label className="admin-field"><span>Section image src</span><input value={section.image?.src ?? ''} onChange={(event) => onStructuredFieldChange('projectSection', 'image.src', event.target.value, index)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectSection', 'image.src', mediaPath, index))}{renderMediaTargetButton('projects', selectedProject.slug)}</label>
                       <label className="admin-field"><span>Section image alt</span><input value={section.image?.alt ?? ''} onChange={(event) => onStructuredFieldChange('projectSection', 'image.alt', event.target.value, index)} /></label>
                       <label className="admin-field"><span>Section image caption</span><textarea value={section.image?.caption ?? ''} onChange={(event) => onStructuredFieldChange('projectSection', 'image.caption', event.target.value, index)} /></label>
                     </div>
@@ -727,6 +734,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Slug</span><input value={mediaSlug} onChange={(event) => onMediaSlugChange(event.target.value)} placeholder="e.g. lightweight-git-backed-portfolio-cms" /></label>
               <label className="admin-field"><span>Image file</span><input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/gif" onChange={(event) => onMediaFileChange(event.target.files?.[0] ?? null)} /></label>
               {mediaPath ? <label className="admin-field"><span>Last uploaded path</span><input readOnly value={mediaPath} /></label> : null}
+              <p className="admin-note">Current uploader target: <span className="admin-code">{mediaArea}/{mediaSlug || '—'}</span></p>
               {mediaPath ? <p className="admin-note">Use the last uploaded path button beside image source fields to apply this asset without copying it manually.</p> : null}
             </div>
           </article>
@@ -743,7 +751,7 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Date</span><input value={blogPost.date} onChange={(event) => onBlogFieldChange('date', event.target.value)} /></label>
                   <label className="admin-field"><span>Status</span><select value={blogPost.status} onChange={(event) => onBlogFieldChange('status', event.target.value)}><option value="draft">draft</option><option value="published">published</option></select></label>
                   {blogPost.sha ? <p className="admin-note">Changing the slug or date will rename the markdown file on the next save.</p> : null}
-                  <label className="admin-field"><span>Cover image</span><input value={blogPost.coverImage ?? ''} onChange={(event) => onBlogFieldChange('coverImage', event.target.value)} />{renderUseLastUploadButton(() => onBlogFieldChange('coverImage', mediaPath))}</label>
+                  <label className="admin-field"><span>Cover image</span><input value={blogPost.coverImage ?? ''} onChange={(event) => onBlogFieldChange('coverImage', event.target.value)} />{renderUseLastUploadButton(() => onBlogFieldChange('coverImage', mediaPath))}{renderMediaTargetButton('blog', blogPost.slug)}</label>
                   <label className="admin-field"><span>Cover alt</span><input value={blogPost.coverAlt ?? ''} onChange={(event) => onBlogFieldChange('coverAlt', event.target.value)} /></label>
                   <label className="admin-field"><span>Excerpt</span><textarea value={blogPost.excerpt ?? ''} onChange={(event) => onBlogFieldChange('excerpt', event.target.value)} /></label>
                   <label className="admin-field"><span>Markdown body</span><textarea className="admin-markdown" value={blogPost.body} onChange={(event) => onBlogFieldChange('body', event.target.value)} /></label>

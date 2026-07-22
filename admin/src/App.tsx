@@ -1665,6 +1665,10 @@ export const App = () => {
       onMediaAreaChange: setMediaArea,
       onMediaFileChange: setMediaFile,
       onMediaSlugChange: setMediaSlug,
+      onMediaTargetSelect: (area: string, slug: string) => {
+        setMediaArea(area)
+        setMediaSlug(slug)
+      },
       onMediaUpload: () => {
         void handleMediaUpload()
       },
