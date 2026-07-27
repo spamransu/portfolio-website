@@ -179,6 +179,29 @@ const syncResetProjectMediaTarget = (
     : null
 }
 
+const syncResetBlogMediaSlug = (
+  currentMediaSlug: string,
+  previousSelectedBlogSlug: string,
+  nextSelectedBlogSlug: string,
+): string => (currentMediaSlug === previousSelectedBlogSlug ? nextSelectedBlogSlug : currentMediaSlug)
+
+const syncResetBlogMediaTarget = (
+  currentMediaTarget: MediaTargetSelection | null,
+  previousSelectedBlogSlug: string,
+  nextPost: BlogPostResponse | null,
+): MediaTargetSelection | null => {
+  if (!currentMediaTarget || currentMediaTarget.kind !== 'blog') return currentMediaTarget
+  if (!nextPost) return null
+
+  if (currentMediaTarget.slug !== previousSelectedBlogSlug && currentMediaTarget.slug === nextPost.slug) {
+    return currentMediaTarget
+  }
+
+  if (currentMediaTarget.slug !== previousSelectedBlogSlug) return null
+
+  return retargetBlogMediaSelection(currentMediaTarget, nextPost.slug, nextPost.title)
+}
+
 const normalizeProjectDetailPage = (value?: SiteContent['projectDetailPage']) => ({
   eyebrow: value?.eyebrow ?? '',
   notFoundTitle: value?.notFoundTitle ?? '',
@@ -1415,12 +1438,13 @@ export const App = () => {
 
     setSelectedBlogPost((current) => (current ? { ...current, post: structuredClone(selectedBlogBaseline) } : current))
     setSelectedBlogSlug(selectedBlogBaseline.slug)
-    setMediaSlug(selectedBlogBaseline.slug)
+    setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, selectedBlogBaseline.slug))
+    setMediaTarget((current) => syncResetBlogMediaTarget(current, selectedBlogSlug, selectedBlogBaseline))
     setBlogStatus(null)
     setBlogConflict(null)
     setError(null)
     setAuthStatus(null)
-  }, [blogList?.posts, confirmDiscardChanges, loadBlogPost, selectedBlogBaseline, selectedBlogPost])
+  }, [blogList?.posts, confirmDiscardChanges, loadBlogPost, selectedBlogBaseline, selectedBlogPost, selectedBlogSlug])
 
   const handleStructuredFieldChange = useCallback((scope: string, field: string, value: string, index?: number) => {
     setWorkingCopy((current) => {
