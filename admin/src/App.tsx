@@ -1922,7 +1922,8 @@ export const App = () => {
       setSelectedBlogSlug(response.post.slug)
       setSelectedBlogPost({ branch: response.branch, post: response.post, repo: response.repo })
       setSelectedBlogBaseline(structuredClone(response.post))
-      setMediaSlug(response.post.slug)
+      setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, response.post.slug))
+      setMediaTarget((current) => syncResetBlogMediaTarget(current, selectedBlogSlug, response.post))
       setBlogActivity({
         latestCommitSha: response.latestCommitSha,
         path: response.post.path,
@@ -1952,7 +1953,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, blogValidationError, handleUnauthorizedError, loadActivity, loadBlogList, selectedBlogPost])
+  }, [blogList, blogValidationError, handleUnauthorizedError, loadActivity, loadBlogList, selectedBlogPost, selectedBlogSlug])
 
   const handleBlogCreate = useCallback(() => {
     if (blogDirty && !confirmDiscardChanges('You have unsaved blog edits. Create a new draft and discard them?')) {
