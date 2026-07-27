@@ -199,6 +199,18 @@ const syncActiveProjectMediaSlug = (
     : currentMediaSlug
 )
 
+const syncClearedProjectMediaSlug = (
+  currentMediaSlug: string,
+  currentMediaArea: string,
+  previousSelectedProjectSlug: string,
+): string => {
+  if (currentMediaArea !== 'projects') return currentMediaSlug
+  if (!currentMediaSlug || currentMediaSlug === previousSelectedProjectSlug || currentMediaSlug === DEFAULT_PROJECTS_MEDIA_SLUG) {
+    return DEFAULT_PROJECTS_MEDIA_SLUG
+  }
+  return currentMediaSlug
+}
+
 const syncEnteredProjectMediaSlug = (
   currentMediaSlug: string,
   currentMediaArea: string,
@@ -1330,7 +1342,11 @@ export const App = () => {
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
       setSelectedProjectSlug(nextProjectSlug)
-      setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
+      setMediaSlug((current) => (
+        nextProjectSlug
+          ? syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug)
+          : syncClearedProjectMediaSlug(current, mediaArea, selectedProjectSlug)
+      ))
       setMediaTarget((current) => (
         syncResetProjectMediaTarget(current, response.content.projects, selectedProjectSlug, nextProjectSlug)
       ))
@@ -1350,7 +1366,7 @@ export const App = () => {
       setSiteContent(null)
       setWorkingCopy(null)
       setSelectedProjectSlug('')
-      setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, ''))
+      setMediaSlug((current) => syncClearedProjectMediaSlug(current, mediaArea, selectedProjectSlug))
       setMediaTarget((current) => syncResetProjectMediaTarget(current, [], selectedProjectSlug, ''))
       setAuthStatus(null)
       setSaveStatus(null)
@@ -1513,7 +1529,11 @@ export const App = () => {
     const nextProjectSlug = getResetProjectSelectionSlug(siteContent.content.projects, selectedProjectSlug)
     setWorkingCopy(structuredClone(siteContent.content))
     setSelectedProjectSlug(nextProjectSlug)
-    setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
+    setMediaSlug((current) => (
+      nextProjectSlug
+        ? syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug)
+        : syncClearedProjectMediaSlug(current, mediaArea, selectedProjectSlug)
+    ))
     setMediaTarget((current) => (
       syncResetProjectMediaTarget(current, siteContent.content.projects, selectedProjectSlug, nextProjectSlug)
     ))
@@ -1952,7 +1972,11 @@ export const App = () => {
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
       setSelectedProjectSlug(nextProjectSlug)
-      setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
+      setMediaSlug((current) => (
+        nextProjectSlug
+          ? syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug)
+          : syncClearedProjectMediaSlug(current, mediaArea, selectedProjectSlug)
+      ))
       setMediaTarget((current) => (
         syncResetProjectMediaTarget(current, response.content.projects, selectedProjectSlug, nextProjectSlug)
       ))
