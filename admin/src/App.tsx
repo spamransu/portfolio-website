@@ -91,6 +91,28 @@ const normalizeSlug = (value: string): string =>
 
 const buildBlogPostPath = (date: string, slug: string): string => `content/blog/${date}-${slug}.md`
 
+const getPreferredMediaSlugForArea = (
+  area: string,
+  currentSlug: string,
+  selectedBlogSlug: string,
+  selectedProjectSlug: string,
+): string => {
+  switch (area) {
+    case 'blog':
+      return selectedBlogSlug || currentSlug
+    case 'projects':
+      return selectedProjectSlug || currentSlug
+    case 'about':
+      return 'about'
+    case 'resume':
+      return 'resume'
+    case 'contact':
+      return 'contact'
+    default:
+      return currentSlug
+  }
+}
+
 const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse => ({
   title: 'Untitled draft',
   slug,
@@ -2060,9 +2082,7 @@ export const App = () => {
     setMediaArea(value)
     setMediaSlug((current) => {
       if (value === mediaArea) return current
-      if (value === 'blog') return selectedBlogSlug
-      if (value === 'projects') return selectedProjectSlug
-      return current
+      return getPreferredMediaSlugForArea(value, current, selectedBlogSlug, selectedProjectSlug)
     })
     setMediaTarget((current) => (current && current.area === value ? current : null))
     setMediaResult(null)
