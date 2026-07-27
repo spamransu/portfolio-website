@@ -2058,10 +2058,16 @@ export const App = () => {
 
   const handleMediaAreaChange = useCallback((value: string) => {
     setMediaArea(value)
+    setMediaSlug((current) => {
+      if (value === mediaArea) return current
+      if (value === 'blog') return selectedBlogSlug
+      if (value === 'projects') return selectedProjectSlug
+      return current
+    })
     setMediaTarget((current) => (current && current.area === value ? current : null))
     setMediaResult(null)
     setMediaStatus(null)
-  }, [])
+  }, [mediaArea, selectedBlogSlug, selectedProjectSlug])
 
   const handleMediaSlugChange = useCallback((value: string) => {
     setMediaSlug(value)
