@@ -601,6 +601,50 @@ const getSiteContentValidationError = (value: unknown): string | null => {
     return `Contact methods must have title, label, description, and a valid mailto, tel, or http/https URL. Check: ${`${invalidMethod.title}` || `${invalidMethod.href}`}.`
   }
 
+  const projectsPage = content.projectsPage as Record<string, unknown> | undefined
+  if (!projectsPage || !`${projectsPage.title}`.trim()) return 'Projects page title is required.'
+  if (!`${projectsPage.intro}`.trim()) return 'Projects page intro is required.'
+
+  const blogPage = content.blogPage as Record<string, unknown> | undefined
+  if (!blogPage || !`${blogPage.title}`.trim()) return 'Blog page title is required.'
+  if (!`${blogPage.intro}`.trim()) return 'Blog page intro is required.'
+
+  const blogPostPage = content.blogPostPage as Record<string, unknown> | undefined
+  if (!blogPostPage || !`${blogPostPage.eyebrowPrefix}`.trim()) return 'Blog post eyebrow prefix is required.'
+  if (!`${blogPostPage.notFoundTitle}`.trim()) return 'Blog post not-found title is required.'
+  if (!`${blogPostPage.notFoundIntro}`.trim()) return 'Blog post not-found intro is required.'
+  if (!`${blogPostPage.backToBlogLabel}`.trim()) return 'Blog post back-to-blog label is required.'
+  if (!`${blogPostPage.startProjectLabel}`.trim()) return 'Blog post start-project label is required.'
+  if (!`${blogPostPage.articleSectionTitle}`.trim()) return 'Blog post article section title is required.'
+
+  const projectDetailPage = content.projectDetailPage as Record<string, unknown> | undefined
+  if (!projectDetailPage || !`${projectDetailPage.notFoundTitle}`.trim()) return 'Project detail not-found title is required.'
+  if (!`${projectDetailPage.notFoundIntro}`.trim()) return 'Project detail not-found intro is required.'
+  if (!`${projectDetailPage.backToProjectsLabel}`.trim()) return 'Project detail back-to-projects label is required.'
+  if (!`${projectDetailPage.startProjectLabel}`.trim()) return 'Project detail start-project label is required.'
+  if (!`${projectDetailPage.snapshotTitle}`.trim()) return 'Project detail snapshot title is required.'
+  if (!`${projectDetailPage.roleLabel}`.trim()) return 'Project detail role label is required.'
+  if (!`${projectDetailPage.clientLabel}`.trim()) return 'Project detail client label is required.'
+  if (!`${projectDetailPage.yearLabel}`.trim()) return 'Project detail year label is required.'
+  if (!`${projectDetailPage.stackLabel}`.trim()) return 'Project detail stack label is required.'
+  if (!`${projectDetailPage.stackAriaTemplate}`.trim()) return 'Project detail stack aria template is required.'
+  if (!`${projectDetailPage.galleryTitle}`.trim()) return 'Project detail gallery title is required.'
+  if (!`${projectDetailPage.galleryIntro}`.trim()) return 'Project detail gallery intro is required.'
+  if (!`${projectDetailPage.nextProjectEyebrow}`.trim()) return 'Project detail next-project eyebrow is required.'
+  if (!`${projectDetailPage.nextProjectLabel}`.trim()) return 'Project detail next-project label is required.'
+  if (!`${projectDetailPage.similarWorkEyebrow}`.trim()) return 'Project detail similar-work eyebrow is required.'
+  if (!`${projectDetailPage.similarWorkTitle}`.trim()) return 'Project detail similar-work title is required.'
+  if (!`${projectDetailPage.similarWorkIntro}`.trim()) return 'Project detail similar-work intro is required.'
+  if (!`${projectDetailPage.similarWorkLabel}`.trim()) return 'Project detail similar-work label is required.'
+
+  const notFoundPage = content.notFoundPage as Record<string, unknown> | undefined
+  if (!notFoundPage || !`${notFoundPage.eyebrow}`.trim()) return '404 page eyebrow is required.'
+  if (!`${notFoundPage.title}`.trim()) return '404 page title is required.'
+  if (!`${notFoundPage.intro}`.trim()) return '404 page intro is required.'
+  if (!`${notFoundPage.suggestionsEyebrow}`.trim()) return '404 page suggestions eyebrow is required.'
+  if (!`${notFoundPage.viewProjectsLabel}`.trim()) return '404 page view-projects label is required.'
+  if (!`${notFoundPage.backHomeLabel}`.trim()) return '404 page back-home label is required.'
+
   return null
 }
 
