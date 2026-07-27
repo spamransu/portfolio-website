@@ -1811,7 +1811,9 @@ export const App = () => {
           })
           setSelectedProjectSlug(nextProjectSlug)
           setSelectedProjectGalleryIndex(0)
-          setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
+          setMediaSlug((current) => (
+            syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, selectedProjectSlug, nextProjectSlug)
+          ))
           setMediaTarget((current) => (
             current && current.area === 'projects' && current.slug !== nextProjectSlug ? null : current
           ))
@@ -1838,7 +1840,7 @@ export const App = () => {
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
-  }, [mediaArea, selectedProjectSlug])
+  }, [mediaArea, mediaTarget, selectedProjectSlug])
 
   const handleStructuredRemove = useCallback((scope: string, index?: number) => {
     const confirmMessageByScope: Record<string, string> = {
@@ -1901,7 +1903,11 @@ export const App = () => {
           const fallbackProjectSlug = next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? ''
           setSelectedProjectSlug(fallbackProjectSlug)
           setSelectedProjectGalleryIndex(0)
-          setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, removedProjectSlug, fallbackProjectSlug))
+          setMediaSlug((current) => (
+            fallbackProjectSlug
+              ? syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, removedProjectSlug, fallbackProjectSlug)
+              : syncClearedProjectMediaSlug(current, mediaArea, removedProjectSlug)
+          ))
           setMediaTarget((current) => (
             syncResetProjectMediaTarget(current, next.projects, removedProjectSlug, fallbackProjectSlug)
           ))
@@ -1934,7 +1940,7 @@ export const App = () => {
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
-  }, [confirmDiscardChanges, mediaArea, selectedProjectSlug])
+  }, [confirmDiscardChanges, mediaArea, mediaTarget, selectedProjectSlug])
 
   const dirty = useMemo(() => {
     if (!siteContent || !workingCopy) return false
