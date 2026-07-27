@@ -1975,17 +1975,13 @@ export const App = () => {
     })
     setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
-    setMediaSlug(slug)
-    setMediaTarget((current) => (
-      current && current.kind === 'blog'
-        ? retargetBlogMediaSelection(current, post.slug, post.title)
-        : current
-    ))
+    setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, post.slug))
+    setMediaTarget((current) => syncResetBlogMediaTarget(current, selectedBlogSlug, post))
     setBlogStatus('New draft created locally. Save it to create the markdown file.')
     setBlogConflict(null)
     setBlogActivity(null)
     setError(null)
-  }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, siteContent?.branch, siteContent?.repo])
+  }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, selectedBlogSlug, siteContent?.branch, siteContent?.repo])
 
   const handleBlogDelete = useCallback(async () => {
     if (!blogList || !selectedBlogPost?.post.sha) return
