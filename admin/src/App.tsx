@@ -100,6 +100,8 @@ const getPreferredMediaSlugForArea = (
   switch (area) {
     case 'blog':
       return selectedBlogSlug || currentSlug
+    case 'home':
+      return 'home'
     case 'projects':
       return selectedProjectSlug || currentSlug
     case 'about':
