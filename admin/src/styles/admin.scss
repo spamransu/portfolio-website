@@ -109,6 +109,15 @@ button {
   font-weight: 600;
 }
 
+.admin-panel summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.admin-panel summary + .admin-copy {
+  margin-top: 0.75rem;
+}
+
 .admin-copy-list {
   margin: 1rem 0 0;
   padding-left: 1.25rem;

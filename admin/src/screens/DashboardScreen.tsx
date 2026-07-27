@@ -533,17 +533,6 @@ export const DashboardScreen = ({
     { id: 'admin-repo-content', label: 'Repo content' },
     { id: 'admin-workflow', label: 'Workflow' },
     { id: 'admin-recent-activity', label: 'Recent activity' },
-    { id: 'admin-home-page', label: 'Home page' },
-    { id: 'admin-site-settings', label: 'Site settings' },
-    { id: 'admin-site-chrome', label: 'Site chrome' },
-    { id: 'admin-project-detail-page', label: 'Project detail page' },
-    { id: 'admin-projects-page', label: 'Projects page' },
-    { id: 'admin-blog-page', label: 'Blog page' },
-    { id: 'admin-blog-post-page', label: 'Blog post page' },
-    { id: 'admin-not-found-page', label: '404 page' },
-    { id: 'admin-about-page', label: 'About page' },
-    { id: 'admin-resume-page', label: 'Resume page' },
-    { id: 'admin-contact-page', label: 'Contact page' },
     { id: 'admin-project-editor', label: 'Project editor' },
     { id: 'admin-media-uploader', label: 'Media uploader' },
     { id: 'admin-blog-editor', label: 'Blog editor' },
@@ -610,7 +599,7 @@ export const DashboardScreen = ({
           <p className="admin-kicker">Portfolio admin</p>
           <h1>Git-backed content dashboard</h1>
           <p className="admin-copy">
-            This admin shell authenticates through GitHub, edits structured site content, exposes blog posts as markdown-backed content, uploads media into the repo, and now covers more repeatable project and profile data.
+            This admin shell stays focused on the main content workflows: add, remove, and refine project case studies; create or delete blog posts; and upload the media those entries need.
           </p>
         </div>
         <div className="admin-actions">
@@ -735,7 +724,7 @@ export const DashboardScreen = ({
         <article className="admin-panel" id="admin-workflow">
           <h2>Workflow</h2>
           <p className="admin-copy">
-            Admin saves commit content to GitHub first. Public updates follow the branch, build, and publish flow for this repo, so this screen tracks content edits rather than final deployment status.
+            Keep this workflow lightweight: save project or blog changes here, review the resulting Git commit, then publish through the normal branch and build flow for the site.
           </p>
           <dl className="admin-meta-list">
             <div><dt>Write branch</dt><dd>{siteBranch ?? '—'}</dd></div>
@@ -743,15 +732,15 @@ export const DashboardScreen = ({
             <div><dt>Selected project</dt><dd>{selectedProjectSlug || '—'}</dd></div>
           </dl>
           <ol className="admin-copy-list">
-            <li>Save site or blog changes here to create a Git commit.</li>
-            <li>Use the repo and activity links to inspect the latest commit.</li>
-            <li>Publish through the repo branch flow after validation passes.</li>
+            <li>Add, reorder, or remove project entries in the project editor.</li>
+            <li>Create, update, duplicate, or delete markdown posts in the blog editor.</li>
+            <li>Use the repo and activity links to inspect the commit before publishing.</li>
           </ol>
         </article>
 
         <article className="admin-panel" id="admin-quick-jump">
           <h2>Quick jump</h2>
-          <p className="admin-copy">Jump straight to the editor section you need instead of scrolling through the full form.</p>
+          <p className="admin-copy">Jump straight to the core project and blog tools instead of the full site-content form.</p>
           <div className="admin-link-grid">
             {quickJumpSections.map((section) => (
               <a key={section.id} className="admin-link-chip" href={`#${section.id}`}>
@@ -807,6 +796,9 @@ export const DashboardScreen = ({
       {workingCopy ? (
         <section className="admin-edit-grid">
           <fieldset disabled={loadingContent || saving} style={{ border: 0, margin: 0, padding: 0, display: 'contents' }}>
+          <details className="admin-panel" id="admin-advanced-site-fields">
+            <summary>Advanced site-content fields</summary>
+            <p className="admin-copy">The user asked for a lighter CMS, so the broad site copy editors stay collapsed by default. Use them only when a project or blog workflow genuinely depends on the surrounding page copy.</p>
           <article className="admin-panel" id="admin-home-page">
             <h2>Home page</h2>
             <div className="admin-form-grid">
@@ -1269,6 +1261,8 @@ export const DashboardScreen = ({
             </div>
             {siteValidation.contactMethods ? <p className="admin-note admin-note-warning">{siteValidation.contactMethods}</p> : null}
           </article>
+
+          </details>
 
           <article className="admin-panel" id="admin-project-editor">
             <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Edit project metadata, stacks, narrative lists, and section copy for the selected case study.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={onProjectDuplicate} disabled={!selectedProject}>Duplicate project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'up')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[0]?.slug === selectedProject.slug}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'down')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[projectOptions.length - 1]?.slug === selectedProject.slug}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
