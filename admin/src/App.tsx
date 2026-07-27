@@ -2089,9 +2089,16 @@ export const App = () => {
   const handleProjectSelect = useCallback((slug: string) => {
     setSelectedProjectSlug(slug)
     setSelectedProjectGalleryIndex(0)
-    setMediaSlug((current) => (current === selectedProjectSlug ? slug : current))
-    setMediaTarget((current) => (current && current.area === 'projects' && current.slug !== slug ? null : current))
-  }, [selectedProjectSlug])
+    setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, slug))
+    setMediaTarget((current) => (
+      syncResetProjectMediaTarget(
+        current,
+        workingCopy?.projects ?? siteContent?.content.projects ?? [],
+        selectedProjectSlug,
+        slug,
+      )
+    ))
+  }, [selectedProjectSlug, siteContent?.content.projects, workingCopy?.projects])
 
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !normalizedMediaSlug || mediaValidationError) return
