@@ -2421,6 +2421,7 @@ export const App = () => {
           setMediaTarget((current) => (
             current && current.area === 'projects' && current.slug !== nextProjectSlug ? null : current
           ))
+          setSaveStatus(`Added ${starterProject.title} locally. Save content to commit it to GitHub.`)
           return next
         case 'projectGallery': {
           if (!selectedProjectSlug) return next
@@ -2753,7 +2754,8 @@ export const App = () => {
           if (!selectedProjectSlug || next.projects.length <= 1) return next
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
           if (projectIndex === -1) return next
-          const removedProjectSlug = next.projects[projectIndex].slug
+          const removedProject = next.projects[projectIndex]
+          const removedProjectSlug = removedProject.slug
           next.projects.splice(projectIndex, 1)
           const nextFeaturedProjectSlugs = next.home.featuredProjects.slugs.filter((slug) => slug !== removedProjectSlug)
           next.home.featuredProjects.slugs = nextFeaturedProjectSlugs
@@ -2772,6 +2774,7 @@ export const App = () => {
           setMediaTarget((current) => (
             syncResetProjectMediaTarget(current, next.projects, removedProjectSlug, fallbackProjectSlug)
           ))
+          setSaveStatus(`Removed ${removedProject.title} locally. Save content to commit the updated project list.`)
           return next
         case 'projectGallery': {
           if (index === undefined || !selectedProjectSlug) return next
@@ -3435,9 +3438,9 @@ export const App = () => {
           ? syncResetProjectMediaTarget(activeTarget, next.projects, selectedProjectSlug, duplicatedProject.slug)
           : null
       ))
+      setSaveStatus(`Duplicated ${sourceProject.title} into ${duplicatedProject.title}. Save content to commit it to GitHub.`)
       return next
     })
-    setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
     setAuthStatus(null)
