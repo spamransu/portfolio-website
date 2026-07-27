@@ -206,7 +206,7 @@ const syncEnteredProjectMediaSlug = (
   previousSelectedProjectSlug: string,
   nextSelectedProjectSlug: string,
 ): string => {
-  if (currentMediaArea !== 'projects') return nextSelectedProjectSlug
+  if (currentMediaArea !== 'projects') return currentMediaSlug
   if (!currentMediaTarget) {
     if (currentMediaSlug === DEFAULT_PROJECTS_MEDIA_SLUG) return nextSelectedProjectSlug
     return syncResetProjectMediaSlug(currentMediaSlug, previousSelectedProjectSlug, nextSelectedProjectSlug)
