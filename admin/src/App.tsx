@@ -158,6 +158,17 @@ const syncResetProjectMediaSlug = (
   nextSelectedProjectSlug: string,
 ): string => (currentMediaSlug === previousSelectedProjectSlug ? nextSelectedProjectSlug : currentMediaSlug)
 
+const syncActiveProjectMediaSlug = (
+  currentMediaSlug: string,
+  currentMediaArea: string,
+  previousSelectedProjectSlug: string,
+  nextSelectedProjectSlug: string,
+): string => (
+  currentMediaArea === 'projects'
+    ? syncResetProjectMediaSlug(currentMediaSlug, previousSelectedProjectSlug, nextSelectedProjectSlug)
+    : currentMediaSlug
+)
+
 const syncResetProjectMediaTarget = (
   currentMediaTarget: MediaTargetSelection | null,
   projects: SiteContent['projects'],
@@ -1239,7 +1250,7 @@ export const App = () => {
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
       setSelectedProjectSlug(nextProjectSlug)
-      setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, nextProjectSlug))
+      setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
       setMediaTarget((current) => (
         syncResetProjectMediaTarget(current, response.content.projects, selectedProjectSlug, nextProjectSlug)
       ))
@@ -1259,7 +1270,7 @@ export const App = () => {
       setSiteContent(null)
       setWorkingCopy(null)
       setSelectedProjectSlug('')
-      setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, ''))
+      setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, ''))
       setMediaTarget((current) => syncResetProjectMediaTarget(current, [], selectedProjectSlug, ''))
       setAuthStatus(null)
       setSaveStatus(null)
@@ -1268,7 +1279,7 @@ export const App = () => {
     } finally {
       setLoadingContent(false)
     }
-  }, [getApiErrorMessage, handleUnauthorizedError, selectedProjectSlug])
+  }, [getApiErrorMessage, handleUnauthorizedError, mediaArea, selectedProjectSlug])
 
   const loadActivity = useCallback(async () => {
     setLoadingActivity(true)
@@ -1422,7 +1433,7 @@ export const App = () => {
     const nextProjectSlug = getResetProjectSelectionSlug(siteContent.content.projects, selectedProjectSlug)
     setWorkingCopy(structuredClone(siteContent.content))
     setSelectedProjectSlug(nextProjectSlug)
-    setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, nextProjectSlug))
+    setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
     setMediaTarget((current) => (
       syncResetProjectMediaTarget(current, siteContent.content.projects, selectedProjectSlug, nextProjectSlug)
     ))
@@ -1437,7 +1448,7 @@ export const App = () => {
     setSiteConflict(null)
     setError(null)
     setAuthStatus(null)
-  }, [confirmDiscardChanges, selectedProjectSlug, siteContent])
+  }, [confirmDiscardChanges, mediaArea, selectedProjectSlug, siteContent])
 
   const handleDiscardBlogChanges = useCallback(() => {
     if (!selectedBlogPost) return
@@ -1579,7 +1590,7 @@ export const App = () => {
           }))
           if (field === 'slug' && typeof nextValue === 'string' && nextValue !== currentProject.slug) {
             setSelectedProjectSlug(nextValue)
-            setMediaSlug((current) => (current === currentProject.slug ? nextValue : current))
+            setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, currentProject.slug, nextValue))
             setMediaTarget((current) => (
               current && current.area === 'projects' && current.slug === currentProject.slug
                 ? retargetProjectMediaSelection(current, nextValue, currentProject.title)
@@ -1646,7 +1657,7 @@ export const App = () => {
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
-  }, [selectedProjectSlug])
+  }, [mediaArea, selectedProjectSlug])
 
   const handleStructuredAdd = useCallback((scope: string) => {
     setWorkingCopy((current) => {
@@ -1696,7 +1707,7 @@ export const App = () => {
           })
           setSelectedProjectSlug(nextProjectSlug)
           setSelectedProjectGalleryIndex(0)
-          setMediaSlug((current) => (current === selectedProjectSlug ? nextProjectSlug : current))
+          setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
           setMediaTarget((current) => (
             current && current.area === 'projects' && current.slug !== nextProjectSlug ? null : current
           ))
@@ -1723,7 +1734,7 @@ export const App = () => {
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
-  }, [selectedProjectSlug])
+  }, [mediaArea, selectedProjectSlug])
 
   const handleStructuredRemove = useCallback((scope: string, index?: number) => {
     const confirmMessageByScope: Record<string, string> = {
@@ -1786,7 +1797,7 @@ export const App = () => {
           const fallbackProjectSlug = next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? ''
           setSelectedProjectSlug(fallbackProjectSlug)
           setSelectedProjectGalleryIndex(0)
-          setMediaSlug((current) => syncResetProjectMediaSlug(current, removedProjectSlug, fallbackProjectSlug))
+          setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, removedProjectSlug, fallbackProjectSlug))
           setMediaTarget((current) => (
             syncResetProjectMediaTarget(current, next.projects, removedProjectSlug, fallbackProjectSlug)
           ))
@@ -1819,7 +1830,7 @@ export const App = () => {
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
-  }, [confirmDiscardChanges, selectedProjectSlug])
+  }, [confirmDiscardChanges, mediaArea, selectedProjectSlug])
 
   const dirty = useMemo(() => {
     if (!siteContent || !workingCopy) return false
@@ -1857,7 +1868,7 @@ export const App = () => {
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
       setSelectedProjectSlug(nextProjectSlug)
-      setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, nextProjectSlug))
+      setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, nextProjectSlug))
       setMediaTarget((current) => (
         syncResetProjectMediaTarget(current, response.content.projects, selectedProjectSlug, nextProjectSlug)
       ))
@@ -1882,7 +1893,7 @@ export const App = () => {
     } finally {
       setSaving(false)
     }
-  }, [handleUnauthorizedError, loadActivity, selectedProjectSlug, siteContent, siteValidationError, workingCopy])
+  }, [handleUnauthorizedError, loadActivity, mediaArea, selectedProjectSlug, siteContent, siteValidationError, workingCopy])
 
   const handleBlogFieldChange = useCallback((field: string, value: string) => {
     setSelectedBlogPost((current) => {
@@ -2100,7 +2111,7 @@ export const App = () => {
   const handleProjectSelect = useCallback((slug: string) => {
     setSelectedProjectSlug(slug)
     setSelectedProjectGalleryIndex(0)
-    setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, slug))
+    setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, slug))
     setMediaTarget((current) => (
       syncResetProjectMediaTarget(
         current,
@@ -2109,7 +2120,7 @@ export const App = () => {
         slug,
       )
     ))
-  }, [selectedProjectSlug, siteContent?.content.projects, workingCopy?.projects])
+  }, [mediaArea, selectedProjectSlug, siteContent?.content.projects, workingCopy?.projects])
 
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !normalizedMediaSlug || mediaValidationError) return
