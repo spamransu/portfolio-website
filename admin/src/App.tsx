@@ -1659,6 +1659,9 @@ export const App = () => {
   const [selectedProjectGalleryIndex, setSelectedProjectGalleryIndex] = useState(0)
   const [selectedHomeStatIndex, setSelectedHomeStatIndex] = useState(0)
   const [selectedSocialIndex, setSelectedSocialIndex] = useState(0)
+  const [selectedHeaderNavIndex, setSelectedHeaderNavIndex] = useState(0)
+  const [selectedFooterGeneralLinkIndex, setSelectedFooterGeneralLinkIndex] = useState(0)
+  const [selectedFooterMoreLinkIndex, setSelectedFooterMoreLinkIndex] = useState(0)
   const [selectedProcessIndex, setSelectedProcessIndex] = useState(0)
   const [selectedHighlightIndex, setSelectedHighlightIndex] = useState(0)
   const [selectedExperienceIndex, setSelectedExperienceIndex] = useState(0)
@@ -1747,6 +1750,9 @@ export const App = () => {
       setSelectedProjectGalleryIndex(0)
       setSelectedHomeStatIndex(0)
       setSelectedSocialIndex(0)
+      setSelectedHeaderNavIndex(0)
+      setSelectedFooterGeneralLinkIndex(0)
+      setSelectedFooterMoreLinkIndex(0)
       setSelectedProcessIndex(0)
       setSelectedHighlightIndex(0)
       setSelectedExperienceIndex(0)
@@ -1942,6 +1948,9 @@ export const App = () => {
     setSelectedProjectGalleryIndex(0)
     setSelectedHomeStatIndex(0)
     setSelectedSocialIndex(0)
+    setSelectedHeaderNavIndex(0)
+    setSelectedFooterGeneralLinkIndex(0)
+    setSelectedFooterMoreLinkIndex(0)
     setSelectedProcessIndex(0)
     setSelectedHighlightIndex(0)
     setSelectedExperienceIndex(0)
@@ -2004,6 +2013,27 @@ export const App = () => {
         case 'social':
           if (index === undefined) return next
           next.site.socials = updateRecordAtIndex(next.site.socials, index, (item) => ({
+            ...item,
+            [field]: value,
+          }))
+          return next
+        case 'headerNav':
+          if (index === undefined || !next.siteChrome) return next
+          next.siteChrome.headerNav = updateRecordAtIndex(next.siteChrome.headerNav, index, (item) => ({
+            ...item,
+            [field]: value,
+          }))
+          return next
+        case 'footerGeneralLink':
+          if (index === undefined || !next.siteChrome) return next
+          next.siteChrome.footer.generalLinks = updateRecordAtIndex(next.siteChrome.footer.generalLinks, index, (item) => ({
+            ...item,
+            [field]: value,
+          }))
+          return next
+        case 'footerMoreLink':
+          if (index === undefined || !next.siteChrome) return next
+          next.siteChrome.footer.moreLinks = updateRecordAtIndex(next.siteChrome.footer.moreLinks, index, (item) => ({
             ...item,
             [field]: value,
           }))
@@ -2176,6 +2206,21 @@ export const App = () => {
           next.site.socials.push({ label: 'New social', href: 'https://' })
           setSelectedSocialIndex(next.site.socials.length - 1)
           return next
+        case 'headerNav':
+          if (!next.siteChrome) return next
+          next.siteChrome.headerNav.push({ to: '/', label: 'New nav link' })
+          setSelectedHeaderNavIndex(next.siteChrome.headerNav.length - 1)
+          return next
+        case 'footerGeneralLink':
+          if (!next.siteChrome) return next
+          next.siteChrome.footer.generalLinks.push({ to: '/', label: 'New footer link' })
+          setSelectedFooterGeneralLinkIndex(next.siteChrome.footer.generalLinks.length - 1)
+          return next
+        case 'footerMoreLink':
+          if (!next.siteChrome) return next
+          next.siteChrome.footer.moreLinks.push({ to: '/', label: 'New footer link' })
+          setSelectedFooterMoreLinkIndex(next.siteChrome.footer.moreLinks.length - 1)
+          return next
         case 'process':
           next.about.process.push({ title: 'New step', description: '' })
           setSelectedProcessIndex(next.about.process.length - 1)
@@ -2256,6 +2301,21 @@ export const App = () => {
           next.site.socials.splice(index + 1, 0, structuredClone(next.site.socials[index]))
           setSelectedSocialIndex(index + 1)
           return next
+        case 'headerNav':
+          if (index === undefined || !next.siteChrome?.headerNav[index]) return next
+          next.siteChrome.headerNav.splice(index + 1, 0, structuredClone(next.siteChrome.headerNav[index]))
+          setSelectedHeaderNavIndex(index + 1)
+          return next
+        case 'footerGeneralLink':
+          if (index === undefined || !next.siteChrome?.footer.generalLinks[index]) return next
+          next.siteChrome.footer.generalLinks.splice(index + 1, 0, structuredClone(next.siteChrome.footer.generalLinks[index]))
+          setSelectedFooterGeneralLinkIndex(index + 1)
+          return next
+        case 'footerMoreLink':
+          if (index === undefined || !next.siteChrome?.footer.moreLinks[index]) return next
+          next.siteChrome.footer.moreLinks.splice(index + 1, 0, structuredClone(next.siteChrome.footer.moreLinks[index]))
+          setSelectedFooterMoreLinkIndex(index + 1)
+          return next
         case 'process':
           if (index === undefined) return next
           next.about.process.splice(index + 1, 0, structuredClone(next.about.process[index]))
@@ -2315,6 +2375,9 @@ export const App = () => {
   const handleStructuredRemove = useCallback((scope: string, index?: number) => {
     const confirmMessageByScope: Record<string, string> = {
       social: 'Remove this social link?',
+      headerNav: 'Remove this header navigation link?',
+      footerGeneralLink: 'Remove this footer general link?',
+      footerMoreLink: 'Remove this footer more link?',
       process: 'Remove this process step?',
       highlight: 'Remove this highlight card?',
       homeStat: 'Remove this home stat card?',
@@ -2338,6 +2401,21 @@ export const App = () => {
           if (index === undefined || next.site.socials.length <= 1) return next
           next.site.socials.splice(index, 1)
           setSelectedSocialIndex(Math.max(0, Math.min(index, next.site.socials.length - 1)))
+          return next
+        case 'headerNav':
+          if (index === undefined || (next.siteChrome?.headerNav.length ?? 0) <= 1) return next
+          next.siteChrome?.headerNav.splice(index, 1)
+          setSelectedHeaderNavIndex(Math.max(0, Math.min(index, (next.siteChrome?.headerNav.length ?? 1) - 1)))
+          return next
+        case 'footerGeneralLink':
+          if (index === undefined || (next.siteChrome?.footer.generalLinks.length ?? 0) <= 1) return next
+          next.siteChrome?.footer.generalLinks.splice(index, 1)
+          setSelectedFooterGeneralLinkIndex(Math.max(0, Math.min(index, (next.siteChrome?.footer.generalLinks.length ?? 1) - 1)))
+          return next
+        case 'footerMoreLink':
+          if (index === undefined || (next.siteChrome?.footer.moreLinks.length ?? 0) <= 1) return next
+          next.siteChrome?.footer.moreLinks.splice(index, 1)
+          setSelectedFooterMoreLinkIndex(Math.max(0, Math.min(index, (next.siteChrome?.footer.moreLinks.length ?? 1) - 1)))
           return next
         case 'process':
           if (index === undefined || next.about.process.length <= 1) return next
@@ -2431,6 +2509,30 @@ export const App = () => {
           if (nextIndex === index) return next
           next.site.socials = moveArrayItem(next.site.socials, index, nextIndex)
           setSelectedSocialIndex(nextIndex)
+          return next
+        }
+        case 'headerNav': {
+          if (index === undefined || !next.siteChrome) return next
+          const nextIndex = resolveNextIndex(next.siteChrome.headerNav.length, index)
+          if (nextIndex === index) return next
+          next.siteChrome.headerNav = moveArrayItem(next.siteChrome.headerNav, index, nextIndex)
+          setSelectedHeaderNavIndex(nextIndex)
+          return next
+        }
+        case 'footerGeneralLink': {
+          if (index === undefined || !next.siteChrome) return next
+          const nextIndex = resolveNextIndex(next.siteChrome.footer.generalLinks.length, index)
+          if (nextIndex === index) return next
+          next.siteChrome.footer.generalLinks = moveArrayItem(next.siteChrome.footer.generalLinks, index, nextIndex)
+          setSelectedFooterGeneralLinkIndex(nextIndex)
+          return next
+        }
+        case 'footerMoreLink': {
+          if (index === undefined || !next.siteChrome) return next
+          const nextIndex = resolveNextIndex(next.siteChrome.footer.moreLinks.length, index)
+          if (nextIndex === index) return next
+          next.siteChrome.footer.moreLinks = moveArrayItem(next.siteChrome.footer.moreLinks, index, nextIndex)
+          setSelectedFooterMoreLinkIndex(nextIndex)
           return next
         }
         case 'process': {
@@ -2926,6 +3028,9 @@ export const App = () => {
   const selectedProjectGalleryItem = selectedProject?.gallery?.[selectedProjectGalleryIndex] ?? null
 
   const selectedSocial = workingCopy?.site.socials[selectedSocialIndex] ?? null
+  const selectedHeaderNavLink = workingCopy?.siteChrome?.headerNav[selectedHeaderNavIndex] ?? null
+  const selectedFooterGeneralLink = workingCopy?.siteChrome?.footer.generalLinks[selectedFooterGeneralLinkIndex] ?? null
+  const selectedFooterMoreLink = workingCopy?.siteChrome?.footer.moreLinks[selectedFooterMoreLinkIndex] ?? null
   const selectedProcess = workingCopy?.about.process[selectedProcessIndex] ?? null
   const selectedHomeStat = workingCopy?.home.stats[selectedHomeStatIndex] ?? null
   const selectedHighlight = workingCopy?.resume.highlights[selectedHighlightIndex] ?? null
@@ -3033,6 +3138,9 @@ export const App = () => {
       onProjectDuplicate: handleProjectDuplicate,
       onHomeStatSelect: setSelectedHomeStatIndex,
       onSocialSelect: setSelectedSocialIndex,
+      onHeaderNavSelect: setSelectedHeaderNavIndex,
+      onFooterGeneralLinkSelect: setSelectedFooterGeneralLinkIndex,
+      onFooterMoreLinkSelect: setSelectedFooterMoreLinkIndex,
       onProcessSelect: setSelectedProcessIndex,
       onHighlightSelect: setSelectedHighlightIndex,
       onExperienceSelect: setSelectedExperienceIndex,
@@ -3047,6 +3155,15 @@ export const App = () => {
       selectedSocial,
       selectedSocialIndex,
       selectedSocialTotal: workingCopy?.site.socials.length ?? 0,
+      selectedHeaderNavLink,
+      selectedHeaderNavIndex,
+      selectedHeaderNavTotal: workingCopy?.siteChrome?.headerNav.length ?? 0,
+      selectedFooterGeneralLink,
+      selectedFooterGeneralLinkIndex,
+      selectedFooterGeneralLinkTotal: workingCopy?.siteChrome?.footer.generalLinks.length ?? 0,
+      selectedFooterMoreLink,
+      selectedFooterMoreLinkIndex,
+      selectedFooterMoreLinkTotal: workingCopy?.siteChrome?.footer.moreLinks.length ?? 0,
       selectedProcess,
       selectedProcessIndex,
       selectedProcessTotal: workingCopy?.about.process.length ?? 0,
@@ -3143,6 +3260,12 @@ export const App = () => {
       selectedBlogMeta,
       selectedExperience,
       selectedExperienceIndex,
+      selectedFooterGeneralLink,
+      selectedFooterGeneralLinkIndex,
+      selectedFooterMoreLink,
+      selectedFooterMoreLinkIndex,
+      selectedHeaderNavIndex,
+      selectedHeaderNavLink,
       selectedHighlight,
       selectedHighlightIndex,
       selectedMethod,

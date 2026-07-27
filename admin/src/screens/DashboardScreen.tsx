@@ -176,6 +176,9 @@ interface DashboardScreenProps {
   onProjectSelect: (value: string) => void
   onHomeStatSelect: (value: number) => void
   onSocialSelect: (value: number) => void
+  onHeaderNavSelect: (value: number) => void
+  onFooterGeneralLinkSelect: (value: number) => void
+  onFooterMoreLinkSelect: (value: number) => void
   onHighlightSelect: (value: number) => void
   onExperienceSelect: (value: number) => void
   onMethodSelect: (value: number) => void
@@ -214,6 +217,15 @@ interface DashboardScreenProps {
   selectedSocial: SocialLink | null
   selectedSocialIndex: number
   selectedSocialTotal: number
+  selectedHeaderNavLink: { to: string; label: string } | null
+  selectedHeaderNavIndex: number
+  selectedHeaderNavTotal: number
+  selectedFooterGeneralLink: { to: string; label: string } | null
+  selectedFooterGeneralLinkIndex: number
+  selectedFooterGeneralLinkTotal: number
+  selectedFooterMoreLink: { to: string; label: string } | null
+  selectedFooterMoreLinkIndex: number
+  selectedFooterMoreLinkTotal: number
   session: AdminSession | null
   siteConflict: {
     currentSha?: string
@@ -328,6 +340,9 @@ export const DashboardScreen = ({
   onProjectSelect,
   onHomeStatSelect,
   onSocialSelect,
+  onHeaderNavSelect,
+  onFooterGeneralLinkSelect,
+  onFooterMoreLinkSelect,
   onHighlightSelect,
   onExperienceSelect,
   onMethodSelect,
@@ -366,6 +381,15 @@ export const DashboardScreen = ({
   selectedSocial,
   selectedSocialIndex,
   selectedSocialTotal,
+  selectedHeaderNavLink,
+  selectedHeaderNavIndex,
+  selectedHeaderNavTotal,
+  selectedFooterGeneralLink,
+  selectedFooterGeneralLinkIndex,
+  selectedFooterGeneralLinkTotal,
+  selectedFooterMoreLink,
+  selectedFooterMoreLinkIndex,
+  selectedFooterMoreLinkTotal,
   session,
   siteConflict,
   siteContent,
@@ -773,14 +797,50 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Skip link label</span><input value={workingCopy.siteChrome?.skipToContentLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.skipToContentLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Header nav aria label</span><input value={workingCopy.siteChrome?.headerNavAriaLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.headerNavAriaLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Footer socials aria label</span><input value={workingCopy.siteChrome?.footerSocialsAriaLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.footerSocialsAriaLabel', event.target.value)} /></label>
-              <label className="admin-field"><span>Header nav links (path | label)</span><textarea value={(workingCopy.siteChrome?.headerNav ?? []).map((link) => `${link.to} | ${link.label}`).join('\n')} onChange={(event) => onFieldChange('siteChrome.headerNav', event.target.value)} /></label>
               <label className="admin-field"><span>Header Linktree label</span><input value={workingCopy.siteChrome?.headerLinktreeLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.headerLinktreeLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Footer copyright template</span><input value={workingCopy.siteChrome?.footer.copyrightTemplate ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.copyrightTemplate', event.target.value)} /></label>
               <label className="admin-field"><span>Footer general heading</span><input value={workingCopy.siteChrome?.footer.generalHeading ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.generalHeading', event.target.value)} /></label>
               <label className="admin-field"><span>Footer more heading</span><input value={workingCopy.siteChrome?.footer.moreHeading ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.moreHeading', event.target.value)} /></label>
-              <label className="admin-field"><span>Footer general links (path | label)</span><textarea value={(workingCopy.siteChrome?.footer.generalLinks ?? []).map((link) => `${link.to} | ${link.label}`).join('\n')} onChange={(event) => onFieldChange('siteChrome.footer.generalLinks', event.target.value)} /></label>
-              <label className="admin-field"><span>Footer more links (path | label)</span><textarea value={(workingCopy.siteChrome?.footer.moreLinks ?? []).map((link) => `${link.to} | ${link.label}`).join('\n')} onChange={(event) => onFieldChange('siteChrome.footer.moreLinks', event.target.value)} /></label>
               <label className="admin-field"><span>Footer Linktree label</span><input value={workingCopy.siteChrome?.footer.linktreeLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.footer.linktreeLabel', event.target.value)} /></label>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Header navigation</h3><p className="admin-copy">Manage the internal links shown in the header.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('headerNav')}>Add link</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('headerNav', selectedHeaderNavIndex)} disabled={!selectedHeaderNavLink}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('headerNav', 'up', selectedHeaderNavIndex)} disabled={selectedHeaderNavIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('headerNav', 'down', selectedHeaderNavIndex)} disabled={selectedHeaderNavIndex >= selectedHeaderNavTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('headerNav', selectedHeaderNavIndex)} disabled={selectedHeaderNavTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected header link</span><select value={selectedHeaderNavIndex} onChange={(event) => onHeaderNavSelect(Number(event.target.value))} disabled={!selectedHeaderNavTotal}>{selectedHeaderNavTotal ? (workingCopy.siteChrome?.headerNav ?? []).map((link, index) => <option key={`${link.to}-${index}`} value={index}>{index + 1} — {link.label || link.to || 'Header link'}</option>) : <option value={0}>No header links yet</option>}</select></label>
+                {!selectedHeaderNavTotal ? <p className="admin-note">No header links yet. Add one to manage the main site navigation here.</p> : null}
+                {selectedHeaderNavLink ? (
+                  <>
+                    <label className="admin-field"><span>Header link path</span><input value={selectedHeaderNavLink.to} onChange={(event) => onStructuredFieldChange('headerNav', 'to', event.target.value, selectedHeaderNavIndex)} /></label>
+                    <label className="admin-field"><span>Header link label</span><input value={selectedHeaderNavLink.label} onChange={(event) => onStructuredFieldChange('headerNav', 'label', event.target.value, selectedHeaderNavIndex)} /></label>
+                  </>
+                ) : null}
+              </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Footer general links</h3><p className="admin-copy">Manage the first footer link group without editing raw path-label lines.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('footerGeneralLink')}>Add link</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('footerGeneralLink', selectedFooterGeneralLinkIndex)} disabled={!selectedFooterGeneralLink}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('footerGeneralLink', 'up', selectedFooterGeneralLinkIndex)} disabled={selectedFooterGeneralLinkIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('footerGeneralLink', 'down', selectedFooterGeneralLinkIndex)} disabled={selectedFooterGeneralLinkIndex >= selectedFooterGeneralLinkTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('footerGeneralLink', selectedFooterGeneralLinkIndex)} disabled={selectedFooterGeneralLinkTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected footer general link</span><select value={selectedFooterGeneralLinkIndex} onChange={(event) => onFooterGeneralLinkSelect(Number(event.target.value))} disabled={!selectedFooterGeneralLinkTotal}>{selectedFooterGeneralLinkTotal ? (workingCopy.siteChrome?.footer.generalLinks ?? []).map((link, index) => <option key={`${link.to}-${index}`} value={index}>{index + 1} — {link.label || link.to || 'Footer link'}</option>) : <option value={0}>No footer general links yet</option>}</select></label>
+                {!selectedFooterGeneralLinkTotal ? <p className="admin-note">No footer general links yet. Add one to populate the first footer column.</p> : null}
+                {selectedFooterGeneralLink ? (
+                  <>
+                    <label className="admin-field"><span>Footer general path</span><input value={selectedFooterGeneralLink.to} onChange={(event) => onStructuredFieldChange('footerGeneralLink', 'to', event.target.value, selectedFooterGeneralLinkIndex)} /></label>
+                    <label className="admin-field"><span>Footer general label</span><input value={selectedFooterGeneralLink.label} onChange={(event) => onStructuredFieldChange('footerGeneralLink', 'label', event.target.value, selectedFooterGeneralLinkIndex)} /></label>
+                  </>
+                ) : null}
+              </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Footer more links</h3><p className="admin-copy">Manage the secondary footer link group as structured items.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('footerMoreLink')}>Add link</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('footerMoreLink', selectedFooterMoreLinkIndex)} disabled={!selectedFooterMoreLink}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('footerMoreLink', 'up', selectedFooterMoreLinkIndex)} disabled={selectedFooterMoreLinkIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('footerMoreLink', 'down', selectedFooterMoreLinkIndex)} disabled={selectedFooterMoreLinkIndex >= selectedFooterMoreLinkTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('footerMoreLink', selectedFooterMoreLinkIndex)} disabled={selectedFooterMoreLinkTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected footer more link</span><select value={selectedFooterMoreLinkIndex} onChange={(event) => onFooterMoreLinkSelect(Number(event.target.value))} disabled={!selectedFooterMoreLinkTotal}>{selectedFooterMoreLinkTotal ? (workingCopy.siteChrome?.footer.moreLinks ?? []).map((link, index) => <option key={`${link.to}-${index}`} value={index}>{index + 1} — {link.label || link.to || 'Footer link'}</option>) : <option value={0}>No footer more links yet</option>}</select></label>
+                {!selectedFooterMoreLinkTotal ? <p className="admin-note">No footer more links yet. Add one to populate the second footer column.</p> : null}
+                {selectedFooterMoreLink ? (
+                  <>
+                    <label className="admin-field"><span>Footer more path</span><input value={selectedFooterMoreLink.to} onChange={(event) => onStructuredFieldChange('footerMoreLink', 'to', event.target.value, selectedFooterMoreLinkIndex)} /></label>
+                    <label className="admin-field"><span>Footer more label</span><input value={selectedFooterMoreLink.label} onChange={(event) => onStructuredFieldChange('footerMoreLink', 'label', event.target.value, selectedFooterMoreLinkIndex)} /></label>
+                  </>
+                ) : null}
+              </div>
             </div>
             {siteValidation.siteChrome ? <p className="admin-note admin-note-warning">{siteValidation.siteChrome}</p> : null}
           </article>
