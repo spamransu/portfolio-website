@@ -264,6 +264,18 @@ const syncEnteredBlogMediaSlug = (
   return nextSelectedBlogSlug
 }
 
+const syncClearedBlogMediaSlug = (
+  currentMediaSlug: string,
+  currentMediaArea: string,
+  previousSelectedBlogSlug: string,
+): string => {
+  if (currentMediaArea !== 'blog') return currentMediaSlug
+  if (!currentMediaSlug || currentMediaSlug === previousSelectedBlogSlug || currentMediaSlug === DEFAULT_BLOG_MEDIA_SLUG) {
+    return DEFAULT_BLOG_MEDIA_SLUG
+  }
+  return currentMediaSlug
+}
+
 const syncResetBlogMediaTarget = (
   currentMediaTarget: MediaTargetSelection | null,
   previousSelectedBlogSlug: string,
@@ -1360,7 +1372,7 @@ export const App = () => {
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
-      setMediaSlug('')
+      setMediaSlug((current) => syncClearedBlogMediaSlug(current, mediaArea, selectedBlogSlug))
       setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       return
     }
@@ -1388,7 +1400,7 @@ export const App = () => {
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
-      setMediaSlug('')
+      setMediaSlug((current) => syncClearedBlogMediaSlug(current, mediaArea, selectedBlogSlug))
       setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       setAuthStatus(null)
       setBlogStatus(null)
@@ -1413,7 +1425,7 @@ export const App = () => {
         setSelectedBlogSlug('')
         setSelectedBlogPost(null)
         setSelectedBlogBaseline(null)
-        setMediaSlug('')
+        setMediaSlug((current) => syncClearedBlogMediaSlug(current, mediaArea, selectedBlogSlug))
         setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       }
     } catch (loadError) {
@@ -1422,14 +1434,14 @@ export const App = () => {
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
-      setMediaSlug('')
+      setMediaSlug((current) => syncClearedBlogMediaSlug(current, mediaArea, selectedBlogSlug))
       setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       setAuthStatus(null)
       setBlogStatus(null)
       setBlogConflict(null)
       setError(getApiErrorMessage(loadError, 'Failed to load blog posts.'))
     }
-  }, [getApiErrorMessage, handleUnauthorizedError, loadBlogPost])
+  }, [getApiErrorMessage, handleUnauthorizedError, loadBlogPost, mediaArea, selectedBlogSlug])
 
   const loadSession = useCallback(async () => {
     setLoading(true)
@@ -1521,7 +1533,11 @@ export const App = () => {
       setSelectedBlogSlug(fallbackSlug)
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
-      setMediaSlug(fallbackSlug)
+      setMediaSlug((current) => (
+        fallbackSlug
+          ? syncEnteredBlogMediaSlug(current, mediaArea, mediaTarget, selectedBlogSlug, fallbackSlug)
+          : syncClearedBlogMediaSlug(current, mediaArea, selectedBlogSlug)
+      ))
       setMediaTarget((current) => (current && current.kind === 'blog' && !fallbackSlug ? null : current))
       setBlogStatus(null)
       setBlogConflict(null)
@@ -1543,7 +1559,7 @@ export const App = () => {
     setBlogConflict(null)
     setError(null)
     setAuthStatus(null)
-  }, [blogList?.posts, confirmDiscardChanges, loadBlogPost, selectedBlogBaseline, selectedBlogPost, selectedBlogSlug])
+  }, [blogList?.posts, confirmDiscardChanges, loadBlogPost, mediaArea, mediaTarget, selectedBlogBaseline, selectedBlogPost, selectedBlogSlug])
 
   const handleStructuredFieldChange = useCallback((scope: string, field: string, value: string, index?: number) => {
     setWorkingCopy((current) => {
