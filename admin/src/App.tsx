@@ -90,6 +90,12 @@ const normalizeSlug = (value: string): string =>
     .replace(/^-+|-+$/g, '')
 
 const buildBlogPostPath = (date: string, slug: string): string => `content/blog/${date}-${slug}.md`
+const DEFAULT_BLOG_MEDIA_SLUG = 'blog'
+const DEFAULT_HOME_MEDIA_SLUG = 'home'
+const DEFAULT_PROJECTS_MEDIA_SLUG = 'projects-page'
+const DEFAULT_ABOUT_MEDIA_SLUG = 'about'
+const DEFAULT_RESUME_MEDIA_SLUG = 'resume'
+const DEFAULT_CONTACT_MEDIA_SLUG = 'contact'
 
 const getPreferredMediaSlugForArea = (
   area: string,
@@ -99,17 +105,17 @@ const getPreferredMediaSlugForArea = (
 ): string => {
   switch (area) {
     case 'blog':
-      return selectedBlogSlug || 'blog'
+      return selectedBlogSlug || DEFAULT_BLOG_MEDIA_SLUG
     case 'home':
-      return 'home'
+      return DEFAULT_HOME_MEDIA_SLUG
     case 'projects':
-      return selectedProjectSlug || 'projects-page'
+      return selectedProjectSlug || DEFAULT_PROJECTS_MEDIA_SLUG
     case 'about':
-      return 'about'
+      return DEFAULT_ABOUT_MEDIA_SLUG
     case 'resume':
-      return 'resume'
+      return DEFAULT_RESUME_MEDIA_SLUG
     case 'contact':
-      return 'contact'
+      return DEFAULT_CONTACT_MEDIA_SLUG
     default:
       return currentSlug
   }
@@ -202,6 +208,7 @@ const syncEnteredProjectMediaSlug = (
 ): string => {
   if (currentMediaArea !== 'projects') return nextSelectedProjectSlug
   if (!currentMediaTarget) {
+    if (currentMediaSlug === DEFAULT_PROJECTS_MEDIA_SLUG) return nextSelectedProjectSlug
     return syncResetProjectMediaSlug(currentMediaSlug, previousSelectedProjectSlug, nextSelectedProjectSlug)
   }
   if (currentMediaTarget.area !== 'projects') return nextSelectedProjectSlug
@@ -247,6 +254,7 @@ const syncEnteredBlogMediaSlug = (
 ): string => {
   if (currentMediaArea !== 'blog') return nextSelectedBlogSlug
   if (!currentMediaTarget) {
+    if (currentMediaSlug === DEFAULT_BLOG_MEDIA_SLUG) return nextSelectedBlogSlug
     return syncResetBlogMediaSlug(currentMediaSlug, previousSelectedBlogSlug, nextSelectedBlogSlug)
   }
   if (currentMediaTarget.area !== 'blog') return nextSelectedBlogSlug
