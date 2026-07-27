@@ -35,7 +35,11 @@ type SiteValidationState = {
   site?: string
   socials?: string
   siteChrome?: string
+  homePage?: string
   homeContact?: string
+  aboutPage?: string
+  resumePage?: string
+  contactPage?: string
   contactForm?: string
   contactMethods?: string
   projectsPage?: string
@@ -1084,6 +1088,38 @@ const isInternalPath = (value: string): boolean => value.startsWith('/')
 const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug: string): SiteValidationState => {
   if (!content) return {}
 
+  const hasNonEmptyItems = (items: string[]): boolean => items.some((item) => item.trim())
+  const getImageValidationError = (label: string, image?: { src: string; alt: string; caption?: string }): string | undefined => {
+    if (!image) return undefined
+    if (!image.src.trim() && ((image.alt ?? '').trim() || (image.caption ?? '').trim())) {
+      return `${label} image src is required when image details are set.`
+    }
+    if (image.src.trim() && !image.alt.trim()) {
+      return `${label} image alt text is required.`
+    }
+    return undefined
+  }
+
+  const getContactFormContentError = (label: string, form: SiteContent['home']['contact'] | SiteContent['contact']['form']): string | undefined => {
+    if (!form.title.trim()) return `${label} title is required.`
+    if (!form.submitLabel.trim()) return `${label} submit label is required.`
+    if (!form.nameLabel.trim()) return `${label} name label is required.`
+    if (!form.emailLabel.trim()) return `${label} email label is required.`
+    if (!form.messageLabel.trim()) return `${label} message label is required.`
+    if (!form.namePlaceholder.trim()) return `${label} name placeholder is required.`
+    if (!form.emailPlaceholder.trim()) return `${label} email placeholder is required.`
+    if (!form.messagePlaceholder.trim()) return `${label} message placeholder is required.`
+    if (!form.nameRequiredError.trim()) return `${label} name-required error is required.`
+    if (!form.emailRequiredError.trim()) return `${label} email-required error is required.`
+    if (!form.emailInvalidError.trim()) return `${label} email-invalid error is required.`
+    if (!form.messageRequiredError.trim()) return `${label} message-required error is required.`
+    if (!form.mailtoSubjectTemplate.trim()) return `${label} mailto subject template is required.`
+    if (!form.mailtoNameLabel.trim()) return `${label} mailto name label is required.`
+    if (!form.mailtoEmailLabel.trim()) return `${label} mailto email label is required.`
+    if (!form.mailtoMessageLabel.trim()) return `${label} mailto message label is required.`
+    return undefined
+  }
+
   const getProjectValidationError = (project: SiteContent['projects'][number] | null): string | undefined => {
     if (!project) return undefined
     if (!project.title.trim()) return 'Project title is required.'
@@ -1143,6 +1179,10 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
   const invalidGeneralLink = content.siteChrome?.footer.generalLinks.find((entry) => !entry.label.trim() || !isInternalPath(entry.to.trim()))
   const invalidMoreLink = content.siteChrome?.footer.moreLinks.find((entry) => !entry.label.trim() || !isInternalPath(entry.to.trim()))
   const invalidMethod = content.contact.methods.find((entry) => !entry.title.trim() || !entry.label.trim() || !entry.description.trim() || !isContactHref(entry.href.trim()))
+  const invalidHomeStat = content.home.stats.find((entry) => !entry.value.trim() || !entry.label.trim())
+  const invalidProcessStep = content.about.process.find((entry) => !entry.title.trim() || !entry.description.trim())
+  const invalidHighlight = content.resume.highlights.find((entry) => !entry.value.trim() || !entry.label.trim())
+  const invalidExperience = content.resume.experience.find((entry) => !entry.role.trim() || !entry.company.trim() || !entry.period.trim() || !entry.highlights.some((item) => item.trim()))
 
   const homeMessageLimit = content.home.contact.messageLimit
   const contactMessageLimit = content.contact.form.messageLimit
@@ -1182,6 +1222,31 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
         : invalidMoreLink
           ? `Footer more links must use internal paths that start with /. Check: ${invalidMoreLink.to || invalidMoreLink.label}.`
           : undefined,
+    homePage: !content.home.hero.eyebrow.trim()
+      ? 'Home hero eyebrow is required.'
+      : !hasNonEmptyItems(content.home.hero.titleLines)
+        ? 'Home hero title needs at least one line.'
+        : !content.home.hero.description.trim()
+          ? 'Home hero description is required.'
+          : !content.home.cta.primaryLabel.trim()
+            ? 'Home primary CTA label is required.'
+            : !content.home.featuredProjects.title.trim()
+              ? 'Featured projects title is required.'
+              : !content.home.bio.eyebrow.trim()
+                ? 'Home bio eyebrow is required.'
+                : !hasNonEmptyItems(content.home.bio.titleLines)
+                  ? 'Home bio title needs at least one line.'
+                  : !content.home.bio.description.trim()
+                    ? 'Home bio description is required.'
+                    : invalidHomeStat
+                      ? `Home stats need both value and label. Check: ${invalidHomeStat.label || invalidHomeStat.value || 'empty stat'}.`
+                      : !content.home.skills.title.trim()
+                        ? 'Home skills title is required.'
+                        : !content.home.skills.description.trim()
+                          ? 'Home skills description is required.'
+                          : !hasNonEmptyItems(content.home.skills.items)
+                            ? 'Home skills need at least one item.'
+                            : getContactFormContentError('Home contact form', content.home.contact),
     homeContact: !Number.isInteger(homeMessageLimit) || homeMessageLimit <= 0
       ? 'Home contact message limit must be a whole number greater than 0.'
       : !content.home.contact.messageCountTemplate.includes('{count}') || !content.home.contact.messageCountTemplate.includes('{limit}')
@@ -1189,6 +1254,68 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
         : !content.home.contact.messageTooLongError.includes('{limit}')
           ? 'Home contact message-too-long error must include {limit}.'
           : undefined,
+    aboutPage: !content.about.title.trim()
+      ? 'About page title is required.'
+      : !content.about.intro.trim()
+        ? 'About page intro is required.'
+        : !content.about.bodySectionTitle.trim()
+          ? 'About body section title is required.'
+          : !content.about.processSectionTitle.trim()
+            ? 'About process section title is required.'
+            : !content.about.processSectionIntro.trim()
+              ? 'About process section intro is required.'
+              : !content.about.principlesSectionTitle.trim()
+                ? 'About principles section title is required.'
+                : !content.about.toolsSectionTitle.trim()
+                  ? 'About tools section title is required.'
+                  : !hasNonEmptyItems(content.about.body)
+                    ? 'About body needs at least one paragraph.'
+                    : !hasNonEmptyItems(content.about.principles)
+                      ? 'About principles need at least one item.'
+                      : invalidProcessStep
+                        ? `About process steps need both title and description. Check: ${invalidProcessStep.title || invalidProcessStep.description || 'empty step'}.`
+                        : !hasNonEmptyItems(content.about.tools)
+                          ? 'About tools need at least one item.'
+                          : getImageValidationError('About hero', content.about.heroImage),
+    resumePage: !content.resume.headline.trim()
+      ? 'Resume headline is required.'
+      : !content.resume.summary.trim()
+        ? 'Resume summary is required.'
+        : !content.resume.highlightsSectionTitle.trim()
+          ? 'Resume highlights section title is required.'
+          : !content.resume.skillsSectionTitle.trim()
+            ? 'Resume skills section title is required.'
+            : !content.resume.experienceSectionTitle.trim()
+              ? 'Resume experience section title is required.'
+              : invalidHighlight
+                ? `Resume highlights need both value and label. Check: ${invalidHighlight.label || invalidHighlight.value || 'empty highlight'}.`
+                : !hasNonEmptyItems(content.resume.skills)
+                  ? 'Resume skills need at least one item.'
+                  : invalidExperience
+                    ? `Resume experience entries need role, company, period, and at least one highlight. Check: ${invalidExperience.role || invalidExperience.company || 'empty experience'}.`
+                    : getImageValidationError('Resume hero', content.resume.heroImage),
+    contactPage: !content.contact.title.trim()
+      ? 'Contact page title is required.'
+      : !content.contact.body.trim()
+        ? 'Contact page intro is required.'
+        : !content.contact.availabilityTitle.trim()
+          ? 'Contact availability title is required.'
+          : !content.contact.availabilityStatusLabel.trim()
+            ? 'Contact availability status label is required.'
+            : !content.contact.availabilityLocationLabel.trim()
+              ? 'Contact availability location label is required.'
+              : !content.contact.availability.trim()
+                ? 'Contact availability body is required.'
+                : !content.contact.formSectionTitle.trim()
+                  ? 'Contact form section title is required.'
+                  : !content.contact.formSectionIntro.trim()
+                    ? 'Contact form section intro is required.'
+                    : !content.contact.methodsSectionTitle.trim()
+                      ? 'Contact methods section title is required.'
+                      : !content.contact.methodsSectionIntro.trim()
+                        ? 'Contact methods section intro is required.'
+                        : getContactFormContentError('Contact form', content.contact.form)
+                          ?? getImageValidationError('Contact hero', content.contact.heroImage),
     contactForm: !Number.isInteger(contactMessageLimit) || contactMessageLimit <= 0
       ? 'Contact form message limit must be a whole number greater than 0.'
       : !content.contact.form.messageCountTemplate.includes('{count}') || !content.contact.form.messageCountTemplate.includes('{limit}')
@@ -2137,7 +2264,11 @@ export const App = () => {
     ?? siteValidation.site
     ?? siteValidation.socials
     ?? siteValidation.siteChrome
+    ?? siteValidation.homePage
     ?? siteValidation.homeContact
+    ?? siteValidation.aboutPage
+    ?? siteValidation.resumePage
+    ?? siteValidation.contactPage
     ?? siteValidation.contactForm
     ?? siteValidation.contactMethods
     ?? siteValidation.projectsPage

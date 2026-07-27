@@ -538,9 +538,39 @@ const getSiteContentValidationError = (value: unknown): string | null => {
   const home = content.home as Record<string, unknown>
   const contact = content.contact as Record<string, unknown>
   const projects = content.projects as Array<Record<string, unknown>>
+  const about = content.about as Record<string, unknown>
+  const resume = content.resume as Record<string, unknown>
   const getProjectLabel = (project: Record<string, unknown>) => `${project.slug}` || `${project.title}` || 'this project'
   const hasNonEmptyItems = (value: unknown): boolean =>
     Array.isArray(value) && value.some((item) => `${item}`.trim())
+  const getImageValidationError = (label: string, image: unknown): string | null => {
+    if (!isRecord(image)) return null
+    const src = `${image.src}`.trim()
+    const alt = `${image.alt}`.trim()
+    const caption = `${image.caption ?? ''}`.trim()
+    if (!src && (alt || caption)) return `${label} image src is required when image details are set.`
+    if (src && !alt) return `${label} image alt text is required.`
+    return null
+  }
+  const getContactFormContentError = (label: string, form: Record<string, unknown>): string | null => {
+    if (!`${form.title}`.trim()) return `${label} title is required.`
+    if (!`${form.submitLabel}`.trim()) return `${label} submit label is required.`
+    if (!`${form.nameLabel}`.trim()) return `${label} name label is required.`
+    if (!`${form.emailLabel}`.trim()) return `${label} email label is required.`
+    if (!`${form.messageLabel}`.trim()) return `${label} message label is required.`
+    if (!`${form.namePlaceholder}`.trim()) return `${label} name placeholder is required.`
+    if (!`${form.emailPlaceholder}`.trim()) return `${label} email placeholder is required.`
+    if (!`${form.messagePlaceholder}`.trim()) return `${label} message placeholder is required.`
+    if (!`${form.nameRequiredError}`.trim()) return `${label} name-required error is required.`
+    if (!`${form.emailRequiredError}`.trim()) return `${label} email-required error is required.`
+    if (!`${form.emailInvalidError}`.trim()) return `${label} email-invalid error is required.`
+    if (!`${form.messageRequiredError}`.trim()) return `${label} message-required error is required.`
+    if (!`${form.mailtoSubjectTemplate}`.trim()) return `${label} mailto subject template is required.`
+    if (!`${form.mailtoNameLabel}`.trim()) return `${label} mailto name label is required.`
+    if (!`${form.mailtoEmailLabel}`.trim()) return `${label} mailto email label is required.`
+    if (!`${form.mailtoMessageLabel}`.trim()) return `${label} mailto message label is required.`
+    return null
+  }
 
   const getProjectContentValidationError = (project: Record<string, unknown>): string | null => {
     if (!`${project.title}`.trim()) return 'Project title is required.'
@@ -653,14 +683,91 @@ const getSiteContentValidationError = (value: unknown): string | null => {
   const homeContactError = validateContactFormConfig(home.contact as Record<string, unknown>, 'Home contact')
   if (homeContactError) return homeContactError
 
+  if (!`${(home.hero as Record<string, unknown>).eyebrow}`.trim()) return 'Home hero eyebrow is required.'
+  if (!hasNonEmptyItems((home.hero as Record<string, unknown>).titleLines)) return 'Home hero title needs at least one line.'
+  if (!`${(home.hero as Record<string, unknown>).description}`.trim()) return 'Home hero description is required.'
+  if (!`${(home.cta as Record<string, unknown>).primaryLabel}`.trim()) return 'Home primary CTA label is required.'
+
+  const homeFeaturedProjects = home.featuredProjects as Record<string, unknown>
+  if (!`${homeFeaturedProjects.title}`.trim()) return 'Featured projects title is required.'
+
+  const homeBio = home.bio as Record<string, unknown>
+  if (!`${homeBio.eyebrow}`.trim()) return 'Home bio eyebrow is required.'
+  if (!hasNonEmptyItems(homeBio.titleLines)) return 'Home bio title needs at least one line.'
+  if (!`${homeBio.description}`.trim()) return 'Home bio description is required.'
+
+  const invalidHomeStat = (home.stats as Array<Record<string, unknown>>).find((entry) => !`${entry.value}`.trim() || !`${entry.label}`.trim())
+  if (invalidHomeStat) {
+    return `Home stats need both value and label. Check: ${`${invalidHomeStat.label}` || `${invalidHomeStat.value}` || 'empty stat'}.`
+  }
+
+  const homeSkills = home.skills as Record<string, unknown>
+  if (!`${homeSkills.title}`.trim()) return 'Home skills title is required.'
+  if (!`${homeSkills.description}`.trim()) return 'Home skills description is required.'
+  if (!hasNonEmptyItems(homeSkills.items)) return 'Home skills need at least one item.'
+
+  const homeContactContentError = getContactFormContentError('Home contact form', home.contact as Record<string, unknown>)
+  if (homeContactContentError) return homeContactContentError
+
+  if (!`${about.title}`.trim()) return 'About page title is required.'
+  if (!`${about.intro}`.trim()) return 'About page intro is required.'
+  if (!`${about.bodySectionTitle}`.trim()) return 'About body section title is required.'
+  if (!`${about.processSectionTitle}`.trim()) return 'About process section title is required.'
+  if (!`${about.processSectionIntro}`.trim()) return 'About process section intro is required.'
+  if (!`${about.principlesSectionTitle}`.trim()) return 'About principles section title is required.'
+  if (!`${about.toolsSectionTitle}`.trim()) return 'About tools section title is required.'
+  if (!hasNonEmptyItems(about.body)) return 'About body needs at least one paragraph.'
+  if (!hasNonEmptyItems(about.principles)) return 'About principles need at least one item.'
+  const invalidProcessStep = (about.process as Array<Record<string, unknown>>).find((entry) => !`${entry.title}`.trim() || !`${entry.description}`.trim())
+  if (invalidProcessStep) {
+    return `About process steps need both title and description. Check: ${`${invalidProcessStep.title}` || `${invalidProcessStep.description}` || 'empty step'}.`
+  }
+  if (!hasNonEmptyItems(about.tools)) return 'About tools need at least one item.'
+  const aboutHeroError = getImageValidationError('About hero', about.heroImage)
+  if (aboutHeroError) return aboutHeroError
+
+  if (!`${resume.headline}`.trim()) return 'Resume headline is required.'
+  if (!`${resume.summary}`.trim()) return 'Resume summary is required.'
+  if (!`${resume.highlightsSectionTitle}`.trim()) return 'Resume highlights section title is required.'
+  if (!`${resume.skillsSectionTitle}`.trim()) return 'Resume skills section title is required.'
+  if (!`${resume.experienceSectionTitle}`.trim()) return 'Resume experience section title is required.'
+  const invalidHighlight = (resume.highlights as Array<Record<string, unknown>>).find((entry) => !`${entry.value}`.trim() || !`${entry.label}`.trim())
+  if (invalidHighlight) {
+    return `Resume highlights need both value and label. Check: ${`${invalidHighlight.label}` || `${invalidHighlight.value}` || 'empty highlight'}.`
+  }
+  if (!hasNonEmptyItems(resume.skills)) return 'Resume skills need at least one item.'
+  const invalidExperience = (resume.experience as Array<Record<string, unknown>>)
+    .find((entry) => !`${entry.role}`.trim() || !`${entry.company}`.trim() || !`${entry.period}`.trim() || !hasNonEmptyItems(entry.highlights))
+  if (invalidExperience) {
+    return `Resume experience entries need role, company, period, and at least one highlight. Check: ${`${invalidExperience.role}` || `${invalidExperience.company}` || 'empty experience'}.`
+  }
+  const resumeHeroError = getImageValidationError('Resume hero', resume.heroImage)
+  if (resumeHeroError) return resumeHeroError
+
   const contactFormError = validateContactFormConfig(contact.form as Record<string, unknown>, 'Contact form')
   if (contactFormError) return contactFormError
+
+  if (!`${contact.title}`.trim()) return 'Contact page title is required.'
+  if (!`${contact.body}`.trim()) return 'Contact page intro is required.'
+  if (!`${contact.availabilityTitle}`.trim()) return 'Contact availability title is required.'
+  if (!`${contact.availabilityStatusLabel}`.trim()) return 'Contact availability status label is required.'
+  if (!`${contact.availabilityLocationLabel}`.trim()) return 'Contact availability location label is required.'
+  if (!`${contact.availability}`.trim()) return 'Contact availability body is required.'
+  if (!`${contact.formSectionTitle}`.trim()) return 'Contact form section title is required.'
+  if (!`${contact.formSectionIntro}`.trim()) return 'Contact form section intro is required.'
+  if (!`${contact.methodsSectionTitle}`.trim()) return 'Contact methods section title is required.'
+  if (!`${contact.methodsSectionIntro}`.trim()) return 'Contact methods section intro is required.'
+
+  const contactFormContentError = getContactFormContentError('Contact form', contact.form as Record<string, unknown>)
+  if (contactFormContentError) return contactFormContentError
 
   const invalidMethod = (contact.methods as Array<Record<string, unknown>>)
     .find((entry) => !`${entry.title}`.trim() || !`${entry.label}`.trim() || !`${entry.description}`.trim() || !isContactHref(`${entry.href}`.trim()))
   if (invalidMethod) {
     return `Contact methods must have title, label, description, and a valid mailto, tel, or http/https URL. Check: ${`${invalidMethod.title}` || `${invalidMethod.href}`}.`
   }
+  const contactHeroError = getImageValidationError('Contact hero', contact.heroImage)
+  if (contactHeroError) return contactHeroError
 
   const projectsPage = content.projectsPage as Record<string, unknown> | undefined
   if (!projectsPage || !`${projectsPage.title}`.trim()) return 'Projects page title is required.'

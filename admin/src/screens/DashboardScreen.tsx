@@ -122,7 +122,11 @@ interface DashboardScreenProps {
     site?: string
     socials?: string
     siteChrome?: string
+    homePage?: string
     homeContact?: string
+    aboutPage?: string
+    resumePage?: string
+    contactPage?: string
     contactForm?: string
     contactMethods?: string
     projectsPage?: string
@@ -718,6 +722,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Home contact mailto email label</span><input value={workingCopy.home.contact.mailtoEmailLabel} onChange={(event) => onFieldChange('home.contact.mailtoEmailLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Home contact mailto message label</span><input value={workingCopy.home.contact.mailtoMessageLabel} onChange={(event) => onFieldChange('home.contact.mailtoMessageLabel', event.target.value)} /></label>
             </div>
+            {siteValidation.homePage ? <p className="admin-note admin-note-warning">{siteValidation.homePage}</p> : null}
           </article>
 
           <article className="admin-panel" id="admin-home-stats">
@@ -893,6 +898,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Hero image caption</span><textarea value={workingCopy.about.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('About hero image', workingCopy.about.heroImage?.src, workingCopy.about.heroImage?.alt, workingCopy.about.heroImage?.caption)}
             </div>
+            {siteValidation.aboutPage ? <p className="admin-note admin-note-warning">{siteValidation.aboutPage}</p> : null}
           </article>
 
           <article className="admin-panel" id="admin-process-steps">
@@ -928,6 +934,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Resume hero image caption</span><textarea value={workingCopy.resume.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('Resume hero image', workingCopy.resume.heroImage?.src, workingCopy.resume.heroImage?.alt, workingCopy.resume.heroImage?.caption)}
             </div>
+            {siteValidation.resumePage ? <p className="admin-note admin-note-warning">{siteValidation.resumePage}</p> : null}
           </article>
 
           <article className="admin-panel" id="admin-resume-highlights">
@@ -1009,6 +1016,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Contact hero image caption</span><textarea value={workingCopy.contact.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'contact.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('Contact hero image', workingCopy.contact.heroImage?.src, workingCopy.contact.heroImage?.alt, workingCopy.contact.heroImage?.caption)}
             </div>
+            {siteValidation.contactPage ? <p className="admin-note admin-note-warning">{siteValidation.contactPage}</p> : null}
             {siteValidation.contactForm ? <p className="admin-note admin-note-warning">{siteValidation.contactForm}</p> : null}
           </article>
 
