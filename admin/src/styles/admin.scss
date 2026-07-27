@@ -90,6 +90,33 @@ button {
   margin-top: 1rem;
 }
 
+.admin-link-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.admin-link-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #eff4ff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.admin-copy-list {
+  margin: 1rem 0 0;
+  padding-left: 1.25rem;
+  color: #b3c2e5;
+  display: grid;
+  gap: 0.5rem;
+}
+
 .admin-kicker,
 .admin-note,
 .admin-copy,

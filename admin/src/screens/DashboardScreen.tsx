@@ -396,6 +396,27 @@ export const DashboardScreen = ({
   const unsavedLocalDraftOptionLabel = blogPost
     ? `${blogPost.date} — ${blogPost.title || blogPost.slug || 'Unsaved draft'} (unsaved draft)`
     : 'Unsaved draft'
+  const quickJumpSections = [
+    { id: 'admin-session', label: 'Session' },
+    { id: 'admin-repo-content', label: 'Repo content' },
+    { id: 'admin-workflow', label: 'Workflow' },
+    { id: 'admin-recent-activity', label: 'Recent activity' },
+    { id: 'admin-home-page', label: 'Home page' },
+    { id: 'admin-site-settings', label: 'Site settings' },
+    { id: 'admin-site-chrome', label: 'Site chrome' },
+    { id: 'admin-project-detail-page', label: 'Project detail page' },
+    { id: 'admin-projects-page', label: 'Projects page' },
+    { id: 'admin-blog-page', label: 'Blog page' },
+    { id: 'admin-blog-post-page', label: 'Blog post page' },
+    { id: 'admin-not-found-page', label: '404 page' },
+    { id: 'admin-about-page', label: 'About page' },
+    { id: 'admin-resume-page', label: 'Resume page' },
+    { id: 'admin-contact-page', label: 'Contact page' },
+    { id: 'admin-project-editor', label: 'Project editor' },
+    { id: 'admin-media-uploader', label: 'Media uploader' },
+    { id: 'admin-blog-editor', label: 'Blog editor' },
+    { id: 'admin-live-json-preview', label: 'Live JSON preview' },
+  ]
   const sanitizedMediaSlug = sanitizePathSegment(mediaSlug)
   const resolvedUploadFilename = mediaFile ? resolveMediaFilename(mediaFile.name, mediaFile.type) : ''
   const nextUploadRepoPath = mediaFile && sanitizedMediaSlug ? `public/images/${mediaArea}/${sanitizedMediaSlug}/${resolvedUploadFilename}` : ''
@@ -530,7 +551,7 @@ export const DashboardScreen = ({
       {copyStatus ? <section className="admin-panel admin-success">{copyStatus}</section> : null}
 
       <section className="admin-grid">
-        <article className="admin-panel">
+        <article className="admin-panel" id="admin-session">
           <h2>Session</h2>
           <dl className="admin-meta-list">
             <div><dt>Status</dt><dd>{session?.authenticated ? 'Authenticated' : 'Signed out'}</dd></div>
@@ -540,7 +561,7 @@ export const DashboardScreen = ({
           </dl>
         </article>
 
-        <article className="admin-panel">
+        <article className="admin-panel" id="admin-repo-content">
           <h2>Repo content</h2>
           <dl className="admin-meta-list">
             <div><dt>Branch</dt><dd>{siteContent?.branch ?? '—'}</dd></div>
@@ -579,7 +600,36 @@ export const DashboardScreen = ({
           </div>
         </article>
 
-        <article className="admin-panel">
+        <article className="admin-panel" id="admin-workflow">
+          <h2>Workflow</h2>
+          <p className="admin-copy">
+            Admin saves commit content to GitHub first. Public updates follow the branch, build, and publish flow for this repo, so this screen tracks content edits rather than final deployment status.
+          </p>
+          <dl className="admin-meta-list">
+            <div><dt>Write branch</dt><dd>{siteBranch ?? '—'}</dd></div>
+            <div><dt>Selected post</dt><dd>{selectedBlogSlug || '—'}</dd></div>
+            <div><dt>Selected project</dt><dd>{selectedProjectSlug || '—'}</dd></div>
+          </dl>
+          <ol className="admin-copy-list">
+            <li>Save site or blog changes here to create a Git commit.</li>
+            <li>Use the repo and activity links to inspect the latest commit.</li>
+            <li>Publish through the repo branch flow after validation passes.</li>
+          </ol>
+        </article>
+
+        <article className="admin-panel" id="admin-quick-jump">
+          <h2>Quick jump</h2>
+          <p className="admin-copy">Jump straight to the editor section you need instead of scrolling through the full form.</p>
+          <div className="admin-link-grid">
+            {quickJumpSections.map((section) => (
+              <a key={section.id} className="admin-link-chip" href={`#${section.id}`}>
+                {section.label}
+              </a>
+            ))}
+          </div>
+        </article>
+
+        <article className="admin-panel" id="admin-recent-activity">
           <div className="admin-panel-header">
             <div>
               <h2>Recent activity</h2>
@@ -625,7 +675,7 @@ export const DashboardScreen = ({
       {workingCopy ? (
         <section className="admin-edit-grid">
           <fieldset disabled={loadingContent || saving} style={{ border: 0, margin: 0, padding: 0, display: 'contents' }}>
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-home-page">
             <h2>Home page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Hero eyebrow</span><input value={workingCopy.home.hero.eyebrow} onChange={(event) => onFieldChange('home.hero.eyebrow', event.target.value)} /></label>
@@ -670,7 +720,7 @@ export const DashboardScreen = ({
             </div>
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-home-stats">
             <div className="admin-panel-header"><div><h2>Home stats</h2><p className="admin-copy">Edit the stat cards shown on the homepage bio section.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('homeStat')}>Add stat</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('homeStat', selectedHomeStatIndex)} disabled={selectedHomeStatTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -691,7 +741,7 @@ export const DashboardScreen = ({
             {siteValidation.homeContact ? <p className="admin-note admin-note-warning">{siteValidation.homeContact}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-site-settings">
             <h2>Site settings</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Name</span><input value={workingCopy.site.name} onChange={(event) => onFieldChange('site.name', event.target.value)} /></label>
@@ -704,7 +754,7 @@ export const DashboardScreen = ({
             {siteValidation.site ? <p className="admin-note admin-note-warning">{siteValidation.site}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-site-chrome">
             <h2>Site chrome</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Skip link label</span><input value={workingCopy.siteChrome?.skipToContentLabel ?? ''} onChange={(event) => onFieldChange('siteChrome.skipToContentLabel', event.target.value)} /></label>
@@ -722,7 +772,7 @@ export const DashboardScreen = ({
             {siteValidation.siteChrome ? <p className="admin-note admin-note-warning">{siteValidation.siteChrome}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-project-detail-page">
             <h2>Project detail page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.projectDetailPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('projectDetailPage.eyebrow', event.target.value)} /></label>
@@ -748,7 +798,7 @@ export const DashboardScreen = ({
             {siteValidation.projectDetailPage ? <p className="admin-note admin-note-warning">{siteValidation.projectDetailPage}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-projects-page">
             <h2>Projects page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Projects eyebrow</span><input value={workingCopy.projectsPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('projectsPage.eyebrow', event.target.value)} /></label>
@@ -764,7 +814,7 @@ export const DashboardScreen = ({
             {siteValidation.projectsPage ? <p className="admin-note admin-note-warning">{siteValidation.projectsPage}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-blog-page">
             <h2>Blog page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Blog eyebrow</span><input value={workingCopy.blogPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('blogPage.eyebrow', event.target.value)} /></label>
@@ -778,7 +828,7 @@ export const DashboardScreen = ({
             {siteValidation.blogPage ? <p className="admin-note admin-note-warning">{siteValidation.blogPage}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-blog-post-page">
             <h2>Blog post page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Blog eyebrow prefix</span><input value={workingCopy.blogPostPage?.eyebrowPrefix ?? ''} onChange={(event) => onFieldChange('blogPostPage.eyebrowPrefix', event.target.value)} /></label>
@@ -791,7 +841,7 @@ export const DashboardScreen = ({
             {siteValidation.blogPostPage ? <p className="admin-note admin-note-warning">{siteValidation.blogPostPage}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-not-found-page">
             <h2>404 page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.notFoundPage?.eyebrow ?? ''} onChange={(event) => onFieldChange('notFoundPage.eyebrow', event.target.value)} /></label>
@@ -804,7 +854,7 @@ export const DashboardScreen = ({
             {siteValidation.notFoundPage ? <p className="admin-note admin-note-warning">{siteValidation.notFoundPage}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-social-links">
             <div className="admin-panel-header"><div><h2>Social links</h2><p className="admin-copy">Edit the existing social entries from the site config.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('social')}>Add social</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('social', selectedSocialIndex)} disabled={selectedSocialTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -824,7 +874,7 @@ export const DashboardScreen = ({
             {siteValidation.socials ? <p className="admin-note admin-note-warning">{siteValidation.socials}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-about-page">
             <h2>About page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.about.eyebrow ?? ''} onChange={(event) => onFieldChange('about.eyebrow', event.target.value)} /></label>
@@ -845,7 +895,7 @@ export const DashboardScreen = ({
             </div>
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-process-steps">
             <div className="admin-panel-header"><div><h2>Process steps</h2><p className="admin-copy">Edit the repeatable process cards shown on the about page.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('process')}>Add step</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('process', selectedProcessIndex)} disabled={selectedProcessTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -864,7 +914,7 @@ export const DashboardScreen = ({
             </div>
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-resume-page">
             <h2>Resume page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.resume.eyebrow ?? ''} onChange={(event) => onFieldChange('resume.eyebrow', event.target.value)} /></label>
@@ -880,7 +930,7 @@ export const DashboardScreen = ({
             </div>
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-resume-highlights">
             <div className="admin-panel-header"><div><h2>Resume highlights</h2><p className="admin-copy">Edit headline stat cards shown on the resume page.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('highlight')}>Add highlight</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('highlight', selectedHighlightIndex)} disabled={selectedHighlightTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -899,7 +949,7 @@ export const DashboardScreen = ({
             </div>
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-resume-experience">
             <div className="admin-panel-header"><div><h2>Resume experience</h2><p className="admin-copy">Edit each experience entry and its bullet highlights.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('experience')}>Add experience</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('experience', selectedExperienceIndex)} disabled={selectedExperienceTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -920,7 +970,7 @@ export const DashboardScreen = ({
             </div>
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-contact-page">
             <h2>Contact page</h2>
             <div className="admin-form-grid">
               <label className="admin-field"><span>Eyebrow</span><input value={workingCopy.contact.eyebrow ?? ''} onChange={(event) => onFieldChange('contact.eyebrow', event.target.value)} /></label>
@@ -962,7 +1012,7 @@ export const DashboardScreen = ({
             {siteValidation.contactForm ? <p className="admin-note admin-note-warning">{siteValidation.contactForm}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-contact-methods">
             <div className="admin-panel-header"><div><h2>Contact methods</h2><p className="admin-copy">Edit each contact method card.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('method')}>Add method</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('method', selectedMethodIndex)} disabled={selectedMethodTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -984,7 +1034,7 @@ export const DashboardScreen = ({
             {siteValidation.contactMethods ? <p className="admin-note admin-note-warning">{siteValidation.contactMethods}</p> : null}
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-project-editor">
             <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Edit project metadata, stacks, narrative lists, and section copy for the selected case study.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
@@ -1015,7 +1065,7 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Stack (one per line)</span><textarea value={toLines(selectedProject.stack)} onChange={(event) => onStructuredFieldChange('project', 'stack', event.target.value)} /></label>
                   <label className="admin-field"><span>Approach bullets (one per line)</span><textarea value={toLines(selectedProject.approach)} onChange={(event) => onStructuredFieldChange('project', 'approach', event.target.value)} /></label>
                   <label className="admin-field"><span>Outcome bullets (one per line)</span><textarea value={toLines(selectedProject.outcome)} onChange={(event) => onStructuredFieldChange('project', 'outcome', event.target.value)} /></label>
-                  <div className="admin-panel admin-panel--subtle">
+                  <div className="admin-panel admin-panel--subtle" id="admin-project-gallery">
                     <div className="admin-panel-header">
                       <div><h2>Project gallery</h2><p className="admin-copy">Edit gallery images for the selected project.</p></div>
                       <div className="admin-actions">
@@ -1064,7 +1114,7 @@ export const DashboardScreen = ({
           </article>
           </fieldset>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-media-uploader">
             <div className="admin-panel-header">
               <div>
                 <h2>Media uploader</h2>
@@ -1116,7 +1166,7 @@ export const DashboardScreen = ({
             </fieldset>
           </article>
 
-          <article className="admin-panel">
+          <article className="admin-panel" id="admin-blog-editor">
             <div className="admin-panel-header">
               <div>
                 <h2>Blog editor</h2>
@@ -1221,7 +1271,7 @@ export const DashboardScreen = ({
             </div>
           </article>
 
-          <section className="admin-panel">
+          <section className="admin-panel" id="admin-live-json-preview">
             <div className="admin-panel-header">
               <div>
                 <h2>Live JSON preview</h2>
