@@ -252,7 +252,7 @@ const syncEnteredBlogMediaSlug = (
   previousSelectedBlogSlug: string,
   nextSelectedBlogSlug: string,
 ): string => {
-  if (currentMediaArea !== 'blog') return nextSelectedBlogSlug
+  if (currentMediaArea !== 'blog') return currentMediaSlug
   if (!currentMediaTarget) {
     if (currentMediaSlug === DEFAULT_BLOG_MEDIA_SLUG) return nextSelectedBlogSlug
     return syncResetBlogMediaSlug(currentMediaSlug, previousSelectedBlogSlug, nextSelectedBlogSlug)
