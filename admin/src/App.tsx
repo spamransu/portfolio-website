@@ -1209,19 +1209,47 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
       : undefined,
     site: !EMAIL_PATTERN.test(content.site.email.trim())
       ? 'Site email must use a valid email address.'
-      : !isHttpUrl(content.site.siteUrl.trim())
-        ? 'Site URL must use a full http or https URL.'
-        : undefined,
+      : !content.site.name.trim()
+        ? 'Site name is required.'
+        : !content.site.tagline.trim()
+          ? 'Site tagline is required.'
+          : !content.site.description.trim()
+            ? 'Site description is required.'
+            : !content.site.location.trim()
+              ? 'Site location is required.'
+              : !isHttpUrl(content.site.siteUrl.trim())
+                ? 'Site URL must use a full http or https URL.'
+                : undefined,
     socials: invalidSocial
       ? `Social links must have a label and a full http or https URL. Check: ${invalidSocial.label || invalidSocial.href}.`
       : undefined,
-    siteChrome: invalidHeaderNav
-      ? `Header nav links must use internal paths that start with /. Check: ${invalidHeaderNav.to || invalidHeaderNav.label}.`
-      : invalidGeneralLink
-        ? `Footer general links must use internal paths that start with /. Check: ${invalidGeneralLink.to || invalidGeneralLink.label}.`
-        : invalidMoreLink
-          ? `Footer more links must use internal paths that start with /. Check: ${invalidMoreLink.to || invalidMoreLink.label}.`
-          : undefined,
+    siteChrome: !content.siteChrome?.skipToContentLabel.trim()
+      ? 'Skip link label is required.'
+      : !content.siteChrome.headerNavAriaLabel.trim()
+        ? 'Header nav aria label is required.'
+        : !content.siteChrome.footerSocialsAriaLabel.trim()
+          ? 'Footer socials aria label is required.'
+          : !(content.siteChrome.headerNav?.length)
+            ? 'Header nav needs at least one link.'
+            : invalidHeaderNav
+              ? `Header nav links must use internal paths that start with /. Check: ${invalidHeaderNav.to || invalidHeaderNav.label}.`
+              : !content.siteChrome.footer.copyrightTemplate.trim()
+                ? 'Footer copyright template is required.'
+                : !content.siteChrome.footer.copyrightTemplate.includes('{year}') || !content.siteChrome.footer.copyrightTemplate.includes('{siteName}')
+                  ? 'Footer copyright template must include both {year} and {siteName}.'
+                  : !content.siteChrome.footer.generalHeading.trim()
+                    ? 'Footer general heading is required.'
+                    : !content.siteChrome.footer.moreHeading.trim()
+                      ? 'Footer more heading is required.'
+                      : !(content.siteChrome.footer.generalLinks?.length)
+                        ? 'Footer general links need at least one link.'
+                        : invalidGeneralLink
+                          ? `Footer general links must use internal paths that start with /. Check: ${invalidGeneralLink.to || invalidGeneralLink.label}.`
+                          : !(content.siteChrome.footer.moreLinks?.length)
+                            ? 'Footer more links need at least one link.'
+                            : invalidMoreLink
+                              ? `Footer more links must use internal paths that start with /. Check: ${invalidMoreLink.to || invalidMoreLink.label}.`
+                              : undefined,
     homePage: !content.home.hero.eyebrow.trim()
       ? 'Home hero eyebrow is required.'
       : !hasNonEmptyItems(content.home.hero.titleLines)
@@ -1330,12 +1358,12 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
       ? 'Projects page title is required.'
       : !projectsPage.intro.trim()
         ? 'Projects page intro is required.'
-        : undefined,
+        : getImageValidationError('Projects page hero', projectsPage.heroImage),
     blogPage: !blogPage?.title.trim()
       ? 'Blog page title is required.'
       : !blogPage.intro.trim()
         ? 'Blog page intro is required.'
-        : undefined,
+        : getImageValidationError('Blog page hero', blogPage.heroImage),
     blogPostPage: !blogPostPage?.eyebrowPrefix.trim()
       ? 'Blog post eyebrow prefix is required.'
       : !blogPostPage.notFoundTitle.trim()

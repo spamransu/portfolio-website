@@ -626,6 +626,10 @@ const getSiteContentValidationError = (value: unknown): string | null => {
   }
 
   if (!EMAIL_PATTERN.test(`${site.email}`.trim())) return 'Site email must use a valid email address.'
+  if (!`${site.name}`.trim()) return 'Site name is required.'
+  if (!`${site.tagline}`.trim()) return 'Site tagline is required.'
+  if (!`${site.description}`.trim()) return 'Site description is required.'
+  if (!`${site.location}`.trim()) return 'Site location is required.'
   if (!isHttpUrl(`${site.siteUrl}`.trim())) return 'Site URL must use a full http or https URL.'
 
   const invalidSocial = (site.socials as Array<Record<string, unknown>>)
@@ -635,6 +639,10 @@ const getSiteContentValidationError = (value: unknown): string | null => {
   }
 
   if (siteChrome) {
+    if (!`${siteChrome.skipToContentLabel}`.trim()) return 'Skip link label is required.'
+    if (!`${siteChrome.headerNavAriaLabel}`.trim()) return 'Header nav aria label is required.'
+    if (!`${siteChrome.footerSocialsAriaLabel}`.trim()) return 'Footer socials aria label is required.'
+    if (!Array.isArray(siteChrome.headerNav) || !siteChrome.headerNav.length) return 'Header nav needs at least one link.'
     const invalidHeaderNav = (siteChrome.headerNav as Array<Record<string, unknown>>)
       .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
     if (invalidHeaderNav) {
@@ -642,12 +650,20 @@ const getSiteContentValidationError = (value: unknown): string | null => {
     }
 
     const footer = siteChrome.footer as Record<string, unknown>
+    if (!`${footer.copyrightTemplate}`.trim()) return 'Footer copyright template is required.'
+    if (!`${footer.copyrightTemplate}`.includes('{year}') || !`${footer.copyrightTemplate}`.includes('{siteName}')) {
+      return 'Footer copyright template must include both {year} and {siteName}.'
+    }
+    if (!`${footer.generalHeading}`.trim()) return 'Footer general heading is required.'
+    if (!`${footer.moreHeading}`.trim()) return 'Footer more heading is required.'
+    if (!Array.isArray(footer.generalLinks) || !footer.generalLinks.length) return 'Footer general links need at least one link.'
     const invalidGeneralLink = (footer.generalLinks as Array<Record<string, unknown>>)
       .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
     if (invalidGeneralLink) {
       return `Footer general links must use internal paths that start with /. Check: ${`${invalidGeneralLink.to}` || `${invalidGeneralLink.label}`}.`
     }
 
+    if (!Array.isArray(footer.moreLinks) || !footer.moreLinks.length) return 'Footer more links need at least one link.'
     const invalidMoreLink = (footer.moreLinks as Array<Record<string, unknown>>)
       .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
     if (invalidMoreLink) {
@@ -772,10 +788,14 @@ const getSiteContentValidationError = (value: unknown): string | null => {
   const projectsPage = content.projectsPage as Record<string, unknown> | undefined
   if (!projectsPage || !`${projectsPage.title}`.trim()) return 'Projects page title is required.'
   if (!`${projectsPage.intro}`.trim()) return 'Projects page intro is required.'
+  const projectsPageHeroError = getImageValidationError('Projects page hero', projectsPage.heroImage)
+  if (projectsPageHeroError) return projectsPageHeroError
 
   const blogPage = content.blogPage as Record<string, unknown> | undefined
   if (!blogPage || !`${blogPage.title}`.trim()) return 'Blog page title is required.'
   if (!`${blogPage.intro}`.trim()) return 'Blog page intro is required.'
+  const blogPageHeroError = getImageValidationError('Blog page hero', blogPage.heroImage)
+  if (blogPageHeroError) return blogPageHeroError
 
   const blogPostPage = content.blogPostPage as Record<string, unknown> | undefined
   if (!blogPostPage || !`${blogPostPage.eyebrowPrefix}`.trim()) return 'Blog post eyebrow prefix is required.'
