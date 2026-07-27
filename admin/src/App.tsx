@@ -1272,8 +1272,11 @@ export const App = () => {
 
   const loadBlogPost = useCallback(async (slug: string) => {
     if (!slug) {
+      setSelectedBlogSlug('')
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
+      setMediaSlug('')
+      setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       return
     }
 
@@ -1283,9 +1286,9 @@ export const App = () => {
       const response = await adminApi.getBlogPost(slug)
       setSelectedBlogPost(response)
       setSelectedBlogBaseline(structuredClone(response.post))
-      setSelectedBlogSlug(slug)
+      setSelectedBlogSlug(response.post.slug)
       setMediaArea('blog')
-      setMediaSlug(slug)
+      setMediaSlug(response.post.slug)
       setMediaTarget((current) => (
         current && current.kind === 'blog'
           ? retargetBlogMediaSelection(current, response.post.slug, response.post.title)
@@ -1297,8 +1300,11 @@ export const App = () => {
       setAuthStatus(null)
     } catch (loadError) {
       if (handleUnauthorizedError(loadError, 'Your admin session expired. Sign in again.')) return
+      setSelectedBlogSlug('')
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
+      setMediaSlug('')
+      setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       setError(getApiErrorMessage(loadError, 'Failed to load blog post.'))
     } finally {
       setLoadingBlog(false)
