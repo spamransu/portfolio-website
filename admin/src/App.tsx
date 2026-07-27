@@ -185,6 +185,17 @@ const syncResetBlogMediaSlug = (
   nextSelectedBlogSlug: string,
 ): string => (currentMediaSlug === previousSelectedBlogSlug ? nextSelectedBlogSlug : currentMediaSlug)
 
+const syncEnteredBlogMediaSlug = (
+  currentMediaSlug: string,
+  currentMediaArea: string,
+  previousSelectedBlogSlug: string,
+  nextSelectedBlogSlug: string,
+): string => (
+  currentMediaArea === 'blog'
+    ? syncResetBlogMediaSlug(currentMediaSlug, previousSelectedBlogSlug, nextSelectedBlogSlug)
+    : nextSelectedBlogSlug
+)
+
 const syncResetBlogMediaTarget = (
   currentMediaTarget: MediaTargetSelection | null,
   previousSelectedBlogSlug: string,
@@ -1294,7 +1305,7 @@ export const App = () => {
       setSelectedBlogBaseline(structuredClone(response.post))
       setSelectedBlogSlug(response.post.slug)
       setMediaArea('blog')
-      setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, response.post.slug))
+      setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, selectedBlogSlug, response.post.slug))
       setMediaTarget((current) => (
         current && current.kind === 'blog'
           ? syncResetBlogMediaTarget(current, selectedBlogSlug, response.post)
@@ -1318,7 +1329,7 @@ export const App = () => {
     } finally {
       setLoadingBlog(false)
     }
-  }, [getApiErrorMessage, handleUnauthorizedError, selectedBlogSlug])
+  }, [getApiErrorMessage, handleUnauthorizedError, mediaArea, selectedBlogSlug])
 
   const loadBlogList = useCallback(async (preferredSlug?: string) => {
     try {
@@ -1975,7 +1986,7 @@ export const App = () => {
     })
     setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
-    setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, post.slug))
+    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, selectedBlogSlug, post.slug))
     setMediaTarget((current) => (
       current && current.kind === 'blog'
         ? syncResetBlogMediaTarget(current, selectedBlogSlug, post)
@@ -1985,7 +1996,7 @@ export const App = () => {
     setBlogConflict(null)
     setBlogActivity(null)
     setError(null)
-  }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, selectedBlogSlug, siteContent?.branch, siteContent?.repo])
+  }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, mediaArea, selectedBlogSlug, siteContent?.branch, siteContent?.repo])
 
   const handleBlogDelete = useCallback(async () => {
     if (!blogList || !selectedBlogPost?.post.sha) return
