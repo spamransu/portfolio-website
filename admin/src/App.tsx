@@ -1669,8 +1669,9 @@ export const App = () => {
           setSelectedMethodIndex(next.contact.methods.length - 1)
           return next
         case 'project':
+          const nextProjectSlug = `new-project-${next.projects.length + 1}`
           next.projects.push({
-            slug: `new-project-${next.projects.length + 1}`,
+            slug: nextProjectSlug,
             title: 'New project',
             year: todayDate().slice(0, 4),
             client: 'Client',
@@ -1682,8 +1683,12 @@ export const App = () => {
             outcome: [],
             sections: [{ kind: 'default', title: 'Overview', body: '' }],
           })
-          setSelectedProjectSlug(next.projects[next.projects.length - 1].slug)
+          setSelectedProjectSlug(nextProjectSlug)
           setSelectedProjectGalleryIndex(0)
+          setMediaSlug((current) => (current === selectedProjectSlug ? nextProjectSlug : current))
+          setMediaTarget((current) => (
+            current && current.area === 'projects' && current.slug !== nextProjectSlug ? null : current
+          ))
           return next
         case 'projectGallery': {
           if (!selectedProjectSlug) return next
