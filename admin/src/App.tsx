@@ -2415,6 +2415,7 @@ export const App = () => {
           next.projects.push(starterProject)
           setSelectedProjectSlug(nextProjectSlug)
           setSelectedProjectGalleryIndex(0)
+          setMediaArea('projects')
           setMediaSlug((current) => (
             syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, selectedProjectSlug, nextProjectSlug)
           ))
@@ -2766,6 +2767,7 @@ export const App = () => {
           const fallbackProjectSlug = next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? ''
           setSelectedProjectSlug(fallbackProjectSlug)
           setSelectedProjectGalleryIndex(0)
+          setMediaArea('projects')
           setMediaSlug((current) => (
             fallbackProjectSlug
               ? syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, removedProjectSlug, fallbackProjectSlug)
@@ -3399,6 +3401,7 @@ export const App = () => {
     setSelectedProjectStackIndex(0)
     setSelectedProjectApproachIndex(0)
     setSelectedProjectOutcomeIndex(0)
+    setMediaArea('projects')
     setMediaSlug((current) => (
       syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, selectedProjectSlug, slug)
     ))
