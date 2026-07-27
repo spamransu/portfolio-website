@@ -1265,7 +1265,32 @@ export const DashboardScreen = ({
           </details>
 
           <article className="admin-panel" id="admin-project-editor">
-            <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Edit project metadata, stacks, narrative lists, and section copy for the selected case study.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={onProjectDuplicate} disabled={!selectedProject}>Duplicate project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'up')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[0]?.slug === selectedProject.slug}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'down')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[projectOptions.length - 1]?.slug === selectedProject.slug}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Keep project management first-class here: add new case studies, remove old ones, reorder the archive, then refine the selected entry below.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={onProjectDuplicate} disabled={!selectedProject}>Duplicate project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'up')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[0]?.slug === selectedProject.slug}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'down')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[projectOptions.length - 1]?.slug === selectedProject.slug}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header">
+                <div>
+                  <h3>Project library</h3>
+                  <p className="admin-copy">Select an entry to edit it. New projects appear here immediately before you save the JSON back to GitHub.</p>
+                </div>
+                <div className="admin-actions">
+                  <p className="admin-note">{projectOptions.length} total projects</p>
+                </div>
+              </div>
+              <div className="admin-selection-grid">
+                {projectOptions.map((project, index) => (
+                  <button
+                    key={project.slug}
+                    type="button"
+                    className={`admin-selection-card${project.slug === selectedProjectSlug ? ' admin-selection-card-active' : ''}`}
+                    onClick={() => onProjectSelect(project.slug)}
+                  >
+                    <span className="admin-kicker">Project {index + 1}</span>
+                    <strong>{project.title}</strong>
+                    <span className="admin-note admin-code">{project.slug}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected project</span>
@@ -1421,7 +1446,7 @@ export const DashboardScreen = ({
             <div className="admin-panel-header">
               <div>
                 <h2>Blog editor</h2>
-                <p className="admin-copy">Select a post from content/blog and edit its frontmatter plus markdown body.</p>
+                <p className="admin-copy">Create, remove, and refine markdown posts without needing the rest of the site to become broadly editable.</p>
               </div>
               <div className="admin-actions">
                 {blogLoading ? <span className="admin-status">Loading…</span> : null}
@@ -1432,6 +1457,34 @@ export const DashboardScreen = ({
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || blogLoading || savingBlog}>Delete post</button>
                 <button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || blogLoading || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button>
               </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header">
+                <div>
+                  <h3>Blog library</h3>
+                  <p className="admin-copy">Start a new draft for a new post, or pick an existing markdown file to update or delete it.</p>
+                </div>
+                <div className="admin-actions">
+                  <p className="admin-note">{blogList.length} saved posts</p>
+                </div>
+              </div>
+              <div className="admin-selection-grid">
+                {blogList.map((post) => (
+                  <button
+                    key={post.slug}
+                    type="button"
+                    className={`admin-selection-card${post.slug === selectedBlogSlug ? ' admin-selection-card-active' : ''}`}
+                    onClick={() => onBlogSelect(post.slug)}
+                    disabled={blogLoading || savingBlog}
+                  >
+                    <span className="admin-kicker">{post.status}</span>
+                    <strong>{post.title}</strong>
+                    <span className="admin-note">{post.date}</span>
+                    <span className="admin-note admin-code">{post.slug}</span>
+                  </button>
+                ))}
+              </div>
+              {!blogList.length ? <p className="admin-note">No saved posts yet. Use New draft to create the first markdown entry.</p> : null}
             </div>
             <div className="admin-form-grid">
               <label className="admin-field">
