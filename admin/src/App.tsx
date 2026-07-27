@@ -180,6 +180,32 @@ const createClonedBlogPost = (source: BlogPostResponse, existingPosts: BlogPostM
   }
 }
 
+const getUniqueProjectCloneSlug = (baseSlug: string, existingProjects: SiteContent['projects']): string => {
+  const normalizedBase = normalizeSlug(baseSlug) || 'new-project'
+  let candidate = normalizedBase
+  let copyIndex = 2
+
+  while (existingProjects.some((project) => project.slug === candidate)) {
+    candidate = `${normalizedBase}-${copyIndex}`
+    copyIndex += 1
+  }
+
+  return candidate
+}
+
+const createClonedProject = (
+  source: SiteContent['projects'][number],
+  existingProjects: SiteContent['projects'],
+): SiteContent['projects'][number] => {
+  const nextSlug = getUniqueProjectCloneSlug(`${source.slug || 'project'}-copy`, existingProjects)
+
+  return {
+    ...structuredClone(source),
+    title: source.title ? `${source.title} (Copy)` : 'New project',
+    slug: nextSlug,
+  }
+}
+
 const retargetProjectMediaSelection = (
   target: MediaTargetSelection,
   nextSlug: string,
@@ -2753,6 +2779,35 @@ export const App = () => {
     ))
   }, [mediaArea, mediaTarget, selectedProjectSlug, siteContent?.content.projects, workingCopy?.projects])
 
+  const handleProjectDuplicate = useCallback(() => {
+    setWorkingCopy((current) => {
+      if (!current || !selectedProjectSlug) return current
+
+      const sourceProject = current.projects.find((project) => project.slug === selectedProjectSlug)
+      if (!sourceProject) return current
+
+      const duplicatedProject = createClonedProject(sourceProject, current.projects)
+      const next = structuredClone(current)
+      next.projects.push(duplicatedProject)
+      setSelectedProjectSlug(duplicatedProject.slug)
+      setSelectedProjectGalleryIndex(0)
+      setMediaArea('projects')
+      setMediaSlug((activeSlug) => (
+        syncEnteredProjectMediaSlug(activeSlug, mediaArea, mediaTarget, selectedProjectSlug, duplicatedProject.slug)
+      ))
+      setMediaTarget((activeTarget) => (
+        activeTarget && activeTarget.area === 'projects'
+          ? syncResetProjectMediaTarget(activeTarget, next.projects, selectedProjectSlug, duplicatedProject.slug)
+          : null
+      ))
+      return next
+    })
+    setSaveStatus(null)
+    setSiteConflict(null)
+    setError(null)
+    setAuthStatus(null)
+  }, [mediaArea, mediaTarget, selectedProjectSlug])
+
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !normalizedMediaSlug || mediaValidationError) return
 
@@ -2906,6 +2961,7 @@ export const App = () => {
         void loadActivity()
       },
       onProjectSelect: handleProjectSelect,
+      onProjectDuplicate: handleProjectDuplicate,
       onHomeStatSelect: setSelectedHomeStatIndex,
       onSocialSelect: setSelectedSocialIndex,
       onProcessSelect: setSelectedProcessIndex,
@@ -2986,6 +3042,7 @@ export const App = () => {
       handleMediaTargetSelect,
       handleMediaUpload,
       handleProjectSelect,
+      handleProjectDuplicate,
       handleStructuredAdd,
       handleStructuredFieldChange,
       handleStructuredMove,

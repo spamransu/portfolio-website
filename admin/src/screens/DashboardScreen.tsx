@@ -178,6 +178,7 @@ interface DashboardScreenProps {
   onHighlightSelect: (value: number) => void
   onExperienceSelect: (value: number) => void
   onMethodSelect: (value: number) => void
+  onProjectDuplicate: () => void
   onReload: () => void
   onDiscard: () => void
   onSave: () => void
@@ -328,6 +329,7 @@ export const DashboardScreen = ({
   onHighlightSelect,
   onExperienceSelect,
   onMethodSelect,
+  onProjectDuplicate,
   onReload,
   onDiscard,
   onSave,
@@ -1047,7 +1049,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-project-editor">
-            <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Edit project metadata, stacks, narrative lists, and section copy for the selected case study.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'up')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[0]?.slug === selectedProject.slug}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'down')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[projectOptions.length - 1]?.slug === selectedProject.slug}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Edit project metadata, stacks, narrative lists, and section copy for the selected case study.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={onProjectDuplicate} disabled={!selectedProject}>Duplicate project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'up')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[0]?.slug === selectedProject.slug}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'down')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[projectOptions.length - 1]?.slug === selectedProject.slug}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected project</span>
