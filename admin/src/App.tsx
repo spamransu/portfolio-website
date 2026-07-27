@@ -1294,6 +1294,15 @@ const getBlogValidationError = (
   if (!BLOG_DATE_PATTERN.test(post.date)) {
     return 'Blog date must use the YYYY-MM-DD format.'
   }
+  if (post.coverImage?.trim() && !post.coverAlt?.trim()) {
+    return 'Cover alt text is required when a blog cover image is set.'
+  }
+  if (!post.coverImage?.trim() && post.coverAlt?.trim()) {
+    return 'Cover image is required when cover alt text is set.'
+  }
+  if (post.status === 'published' && !post.excerpt?.trim()) {
+    return 'Published blog posts require an excerpt.'
+  }
   const conflictingSlugPost = existingPosts.find((entry) => entry.slug === post.slug && entry.sha !== post.sha)
   if (conflictingSlugPost) {
     return `Blog slug must be unique. Another post already uses slug "${post.slug}".`

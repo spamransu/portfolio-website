@@ -737,6 +737,9 @@ const getBlogPostValidationError = (value: unknown): string | null => {
   if (!post.body.trim()) return 'Blog body is required.'
   if (!SLUG_PATTERN.test(post.slug)) return 'Blog slug must use lowercase letters, numbers, and hyphens only.'
   if (!BLOG_DATE_PATTERN.test(post.date)) return 'Blog date must use the YYYY-MM-DD format.'
+  if (post.coverImage?.trim() && !post.coverAlt?.trim()) return 'Cover alt text is required when a blog cover image is set.'
+  if (!post.coverImage?.trim() && post.coverAlt?.trim()) return 'Cover image is required when cover alt text is set.'
+  if (post.status === 'published' && !post.excerpt?.trim()) return 'Published blog posts require an excerpt.'
   return null
 }
 
