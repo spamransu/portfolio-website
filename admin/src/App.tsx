@@ -38,6 +38,11 @@ type SiteValidationState = {
   homeContact?: string
   contactForm?: string
   contactMethods?: string
+  projectsPage?: string
+  blogPage?: string
+  blogPostPage?: string
+  projectDetailPage?: string
+  notFoundPage?: string
 }
 
 type BlogActivity = {
@@ -1097,6 +1102,11 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
 
   const homeMessageLimit = content.home.contact.messageLimit
   const contactMessageLimit = content.contact.form.messageLimit
+  const projectsPage = content.projectsPage
+  const blogPage = content.blogPage
+  const blogPostPage = content.blogPostPage
+  const projectDetailPage = content.projectDetailPage
+  const notFoundPage = content.notFoundPage
 
   return {
     selectedProject: invalidProjectSlug
@@ -1141,6 +1151,79 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
     contactMethods: invalidMethod
       ? `Contact methods must have title, label, description, and a valid mailto, tel, or http/https URL. Check: ${invalidMethod.title || invalidMethod.href}.`
       : undefined,
+    projectsPage: !projectsPage?.title.trim()
+      ? 'Projects page title is required.'
+      : !projectsPage.intro.trim()
+        ? 'Projects page intro is required.'
+        : undefined,
+    blogPage: !blogPage?.title.trim()
+      ? 'Blog page title is required.'
+      : !blogPage.intro.trim()
+        ? 'Blog page intro is required.'
+        : undefined,
+    blogPostPage: !blogPostPage?.eyebrowPrefix.trim()
+      ? 'Blog post eyebrow prefix is required.'
+      : !blogPostPage.notFoundTitle.trim()
+        ? 'Blog post not-found title is required.'
+        : !blogPostPage.notFoundIntro.trim()
+          ? 'Blog post not-found intro is required.'
+          : !blogPostPage.backToBlogLabel.trim()
+            ? 'Blog post back-to-blog label is required.'
+            : !blogPostPage.startProjectLabel.trim()
+              ? 'Blog post start-project label is required.'
+              : !blogPostPage.articleSectionTitle.trim()
+                ? 'Blog post article section title is required.'
+                : undefined,
+    projectDetailPage: !projectDetailPage?.notFoundTitle.trim()
+      ? 'Project detail not-found title is required.'
+      : !projectDetailPage.notFoundIntro.trim()
+        ? 'Project detail not-found intro is required.'
+        : !projectDetailPage.backToProjectsLabel.trim()
+          ? 'Project detail back-to-projects label is required.'
+          : !projectDetailPage.startProjectLabel.trim()
+            ? 'Project detail start-project label is required.'
+            : !projectDetailPage.snapshotTitle.trim()
+              ? 'Project detail snapshot title is required.'
+              : !projectDetailPage.roleLabel.trim()
+                ? 'Project detail role label is required.'
+                : !projectDetailPage.clientLabel.trim()
+                  ? 'Project detail client label is required.'
+                  : !projectDetailPage.yearLabel.trim()
+                    ? 'Project detail year label is required.'
+                    : !projectDetailPage.stackLabel.trim()
+                      ? 'Project detail stack label is required.'
+                      : !projectDetailPage.stackAriaTemplate.trim()
+                        ? 'Project detail stack aria template is required.'
+                        : !projectDetailPage.galleryTitle.trim()
+                          ? 'Project detail gallery title is required.'
+                          : !projectDetailPage.galleryIntro.trim()
+                            ? 'Project detail gallery intro is required.'
+                            : !projectDetailPage.nextProjectEyebrow.trim()
+                              ? 'Project detail next-project eyebrow is required.'
+                              : !projectDetailPage.nextProjectLabel.trim()
+                                ? 'Project detail next-project label is required.'
+                                : !projectDetailPage.similarWorkEyebrow.trim()
+                                  ? 'Project detail similar-work eyebrow is required.'
+                                  : !projectDetailPage.similarWorkTitle.trim()
+                                    ? 'Project detail similar-work title is required.'
+                                    : !projectDetailPage.similarWorkIntro.trim()
+                                      ? 'Project detail similar-work intro is required.'
+                                      : !projectDetailPage.similarWorkLabel.trim()
+                                        ? 'Project detail similar-work label is required.'
+                                        : undefined,
+    notFoundPage: !notFoundPage?.eyebrow.trim()
+      ? '404 page eyebrow is required.'
+      : !notFoundPage.title.trim()
+        ? '404 page title is required.'
+        : !notFoundPage.intro.trim()
+          ? '404 page intro is required.'
+          : !notFoundPage.suggestionsEyebrow.trim()
+            ? '404 page suggestions eyebrow is required.'
+            : !notFoundPage.viewProjectsLabel.trim()
+              ? '404 page view-projects label is required.'
+              : !notFoundPage.backHomeLabel.trim()
+                ? '404 page back-home label is required.'
+                : undefined,
   }
 }
 
@@ -1956,6 +2039,11 @@ export const App = () => {
     ?? siteValidation.homeContact
     ?? siteValidation.contactForm
     ?? siteValidation.contactMethods
+    ?? siteValidation.projectsPage
+    ?? siteValidation.blogPage
+    ?? siteValidation.blogPostPage
+    ?? siteValidation.projectDetailPage
+    ?? siteValidation.notFoundPage
     ?? null
 
   const handleSave = useCallback(async () => {

@@ -125,6 +125,11 @@ interface DashboardScreenProps {
     homeContact?: string
     contactForm?: string
     contactMethods?: string
+    projectsPage?: string
+    blogPage?: string
+    blogPostPage?: string
+    projectDetailPage?: string
+    notFoundPage?: string
   }
   siteValidationError: string | null
   loading: boolean
@@ -740,6 +745,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Similar work intro</span><textarea value={workingCopy.projectDetailPage?.similarWorkIntro ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkIntro', event.target.value)} /></label>
               <label className="admin-field"><span>Similar work label</span><input value={workingCopy.projectDetailPage?.similarWorkLabel ?? ''} onChange={(event) => onFieldChange('projectDetailPage.similarWorkLabel', event.target.value)} /></label>
             </div>
+            {siteValidation.projectDetailPage ? <p className="admin-note admin-note-warning">{siteValidation.projectDetailPage}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -755,6 +761,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Projects hero caption</span><textarea value={workingCopy.projectsPage?.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'projectsPage.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('Projects page hero image', workingCopy.projectsPage?.heroImage?.src, workingCopy.projectsPage?.heroImage?.alt, workingCopy.projectsPage?.heroImage?.caption)}
             </div>
+            {siteValidation.projectsPage ? <p className="admin-note admin-note-warning">{siteValidation.projectsPage}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -768,6 +775,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Blog hero caption</span><textarea value={workingCopy.blogPage?.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'blogPage.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('Blog page hero image', workingCopy.blogPage?.heroImage?.src, workingCopy.blogPage?.heroImage?.alt, workingCopy.blogPage?.heroImage?.caption)}
             </div>
+            {siteValidation.blogPage ? <p className="admin-note admin-note-warning">{siteValidation.blogPage}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -780,6 +788,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Start project label</span><input value={workingCopy.blogPostPage?.startProjectLabel ?? ''} onChange={(event) => onFieldChange('blogPostPage.startProjectLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Article section title</span><input value={workingCopy.blogPostPage?.articleSectionTitle ?? ''} onChange={(event) => onFieldChange('blogPostPage.articleSectionTitle', event.target.value)} /></label>
             </div>
+            {siteValidation.blogPostPage ? <p className="admin-note admin-note-warning">{siteValidation.blogPostPage}</p> : null}
           </article>
 
           <article className="admin-panel">
@@ -792,6 +801,7 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>View projects label</span><input value={workingCopy.notFoundPage?.viewProjectsLabel ?? ''} onChange={(event) => onFieldChange('notFoundPage.viewProjectsLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Back home label</span><input value={workingCopy.notFoundPage?.backHomeLabel ?? ''} onChange={(event) => onFieldChange('notFoundPage.backHomeLabel', event.target.value)} /></label>
             </div>
+            {siteValidation.notFoundPage ? <p className="admin-note admin-note-warning">{siteValidation.notFoundPage}</p> : null}
           </article>
 
           <article className="admin-panel">
