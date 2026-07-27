@@ -2244,6 +2244,74 @@ export const App = () => {
     setError(null)
   }, [mediaArea, mediaTarget, selectedProjectSlug])
 
+  const handleStructuredDuplicate = useCallback((scope: string, index?: number) => {
+    setWorkingCopy((current) => {
+      if (!current) return current
+
+      const next = structuredClone(current)
+
+      switch (scope) {
+        case 'social':
+          if (index === undefined) return next
+          next.site.socials.splice(index + 1, 0, structuredClone(next.site.socials[index]))
+          setSelectedSocialIndex(index + 1)
+          return next
+        case 'process':
+          if (index === undefined) return next
+          next.about.process.splice(index + 1, 0, structuredClone(next.about.process[index]))
+          setSelectedProcessIndex(index + 1)
+          return next
+        case 'highlight':
+          if (index === undefined) return next
+          next.resume.highlights.splice(index + 1, 0, structuredClone(next.resume.highlights[index]))
+          setSelectedHighlightIndex(index + 1)
+          return next
+        case 'homeStat':
+          if (index === undefined) return next
+          next.home.stats.splice(index + 1, 0, structuredClone(next.home.stats[index]))
+          setSelectedHomeStatIndex(index + 1)
+          return next
+        case 'experience':
+          if (index === undefined) return next
+          next.resume.experience.splice(index + 1, 0, structuredClone(next.resume.experience[index]))
+          setSelectedExperienceIndex(index + 1)
+          return next
+        case 'method':
+          if (index === undefined) return next
+          next.contact.methods.splice(index + 1, 0, structuredClone(next.contact.methods[index]))
+          setSelectedMethodIndex(index + 1)
+          return next
+        case 'projectGallery': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const gallery = next.projects[projectIndex].gallery ?? []
+          if (!gallery[index]) return next
+          gallery.splice(index + 1, 0, structuredClone(gallery[index]))
+          next.projects[projectIndex].gallery = gallery
+          setSelectedProjectGalleryIndex(index + 1)
+          return next
+        }
+        case 'projectSection': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const sections = next.projects[projectIndex].sections ?? []
+          if (!sections[index]) return next
+          sections.splice(index + 1, 0, structuredClone(sections[index]))
+          next.projects[projectIndex].sections = sections
+          return next
+        }
+        default:
+          return next
+      }
+    })
+    setSaveStatus(null)
+    setSiteConflict(null)
+    setError(null)
+    setAuthStatus(null)
+  }, [selectedProjectSlug])
+
   const handleStructuredRemove = useCallback((scope: string, index?: number) => {
     const confirmMessageByScope: Record<string, string> = {
       social: 'Remove this social link?',
@@ -2939,6 +3007,7 @@ export const App = () => {
       },
       onFieldChange: handleFieldChange,
       onStructuredAdd: handleStructuredAdd,
+      onStructuredDuplicate: handleStructuredDuplicate,
       onStructuredFieldChange: handleStructuredFieldChange,
       onStructuredMove: handleStructuredMove,
       onStructuredRemove: handleStructuredRemove,
@@ -3044,6 +3113,7 @@ export const App = () => {
       handleProjectSelect,
       handleProjectDuplicate,
       handleStructuredAdd,
+      handleStructuredDuplicate,
       handleStructuredFieldChange,
       handleStructuredMove,
       handleStructuredRemove,
