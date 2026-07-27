@@ -1250,6 +1250,9 @@ export const App = () => {
       setSelectedProjectSlug('')
       setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, ''))
       setMediaTarget((current) => syncResetProjectMediaTarget(current, [], selectedProjectSlug, ''))
+      setAuthStatus(null)
+      setSaveStatus(null)
+      setSiteConflict(null)
       setError(getApiErrorMessage(loadError, 'Failed to load site content.'))
     } finally {
       setLoadingContent(false)
@@ -1308,6 +1311,9 @@ export const App = () => {
       setSelectedBlogBaseline(null)
       setMediaSlug('')
       setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
+      setAuthStatus(null)
+      setBlogStatus(null)
+      setBlogConflict(null)
       setError(getApiErrorMessage(loadError, 'Failed to load blog post.'))
     } finally {
       setLoadingBlog(false)
@@ -1339,6 +1345,9 @@ export const App = () => {
       setSelectedBlogBaseline(null)
       setMediaSlug('')
       setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
+      setAuthStatus(null)
+      setBlogStatus(null)
+      setBlogConflict(null)
       setError(getApiErrorMessage(loadError, 'Failed to load blog posts.'))
     }
   }, [getApiErrorMessage, handleUnauthorizedError, loadBlogPost])
