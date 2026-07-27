@@ -1454,7 +1454,7 @@ export const DashboardScreen = ({
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDuplicate} disabled={!blogPost || blogLoading || savingBlog}>Duplicate draft</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || blogLoading || savingBlog}>Discard blog edits</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || !blogPost?.sha || blogLoading || savingBlog}>Reload post</button>
-                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || blogLoading || savingBlog}>Delete post</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost || blogLoading || savingBlog}>{blogPost?.sha ? 'Delete post' : 'Remove draft'}</button>
                 <button type="button" className="admin-button" onClick={onBlogSave} disabled={!blogDirty || !blogPost || blogLoading || savingBlog || Boolean(blogValidationError)}>{savingBlog ? 'Saving…' : blogValidationError ? 'Fix validation errors' : blogDirty ? 'Save post' : 'Post saved'}</button>
               </div>
             </div>

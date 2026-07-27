@@ -3270,7 +3270,25 @@ export const App = () => {
   }, [blogList?.branch, blogList?.posts, blogList?.repo, mediaArea, mediaTarget, selectedBlogPost, selectedBlogSlug])
 
   const handleBlogDelete = useCallback(async () => {
-    if (!blogList || !selectedBlogPost?.post.sha) return
+    if (!blogList || !selectedBlogPost) return
+    if (!selectedBlogPost.post.sha) {
+      if (!confirmDiscardChanges(`Remove the local draft "${selectedBlogPost.post.title}"? This will discard it without committing anything.`)) return
+      const fallbackSlug = blogList.posts[0]?.slug ?? ''
+      setSelectedBlogSlug(fallbackSlug)
+      setSelectedBlogPost(null)
+      setSelectedBlogBaseline(null)
+      setBlogConflict(null)
+      setBlogActivity(null)
+      setBlogStatus('Removed the local draft.')
+      setError(null)
+      if (fallbackSlug) {
+        void loadBlogPost(fallbackSlug)
+      } else {
+        setMediaSlug((current) => syncClearedBlogMediaSlug(current, mediaArea, selectedBlogSlug))
+        setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
+      }
+      return
+    }
     if (!confirmDiscardChanges(`Delete blog post "${selectedBlogPost.post.title}"? This commits a file deletion to GitHub.`)) return
 
     setSavingBlog(true)
@@ -3314,7 +3332,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, confirmDiscardChanges, handleUnauthorizedError, loadActivity, loadBlogList, selectedBlogPost])
+  }, [blogList, confirmDiscardChanges, handleUnauthorizedError, loadActivity, loadBlogList, loadBlogPost, mediaArea, selectedBlogPost, selectedBlogSlug])
 
   const handleMediaAreaChange = useCallback((value: string) => {
     setMediaArea(value)
