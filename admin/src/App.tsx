@@ -1775,9 +1775,9 @@ export const App = () => {
           const fallbackProjectSlug = next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? ''
           setSelectedProjectSlug(fallbackProjectSlug)
           setSelectedProjectGalleryIndex(0)
-          setMediaSlug((current) => (current === removedProjectSlug ? fallbackProjectSlug : current))
+          setMediaSlug((current) => syncResetProjectMediaSlug(current, removedProjectSlug, fallbackProjectSlug))
           setMediaTarget((current) => (
-            current && current.area === 'projects' && current.slug === removedProjectSlug ? null : current
+            syncResetProjectMediaTarget(current, next.projects, removedProjectSlug, fallbackProjectSlug)
           ))
           return next
         case 'projectGallery': {
