@@ -137,19 +137,6 @@ const getPreferredMediaSlugForArea = (
   }
 }
 
-const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse => ({
-  title: 'Untitled draft',
-  slug,
-  date: todayDate(),
-  status: 'draft',
-  body: '',
-  coverAlt: '',
-  coverImage: '',
-  excerpt: '',
-  path: buildBlogPostPath(todayDate(), slug),
-  sha: '',
-})
-
 const getUniqueBlogCloneSlug = (baseSlug: string, existingPosts: BlogPostMeta[], date: string): string => {
   const normalizedBase = normalizeSlug(baseSlug) || `draft-${todayDate()}`
   let candidate = normalizedBase
@@ -163,6 +150,24 @@ const getUniqueBlogCloneSlug = (baseSlug: string, existingPosts: BlogPostMeta[],
   }
 
   return candidate
+}
+
+const createEmptyBlogPost = (existingPosts: BlogPostMeta[]): BlogPostResponse => {
+  const date = todayDate()
+  const slug = getUniqueBlogCloneSlug('new-post', existingPosts, date)
+
+  return {
+    title: 'New blog post',
+    slug,
+    date,
+    status: 'draft',
+    body: 'Start writing here.\n\nAdd the main notes, decisions, or build details for this post.',
+    coverAlt: '',
+    coverImage: '',
+    excerpt: 'Add a short excerpt before publishing.',
+    path: buildBlogPostPath(date, slug),
+    sha: '',
+  }
 }
 
 const createClonedBlogPost = (source: BlogPostResponse, existingPosts: BlogPostMeta[]): BlogPostResponse => {
@@ -3212,9 +3217,8 @@ export const App = () => {
       return
     }
 
-    const slug = `draft-${Date.now()}`
-    const post = createEmptyBlogPost(slug)
-    setSelectedBlogSlug(slug)
+    const post = createEmptyBlogPost(blogList?.posts ?? [])
+    setSelectedBlogSlug(post.slug)
     setSelectedBlogPost({
       branch: blogList?.branch ?? siteContent?.branch ?? 'main',
       post,
