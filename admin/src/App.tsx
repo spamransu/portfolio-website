@@ -1837,8 +1837,14 @@ export const App = () => {
         sha: siteContent.sha,
       })
 
+      const nextProjectSlug = getResetProjectSelectionSlug(response.content.projects, selectedProjectSlug)
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
+      setSelectedProjectSlug(nextProjectSlug)
+      setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, nextProjectSlug))
+      setMediaTarget((current) => (
+        syncResetProjectMediaTarget(current, response.content.projects, selectedProjectSlug, nextProjectSlug)
+      ))
       void loadActivity()
       setSaveStatus(`Saved site content to ${response.branch} at ${response.latestCommitSha ?? response.sha}.`)
     } catch (saveError) {
@@ -1860,7 +1866,7 @@ export const App = () => {
     } finally {
       setSaving(false)
     }
-  }, [handleUnauthorizedError, loadActivity, siteContent, siteValidationError, workingCopy])
+  }, [handleUnauthorizedError, loadActivity, selectedProjectSlug, siteContent, siteValidationError, workingCopy])
 
   const handleBlogFieldChange = useCallback((field: string, value: string) => {
     setSelectedBlogPost((current) => {
