@@ -189,7 +189,11 @@ interface DashboardScreenProps {
   onHighlightSelect: (value: number) => void
   onResumeSkillSelect: (value: number) => void
   onExperienceSelect: (value: number) => void
+  onExperienceHighlightSelect: (value: number) => void
   onMethodSelect: (value: number) => void
+  onProjectStackSelect: (value: number) => void
+  onProjectApproachSelect: (value: number) => void
+  onProjectOutcomeSelect: (value: number) => void
   onProjectDuplicate: () => void
   onReload: () => void
   onDiscard: () => void
@@ -204,6 +208,9 @@ interface DashboardScreenProps {
   selectedBlogSlug: string
   selectedExperience: Job | null
   selectedExperienceIndex: number
+  selectedExperienceHighlight: string | null
+  selectedExperienceHighlightIndex: number
+  selectedExperienceHighlightTotal: number
   selectedExperienceTotal: number
   selectedHighlight: HighlightStat | null
   selectedHighlightIndex: number
@@ -234,6 +241,15 @@ interface DashboardScreenProps {
   selectedProjectGalleryItem: ImageAsset | null
   selectedProjectGalleryTotal: number
   selectedProjectSlug: string
+  selectedProjectStackItem: string | null
+  selectedProjectStackIndex: number
+  selectedProjectStackTotal: number
+  selectedProjectApproachItem: string | null
+  selectedProjectApproachIndex: number
+  selectedProjectApproachTotal: number
+  selectedProjectOutcomeItem: string | null
+  selectedProjectOutcomeIndex: number
+  selectedProjectOutcomeTotal: number
   selectedSocial: SocialLink | null
   selectedSocialIndex: number
   selectedSocialTotal: number
@@ -385,7 +401,11 @@ export const DashboardScreen = ({
   onHighlightSelect,
   onResumeSkillSelect,
   onExperienceSelect,
+  onExperienceHighlightSelect,
   onMethodSelect,
+  onProjectStackSelect,
+  onProjectApproachSelect,
+  onProjectOutcomeSelect,
   onProjectDuplicate,
   onReload,
   onDiscard,
@@ -400,6 +420,9 @@ export const DashboardScreen = ({
   selectedBlogSlug,
   selectedExperience,
   selectedExperienceIndex,
+  selectedExperienceHighlight,
+  selectedExperienceHighlightIndex,
+  selectedExperienceHighlightTotal,
   selectedExperienceTotal,
   selectedHighlight,
   selectedHighlightIndex,
@@ -430,6 +453,15 @@ export const DashboardScreen = ({
   selectedProjectGalleryItem,
   selectedProjectGalleryTotal,
   selectedProjectSlug,
+  selectedProjectStackItem,
+  selectedProjectStackIndex,
+  selectedProjectStackTotal,
+  selectedProjectApproachItem,
+  selectedProjectApproachIndex,
+  selectedProjectApproachTotal,
+  selectedProjectOutcomeItem,
+  selectedProjectOutcomeIndex,
+  selectedProjectOutcomeTotal,
   selectedSocial,
   selectedSocialIndex,
   selectedSocialTotal,
@@ -1159,10 +1191,18 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Role</span><input value={selectedExperience.role} onChange={(event) => onStructuredFieldChange('experience', 'role', event.target.value, selectedExperienceIndex)} /></label>
                   <label className="admin-field"><span>Company</span><input value={selectedExperience.company} onChange={(event) => onStructuredFieldChange('experience', 'company', event.target.value, selectedExperienceIndex)} /></label>
                   <label className="admin-field"><span>Period</span><input value={selectedExperience.period} onChange={(event) => onStructuredFieldChange('experience', 'period', event.target.value, selectedExperienceIndex)} /></label>
-                  <label className="admin-field"><span>Highlights (one per line)</span><textarea value={toLines(selectedExperience.highlights)} onChange={(event) => onStructuredFieldChange('experience', 'highlights', event.target.value, selectedExperienceIndex)} /></label>
                 </>
               ) : null}
             </div>
+            {selectedExperience ? (
+              <div className="admin-subpanel">
+                <div className="admin-panel-header"><div><h3>Experience highlights</h3><p className="admin-copy">Manage each experience bullet as its own editable item.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('experienceHighlight')}>Add highlight</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('experienceHighlight', selectedExperienceHighlightIndex)} disabled={selectedExperienceHighlight == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('experienceHighlight', 'up', selectedExperienceHighlightIndex)} disabled={selectedExperienceHighlightIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('experienceHighlight', 'down', selectedExperienceHighlightIndex)} disabled={selectedExperienceHighlightIndex >= selectedExperienceHighlightTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('experienceHighlight', selectedExperienceHighlightIndex)} disabled={selectedExperienceHighlightTotal <= 1}>Remove selected</button></div></div>
+                <div className="admin-form-grid">
+                  <label className="admin-field"><span>Selected highlight</span><select value={selectedExperienceHighlightIndex} onChange={(event) => onExperienceHighlightSelect(Number(event.target.value))}>{selectedExperience.highlights.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item.slice(0, 48) || 'Highlight'}</option>)}</select></label>
+                  <label className="admin-field"><span>Highlight text</span><textarea value={selectedExperienceHighlight ?? ''} onChange={(event) => onStructuredFieldChange('experienceHighlight', 'value', event.target.value, selectedExperienceHighlightIndex)} /></label>
+                </div>
+              </div>
+            ) : null}
           </article>
 
           <article className="admin-panel" id="admin-contact-page">
@@ -1258,9 +1298,27 @@ export const DashboardScreen = ({
                   <label className="admin-field"><span>Lead image src</span><input value={selectedProject.image?.src ?? ''} onChange={(event) => onStructuredFieldChange('projectImage', 'src', event.target.value)} />{renderUseLastUploadButton(() => onStructuredFieldChange('projectImage', 'src', mediaPath))}{renderMediaTargetButton({ area: 'projects', slug: selectedProject.slug, key: `project:${selectedProject.slug}:image.src`, kind: 'structured', scope: 'projectImage', field: 'src', label: `${selectedProject.title} lead image` })}</label>
                   <label className="admin-field"><span>Lead image alt</span><input value={selectedProject.image?.alt ?? ''} onChange={(event) => onStructuredFieldChange('projectImage', 'alt', event.target.value)} /></label>
                   {renderAssignedImagePreview(`${selectedProject.title} lead image`, selectedProject.image?.src, selectedProject.image?.alt, selectedProject.summary)}
-                  <label className="admin-field"><span>Stack (one per line)</span><textarea value={toLines(selectedProject.stack)} onChange={(event) => onStructuredFieldChange('project', 'stack', event.target.value)} /></label>
-                  <label className="admin-field"><span>Approach bullets (one per line)</span><textarea value={toLines(selectedProject.approach)} onChange={(event) => onStructuredFieldChange('project', 'approach', event.target.value)} /></label>
-                  <label className="admin-field"><span>Outcome bullets (one per line)</span><textarea value={toLines(selectedProject.outcome)} onChange={(event) => onStructuredFieldChange('project', 'outcome', event.target.value)} /></label>
+                  <div className="admin-subpanel">
+                    <div className="admin-panel-header"><div><h3>Project stack</h3><p className="admin-copy">Manage the tech stack as ordered structured items.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectStack')}>Add stack item</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('projectStack', selectedProjectStackIndex)} disabled={selectedProjectStackItem == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectStack', 'up', selectedProjectStackIndex)} disabled={selectedProjectStackIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectStack', 'down', selectedProjectStackIndex)} disabled={selectedProjectStackIndex >= selectedProjectStackTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectStack', selectedProjectStackIndex)} disabled={selectedProjectStackTotal <= 1}>Remove selected</button></div></div>
+                    <div className="admin-form-grid">
+                      <label className="admin-field"><span>Selected stack item</span><select value={selectedProjectStackIndex} onChange={(event) => onProjectStackSelect(Number(event.target.value))}>{selectedProject.stack.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item || 'Stack item'}</option>)}</select></label>
+                      <label className="admin-field"><span>Stack item</span><input value={selectedProjectStackItem ?? ''} onChange={(event) => onStructuredFieldChange('projectStack', 'value', event.target.value, selectedProjectStackIndex)} /></label>
+                    </div>
+                  </div>
+                  <div className="admin-subpanel">
+                    <div className="admin-panel-header"><div><h3>Approach bullets</h3><p className="admin-copy">Edit approach points one at a time.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectApproach')}>Add bullet</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('projectApproach', selectedProjectApproachIndex)} disabled={selectedProjectApproachItem == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectApproach', 'up', selectedProjectApproachIndex)} disabled={selectedProjectApproachIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectApproach', 'down', selectedProjectApproachIndex)} disabled={selectedProjectApproachIndex >= selectedProjectApproachTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectApproach', selectedProjectApproachIndex)} disabled={selectedProjectApproachTotal <= 1}>Remove selected</button></div></div>
+                    <div className="admin-form-grid">
+                      <label className="admin-field"><span>Selected approach bullet</span><select value={selectedProjectApproachIndex} onChange={(event) => onProjectApproachSelect(Number(event.target.value))}>{selectedProject.approach.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item.slice(0, 48) || 'Approach bullet'}</option>)}</select></label>
+                      <label className="admin-field"><span>Approach text</span><textarea value={selectedProjectApproachItem ?? ''} onChange={(event) => onStructuredFieldChange('projectApproach', 'value', event.target.value, selectedProjectApproachIndex)} /></label>
+                    </div>
+                  </div>
+                  <div className="admin-subpanel">
+                    <div className="admin-panel-header"><div><h3>Outcome bullets</h3><p className="admin-copy">Manage outcome points as structured ordered items.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectOutcome')}>Add bullet</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('projectOutcome', selectedProjectOutcomeIndex)} disabled={selectedProjectOutcomeItem == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectOutcome', 'up', selectedProjectOutcomeIndex)} disabled={selectedProjectOutcomeIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectOutcome', 'down', selectedProjectOutcomeIndex)} disabled={selectedProjectOutcomeIndex >= selectedProjectOutcomeTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectOutcome', selectedProjectOutcomeIndex)} disabled={selectedProjectOutcomeTotal <= 1}>Remove selected</button></div></div>
+                    <div className="admin-form-grid">
+                      <label className="admin-field"><span>Selected outcome bullet</span><select value={selectedProjectOutcomeIndex} onChange={(event) => onProjectOutcomeSelect(Number(event.target.value))}>{selectedProject.outcome.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item.slice(0, 48) || 'Outcome bullet'}</option>)}</select></label>
+                      <label className="admin-field"><span>Outcome text</span><textarea value={selectedProjectOutcomeItem ?? ''} onChange={(event) => onStructuredFieldChange('projectOutcome', 'value', event.target.value, selectedProjectOutcomeIndex)} /></label>
+                    </div>
+                  </div>
                   <div className="admin-panel admin-panel--subtle" id="admin-project-gallery">
                     <div className="admin-panel-header">
                       <div><h2>Project gallery</h2><p className="admin-copy">Edit gallery images for the selected project.</p></div>

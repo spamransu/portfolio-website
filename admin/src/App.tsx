@@ -1673,7 +1673,11 @@ export const App = () => {
   const [selectedHighlightIndex, setSelectedHighlightIndex] = useState(0)
   const [selectedResumeSkillIndex, setSelectedResumeSkillIndex] = useState(0)
   const [selectedExperienceIndex, setSelectedExperienceIndex] = useState(0)
+  const [selectedExperienceHighlightIndex, setSelectedExperienceHighlightIndex] = useState(0)
   const [selectedMethodIndex, setSelectedMethodIndex] = useState(0)
+  const [selectedProjectStackIndex, setSelectedProjectStackIndex] = useState(0)
+  const [selectedProjectApproachIndex, setSelectedProjectApproachIndex] = useState(0)
+  const [selectedProjectOutcomeIndex, setSelectedProjectOutcomeIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [loadingContent, setLoadingContent] = useState(false)
   const [loadingBlog, setLoadingBlog] = useState(false)
@@ -1772,7 +1776,11 @@ export const App = () => {
       setSelectedHighlightIndex(0)
       setSelectedResumeSkillIndex(0)
       setSelectedExperienceIndex(0)
+      setSelectedExperienceHighlightIndex(0)
       setSelectedMethodIndex(0)
+      setSelectedProjectStackIndex(0)
+      setSelectedProjectApproachIndex(0)
+      setSelectedProjectOutcomeIndex(0)
       setError(null)
       setAuthStatus(null)
       setSaveStatus(null)
@@ -1978,7 +1986,11 @@ export const App = () => {
     setSelectedHighlightIndex(0)
     setSelectedResumeSkillIndex(0)
     setSelectedExperienceIndex(0)
+    setSelectedExperienceHighlightIndex(0)
     setSelectedMethodIndex(0)
+    setSelectedProjectStackIndex(0)
+    setSelectedProjectApproachIndex(0)
+    setSelectedProjectOutcomeIndex(0)
     setSaveStatus(null)
     setSiteConflict(null)
     setError(null)
@@ -2129,6 +2141,13 @@ export const App = () => {
           if (index === undefined) return next
           next.resume.skills = updateRecordAtIndex(next.resume.skills, index, () => value)
           return next
+        case 'experienceHighlight':
+          if (index === undefined) return next
+          next.resume.experience = updateRecordAtIndex(next.resume.experience, selectedExperienceIndex, (item) => ({
+            ...item,
+            highlights: updateRecordAtIndex(item.highlights, index, () => value),
+          }))
+          return next
         case 'heroImage': {
           const target = field.split('.')[0] as 'about' | 'resume' | 'contact' | 'projectsPage' | 'blogPage'
           const property = field.split('.')[1] as 'src' | 'alt' | 'caption'
@@ -2242,6 +2261,36 @@ export const App = () => {
           }))
           return next
         }
+        case 'projectStack': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
+            ...project,
+            stack: updateRecordAtIndex(project.stack, index, () => value),
+          }))
+          return next
+        }
+        case 'projectApproach': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
+            ...project,
+            approach: updateRecordAtIndex(project.approach, index, () => value),
+          }))
+          return next
+        }
+        case 'projectOutcome': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects = updateRecordAtIndex(next.projects, projectIndex, (project) => ({
+            ...project,
+            outcome: updateRecordAtIndex(project.outcome, index, () => value),
+          }))
+          return next
+        }
         default:
           return next
       }
@@ -2317,6 +2366,11 @@ export const App = () => {
           next.resume.skills.push('New skill')
           setSelectedResumeSkillIndex(next.resume.skills.length - 1)
           return next
+        case 'experienceHighlight':
+          if (!next.resume.experience[selectedExperienceIndex]) return next
+          next.resume.experience[selectedExperienceIndex].highlights.push('New highlight')
+          setSelectedExperienceHighlightIndex(next.resume.experience[selectedExperienceIndex].highlights.length - 1)
+          return next
         case 'homeStat':
           next.home.stats.push({ value: '0', label: 'New stat', tone: 'accent' })
           setSelectedHomeStatIndex(next.home.stats.length - 1)
@@ -2366,6 +2420,30 @@ export const App = () => {
           const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
           if (projectIndex === -1) return next
           next.projects[projectIndex].sections = [...(next.projects[projectIndex].sections ?? []), { kind: 'default', title: 'New section', body: '', image: { src: '', alt: '', caption: '' } }]
+          return next
+        }
+        case 'projectStack': {
+          if (!selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects[projectIndex].stack.push('New stack item')
+          setSelectedProjectStackIndex(next.projects[projectIndex].stack.length - 1)
+          return next
+        }
+        case 'projectApproach': {
+          if (!selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects[projectIndex].approach.push('New approach bullet')
+          setSelectedProjectApproachIndex(next.projects[projectIndex].approach.length - 1)
+          return next
+        }
+        case 'projectOutcome': {
+          if (!selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          next.projects[projectIndex].outcome.push('New outcome bullet')
+          setSelectedProjectOutcomeIndex(next.projects[projectIndex].outcome.length - 1)
           return next
         }
         default:
@@ -2454,6 +2532,11 @@ export const App = () => {
           next.resume.skills.splice(index + 1, 0, structuredClone(next.resume.skills[index]))
           setSelectedResumeSkillIndex(index + 1)
           return next
+        case 'experienceHighlight':
+          if (index === undefined || !next.resume.experience[selectedExperienceIndex]?.highlights[index]) return next
+          next.resume.experience[selectedExperienceIndex].highlights.splice(index + 1, 0, structuredClone(next.resume.experience[selectedExperienceIndex].highlights[index]))
+          setSelectedExperienceHighlightIndex(index + 1)
+          return next
         case 'homeStat':
           if (index === undefined) return next
           next.home.stats.splice(index + 1, 0, structuredClone(next.home.stats[index]))
@@ -2490,6 +2573,30 @@ export const App = () => {
           next.projects[projectIndex].sections = sections
           return next
         }
+        case 'projectStack': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1 || !next.projects[projectIndex].stack[index]) return next
+          next.projects[projectIndex].stack.splice(index + 1, 0, structuredClone(next.projects[projectIndex].stack[index]))
+          setSelectedProjectStackIndex(index + 1)
+          return next
+        }
+        case 'projectApproach': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1 || !next.projects[projectIndex].approach[index]) return next
+          next.projects[projectIndex].approach.splice(index + 1, 0, structuredClone(next.projects[projectIndex].approach[index]))
+          setSelectedProjectApproachIndex(index + 1)
+          return next
+        }
+        case 'projectOutcome': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1 || !next.projects[projectIndex].outcome[index]) return next
+          next.projects[projectIndex].outcome.splice(index + 1, 0, structuredClone(next.projects[projectIndex].outcome[index]))
+          setSelectedProjectOutcomeIndex(index + 1)
+          return next
+        }
         default:
           return next
       }
@@ -2516,12 +2623,16 @@ export const App = () => {
       process: 'Remove this process step?',
       highlight: 'Remove this highlight card?',
       resumeSkill: 'Remove this resume skill?',
+      experienceHighlight: 'Remove this experience highlight?',
       homeStat: 'Remove this home stat card?',
       experience: 'Remove this experience entry?',
       method: 'Remove this contact method?',
       project: 'Remove this project from site content?',
       projectGallery: 'Remove this gallery image?',
       projectSection: 'Remove this project section?',
+      projectStack: 'Remove this stack item?',
+      projectApproach: 'Remove this approach bullet?',
+      projectOutcome: 'Remove this outcome bullet?',
     }
 
     const confirmMessage = confirmMessageByScope[scope]
@@ -2603,6 +2714,11 @@ export const App = () => {
           next.resume.skills.splice(index, 1)
           setSelectedResumeSkillIndex(Math.max(0, Math.min(index, next.resume.skills.length - 1)))
           return next
+        case 'experienceHighlight':
+          if (index === undefined || (next.resume.experience[selectedExperienceIndex]?.highlights.length ?? 0) <= 1) return next
+          next.resume.experience[selectedExperienceIndex].highlights.splice(index, 1)
+          setSelectedExperienceHighlightIndex(Math.max(0, Math.min(index, next.resume.experience[selectedExperienceIndex].highlights.length - 1)))
+          return next
         case 'homeStat':
           if (index === undefined || next.home.stats.length <= 1) return next
           next.home.stats.splice(index, 1)
@@ -2655,6 +2771,30 @@ export const App = () => {
           if (sections.length <= 1) return next
           sections.splice(index, 1)
           next.projects[projectIndex].sections = sections
+          return next
+        }
+        case 'projectStack': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1 || next.projects[projectIndex].stack.length <= 1) return next
+          next.projects[projectIndex].stack.splice(index, 1)
+          setSelectedProjectStackIndex(Math.max(0, Math.min(index, next.projects[projectIndex].stack.length - 1)))
+          return next
+        }
+        case 'projectApproach': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1 || next.projects[projectIndex].approach.length <= 1) return next
+          next.projects[projectIndex].approach.splice(index, 1)
+          setSelectedProjectApproachIndex(Math.max(0, Math.min(index, next.projects[projectIndex].approach.length - 1)))
+          return next
+        }
+        case 'projectOutcome': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1 || next.projects[projectIndex].outcome.length <= 1) return next
+          next.projects[projectIndex].outcome.splice(index, 1)
+          setSelectedProjectOutcomeIndex(Math.max(0, Math.min(index, next.projects[projectIndex].outcome.length - 1)))
           return next
         }
         default:
@@ -2791,6 +2931,15 @@ export const App = () => {
           setSelectedResumeSkillIndex(nextIndex)
           return next
         }
+        case 'experienceHighlight': {
+          if (index === undefined) return next
+          const highlights = next.resume.experience[selectedExperienceIndex]?.highlights ?? []
+          const nextIndex = resolveNextIndex(highlights.length, index)
+          if (nextIndex === index || !next.resume.experience[selectedExperienceIndex]) return next
+          next.resume.experience[selectedExperienceIndex].highlights = moveArrayItem(highlights, index, nextIndex)
+          setSelectedExperienceHighlightIndex(nextIndex)
+          return next
+        }
         case 'homeStat': {
           if (index === undefined) return next
           const nextIndex = resolveNextIndex(next.home.stats.length, index)
@@ -2844,6 +2993,36 @@ export const App = () => {
           const nextIndex = resolveNextIndex(sections.length, index)
           if (nextIndex === index) return next
           next.projects[projectIndex].sections = moveArrayItem(sections, index, nextIndex)
+          return next
+        }
+        case 'projectStack': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const nextIndex = resolveNextIndex(next.projects[projectIndex].stack.length, index)
+          if (nextIndex === index) return next
+          next.projects[projectIndex].stack = moveArrayItem(next.projects[projectIndex].stack, index, nextIndex)
+          setSelectedProjectStackIndex(nextIndex)
+          return next
+        }
+        case 'projectApproach': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const nextIndex = resolveNextIndex(next.projects[projectIndex].approach.length, index)
+          if (nextIndex === index) return next
+          next.projects[projectIndex].approach = moveArrayItem(next.projects[projectIndex].approach, index, nextIndex)
+          setSelectedProjectApproachIndex(nextIndex)
+          return next
+        }
+        case 'projectOutcome': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const nextIndex = resolveNextIndex(next.projects[projectIndex].outcome.length, index)
+          if (nextIndex === index) return next
+          next.projects[projectIndex].outcome = moveArrayItem(next.projects[projectIndex].outcome, index, nextIndex)
+          setSelectedProjectOutcomeIndex(nextIndex)
           return next
         }
         default:
@@ -3176,6 +3355,9 @@ export const App = () => {
   const handleProjectSelect = useCallback((slug: string) => {
     setSelectedProjectSlug(slug)
     setSelectedProjectGalleryIndex(0)
+    setSelectedProjectStackIndex(0)
+    setSelectedProjectApproachIndex(0)
+    setSelectedProjectOutcomeIndex(0)
     setMediaSlug((current) => (
       syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, selectedProjectSlug, slug)
     ))
@@ -3188,6 +3370,11 @@ export const App = () => {
       )
     ))
   }, [mediaArea, mediaTarget, selectedProjectSlug, siteContent?.content.projects, workingCopy?.projects])
+
+  const handleExperienceSelect = useCallback((value: number) => {
+    setSelectedExperienceIndex(value)
+    setSelectedExperienceHighlightIndex(0)
+  }, [])
 
   const handleProjectDuplicate = useCallback(() => {
     setWorkingCopy((current) => {
@@ -3283,7 +3470,11 @@ export const App = () => {
   const selectedHighlight = workingCopy?.resume.highlights[selectedHighlightIndex] ?? null
   const selectedResumeSkill = workingCopy?.resume.skills[selectedResumeSkillIndex] ?? null
   const selectedExperience = workingCopy?.resume.experience[selectedExperienceIndex] ?? null
+  const selectedExperienceHighlight = selectedExperience?.highlights[selectedExperienceHighlightIndex] ?? null
   const selectedMethod = workingCopy?.contact.methods[selectedMethodIndex] ?? null
+  const selectedProjectStackItem = selectedProject?.stack[selectedProjectStackIndex] ?? null
+  const selectedProjectApproachItem = selectedProject?.approach[selectedProjectApproachIndex] ?? null
+  const selectedProjectOutcomeItem = selectedProject?.outcome[selectedProjectOutcomeIndex] ?? null
 
   useEffect(() => {
     if (!dirty && !blogDirty) return
@@ -3399,9 +3590,13 @@ export const App = () => {
       onProcessSelect: setSelectedProcessIndex,
       onHighlightSelect: setSelectedHighlightIndex,
       onResumeSkillSelect: setSelectedResumeSkillIndex,
-      onExperienceSelect: setSelectedExperienceIndex,
+      onExperienceSelect: handleExperienceSelect,
+      onExperienceHighlightSelect: setSelectedExperienceHighlightIndex,
       onMethodSelect: setSelectedMethodIndex,
       onProjectGallerySelect: setSelectedProjectGalleryIndex,
+      onProjectStackSelect: setSelectedProjectStackIndex,
+      onProjectApproachSelect: setSelectedProjectApproachIndex,
+      onProjectOutcomeSelect: setSelectedProjectOutcomeIndex,
       projectOptions: workingCopy?.projects.map((project) => ({ slug: project.slug, title: project.title })) ?? [],
       selectedProject,
       selectedProjectGalleryIndex,
@@ -3455,10 +3650,22 @@ export const App = () => {
       selectedResumeSkillTotal: workingCopy?.resume.skills.length ?? 0,
       selectedExperience,
       selectedExperienceIndex,
+      selectedExperienceHighlight,
+      selectedExperienceHighlightIndex,
+      selectedExperienceHighlightTotal: selectedExperience?.highlights.length ?? 0,
       selectedExperienceTotal: workingCopy?.resume.experience.length ?? 0,
       selectedMethod,
       selectedMethodIndex,
       selectedMethodTotal: workingCopy?.contact.methods.length ?? 0,
+      selectedProjectStackItem,
+      selectedProjectStackIndex,
+      selectedProjectStackTotal: selectedProject?.stack.length ?? 0,
+      selectedProjectApproachItem,
+      selectedProjectApproachIndex,
+      selectedProjectApproachTotal: selectedProject?.approach.length ?? 0,
+      selectedProjectOutcomeItem,
+      selectedProjectOutcomeIndex,
+      selectedProjectOutcomeTotal: selectedProject?.outcome.length ?? 0,
       onReload: () => {
         if (dirty && !confirmDiscardChanges('Discard unsaved content changes and reload from GitHub?')) return
         void loadSiteContent()
@@ -3507,6 +3714,7 @@ export const App = () => {
       handleMediaTargetClear,
       handleMediaTargetSelect,
       handleMediaUpload,
+      handleExperienceSelect,
       handleProjectSelect,
       handleProjectDuplicate,
       handleStructuredAdd,
@@ -3541,6 +3749,8 @@ export const App = () => {
       selectedFeaturedProjectSlug,
       selectedFeaturedProjectSlugIndex,
       selectedExperience,
+      selectedExperienceHighlight,
+      selectedExperienceHighlightIndex,
       selectedExperienceIndex,
       selectedHomeBioTitleLine,
       selectedHomeBioTitleLineIndex,
@@ -3571,6 +3781,12 @@ export const App = () => {
       selectedProject,
       selectedProjectGalleryIndex,
       selectedProjectGalleryItem,
+      selectedProjectOutcomeIndex,
+      selectedProjectOutcomeItem,
+      selectedProjectApproachIndex,
+      selectedProjectApproachItem,
+      selectedProjectStackIndex,
+      selectedProjectStackItem,
       selectedProjectSlug,
       selectedResumeSkill,
       selectedResumeSkillIndex,
