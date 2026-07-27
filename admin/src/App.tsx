@@ -206,6 +206,27 @@ const createClonedProject = (
   }
 }
 
+const createEmptyProject = (
+  existingProjects: SiteContent['projects'],
+): SiteContent['projects'][number] => {
+  const nextSlug = getUniqueProjectCloneSlug('new-project', existingProjects)
+  const nextIndex = existingProjects.length + 1
+
+  return {
+    slug: nextSlug,
+    title: `New project ${nextIndex}`,
+    year: todayDate().slice(0, 4),
+    client: 'Internal project',
+    summary: 'Add a short summary for this project.',
+    role: 'Add your role',
+    stack: ['Add stack item'],
+    challenge: 'Describe the challenge this project solved.',
+    approach: ['Describe the approach you took.'],
+    outcome: ['Describe the result or impact.'],
+    sections: [{ kind: 'default', title: 'Overview', body: 'Add project overview copy.' }],
+  }
+}
+
 const retargetProjectMediaSelection = (
   target: MediaTargetSelection,
   nextSlug: string,
@@ -2384,20 +2405,9 @@ export const App = () => {
           setSelectedMethodIndex(next.contact.methods.length - 1)
           return next
         case 'project':
-          const nextProjectSlug = `new-project-${next.projects.length + 1}`
-          next.projects.push({
-            slug: nextProjectSlug,
-            title: 'New project',
-            year: todayDate().slice(0, 4),
-            client: 'Client',
-            summary: '',
-            role: '',
-            stack: [],
-            challenge: '',
-            approach: [],
-            outcome: [],
-            sections: [{ kind: 'default', title: 'Overview', body: '' }],
-          })
+          const starterProject = createEmptyProject(next.projects)
+          const nextProjectSlug = starterProject.slug
+          next.projects.push(starterProject)
           setSelectedProjectSlug(nextProjectSlug)
           setSelectedProjectGalleryIndex(0)
           setMediaSlug((current) => (
