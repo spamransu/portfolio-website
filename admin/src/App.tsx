@@ -2755,6 +2755,12 @@ export const App = () => {
           if (projectIndex === -1) return next
           const removedProjectSlug = next.projects[projectIndex].slug
           next.projects.splice(projectIndex, 1)
+          const nextFeaturedProjectSlugs = next.home.featuredProjects.slugs.filter((slug) => slug !== removedProjectSlug)
+          next.home.featuredProjects.slugs = nextFeaturedProjectSlugs
+          setSelectedFeaturedProjectSlugIndex((currentIndex) => {
+            if (!nextFeaturedProjectSlugs.length) return 0
+            return Math.max(0, Math.min(currentIndex, nextFeaturedProjectSlugs.length - 1))
+          })
           const fallbackProjectSlug = next.projects[Math.max(0, Math.min(projectIndex, next.projects.length - 1))]?.slug ?? ''
           setSelectedProjectSlug(fallbackProjectSlug)
           setSelectedProjectGalleryIndex(0)
