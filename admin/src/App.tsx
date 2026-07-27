@@ -1247,6 +1247,9 @@ export const App = () => {
       if (handleUnauthorizedError(loadError, 'Your admin session expired. Sign in again.')) return
       setSiteContent(null)
       setWorkingCopy(null)
+      setSelectedProjectSlug('')
+      setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, ''))
+      setMediaTarget((current) => syncResetProjectMediaTarget(current, [], selectedProjectSlug, ''))
       setError(getApiErrorMessage(loadError, 'Failed to load site content.'))
     } finally {
       setLoadingContent(false)
