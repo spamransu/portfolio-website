@@ -147,6 +147,38 @@ const retargetBlogMediaSelection = (
   slug: nextSlug,
 })
 
+const getResetProjectSelectionSlug = (projects: SiteContent['projects'], currentSlug: string): string => {
+  if (currentSlug && projects.some((project) => project.slug === currentSlug)) return currentSlug
+  return projects[0]?.slug ?? ''
+}
+
+const syncResetProjectMediaSlug = (
+  currentMediaSlug: string,
+  previousSelectedProjectSlug: string,
+  nextSelectedProjectSlug: string,
+): string => (currentMediaSlug === previousSelectedProjectSlug ? nextSelectedProjectSlug : currentMediaSlug)
+
+const syncResetProjectMediaTarget = (
+  currentMediaTarget: MediaTargetSelection | null,
+  projects: SiteContent['projects'],
+  previousSelectedProjectSlug: string,
+  nextSelectedProjectSlug: string,
+): MediaTargetSelection | null => {
+  if (!currentMediaTarget || currentMediaTarget.area !== 'projects') return currentMediaTarget
+
+  const matchingProject = projects.find((project) => project.slug === currentMediaTarget.slug)
+  if (matchingProject) return currentMediaTarget
+
+  if (currentMediaTarget.slug !== previousSelectedProjectSlug || !nextSelectedProjectSlug) {
+    return null
+  }
+
+  const nextProject = projects.find((project) => project.slug === nextSelectedProjectSlug)
+  return nextProject
+    ? retargetProjectMediaSelection(currentMediaTarget, nextProject.slug, nextProject.title)
+    : null
+}
+
 const normalizeProjectDetailPage = (value?: SiteContent['projectDetailPage']) => ({
   eyebrow: value?.eyebrow ?? '',
   notFoundTitle: value?.notFoundTitle ?? '',
@@ -1169,9 +1201,14 @@ export const App = () => {
 
     try {
       const response = await adminApi.getSiteContent()
+      const nextProjectSlug = getResetProjectSelectionSlug(response.content.projects, selectedProjectSlug)
       setSiteContent(response)
       setWorkingCopy(structuredClone(response.content))
-      setSelectedProjectSlug(response.content.projects[0]?.slug ?? '')
+      setSelectedProjectSlug(nextProjectSlug)
+      setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, nextProjectSlug))
+      setMediaTarget((current) => (
+        syncResetProjectMediaTarget(current, response.content.projects, selectedProjectSlug, nextProjectSlug)
+      ))
       setSelectedProjectGalleryIndex(0)
       setSelectedHomeStatIndex(0)
       setSelectedSocialIndex(0)
@@ -1191,7 +1228,7 @@ export const App = () => {
     } finally {
       setLoadingContent(false)
     }
-  }, [getApiErrorMessage, handleUnauthorizedError])
+  }, [getApiErrorMessage, handleUnauthorizedError, selectedProjectSlug])
 
   const loadActivity = useCallback(async () => {
     setLoadingActivity(true)
@@ -1328,11 +1365,13 @@ export const App = () => {
     if (!siteContent) return
     if (!confirmDiscardChanges('Discard unsaved content changes and restore the last loaded site content?')) return
 
+    const nextProjectSlug = getResetProjectSelectionSlug(siteContent.content.projects, selectedProjectSlug)
     setWorkingCopy(structuredClone(siteContent.content))
-    setSelectedProjectSlug((current) => {
-      if (current && siteContent.content.projects.some((project) => project.slug === current)) return current
-      return siteContent.content.projects[0]?.slug ?? ''
-    })
+    setSelectedProjectSlug(nextProjectSlug)
+    setMediaSlug((current) => syncResetProjectMediaSlug(current, selectedProjectSlug, nextProjectSlug))
+    setMediaTarget((current) => (
+      syncResetProjectMediaTarget(current, siteContent.content.projects, selectedProjectSlug, nextProjectSlug)
+    ))
     setSelectedProjectGalleryIndex(0)
     setSelectedHomeStatIndex(0)
     setSelectedSocialIndex(0)
@@ -1344,7 +1383,7 @@ export const App = () => {
     setSiteConflict(null)
     setError(null)
     setAuthStatus(null)
-  }, [confirmDiscardChanges, siteContent])
+  }, [confirmDiscardChanges, selectedProjectSlug, siteContent])
 
   const handleDiscardBlogChanges = useCallback(() => {
     if (!selectedBlogPost) return
