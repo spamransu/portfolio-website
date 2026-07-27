@@ -1318,8 +1318,43 @@ const getAuthMessageFromUrl = (): { kind: 'error' | 'success'; message: string }
   const kind = auth === 'success' ? 'success' : 'error'
   const message = auth === 'success' ? 'GitHub login successful.' : 'GitHub login failed.'
   const nextHash = hash.slice(0, queryIndex) || '#/'
-  window.history.replaceState({}, document.title, `${window.location.pathname}${nextHash}`)
+  window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.search}${nextHash}`)
   return { kind, message }
+}
+
+const getAdminUrlState = () => {
+  const params = new URLSearchParams(window.location.search)
+
+  return {
+    blogSlug: normalizeSlug(params.get('post') ?? ''),
+    projectSlug: normalizeSlug(params.get('project') ?? ''),
+  }
+}
+
+const syncAdminUrlState = (nextState: { blogSlug?: string | null; projectSlug?: string | null }) => {
+  const url = new URL(window.location.href)
+
+  if (nextState.blogSlug !== undefined) {
+    const nextBlogSlug = normalizeSlug(nextState.blogSlug ?? '')
+    if (nextBlogSlug) {
+      url.searchParams.set('post', nextBlogSlug)
+    } else {
+      url.searchParams.delete('post')
+    }
+  }
+
+  if (nextState.projectSlug !== undefined) {
+    const nextProjectSlug = normalizeSlug(nextState.projectSlug ?? '')
+    if (nextProjectSlug) {
+      url.searchParams.set('project', nextProjectSlug)
+    } else {
+      url.searchParams.delete('project')
+    }
+  }
+
+  const nextSearch = url.searchParams.toString()
+  const nextUrl = `${url.pathname}${nextSearch ? `?${nextSearch}` : ''}${url.hash}`
+  window.history.replaceState({}, document.title, nextUrl)
 }
 
 const getUnsavedChangesSummary = (dirty: boolean, blogDirty: boolean): string => {
@@ -1337,14 +1372,15 @@ const getLogoutDiscardMessage = (dirty: boolean, blogDirty: boolean): string => 
 
 export const App = () => {
   const initialAuthMessage = getAuthMessageFromUrl()
+  const initialUrlState = getAdminUrlState()
   const [session, setSession] = useState<AdminSession>(DEFAULT_SESSION)
   const [siteContent, setSiteContent] = useState<SiteContentResponse | null>(null)
   const [workingCopy, setWorkingCopy] = useState<SiteContent | null>(null)
   const [blogList, setBlogList] = useState<BlogListResponse | null>(null)
-  const [selectedBlogSlug, setSelectedBlogSlug] = useState<string>('')
+  const [selectedBlogSlug, setSelectedBlogSlug] = useState<string>(initialUrlState.blogSlug)
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogDetailResponse | null>(null)
   const [selectedBlogBaseline, setSelectedBlogBaseline] = useState<BlogPostResponse | null>(null)
-  const [selectedProjectSlug, setSelectedProjectSlug] = useState<string>('')
+  const [selectedProjectSlug, setSelectedProjectSlug] = useState<string>(initialUrlState.projectSlug)
   const [selectedProjectGalleryIndex, setSelectedProjectGalleryIndex] = useState(0)
   const [selectedHomeStatIndex, setSelectedHomeStatIndex] = useState(0)
   const [selectedSocialIndex, setSelectedSocialIndex] = useState(0)
@@ -1526,8 +1562,9 @@ export const App = () => {
       const response = await adminApi.getBlogPosts()
       setBlogList(response)
       setAuthStatus(null)
-      const nextSlug = (preferredSlug && response.posts.some((post) => post.slug === preferredSlug)
-        ? preferredSlug
+      const requestedSlug = preferredSlug ?? selectedBlogSlug
+      const nextSlug = (requestedSlug && response.posts.some((post) => post.slug === requestedSlug)
+        ? requestedSlug
         : response.posts[0]?.slug) ?? ''
       if (nextSlug) {
         await loadBlogPost(nextSlug)
@@ -1575,6 +1612,13 @@ export const App = () => {
   useEffect(() => {
     void loadSession()
   }, [loadSession])
+
+  useEffect(() => {
+    syncAdminUrlState({
+      blogSlug: selectedBlogSlug || null,
+      projectSlug: selectedProjectSlug || null,
+    })
+  }, [selectedBlogSlug, selectedProjectSlug])
 
   const confirmDiscardChanges = useCallback((message: string) => {
     return window.confirm(message)
