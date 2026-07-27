@@ -1298,7 +1298,7 @@ export const App = () => {
       setMediaTarget((current) => (
         current && current.kind === 'blog'
           ? retargetBlogMediaSelection(current, response.post.slug, response.post.title)
-          : current
+          : null
       ))
       setBlogStatus(null)
       setBlogConflict(null)
@@ -1976,7 +1976,11 @@ export const App = () => {
     setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
     setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, post.slug))
-    setMediaTarget((current) => syncResetBlogMediaTarget(current, selectedBlogSlug, post))
+    setMediaTarget((current) => (
+      current && current.kind === 'blog'
+        ? syncResetBlogMediaTarget(current, selectedBlogSlug, post)
+        : null
+    ))
     setBlogStatus('New draft created locally. Save it to create the markdown file.')
     setBlogConflict(null)
     setBlogActivity(null)
