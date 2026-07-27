@@ -2226,6 +2226,9 @@ export const App = () => {
             [field]: nextValue,
           }))
           if (field === 'slug' && typeof nextValue === 'string' && nextValue !== currentProject.slug) {
+            next.home.featuredProjects.slugs = next.home.featuredProjects.slugs.map((slug) => (
+              slug === currentProject.slug ? nextValue : slug
+            ))
             setSelectedProjectSlug(nextValue)
             setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, currentProject.slug, nextValue))
             setMediaTarget((current) => (
