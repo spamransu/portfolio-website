@@ -1084,6 +1084,49 @@ const isInternalPath = (value: string): boolean => value.startsWith('/')
 const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug: string): SiteValidationState => {
   if (!content) return {}
 
+  const getProjectValidationError = (project: SiteContent['projects'][number] | null): string | undefined => {
+    if (!project) return undefined
+    if (!project.title.trim()) return 'Project title is required.'
+    if (!project.year.trim()) return `Project year is required for ${project.slug || project.title || 'this project'}.`
+    if (!project.client.trim()) return `Project client is required for ${project.slug || project.title || 'this project'}.`
+    if (!project.summary.trim()) return `Project summary is required for ${project.slug || project.title || 'this project'}.`
+    if (!project.role.trim()) return `Project role is required for ${project.slug || project.title || 'this project'}.`
+    if (!project.challenge.trim()) return `Project challenge is required for ${project.slug || project.title || 'this project'}.`
+    if (!project.stack.some((item) => item.trim())) return `Project stack must include at least one item for ${project.slug || project.title || 'this project'}.`
+    if (!project.approach.some((item) => item.trim())) return `Project approach must include at least one item for ${project.slug || project.title || 'this project'}.`
+    if (!project.outcome.some((item) => item.trim())) return `Project outcome must include at least one item for ${project.slug || project.title || 'this project'}.`
+    if (!project.sections?.length) return `Project sections are required for ${project.slug || project.title || 'this project'}.`
+
+    if (project.image) {
+      if (!project.image.src.trim() && ((project.image.alt ?? '').trim() || (project.image.caption ?? '').trim())) {
+        return `Project lead image src is required when image details are set for ${project.slug || project.title || 'this project'}.`
+      }
+      if (project.image.src.trim() && !project.image.alt.trim()) {
+        return `Project lead image alt text is required for ${project.slug || project.title || 'this project'}.`
+      }
+    }
+
+    const invalidGalleryItem = project.gallery?.find((item) => !item.src.trim() || !item.alt.trim())
+    if (invalidGalleryItem) {
+      return `Every project gallery image needs both src and alt text for ${project.slug || project.title || 'this project'}.`
+    }
+
+    const invalidSection = project.sections.find((section) => {
+      if (!section.title.trim() || !section.body.trim()) return true
+      if (!section.image) return false
+      if (!section.image.src.trim() && ((section.image.alt ?? '').trim() || (section.image.caption ?? '').trim())) return true
+      if (section.image.src.trim() && !section.image.alt.trim()) return true
+      return false
+    })
+    if (invalidSection) {
+      if (!invalidSection.title.trim()) return `Project sections need a title for ${project.slug || project.title || 'this project'}.`
+      if (!invalidSection.body.trim()) return `Project sections need body copy for ${project.slug || project.title || 'this project'}.`
+      return `Project section images need both src and alt text for ${project.slug || project.title || 'this project'}.`
+    }
+
+    return undefined
+  }
+
   const slugCounts = new Map<string, number>()
   for (const project of content.projects) {
     slugCounts.set(project.slug, (slugCounts.get(project.slug) ?? 0) + 1)
@@ -1093,6 +1136,7 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
   const duplicateSlugs = [...slugCounts.entries()].filter(([, count]) => count > 1).map(([slug]) => slug)
   const missingFeatured = content.home.featuredProjects.slugs.filter((slug) => !slugCounts.has(slug))
   const invalidProjectSlug = content.projects.find((project) => !project.slug || !PROJECT_SLUG_PATTERN.test(project.slug))
+  const invalidProjectContent = content.projects.find((project) => getProjectValidationError(project))
 
   const invalidSocial = content.site.socials.find((entry) => !entry.label.trim() || !isHttpUrl(entry.href.trim()))
   const invalidHeaderNav = content.siteChrome?.headerNav.find((entry) => !entry.label.trim() || !isInternalPath(entry.to.trim()))
@@ -1113,8 +1157,12 @@ const getSiteValidationState = (content: SiteContent | null, selectedProjectSlug
       ? `Project slug must use lowercase letters, numbers, and hyphens only. Check: ${invalidProjectSlug.slug || '(empty slug)'}.`
       : selectedProject && duplicateSlugs.includes(selectedProject.slug)
         ? `Project slug must be unique. Duplicate slug: ${selectedProject.slug}.`
-        : duplicateSlugs[0]
-          ? `Project slug must be unique. Duplicate slug: ${duplicateSlugs[0]}.`
+          : duplicateSlugs[0]
+            ? `Project slug must be unique. Duplicate slug: ${duplicateSlugs[0]}.`
+            : selectedProject
+              ? getProjectValidationError(selectedProject)
+              : invalidProjectContent
+                ? getProjectValidationError(invalidProjectContent)
           : undefined,
     featuredProjects: missingFeatured.length
       ? `Featured project slugs must match existing projects. Missing: ${missingFeatured.join(', ')}.`

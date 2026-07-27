@@ -538,6 +538,62 @@ const getSiteContentValidationError = (value: unknown): string | null => {
   const home = content.home as Record<string, unknown>
   const contact = content.contact as Record<string, unknown>
   const projects = content.projects as Array<Record<string, unknown>>
+  const getProjectLabel = (project: Record<string, unknown>) => `${project.slug}` || `${project.title}` || 'this project'
+  const hasNonEmptyItems = (value: unknown): boolean =>
+    Array.isArray(value) && value.some((item) => `${item}`.trim())
+
+  const getProjectContentValidationError = (project: Record<string, unknown>): string | null => {
+    if (!`${project.title}`.trim()) return 'Project title is required.'
+    if (!`${project.year}`.trim()) return `Project year is required for ${getProjectLabel(project)}.`
+    if (!`${project.client}`.trim()) return `Project client is required for ${getProjectLabel(project)}.`
+    if (!`${project.summary}`.trim()) return `Project summary is required for ${getProjectLabel(project)}.`
+    if (!`${project.role}`.trim()) return `Project role is required for ${getProjectLabel(project)}.`
+    if (!`${project.challenge}`.trim()) return `Project challenge is required for ${getProjectLabel(project)}.`
+    if (!hasNonEmptyItems(project.stack)) return `Project stack must include at least one item for ${getProjectLabel(project)}.`
+    if (!hasNonEmptyItems(project.approach)) return `Project approach must include at least one item for ${getProjectLabel(project)}.`
+    if (!hasNonEmptyItems(project.outcome)) return `Project outcome must include at least one item for ${getProjectLabel(project)}.`
+
+    const sections = Array.isArray(project.sections) ? project.sections as Array<Record<string, unknown>> : []
+    if (!sections.length) return `Project sections are required for ${getProjectLabel(project)}.`
+
+    const image = isRecord(project.image) ? project.image as Record<string, unknown> : null
+    if (image) {
+      const imageSrc = `${image.src}`.trim()
+      const imageAlt = `${image.alt}`.trim()
+      const imageCaption = `${image.caption ?? ''}`.trim()
+      if (!imageSrc && (imageAlt || imageCaption)) {
+        return `Project lead image src is required when image details are set for ${getProjectLabel(project)}.`
+      }
+      if (imageSrc && !imageAlt) {
+        return `Project lead image alt text is required for ${getProjectLabel(project)}.`
+      }
+    }
+
+    const gallery = Array.isArray(project.gallery) ? project.gallery as Array<Record<string, unknown>> : []
+    const invalidGalleryItem = gallery.find((item) => !`${item.src}`.trim() || !`${item.alt}`.trim())
+    if (invalidGalleryItem) {
+      return `Every project gallery image needs both src and alt text for ${getProjectLabel(project)}.`
+    }
+
+    const invalidSection = sections.find((section) => {
+      if (!`${section.title}`.trim() || !`${section.body}`.trim()) return true
+      if (!isRecord(section.image)) return false
+      const sectionImage = section.image as Record<string, unknown>
+      const sectionImageSrc = `${sectionImage.src}`.trim()
+      const sectionImageAlt = `${sectionImage.alt}`.trim()
+      const sectionImageCaption = `${sectionImage.caption ?? ''}`.trim()
+      if (!sectionImageSrc && (sectionImageAlt || sectionImageCaption)) return true
+      if (sectionImageSrc && !sectionImageAlt) return true
+      return false
+    })
+    if (invalidSection) {
+      if (!`${invalidSection.title}`.trim()) return `Project sections need a title for ${getProjectLabel(project)}.`
+      if (!`${invalidSection.body}`.trim()) return `Project sections need body copy for ${getProjectLabel(project)}.`
+      return `Project section images need both src and alt text for ${getProjectLabel(project)}.`
+    }
+
+    return null
+  }
 
   if (!EMAIL_PATTERN.test(`${site.email}`.trim())) return 'Site email must use a valid email address.'
   if (!isHttpUrl(`${site.siteUrl}`.trim())) return 'Site URL must use a full http or https URL.'
@@ -581,6 +637,11 @@ const getSiteContentValidationError = (value: unknown): string | null => {
   const duplicateProjectSlug = [...projectSlugs.entries()].find(([, count]) => count > 1)?.[0]
   if (duplicateProjectSlug) {
     return `Project slug must be unique. Duplicate slug: ${duplicateProjectSlug}.`
+  }
+
+  const invalidProjectContent = projects.find((project) => getProjectContentValidationError(project))
+  if (invalidProjectContent) {
+    return getProjectContentValidationError(invalidProjectContent)
   }
 
   const featuredProjects = (home.featuredProjects as Record<string, unknown>).slugs as string[]
