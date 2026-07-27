@@ -79,6 +79,13 @@ const splitLinkLines = (value: string): Array<{ to: string; label: string }> =>
 const updateRecordAtIndex = <T,>(items: T[], index: number, updater: (item: T) => T): T[] =>
   items.map((item, itemIndex) => (itemIndex === index ? updater(item) : item))
 
+const moveArrayItem = <T,>(items: T[], fromIndex: number, toIndex: number): T[] => {
+  const next = [...items]
+  const [movedItem] = next.splice(fromIndex, 1)
+  next.splice(toIndex, 0, movedItem)
+  return next
+}
+
 const normalizeTone = (value: string): 'accent' | 'accent-2' | 'accent-3' => {
   if (value === 'accent-2' || value === 'accent-3') return value
   return 'accent'
@@ -2281,6 +2288,107 @@ export const App = () => {
     setError(null)
   }, [confirmDiscardChanges, mediaArea, mediaTarget, selectedProjectSlug])
 
+  const handleStructuredMove = useCallback((scope: string, direction: 'up' | 'down', index?: number) => {
+    setWorkingCopy((current) => {
+      if (!current) return current
+
+      const next = structuredClone(current)
+
+      const resolveNextIndex = (length: number, currentIndex: number) => {
+        if (length <= 1) return currentIndex
+        if (direction === 'up') return Math.max(0, currentIndex - 1)
+        return Math.min(length - 1, currentIndex + 1)
+      }
+
+      switch (scope) {
+        case 'social': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.site.socials.length, index)
+          if (nextIndex === index) return next
+          next.site.socials = moveArrayItem(next.site.socials, index, nextIndex)
+          setSelectedSocialIndex(nextIndex)
+          return next
+        }
+        case 'process': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.about.process.length, index)
+          if (nextIndex === index) return next
+          next.about.process = moveArrayItem(next.about.process, index, nextIndex)
+          setSelectedProcessIndex(nextIndex)
+          return next
+        }
+        case 'highlight': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.resume.highlights.length, index)
+          if (nextIndex === index) return next
+          next.resume.highlights = moveArrayItem(next.resume.highlights, index, nextIndex)
+          setSelectedHighlightIndex(nextIndex)
+          return next
+        }
+        case 'homeStat': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.home.stats.length, index)
+          if (nextIndex === index) return next
+          next.home.stats = moveArrayItem(next.home.stats, index, nextIndex)
+          setSelectedHomeStatIndex(nextIndex)
+          return next
+        }
+        case 'experience': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.resume.experience.length, index)
+          if (nextIndex === index) return next
+          next.resume.experience = moveArrayItem(next.resume.experience, index, nextIndex)
+          setSelectedExperienceIndex(nextIndex)
+          return next
+        }
+        case 'method': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.contact.methods.length, index)
+          if (nextIndex === index) return next
+          next.contact.methods = moveArrayItem(next.contact.methods, index, nextIndex)
+          setSelectedMethodIndex(nextIndex)
+          return next
+        }
+        case 'project': {
+          if (!selectedProjectSlug) return next
+          const currentIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (currentIndex === -1) return next
+          const nextIndex = resolveNextIndex(next.projects.length, currentIndex)
+          if (nextIndex === currentIndex) return next
+          next.projects = moveArrayItem(next.projects, currentIndex, nextIndex)
+          setSelectedProjectSlug(next.projects[nextIndex].slug)
+          return next
+        }
+        case 'projectGallery': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const gallery = next.projects[projectIndex].gallery ?? []
+          const nextIndex = resolveNextIndex(gallery.length, index)
+          if (nextIndex === index) return next
+          next.projects[projectIndex].gallery = moveArrayItem(gallery, index, nextIndex)
+          setSelectedProjectGalleryIndex(nextIndex)
+          return next
+        }
+        case 'projectSection': {
+          if (index === undefined || !selectedProjectSlug) return next
+          const projectIndex = next.projects.findIndex((project) => project.slug === selectedProjectSlug)
+          if (projectIndex === -1) return next
+          const sections = next.projects[projectIndex].sections ?? []
+          const nextIndex = resolveNextIndex(sections.length, index)
+          if (nextIndex === index) return next
+          next.projects[projectIndex].sections = moveArrayItem(sections, index, nextIndex)
+          return next
+        }
+        default:
+          return next
+      }
+    })
+    setSaveStatus(null)
+    setSiteConflict(null)
+    setError(null)
+  }, [selectedProjectSlug])
+
   const dirty = useMemo(() => {
     if (!siteContent || !workingCopy) return false
     return JSON.stringify(siteContent.content) !== JSON.stringify(workingCopy)
@@ -2719,6 +2827,7 @@ export const App = () => {
       onFieldChange: handleFieldChange,
       onStructuredAdd: handleStructuredAdd,
       onStructuredFieldChange: handleStructuredFieldChange,
+      onStructuredMove: handleStructuredMove,
       onStructuredRemove: handleStructuredRemove,
       onLogin: handleLogin,
       onLogout: () => {
@@ -2820,6 +2929,7 @@ export const App = () => {
       handleProjectSelect,
       handleStructuredAdd,
       handleStructuredFieldChange,
+      handleStructuredMove,
       handleStructuredRemove,
       handleSave,
       loadBlogPost,

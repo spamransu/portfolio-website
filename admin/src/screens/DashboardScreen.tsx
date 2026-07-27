@@ -155,6 +155,7 @@ interface DashboardScreenProps {
   onFieldChange: (field: string, value: string) => void
   onStructuredAdd: (scope: string) => void
   onStructuredFieldChange: (scope: string, field: string, value: string, index?: number) => void
+  onStructuredMove: (scope: string, direction: 'up' | 'down', index?: number) => void
   onStructuredRemove: (scope: string, index?: number) => void
   onLogin: () => void
   onLogout: () => void
@@ -303,6 +304,7 @@ export const DashboardScreen = ({
   onFieldChange,
   onStructuredAdd,
   onStructuredFieldChange,
+  onStructuredMove,
   onStructuredRemove,
   onLogin,
   onLogout,
@@ -726,7 +728,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-home-stats">
-            <div className="admin-panel-header"><div><h2>Home stats</h2><p className="admin-copy">Edit the stat cards shown on the homepage bio section.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('homeStat')}>Add stat</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('homeStat', selectedHomeStatIndex)} disabled={selectedHomeStatTotal <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Home stats</h2><p className="admin-copy">Edit the stat cards shown on the homepage bio section.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('homeStat')}>Add stat</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeStat', 'up', selectedHomeStatIndex)} disabled={selectedHomeStatIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeStat', 'down', selectedHomeStatIndex)} disabled={selectedHomeStatIndex >= selectedHomeStatTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('homeStat', selectedHomeStatIndex)} disabled={selectedHomeStatTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected stat</span>
@@ -860,7 +862,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-social-links">
-            <div className="admin-panel-header"><div><h2>Social links</h2><p className="admin-copy">Edit the existing social entries from the site config.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('social')}>Add social</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('social', selectedSocialIndex)} disabled={selectedSocialTotal <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Social links</h2><p className="admin-copy">Edit the existing social entries from the site config.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('social')}>Add social</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('social', 'up', selectedSocialIndex)} disabled={selectedSocialIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('social', 'down', selectedSocialIndex)} disabled={selectedSocialIndex >= selectedSocialTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('social', selectedSocialIndex)} disabled={selectedSocialTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected social</span>
@@ -902,7 +904,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-process-steps">
-            <div className="admin-panel-header"><div><h2>Process steps</h2><p className="admin-copy">Edit the repeatable process cards shown on the about page.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('process')}>Add step</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('process', selectedProcessIndex)} disabled={selectedProcessTotal <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Process steps</h2><p className="admin-copy">Edit the repeatable process cards shown on the about page.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('process')}>Add step</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('process', 'up', selectedProcessIndex)} disabled={selectedProcessIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('process', 'down', selectedProcessIndex)} disabled={selectedProcessIndex >= selectedProcessTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('process', selectedProcessIndex)} disabled={selectedProcessTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected step</span>
@@ -938,7 +940,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-resume-highlights">
-            <div className="admin-panel-header"><div><h2>Resume highlights</h2><p className="admin-copy">Edit headline stat cards shown on the resume page.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('highlight')}>Add highlight</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('highlight', selectedHighlightIndex)} disabled={selectedHighlightTotal <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Resume highlights</h2><p className="admin-copy">Edit headline stat cards shown on the resume page.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('highlight')}>Add highlight</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('highlight', 'up', selectedHighlightIndex)} disabled={selectedHighlightIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('highlight', 'down', selectedHighlightIndex)} disabled={selectedHighlightIndex >= selectedHighlightTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('highlight', selectedHighlightIndex)} disabled={selectedHighlightTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected highlight</span>
@@ -957,7 +959,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-resume-experience">
-            <div className="admin-panel-header"><div><h2>Resume experience</h2><p className="admin-copy">Edit each experience entry and its bullet highlights.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('experience')}>Add experience</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('experience', selectedExperienceIndex)} disabled={selectedExperienceTotal <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Resume experience</h2><p className="admin-copy">Edit each experience entry and its bullet highlights.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('experience')}>Add experience</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('experience', 'up', selectedExperienceIndex)} disabled={selectedExperienceIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('experience', 'down', selectedExperienceIndex)} disabled={selectedExperienceIndex >= selectedExperienceTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('experience', selectedExperienceIndex)} disabled={selectedExperienceTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected experience</span>
@@ -1021,7 +1023,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-contact-methods">
-            <div className="admin-panel-header"><div><h2>Contact methods</h2><p className="admin-copy">Edit each contact method card.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('method')}>Add method</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('method', selectedMethodIndex)} disabled={selectedMethodTotal <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Contact methods</h2><p className="admin-copy">Edit each contact method card.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('method')}>Add method</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('method', 'up', selectedMethodIndex)} disabled={selectedMethodIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('method', 'down', selectedMethodIndex)} disabled={selectedMethodIndex >= selectedMethodTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('method', selectedMethodIndex)} disabled={selectedMethodTotal <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected method</span>
@@ -1043,7 +1045,7 @@ export const DashboardScreen = ({
           </article>
 
           <article className="admin-panel" id="admin-project-editor">
-            <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Edit project metadata, stacks, narrative lists, and section copy for the selected case study.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
+            <div className="admin-panel-header"><div><h2>Project editor</h2><p className="admin-copy">Edit project metadata, stacks, narrative lists, and section copy for the selected case study.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('project')}>Add project</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'up')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[0]?.slug === selectedProject.slug}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('project', 'down')} disabled={projectOptions.length <= 1 || !selectedProject || projectOptions[projectOptions.length - 1]?.slug === selectedProject.slug}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('project')} disabled={projectOptions.length <= 1}>Remove selected</button></div></div>
             <div className="admin-form-grid">
               <label className="admin-field">
                 <span>Selected project</span>
@@ -1078,6 +1080,8 @@ export const DashboardScreen = ({
                       <div><h2>Project gallery</h2><p className="admin-copy">Edit gallery images for the selected project.</p></div>
                       <div className="admin-actions">
                         <button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectGallery')}>Add gallery image</button>
+                        <button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectGallery', 'up', selectedProjectGalleryIndex)} disabled={selectedProjectGalleryIndex <= 0}>Move up</button>
+                        <button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectGallery', 'down', selectedProjectGalleryIndex)} disabled={selectedProjectGalleryIndex >= selectedProjectGalleryTotal - 1}>Move down</button>
                         <button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectGallery', selectedProjectGalleryIndex)} disabled={selectedProjectGalleryTotal <= 1}>Remove selected</button>
                       </div>
                     </div>
@@ -1106,7 +1110,7 @@ export const DashboardScreen = ({
                   <div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('projectSection')}>Add section</button></div>
                   {selectedProject.sections?.length ? selectedProject.sections.map((section, index) => (
                     <div className="admin-subpanel" key={`${selectedProject.slug}-${section.title}-${index}`}>
-                      <div className="admin-actions"><p className="admin-note">Section {index + 1}</p><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectSection', index)} disabled={(selectedProject.sections?.length ?? 0) <= 1}>Remove section</button></div>
+                      <div className="admin-actions"><p className="admin-note">Section {index + 1}</p><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectSection', 'up', index)} disabled={index <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('projectSection', 'down', index)} disabled={index >= (selectedProject.sections?.length ?? 0) - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('projectSection', index)} disabled={(selectedProject.sections?.length ?? 0) <= 1}>Remove section</button></div>
                       <label className="admin-field"><span>Section kind</span><select value={section.kind} onChange={(event) => onStructuredFieldChange('projectSection', 'kind', event.target.value, index)}><option value="default">default</option><option value="approach">approach</option><option value="outcome">outcome</option></select></label>
                       <label className="admin-field"><span>Section title</span><input value={section.title} onChange={(event) => onStructuredFieldChange('projectSection', 'title', event.target.value, index)} /></label>
                       <label className="admin-field"><span>Section body</span><textarea value={section.body} onChange={(event) => onStructuredFieldChange('projectSection', 'body', event.target.value, index)} /></label>
