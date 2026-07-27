@@ -1334,6 +1334,8 @@ export const App = () => {
       setSelectedBlogSlug('')
       setSelectedBlogPost(null)
       setSelectedBlogBaseline(null)
+      setMediaSlug('')
+      setMediaTarget((current) => (current && current.kind === 'blog' ? null : current))
       setError(getApiErrorMessage(loadError, 'Failed to load blog posts.'))
     }
   }, [getApiErrorMessage, handleUnauthorizedError, loadBlogPost])
