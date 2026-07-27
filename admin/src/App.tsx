@@ -150,6 +150,36 @@ const createEmptyBlogPost = (slug = `draft-${todayDate()}`): BlogPostResponse =>
   sha: '',
 })
 
+const getUniqueBlogCloneSlug = (baseSlug: string, existingPosts: BlogPostMeta[], date: string): string => {
+  const normalizedBase = normalizeSlug(baseSlug) || `draft-${todayDate()}`
+  let candidate = normalizedBase
+  let copyIndex = 2
+
+  while (
+    existingPosts.some((entry) => entry.slug === candidate || entry.path === buildBlogPostPath(date, candidate))
+  ) {
+    candidate = `${normalizedBase}-${copyIndex}`
+    copyIndex += 1
+  }
+
+  return candidate
+}
+
+const createClonedBlogPost = (source: BlogPostResponse, existingPosts: BlogPostMeta[]): BlogPostResponse => {
+  const date = todayDate()
+  const nextSlug = getUniqueBlogCloneSlug(`${source.slug || 'draft'}-copy`, existingPosts, date)
+
+  return {
+    ...structuredClone(source),
+    title: source.title ? `${source.title} (Copy)` : 'Untitled draft',
+    slug: nextSlug,
+    date,
+    status: 'draft',
+    path: buildBlogPostPath(date, nextSlug),
+    sha: '',
+  }
+}
+
 const retargetProjectMediaSelection = (
   target: MediaTargetSelection,
   nextSlug: string,
@@ -2579,6 +2609,31 @@ export const App = () => {
     setError(null)
   }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, mediaArea, mediaTarget, selectedBlogSlug, siteContent?.branch, siteContent?.repo])
 
+  const handleBlogDuplicate = useCallback(() => {
+    if (!selectedBlogPost) return
+
+    const post = createClonedBlogPost(selectedBlogPost.post, blogList?.posts ?? [])
+    setSelectedBlogSlug(post.slug)
+    setSelectedBlogPost({
+      branch: blogList?.branch ?? selectedBlogPost.branch,
+      post,
+      repo: blogList?.repo ?? selectedBlogPost.repo,
+    })
+    setSelectedBlogBaseline(structuredClone(post))
+    setMediaArea('blog')
+    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, mediaTarget, selectedBlogSlug, post.slug))
+    setMediaTarget((current) => (
+      current && current.kind === 'blog'
+        ? syncResetBlogMediaTarget(current, selectedBlogSlug, post)
+        : null
+    ))
+    setBlogStatus(`Duplicated ${selectedBlogPost.post.slug} into a new local draft. Save it to create the new markdown file.`)
+    setBlogConflict(null)
+    setBlogActivity(null)
+    setError(null)
+    setAuthStatus(null)
+  }, [blogList?.branch, blogList?.posts, blogList?.repo, mediaArea, mediaTarget, selectedBlogPost, selectedBlogSlug])
+
   const handleBlogDelete = useCallback(async () => {
     if (!blogList || !selectedBlogPost?.post.sha) return
     if (!confirmDiscardChanges(`Delete blog post "${selectedBlogPost.post.title}"? This commits a file deletion to GitHub.`)) return
@@ -2808,6 +2863,9 @@ export const App = () => {
       onBlogCreate: () => {
         handleBlogCreate()
       },
+      onBlogDuplicate: () => {
+        handleBlogDuplicate()
+      },
       onBlogDelete: () => {
         void handleBlogDelete()
       },
@@ -2912,6 +2970,7 @@ export const App = () => {
       error,
       handleBlogFieldChange,
       handleBlogCreate,
+      handleBlogDuplicate,
       handleDiscardBlogChanges,
       handleDiscardSiteChanges,
       handleBlogDelete,

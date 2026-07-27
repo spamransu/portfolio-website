@@ -108,6 +108,7 @@ interface DashboardScreenProps {
   blogRepo: AdminRepoInfo | null
   blogLoading: boolean
   onBlogCreate: () => void
+  onBlogDuplicate: () => void
   onBlogDiscard: () => void
   onBlogDelete: () => void
   blogMeta: BlogPostMeta | null
@@ -275,6 +276,7 @@ export const DashboardScreen = ({
   blogRepo,
   blogLoading,
   onBlogCreate,
+  onBlogDuplicate,
   onBlogDiscard,
   onBlogDelete,
   blogMeta,
@@ -1187,6 +1189,7 @@ export const DashboardScreen = ({
               <div className="admin-actions">
                 {blogLoading ? <span className="admin-status">Loading…</span> : null}
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogCreate} disabled={blogLoading || savingBlog}>New draft</button>
+                <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDuplicate} disabled={!blogPost || blogLoading || savingBlog}>Duplicate draft</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDiscard} disabled={!blogDirty || !blogPost || blogLoading || savingBlog}>Discard blog edits</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogReload} disabled={!selectedBlogSlug || !blogPost?.sha || blogLoading || savingBlog}>Reload post</button>
                 <button type="button" className="admin-button admin-button-secondary" onClick={onBlogDelete} disabled={!blogPost?.sha || blogLoading || savingBlog}>Delete post</button>
