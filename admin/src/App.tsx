@@ -1294,10 +1294,10 @@ export const App = () => {
       setSelectedBlogBaseline(structuredClone(response.post))
       setSelectedBlogSlug(response.post.slug)
       setMediaArea('blog')
-      setMediaSlug(response.post.slug)
+      setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, response.post.slug))
       setMediaTarget((current) => (
         current && current.kind === 'blog'
-          ? retargetBlogMediaSelection(current, response.post.slug, response.post.title)
+          ? syncResetBlogMediaTarget(current, selectedBlogSlug, response.post)
           : null
       ))
       setBlogStatus(null)
@@ -1318,7 +1318,7 @@ export const App = () => {
     } finally {
       setLoadingBlog(false)
     }
-  }, [getApiErrorMessage, handleUnauthorizedError])
+  }, [getApiErrorMessage, handleUnauthorizedError, selectedBlogSlug])
 
   const loadBlogList = useCallback(async (preferredSlug?: string) => {
     try {
