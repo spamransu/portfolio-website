@@ -175,11 +175,19 @@ interface DashboardScreenProps {
   onProjectGallerySelect: (value: number) => void
   onProjectSelect: (value: string) => void
   onHomeStatSelect: (value: number) => void
+  onHomeHeroTitleLineSelect: (value: number) => void
+  onFeaturedProjectSlugSelect: (value: number) => void
+  onHomeBioTitleLineSelect: (value: number) => void
+  onHomeSkillItemSelect: (value: number) => void
   onSocialSelect: (value: number) => void
   onHeaderNavSelect: (value: number) => void
   onFooterGeneralLinkSelect: (value: number) => void
   onFooterMoreLinkSelect: (value: number) => void
+  onAboutBodySelect: (value: number) => void
+  onAboutPrincipleSelect: (value: number) => void
+  onAboutToolSelect: (value: number) => void
   onHighlightSelect: (value: number) => void
+  onResumeSkillSelect: (value: number) => void
   onExperienceSelect: (value: number) => void
   onMethodSelect: (value: number) => void
   onProjectDuplicate: () => void
@@ -203,6 +211,18 @@ interface DashboardScreenProps {
   selectedHomeStat: HomeStat | null
   selectedHomeStatIndex: number
   selectedHomeStatTotal: number
+  selectedHomeHeroTitleLine: string | null
+  selectedHomeHeroTitleLineIndex: number
+  selectedHomeHeroTitleLineTotal: number
+  selectedFeaturedProjectSlug: string | null
+  selectedFeaturedProjectSlugIndex: number
+  selectedFeaturedProjectSlugTotal: number
+  selectedHomeBioTitleLine: string | null
+  selectedHomeBioTitleLineIndex: number
+  selectedHomeBioTitleLineTotal: number
+  selectedHomeSkillItem: string | null
+  selectedHomeSkillItemIndex: number
+  selectedHomeSkillItemTotal: number
   selectedMethod: ContactMethod | null
   selectedMethodIndex: number
   selectedMethodTotal: number
@@ -226,6 +246,18 @@ interface DashboardScreenProps {
   selectedFooterMoreLink: { to: string; label: string } | null
   selectedFooterMoreLinkIndex: number
   selectedFooterMoreLinkTotal: number
+  selectedAboutBodyParagraph: string | null
+  selectedAboutBodyIndex: number
+  selectedAboutBodyTotal: number
+  selectedAboutPrinciple: string | null
+  selectedAboutPrincipleIndex: number
+  selectedAboutPrincipleTotal: number
+  selectedAboutTool: string | null
+  selectedAboutToolIndex: number
+  selectedAboutToolTotal: number
+  selectedResumeSkill: string | null
+  selectedResumeSkillIndex: number
+  selectedResumeSkillTotal: number
   session: AdminSession | null
   siteConflict: {
     currentSha?: string
@@ -339,11 +371,19 @@ export const DashboardScreen = ({
   onProjectGallerySelect,
   onProjectSelect,
   onHomeStatSelect,
+  onHomeHeroTitleLineSelect,
+  onFeaturedProjectSlugSelect,
+  onHomeBioTitleLineSelect,
+  onHomeSkillItemSelect,
   onSocialSelect,
   onHeaderNavSelect,
   onFooterGeneralLinkSelect,
   onFooterMoreLinkSelect,
+  onAboutBodySelect,
+  onAboutPrincipleSelect,
+  onAboutToolSelect,
   onHighlightSelect,
+  onResumeSkillSelect,
   onExperienceSelect,
   onMethodSelect,
   onProjectDuplicate,
@@ -367,6 +407,18 @@ export const DashboardScreen = ({
   selectedHomeStat,
   selectedHomeStatIndex,
   selectedHomeStatTotal,
+  selectedHomeHeroTitleLine,
+  selectedHomeHeroTitleLineIndex,
+  selectedHomeHeroTitleLineTotal,
+  selectedFeaturedProjectSlug,
+  selectedFeaturedProjectSlugIndex,
+  selectedFeaturedProjectSlugTotal,
+  selectedHomeBioTitleLine,
+  selectedHomeBioTitleLineIndex,
+  selectedHomeBioTitleLineTotal,
+  selectedHomeSkillItem,
+  selectedHomeSkillItemIndex,
+  selectedHomeSkillItemTotal,
   selectedMethod,
   selectedMethodIndex,
   selectedMethodTotal,
@@ -390,6 +442,18 @@ export const DashboardScreen = ({
   selectedFooterMoreLink,
   selectedFooterMoreLinkIndex,
   selectedFooterMoreLinkTotal,
+  selectedAboutBodyParagraph,
+  selectedAboutBodyIndex,
+  selectedAboutBodyTotal,
+  selectedAboutPrinciple,
+  selectedAboutPrincipleIndex,
+  selectedAboutPrincipleTotal,
+  selectedAboutTool,
+  selectedAboutToolIndex,
+  selectedAboutToolTotal,
+  selectedResumeSkill,
+  selectedResumeSkillIndex,
+  selectedResumeSkillTotal,
   session,
   siteConflict,
   siteContent,
@@ -754,6 +818,34 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Home contact mailto email label</span><input value={workingCopy.home.contact.mailtoEmailLabel} onChange={(event) => onFieldChange('home.contact.mailtoEmailLabel', event.target.value)} /></label>
               <label className="admin-field"><span>Home contact mailto message label</span><input value={workingCopy.home.contact.mailtoMessageLabel} onChange={(event) => onFieldChange('home.contact.mailtoMessageLabel', event.target.value)} /></label>
             </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Hero title lines</h3><p className="admin-copy">Manage the homepage hero title as ordered lines instead of rewriting the whole textarea.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('homeHeroTitleLine')}>Add line</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('homeHeroTitleLine', selectedHomeHeroTitleLineIndex)} disabled={selectedHomeHeroTitleLine == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeHeroTitleLine', 'up', selectedHomeHeroTitleLineIndex)} disabled={selectedHomeHeroTitleLineIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeHeroTitleLine', 'down', selectedHomeHeroTitleLineIndex)} disabled={selectedHomeHeroTitleLineIndex >= selectedHomeHeroTitleLineTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('homeHeroTitleLine', selectedHomeHeroTitleLineIndex)} disabled={selectedHomeHeroTitleLineTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected hero title line</span><select value={selectedHomeHeroTitleLineIndex} onChange={(event) => onHomeHeroTitleLineSelect(Number(event.target.value))}>{workingCopy.home.hero.titleLines.map((line, index) => <option key={`${line}-${index}`} value={index}>{index + 1} — {line || 'Untitled line'}</option>)}</select></label>
+                <label className="admin-field"><span>Line text</span><input value={selectedHomeHeroTitleLine ?? ''} onChange={(event) => onStructuredFieldChange('homeHeroTitleLine', 'value', event.target.value, selectedHomeHeroTitleLineIndex)} /></label>
+              </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Featured project slugs</h3><p className="admin-copy">Manage the featured project order as structured slug entries.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('featuredProjectSlug')}>Add slug</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('featuredProjectSlug', selectedFeaturedProjectSlugIndex)} disabled={selectedFeaturedProjectSlug == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('featuredProjectSlug', 'up', selectedFeaturedProjectSlugIndex)} disabled={selectedFeaturedProjectSlugIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('featuredProjectSlug', 'down', selectedFeaturedProjectSlugIndex)} disabled={selectedFeaturedProjectSlugIndex >= selectedFeaturedProjectSlugTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('featuredProjectSlug', selectedFeaturedProjectSlugIndex)} disabled={selectedFeaturedProjectSlugTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected featured slug</span><select value={selectedFeaturedProjectSlugIndex} onChange={(event) => onFeaturedProjectSlugSelect(Number(event.target.value))}>{workingCopy.home.featuredProjects.slugs.map((slug, index) => <option key={`${slug}-${index}`} value={index}>{index + 1} — {slug || 'Empty slug'}</option>)}</select></label>
+                <label className="admin-field"><span>Slug</span><input value={selectedFeaturedProjectSlug ?? ''} onChange={(event) => onStructuredFieldChange('featuredProjectSlug', 'value', event.target.value, selectedFeaturedProjectSlugIndex)} /></label>
+              </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Bio title lines</h3><p className="admin-copy">Edit the homepage bio heading as separate ordered lines.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('homeBioTitleLine')}>Add line</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('homeBioTitleLine', selectedHomeBioTitleLineIndex)} disabled={selectedHomeBioTitleLine == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeBioTitleLine', 'up', selectedHomeBioTitleLineIndex)} disabled={selectedHomeBioTitleLineIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeBioTitleLine', 'down', selectedHomeBioTitleLineIndex)} disabled={selectedHomeBioTitleLineIndex >= selectedHomeBioTitleLineTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('homeBioTitleLine', selectedHomeBioTitleLineIndex)} disabled={selectedHomeBioTitleLineTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected bio title line</span><select value={selectedHomeBioTitleLineIndex} onChange={(event) => onHomeBioTitleLineSelect(Number(event.target.value))}>{workingCopy.home.bio.titleLines.map((line, index) => <option key={`${line}-${index}`} value={index}>{index + 1} — {line || 'Untitled line'}</option>)}</select></label>
+                <label className="admin-field"><span>Line text</span><input value={selectedHomeBioTitleLine ?? ''} onChange={(event) => onStructuredFieldChange('homeBioTitleLine', 'value', event.target.value, selectedHomeBioTitleLineIndex)} /></label>
+              </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Skills items</h3><p className="admin-copy">Manage the homepage skills list as individual items.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('homeSkillItem')}>Add skill</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('homeSkillItem', selectedHomeSkillItemIndex)} disabled={selectedHomeSkillItem == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeSkillItem', 'up', selectedHomeSkillItemIndex)} disabled={selectedHomeSkillItemIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('homeSkillItem', 'down', selectedHomeSkillItemIndex)} disabled={selectedHomeSkillItemIndex >= selectedHomeSkillItemTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('homeSkillItem', selectedHomeSkillItemIndex)} disabled={selectedHomeSkillItemTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected skill item</span><select value={selectedHomeSkillItemIndex} onChange={(event) => onHomeSkillItemSelect(Number(event.target.value))}>{workingCopy.home.skills.items.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item || 'Untitled skill'}</option>)}</select></label>
+                <label className="admin-field"><span>Skill item</span><input value={selectedHomeSkillItem ?? ''} onChange={(event) => onStructuredFieldChange('homeSkillItem', 'value', event.target.value, selectedHomeSkillItemIndex)} /></label>
+              </div>
+            </div>
             {siteValidation.homePage ? <p className="admin-note admin-note-warning">{siteValidation.homePage}</p> : null}
           </article>
 
@@ -966,6 +1058,27 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Hero image caption</span><textarea value={workingCopy.about.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'about.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('About hero image', workingCopy.about.heroImage?.src, workingCopy.about.heroImage?.alt, workingCopy.about.heroImage?.caption)}
             </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Body paragraphs</h3><p className="admin-copy">Manage the about page body copy as ordered paragraphs.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('aboutBody')}>Add paragraph</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('aboutBody', selectedAboutBodyIndex)} disabled={selectedAboutBodyParagraph == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('aboutBody', 'up', selectedAboutBodyIndex)} disabled={selectedAboutBodyIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('aboutBody', 'down', selectedAboutBodyIndex)} disabled={selectedAboutBodyIndex >= selectedAboutBodyTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('aboutBody', selectedAboutBodyIndex)} disabled={selectedAboutBodyTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected paragraph</span><select value={selectedAboutBodyIndex} onChange={(event) => onAboutBodySelect(Number(event.target.value))}>{workingCopy.about.body.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item.slice(0, 40) || 'Paragraph'}</option>)}</select></label>
+                <label className="admin-field"><span>Paragraph text</span><textarea value={selectedAboutBodyParagraph ?? ''} onChange={(event) => onStructuredFieldChange('aboutBody', 'value', event.target.value, selectedAboutBodyIndex)} /></label>
+              </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Principles</h3><p className="admin-copy">Edit the about page principles as individual list items.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('aboutPrinciple')}>Add principle</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('aboutPrinciple', selectedAboutPrincipleIndex)} disabled={selectedAboutPrinciple == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('aboutPrinciple', 'up', selectedAboutPrincipleIndex)} disabled={selectedAboutPrincipleIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('aboutPrinciple', 'down', selectedAboutPrincipleIndex)} disabled={selectedAboutPrincipleIndex >= selectedAboutPrincipleTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('aboutPrinciple', selectedAboutPrincipleIndex)} disabled={selectedAboutPrincipleTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected principle</span><select value={selectedAboutPrincipleIndex} onChange={(event) => onAboutPrincipleSelect(Number(event.target.value))}>{workingCopy.about.principles.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item.slice(0, 40) || 'Principle'}</option>)}</select></label>
+                <label className="admin-field"><span>Principle text</span><textarea value={selectedAboutPrinciple ?? ''} onChange={(event) => onStructuredFieldChange('aboutPrinciple', 'value', event.target.value, selectedAboutPrincipleIndex)} /></label>
+              </div>
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Tools</h3><p className="admin-copy">Manage the tools list without editing a raw multiline field.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('aboutTool')}>Add tool</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('aboutTool', selectedAboutToolIndex)} disabled={selectedAboutTool == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('aboutTool', 'up', selectedAboutToolIndex)} disabled={selectedAboutToolIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('aboutTool', 'down', selectedAboutToolIndex)} disabled={selectedAboutToolIndex >= selectedAboutToolTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('aboutTool', selectedAboutToolIndex)} disabled={selectedAboutToolTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected tool</span><select value={selectedAboutToolIndex} onChange={(event) => onAboutToolSelect(Number(event.target.value))}>{workingCopy.about.tools.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item || 'Tool'}</option>)}</select></label>
+                <label className="admin-field"><span>Tool label</span><input value={selectedAboutTool ?? ''} onChange={(event) => onStructuredFieldChange('aboutTool', 'value', event.target.value, selectedAboutToolIndex)} /></label>
+              </div>
+            </div>
             {siteValidation.aboutPage ? <p className="admin-note admin-note-warning">{siteValidation.aboutPage}</p> : null}
           </article>
 
@@ -1001,6 +1114,13 @@ export const DashboardScreen = ({
               <label className="admin-field"><span>Resume hero image alt</span><input value={workingCopy.resume.heroImage?.alt ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.alt', event.target.value)} /></label>
               <label className="admin-field"><span>Resume hero image caption</span><textarea value={workingCopy.resume.heroImage?.caption ?? ''} onChange={(event) => onStructuredFieldChange('heroImage', 'resume.caption', event.target.value)} /></label>
               {renderAssignedImagePreview('Resume hero image', workingCopy.resume.heroImage?.src, workingCopy.resume.heroImage?.alt, workingCopy.resume.heroImage?.caption)}
+            </div>
+            <div className="admin-subpanel">
+              <div className="admin-panel-header"><div><h3>Resume skills</h3><p className="admin-copy">Manage the resume skills list as ordered items.</p></div><div className="admin-actions"><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredAdd('resumeSkill')}>Add skill</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredDuplicate('resumeSkill', selectedResumeSkillIndex)} disabled={selectedResumeSkill == null}>Duplicate selected</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('resumeSkill', 'up', selectedResumeSkillIndex)} disabled={selectedResumeSkillIndex <= 0}>Move up</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredMove('resumeSkill', 'down', selectedResumeSkillIndex)} disabled={selectedResumeSkillIndex >= selectedResumeSkillTotal - 1}>Move down</button><button type="button" className="admin-button admin-button-secondary" onClick={() => onStructuredRemove('resumeSkill', selectedResumeSkillIndex)} disabled={selectedResumeSkillTotal <= 1}>Remove selected</button></div></div>
+              <div className="admin-form-grid">
+                <label className="admin-field"><span>Selected resume skill</span><select value={selectedResumeSkillIndex} onChange={(event) => onResumeSkillSelect(Number(event.target.value))}>{workingCopy.resume.skills.map((item, index) => <option key={`${item}-${index}`} value={index}>{index + 1} — {item || 'Skill'}</option>)}</select></label>
+                <label className="admin-field"><span>Skill item</span><input value={selectedResumeSkill ?? ''} onChange={(event) => onStructuredFieldChange('resumeSkill', 'value', event.target.value, selectedResumeSkillIndex)} /></label>
+              </div>
             </div>
             {siteValidation.resumePage ? <p className="admin-note admin-note-warning">{siteValidation.resumePage}</p> : null}
           </article>

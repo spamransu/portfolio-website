@@ -1658,12 +1658,20 @@ export const App = () => {
   const [selectedProjectSlug, setSelectedProjectSlug] = useState<string>(initialUrlState.projectSlug)
   const [selectedProjectGalleryIndex, setSelectedProjectGalleryIndex] = useState(0)
   const [selectedHomeStatIndex, setSelectedHomeStatIndex] = useState(0)
+  const [selectedHomeHeroTitleLineIndex, setSelectedHomeHeroTitleLineIndex] = useState(0)
+  const [selectedFeaturedProjectSlugIndex, setSelectedFeaturedProjectSlugIndex] = useState(0)
+  const [selectedHomeBioTitleLineIndex, setSelectedHomeBioTitleLineIndex] = useState(0)
+  const [selectedHomeSkillItemIndex, setSelectedHomeSkillItemIndex] = useState(0)
   const [selectedSocialIndex, setSelectedSocialIndex] = useState(0)
   const [selectedHeaderNavIndex, setSelectedHeaderNavIndex] = useState(0)
   const [selectedFooterGeneralLinkIndex, setSelectedFooterGeneralLinkIndex] = useState(0)
   const [selectedFooterMoreLinkIndex, setSelectedFooterMoreLinkIndex] = useState(0)
+  const [selectedAboutBodyIndex, setSelectedAboutBodyIndex] = useState(0)
+  const [selectedAboutPrincipleIndex, setSelectedAboutPrincipleIndex] = useState(0)
+  const [selectedAboutToolIndex, setSelectedAboutToolIndex] = useState(0)
   const [selectedProcessIndex, setSelectedProcessIndex] = useState(0)
   const [selectedHighlightIndex, setSelectedHighlightIndex] = useState(0)
+  const [selectedResumeSkillIndex, setSelectedResumeSkillIndex] = useState(0)
   const [selectedExperienceIndex, setSelectedExperienceIndex] = useState(0)
   const [selectedMethodIndex, setSelectedMethodIndex] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -1749,12 +1757,20 @@ export const App = () => {
       ))
       setSelectedProjectGalleryIndex(0)
       setSelectedHomeStatIndex(0)
+      setSelectedHomeHeroTitleLineIndex(0)
+      setSelectedFeaturedProjectSlugIndex(0)
+      setSelectedHomeBioTitleLineIndex(0)
+      setSelectedHomeSkillItemIndex(0)
       setSelectedSocialIndex(0)
       setSelectedHeaderNavIndex(0)
       setSelectedFooterGeneralLinkIndex(0)
       setSelectedFooterMoreLinkIndex(0)
+      setSelectedAboutBodyIndex(0)
+      setSelectedAboutPrincipleIndex(0)
+      setSelectedAboutToolIndex(0)
       setSelectedProcessIndex(0)
       setSelectedHighlightIndex(0)
+      setSelectedResumeSkillIndex(0)
       setSelectedExperienceIndex(0)
       setSelectedMethodIndex(0)
       setError(null)
@@ -1947,12 +1963,20 @@ export const App = () => {
     ))
     setSelectedProjectGalleryIndex(0)
     setSelectedHomeStatIndex(0)
+    setSelectedHomeHeroTitleLineIndex(0)
+    setSelectedFeaturedProjectSlugIndex(0)
+    setSelectedHomeBioTitleLineIndex(0)
+    setSelectedHomeSkillItemIndex(0)
     setSelectedSocialIndex(0)
     setSelectedHeaderNavIndex(0)
     setSelectedFooterGeneralLinkIndex(0)
     setSelectedFooterMoreLinkIndex(0)
+    setSelectedAboutBodyIndex(0)
+    setSelectedAboutPrincipleIndex(0)
+    setSelectedAboutToolIndex(0)
     setSelectedProcessIndex(0)
     setSelectedHighlightIndex(0)
+    setSelectedResumeSkillIndex(0)
     setSelectedExperienceIndex(0)
     setSelectedMethodIndex(0)
     setSaveStatus(null)
@@ -2017,6 +2041,22 @@ export const App = () => {
             [field]: value,
           }))
           return next
+        case 'homeHeroTitleLine':
+          if (index === undefined) return next
+          next.home.hero.titleLines = updateRecordAtIndex(next.home.hero.titleLines, index, () => value)
+          return next
+        case 'featuredProjectSlug':
+          if (index === undefined) return next
+          next.home.featuredProjects.slugs = updateRecordAtIndex(next.home.featuredProjects.slugs, index, () => normalizeSlug(value))
+          return next
+        case 'homeBioTitleLine':
+          if (index === undefined) return next
+          next.home.bio.titleLines = updateRecordAtIndex(next.home.bio.titleLines, index, () => value)
+          return next
+        case 'homeSkillItem':
+          if (index === undefined) return next
+          next.home.skills.items = updateRecordAtIndex(next.home.skills.items, index, () => value)
+          return next
         case 'headerNav':
           if (index === undefined || !next.siteChrome) return next
           next.siteChrome.headerNav = updateRecordAtIndex(next.siteChrome.headerNav, index, (item) => ({
@@ -2037,6 +2077,18 @@ export const App = () => {
             ...item,
             [field]: value,
           }))
+          return next
+        case 'aboutBody':
+          if (index === undefined) return next
+          next.about.body = updateRecordAtIndex(next.about.body, index, () => value)
+          return next
+        case 'aboutPrinciple':
+          if (index === undefined) return next
+          next.about.principles = updateRecordAtIndex(next.about.principles, index, () => value)
+          return next
+        case 'aboutTool':
+          if (index === undefined) return next
+          next.about.tools = updateRecordAtIndex(next.about.tools, index, () => value)
           return next
         case 'process':
           if (index === undefined) return next
@@ -2072,6 +2124,10 @@ export const App = () => {
             ...item,
             [field]: value,
           }))
+          return next
+        case 'resumeSkill':
+          if (index === undefined) return next
+          next.resume.skills = updateRecordAtIndex(next.resume.skills, index, () => value)
           return next
         case 'heroImage': {
           const target = field.split('.')[0] as 'about' | 'resume' | 'contact' | 'projectsPage' | 'blogPage'
@@ -2206,6 +2262,22 @@ export const App = () => {
           next.site.socials.push({ label: 'New social', href: 'https://' })
           setSelectedSocialIndex(next.site.socials.length - 1)
           return next
+        case 'homeHeroTitleLine':
+          next.home.hero.titleLines.push('New title line')
+          setSelectedHomeHeroTitleLineIndex(next.home.hero.titleLines.length - 1)
+          return next
+        case 'featuredProjectSlug':
+          next.home.featuredProjects.slugs.push(next.projects[0]?.slug ?? 'project-slug')
+          setSelectedFeaturedProjectSlugIndex(next.home.featuredProjects.slugs.length - 1)
+          return next
+        case 'homeBioTitleLine':
+          next.home.bio.titleLines.push('New title line')
+          setSelectedHomeBioTitleLineIndex(next.home.bio.titleLines.length - 1)
+          return next
+        case 'homeSkillItem':
+          next.home.skills.items.push('New skill')
+          setSelectedHomeSkillItemIndex(next.home.skills.items.length - 1)
+          return next
         case 'headerNav':
           if (!next.siteChrome) return next
           next.siteChrome.headerNav.push({ to: '/', label: 'New nav link' })
@@ -2221,6 +2293,18 @@ export const App = () => {
           next.siteChrome.footer.moreLinks.push({ to: '/', label: 'New footer link' })
           setSelectedFooterMoreLinkIndex(next.siteChrome.footer.moreLinks.length - 1)
           return next
+        case 'aboutBody':
+          next.about.body.push('New paragraph')
+          setSelectedAboutBodyIndex(next.about.body.length - 1)
+          return next
+        case 'aboutPrinciple':
+          next.about.principles.push('New principle')
+          setSelectedAboutPrincipleIndex(next.about.principles.length - 1)
+          return next
+        case 'aboutTool':
+          next.about.tools.push('New tool')
+          setSelectedAboutToolIndex(next.about.tools.length - 1)
+          return next
         case 'process':
           next.about.process.push({ title: 'New step', description: '' })
           setSelectedProcessIndex(next.about.process.length - 1)
@@ -2228,6 +2312,10 @@ export const App = () => {
         case 'highlight':
           next.resume.highlights.push({ value: '0', label: 'New highlight' })
           setSelectedHighlightIndex(next.resume.highlights.length - 1)
+          return next
+        case 'resumeSkill':
+          next.resume.skills.push('New skill')
+          setSelectedResumeSkillIndex(next.resume.skills.length - 1)
           return next
         case 'homeStat':
           next.home.stats.push({ value: '0', label: 'New stat', tone: 'accent' })
@@ -2301,6 +2389,26 @@ export const App = () => {
           next.site.socials.splice(index + 1, 0, structuredClone(next.site.socials[index]))
           setSelectedSocialIndex(index + 1)
           return next
+        case 'homeHeroTitleLine':
+          if (index === undefined) return next
+          next.home.hero.titleLines.splice(index + 1, 0, structuredClone(next.home.hero.titleLines[index]))
+          setSelectedHomeHeroTitleLineIndex(index + 1)
+          return next
+        case 'featuredProjectSlug':
+          if (index === undefined) return next
+          next.home.featuredProjects.slugs.splice(index + 1, 0, structuredClone(next.home.featuredProjects.slugs[index]))
+          setSelectedFeaturedProjectSlugIndex(index + 1)
+          return next
+        case 'homeBioTitleLine':
+          if (index === undefined) return next
+          next.home.bio.titleLines.splice(index + 1, 0, structuredClone(next.home.bio.titleLines[index]))
+          setSelectedHomeBioTitleLineIndex(index + 1)
+          return next
+        case 'homeSkillItem':
+          if (index === undefined) return next
+          next.home.skills.items.splice(index + 1, 0, structuredClone(next.home.skills.items[index]))
+          setSelectedHomeSkillItemIndex(index + 1)
+          return next
         case 'headerNav':
           if (index === undefined || !next.siteChrome?.headerNav[index]) return next
           next.siteChrome.headerNav.splice(index + 1, 0, structuredClone(next.siteChrome.headerNav[index]))
@@ -2316,6 +2424,21 @@ export const App = () => {
           next.siteChrome.footer.moreLinks.splice(index + 1, 0, structuredClone(next.siteChrome.footer.moreLinks[index]))
           setSelectedFooterMoreLinkIndex(index + 1)
           return next
+        case 'aboutBody':
+          if (index === undefined) return next
+          next.about.body.splice(index + 1, 0, structuredClone(next.about.body[index]))
+          setSelectedAboutBodyIndex(index + 1)
+          return next
+        case 'aboutPrinciple':
+          if (index === undefined) return next
+          next.about.principles.splice(index + 1, 0, structuredClone(next.about.principles[index]))
+          setSelectedAboutPrincipleIndex(index + 1)
+          return next
+        case 'aboutTool':
+          if (index === undefined) return next
+          next.about.tools.splice(index + 1, 0, structuredClone(next.about.tools[index]))
+          setSelectedAboutToolIndex(index + 1)
+          return next
         case 'process':
           if (index === undefined) return next
           next.about.process.splice(index + 1, 0, structuredClone(next.about.process[index]))
@@ -2325,6 +2448,11 @@ export const App = () => {
           if (index === undefined) return next
           next.resume.highlights.splice(index + 1, 0, structuredClone(next.resume.highlights[index]))
           setSelectedHighlightIndex(index + 1)
+          return next
+        case 'resumeSkill':
+          if (index === undefined) return next
+          next.resume.skills.splice(index + 1, 0, structuredClone(next.resume.skills[index]))
+          setSelectedResumeSkillIndex(index + 1)
           return next
         case 'homeStat':
           if (index === undefined) return next
@@ -2375,11 +2503,19 @@ export const App = () => {
   const handleStructuredRemove = useCallback((scope: string, index?: number) => {
     const confirmMessageByScope: Record<string, string> = {
       social: 'Remove this social link?',
+      homeHeroTitleLine: 'Remove this home hero title line?',
+      featuredProjectSlug: 'Remove this featured project slug?',
+      homeBioTitleLine: 'Remove this home bio title line?',
+      homeSkillItem: 'Remove this home skill item?',
       headerNav: 'Remove this header navigation link?',
       footerGeneralLink: 'Remove this footer general link?',
       footerMoreLink: 'Remove this footer more link?',
+      aboutBody: 'Remove this about body paragraph?',
+      aboutPrinciple: 'Remove this principle?',
+      aboutTool: 'Remove this tool?',
       process: 'Remove this process step?',
       highlight: 'Remove this highlight card?',
+      resumeSkill: 'Remove this resume skill?',
       homeStat: 'Remove this home stat card?',
       experience: 'Remove this experience entry?',
       method: 'Remove this contact method?',
@@ -2402,6 +2538,26 @@ export const App = () => {
           next.site.socials.splice(index, 1)
           setSelectedSocialIndex(Math.max(0, Math.min(index, next.site.socials.length - 1)))
           return next
+        case 'homeHeroTitleLine':
+          if (index === undefined || next.home.hero.titleLines.length <= 1) return next
+          next.home.hero.titleLines.splice(index, 1)
+          setSelectedHomeHeroTitleLineIndex(Math.max(0, Math.min(index, next.home.hero.titleLines.length - 1)))
+          return next
+        case 'featuredProjectSlug':
+          if (index === undefined || next.home.featuredProjects.slugs.length <= 1) return next
+          next.home.featuredProjects.slugs.splice(index, 1)
+          setSelectedFeaturedProjectSlugIndex(Math.max(0, Math.min(index, next.home.featuredProjects.slugs.length - 1)))
+          return next
+        case 'homeBioTitleLine':
+          if (index === undefined || next.home.bio.titleLines.length <= 1) return next
+          next.home.bio.titleLines.splice(index, 1)
+          setSelectedHomeBioTitleLineIndex(Math.max(0, Math.min(index, next.home.bio.titleLines.length - 1)))
+          return next
+        case 'homeSkillItem':
+          if (index === undefined || next.home.skills.items.length <= 1) return next
+          next.home.skills.items.splice(index, 1)
+          setSelectedHomeSkillItemIndex(Math.max(0, Math.min(index, next.home.skills.items.length - 1)))
+          return next
         case 'headerNav':
           if (index === undefined || (next.siteChrome?.headerNav.length ?? 0) <= 1) return next
           next.siteChrome?.headerNav.splice(index, 1)
@@ -2417,6 +2573,21 @@ export const App = () => {
           next.siteChrome?.footer.moreLinks.splice(index, 1)
           setSelectedFooterMoreLinkIndex(Math.max(0, Math.min(index, (next.siteChrome?.footer.moreLinks.length ?? 1) - 1)))
           return next
+        case 'aboutBody':
+          if (index === undefined || next.about.body.length <= 1) return next
+          next.about.body.splice(index, 1)
+          setSelectedAboutBodyIndex(Math.max(0, Math.min(index, next.about.body.length - 1)))
+          return next
+        case 'aboutPrinciple':
+          if (index === undefined || next.about.principles.length <= 1) return next
+          next.about.principles.splice(index, 1)
+          setSelectedAboutPrincipleIndex(Math.max(0, Math.min(index, next.about.principles.length - 1)))
+          return next
+        case 'aboutTool':
+          if (index === undefined || next.about.tools.length <= 1) return next
+          next.about.tools.splice(index, 1)
+          setSelectedAboutToolIndex(Math.max(0, Math.min(index, next.about.tools.length - 1)))
+          return next
         case 'process':
           if (index === undefined || next.about.process.length <= 1) return next
           next.about.process.splice(index, 1)
@@ -2426,6 +2597,11 @@ export const App = () => {
           if (index === undefined || next.resume.highlights.length <= 1) return next
           next.resume.highlights.splice(index, 1)
           setSelectedHighlightIndex(Math.max(0, Math.min(index, next.resume.highlights.length - 1)))
+          return next
+        case 'resumeSkill':
+          if (index === undefined || next.resume.skills.length <= 1) return next
+          next.resume.skills.splice(index, 1)
+          setSelectedResumeSkillIndex(Math.max(0, Math.min(index, next.resume.skills.length - 1)))
           return next
         case 'homeStat':
           if (index === undefined || next.home.stats.length <= 1) return next
@@ -2511,6 +2687,38 @@ export const App = () => {
           setSelectedSocialIndex(nextIndex)
           return next
         }
+        case 'homeHeroTitleLine': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.home.hero.titleLines.length, index)
+          if (nextIndex === index) return next
+          next.home.hero.titleLines = moveArrayItem(next.home.hero.titleLines, index, nextIndex)
+          setSelectedHomeHeroTitleLineIndex(nextIndex)
+          return next
+        }
+        case 'featuredProjectSlug': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.home.featuredProjects.slugs.length, index)
+          if (nextIndex === index) return next
+          next.home.featuredProjects.slugs = moveArrayItem(next.home.featuredProjects.slugs, index, nextIndex)
+          setSelectedFeaturedProjectSlugIndex(nextIndex)
+          return next
+        }
+        case 'homeBioTitleLine': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.home.bio.titleLines.length, index)
+          if (nextIndex === index) return next
+          next.home.bio.titleLines = moveArrayItem(next.home.bio.titleLines, index, nextIndex)
+          setSelectedHomeBioTitleLineIndex(nextIndex)
+          return next
+        }
+        case 'homeSkillItem': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.home.skills.items.length, index)
+          if (nextIndex === index) return next
+          next.home.skills.items = moveArrayItem(next.home.skills.items, index, nextIndex)
+          setSelectedHomeSkillItemIndex(nextIndex)
+          return next
+        }
         case 'headerNav': {
           if (index === undefined || !next.siteChrome) return next
           const nextIndex = resolveNextIndex(next.siteChrome.headerNav.length, index)
@@ -2535,6 +2743,30 @@ export const App = () => {
           setSelectedFooterMoreLinkIndex(nextIndex)
           return next
         }
+        case 'aboutBody': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.about.body.length, index)
+          if (nextIndex === index) return next
+          next.about.body = moveArrayItem(next.about.body, index, nextIndex)
+          setSelectedAboutBodyIndex(nextIndex)
+          return next
+        }
+        case 'aboutPrinciple': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.about.principles.length, index)
+          if (nextIndex === index) return next
+          next.about.principles = moveArrayItem(next.about.principles, index, nextIndex)
+          setSelectedAboutPrincipleIndex(nextIndex)
+          return next
+        }
+        case 'aboutTool': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.about.tools.length, index)
+          if (nextIndex === index) return next
+          next.about.tools = moveArrayItem(next.about.tools, index, nextIndex)
+          setSelectedAboutToolIndex(nextIndex)
+          return next
+        }
         case 'process': {
           if (index === undefined) return next
           const nextIndex = resolveNextIndex(next.about.process.length, index)
@@ -2549,6 +2781,14 @@ export const App = () => {
           if (nextIndex === index) return next
           next.resume.highlights = moveArrayItem(next.resume.highlights, index, nextIndex)
           setSelectedHighlightIndex(nextIndex)
+          return next
+        }
+        case 'resumeSkill': {
+          if (index === undefined) return next
+          const nextIndex = resolveNextIndex(next.resume.skills.length, index)
+          if (nextIndex === index) return next
+          next.resume.skills = moveArrayItem(next.resume.skills, index, nextIndex)
+          setSelectedResumeSkillIndex(nextIndex)
           return next
         }
         case 'homeStat': {
@@ -3028,12 +3268,20 @@ export const App = () => {
   const selectedProjectGalleryItem = selectedProject?.gallery?.[selectedProjectGalleryIndex] ?? null
 
   const selectedSocial = workingCopy?.site.socials[selectedSocialIndex] ?? null
+  const selectedHomeHeroTitleLine = workingCopy?.home.hero.titleLines[selectedHomeHeroTitleLineIndex] ?? null
+  const selectedFeaturedProjectSlug = workingCopy?.home.featuredProjects.slugs[selectedFeaturedProjectSlugIndex] ?? null
+  const selectedHomeBioTitleLine = workingCopy?.home.bio.titleLines[selectedHomeBioTitleLineIndex] ?? null
+  const selectedHomeSkillItem = workingCopy?.home.skills.items[selectedHomeSkillItemIndex] ?? null
   const selectedHeaderNavLink = workingCopy?.siteChrome?.headerNav[selectedHeaderNavIndex] ?? null
   const selectedFooterGeneralLink = workingCopy?.siteChrome?.footer.generalLinks[selectedFooterGeneralLinkIndex] ?? null
   const selectedFooterMoreLink = workingCopy?.siteChrome?.footer.moreLinks[selectedFooterMoreLinkIndex] ?? null
+  const selectedAboutBodyParagraph = workingCopy?.about.body[selectedAboutBodyIndex] ?? null
+  const selectedAboutPrinciple = workingCopy?.about.principles[selectedAboutPrincipleIndex] ?? null
+  const selectedAboutTool = workingCopy?.about.tools[selectedAboutToolIndex] ?? null
   const selectedProcess = workingCopy?.about.process[selectedProcessIndex] ?? null
   const selectedHomeStat = workingCopy?.home.stats[selectedHomeStatIndex] ?? null
   const selectedHighlight = workingCopy?.resume.highlights[selectedHighlightIndex] ?? null
+  const selectedResumeSkill = workingCopy?.resume.skills[selectedResumeSkillIndex] ?? null
   const selectedExperience = workingCopy?.resume.experience[selectedExperienceIndex] ?? null
   const selectedMethod = workingCopy?.contact.methods[selectedMethodIndex] ?? null
 
@@ -3137,12 +3385,20 @@ export const App = () => {
       onProjectSelect: handleProjectSelect,
       onProjectDuplicate: handleProjectDuplicate,
       onHomeStatSelect: setSelectedHomeStatIndex,
+      onHomeHeroTitleLineSelect: setSelectedHomeHeroTitleLineIndex,
+      onFeaturedProjectSlugSelect: setSelectedFeaturedProjectSlugIndex,
+      onHomeBioTitleLineSelect: setSelectedHomeBioTitleLineIndex,
+      onHomeSkillItemSelect: setSelectedHomeSkillItemIndex,
       onSocialSelect: setSelectedSocialIndex,
       onHeaderNavSelect: setSelectedHeaderNavIndex,
       onFooterGeneralLinkSelect: setSelectedFooterGeneralLinkIndex,
       onFooterMoreLinkSelect: setSelectedFooterMoreLinkIndex,
+      onAboutBodySelect: setSelectedAboutBodyIndex,
+      onAboutPrincipleSelect: setSelectedAboutPrincipleIndex,
+      onAboutToolSelect: setSelectedAboutToolIndex,
       onProcessSelect: setSelectedProcessIndex,
       onHighlightSelect: setSelectedHighlightIndex,
+      onResumeSkillSelect: setSelectedResumeSkillIndex,
       onExperienceSelect: setSelectedExperienceIndex,
       onMethodSelect: setSelectedMethodIndex,
       onProjectGallerySelect: setSelectedProjectGalleryIndex,
@@ -3155,6 +3411,18 @@ export const App = () => {
       selectedSocial,
       selectedSocialIndex,
       selectedSocialTotal: workingCopy?.site.socials.length ?? 0,
+      selectedHomeHeroTitleLine,
+      selectedHomeHeroTitleLineIndex,
+      selectedHomeHeroTitleLineTotal: workingCopy?.home.hero.titleLines.length ?? 0,
+      selectedFeaturedProjectSlug,
+      selectedFeaturedProjectSlugIndex,
+      selectedFeaturedProjectSlugTotal: workingCopy?.home.featuredProjects.slugs.length ?? 0,
+      selectedHomeBioTitleLine,
+      selectedHomeBioTitleLineIndex,
+      selectedHomeBioTitleLineTotal: workingCopy?.home.bio.titleLines.length ?? 0,
+      selectedHomeSkillItem,
+      selectedHomeSkillItemIndex,
+      selectedHomeSkillItemTotal: workingCopy?.home.skills.items.length ?? 0,
       selectedHeaderNavLink,
       selectedHeaderNavIndex,
       selectedHeaderNavTotal: workingCopy?.siteChrome?.headerNav.length ?? 0,
@@ -3164,6 +3432,15 @@ export const App = () => {
       selectedFooterMoreLink,
       selectedFooterMoreLinkIndex,
       selectedFooterMoreLinkTotal: workingCopy?.siteChrome?.footer.moreLinks.length ?? 0,
+      selectedAboutBodyParagraph,
+      selectedAboutBodyIndex,
+      selectedAboutBodyTotal: workingCopy?.about.body.length ?? 0,
+      selectedAboutPrinciple,
+      selectedAboutPrincipleIndex,
+      selectedAboutPrincipleTotal: workingCopy?.about.principles.length ?? 0,
+      selectedAboutTool,
+      selectedAboutToolIndex,
+      selectedAboutToolTotal: workingCopy?.about.tools.length ?? 0,
       selectedProcess,
       selectedProcessIndex,
       selectedProcessTotal: workingCopy?.about.process.length ?? 0,
@@ -3173,6 +3450,9 @@ export const App = () => {
       selectedHighlight,
       selectedHighlightIndex,
       selectedHighlightTotal: workingCopy?.resume.highlights.length ?? 0,
+      selectedResumeSkill,
+      selectedResumeSkillIndex,
+      selectedResumeSkillTotal: workingCopy?.resume.skills.length ?? 0,
       selectedExperience,
       selectedExperienceIndex,
       selectedExperienceTotal: workingCopy?.resume.experience.length ?? 0,
@@ -3258,12 +3538,26 @@ export const App = () => {
       saving,
       savingBlog,
       selectedBlogMeta,
+      selectedFeaturedProjectSlug,
+      selectedFeaturedProjectSlugIndex,
       selectedExperience,
       selectedExperienceIndex,
+      selectedHomeBioTitleLine,
+      selectedHomeBioTitleLineIndex,
+      selectedHomeHeroTitleLine,
+      selectedHomeHeroTitleLineIndex,
+      selectedHomeSkillItem,
+      selectedHomeSkillItemIndex,
       selectedFooterGeneralLink,
       selectedFooterGeneralLinkIndex,
       selectedFooterMoreLink,
       selectedFooterMoreLinkIndex,
+      selectedAboutBodyIndex,
+      selectedAboutBodyParagraph,
+      selectedAboutPrinciple,
+      selectedAboutPrincipleIndex,
+      selectedAboutTool,
+      selectedAboutToolIndex,
       selectedHeaderNavIndex,
       selectedHeaderNavLink,
       selectedHighlight,
@@ -3278,6 +3572,8 @@ export const App = () => {
       selectedProjectGalleryIndex,
       selectedProjectGalleryItem,
       selectedProjectSlug,
+      selectedResumeSkill,
+      selectedResumeSkillIndex,
       selectedSocial,
       selectedSocialIndex,
       selectedBlogPost,
