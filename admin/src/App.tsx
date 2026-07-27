@@ -193,6 +193,24 @@ const syncActiveProjectMediaSlug = (
     : currentMediaSlug
 )
 
+const syncEnteredProjectMediaSlug = (
+  currentMediaSlug: string,
+  currentMediaArea: string,
+  currentMediaTarget: MediaTargetSelection | null,
+  previousSelectedProjectSlug: string,
+  nextSelectedProjectSlug: string,
+): string => {
+  if (currentMediaArea !== 'projects') return nextSelectedProjectSlug
+  if (!currentMediaTarget) {
+    return syncResetProjectMediaSlug(currentMediaSlug, previousSelectedProjectSlug, nextSelectedProjectSlug)
+  }
+  if (currentMediaTarget.area !== 'projects') return nextSelectedProjectSlug
+  if (currentMediaTarget.scope === 'projectImage' || currentMediaTarget.scope === 'projectGallery' || currentMediaTarget.scope === 'projectSection') {
+    return syncResetProjectMediaSlug(currentMediaSlug, previousSelectedProjectSlug, nextSelectedProjectSlug)
+  }
+  return nextSelectedProjectSlug
+}
+
 const syncResetProjectMediaTarget = (
   currentMediaTarget: MediaTargetSelection | null,
   projects: SiteContent['projects'],
@@ -2139,7 +2157,9 @@ export const App = () => {
   const handleProjectSelect = useCallback((slug: string) => {
     setSelectedProjectSlug(slug)
     setSelectedProjectGalleryIndex(0)
-    setMediaSlug((current) => syncActiveProjectMediaSlug(current, mediaArea, selectedProjectSlug, slug))
+    setMediaSlug((current) => (
+      syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, selectedProjectSlug, slug)
+    ))
     setMediaTarget((current) => (
       syncResetProjectMediaTarget(
         current,
@@ -2148,7 +2168,7 @@ export const App = () => {
         slug,
       )
     ))
-  }, [mediaArea, selectedProjectSlug, siteContent?.content.projects, workingCopy?.projects])
+  }, [mediaArea, mediaTarget, selectedProjectSlug, siteContent?.content.projects, workingCopy?.projects])
 
   const handleMediaUpload = useCallback(async () => {
     if (!mediaFile || !mediaArea || !normalizedMediaSlug || mediaValidationError) return
