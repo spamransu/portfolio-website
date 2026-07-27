@@ -241,13 +241,20 @@ const syncResetBlogMediaSlug = (
 const syncEnteredBlogMediaSlug = (
   currentMediaSlug: string,
   currentMediaArea: string,
+  currentMediaTarget: MediaTargetSelection | null,
   previousSelectedBlogSlug: string,
   nextSelectedBlogSlug: string,
-): string => (
-  currentMediaArea === 'blog'
-    ? syncResetBlogMediaSlug(currentMediaSlug, previousSelectedBlogSlug, nextSelectedBlogSlug)
-    : nextSelectedBlogSlug
-)
+): string => {
+  if (currentMediaArea !== 'blog') return nextSelectedBlogSlug
+  if (!currentMediaTarget) {
+    return syncResetBlogMediaSlug(currentMediaSlug, previousSelectedBlogSlug, nextSelectedBlogSlug)
+  }
+  if (currentMediaTarget.area !== 'blog') return nextSelectedBlogSlug
+  if (currentMediaTarget.kind === 'blog') {
+    return syncResetBlogMediaSlug(currentMediaSlug, previousSelectedBlogSlug, nextSelectedBlogSlug)
+  }
+  return nextSelectedBlogSlug
+}
 
 const syncResetBlogMediaTarget = (
   currentMediaTarget: MediaTargetSelection | null,
@@ -1358,7 +1365,7 @@ export const App = () => {
       setSelectedBlogBaseline(structuredClone(response.post))
       setSelectedBlogSlug(response.post.slug)
       setMediaArea('blog')
-      setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, selectedBlogSlug, response.post.slug))
+      setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, mediaTarget, selectedBlogSlug, response.post.slug))
       setMediaTarget((current) => (
         current && current.kind === 'blog'
           ? syncResetBlogMediaTarget(current, selectedBlogSlug, response.post)
@@ -1382,7 +1389,7 @@ export const App = () => {
     } finally {
       setLoadingBlog(false)
     }
-  }, [getApiErrorMessage, handleUnauthorizedError, mediaArea, selectedBlogSlug])
+  }, [getApiErrorMessage, handleUnauthorizedError, mediaArea, mediaTarget, selectedBlogSlug])
 
   const loadBlogList = useCallback(async (preferredSlug?: string) => {
     try {
@@ -2039,7 +2046,7 @@ export const App = () => {
     })
     setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
-    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, selectedBlogSlug, post.slug))
+    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, mediaTarget, selectedBlogSlug, post.slug))
     setMediaTarget((current) => (
       current && current.kind === 'blog'
         ? syncResetBlogMediaTarget(current, selectedBlogSlug, post)
@@ -2049,7 +2056,7 @@ export const App = () => {
     setBlogConflict(null)
     setBlogActivity(null)
     setError(null)
-  }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, mediaArea, selectedBlogSlug, siteContent?.branch, siteContent?.repo])
+  }, [blogDirty, blogList?.branch, blogList?.repo, confirmDiscardChanges, mediaArea, mediaTarget, selectedBlogSlug, siteContent?.branch, siteContent?.repo])
 
   const handleBlogDelete = useCallback(async () => {
     if (!blogList || !selectedBlogPost?.post.sha) return
