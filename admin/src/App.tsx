@@ -245,6 +245,17 @@ const syncResetBlogMediaSlug = (
   nextSelectedBlogSlug: string,
 ): string => (currentMediaSlug === previousSelectedBlogSlug ? nextSelectedBlogSlug : currentMediaSlug)
 
+const syncActiveBlogMediaSlug = (
+  currentMediaSlug: string,
+  currentMediaArea: string,
+  previousSelectedBlogSlug: string,
+  nextSelectedBlogSlug: string,
+): string => (
+  currentMediaArea === 'blog'
+    ? syncResetBlogMediaSlug(currentMediaSlug, previousSelectedBlogSlug, nextSelectedBlogSlug)
+    : currentMediaSlug
+)
+
 const syncEnteredBlogMediaSlug = (
   currentMediaSlug: string,
   currentMediaArea: string,
@@ -1553,7 +1564,7 @@ export const App = () => {
 
     setSelectedBlogPost((current) => (current ? { ...current, post: structuredClone(selectedBlogBaseline) } : current))
     setSelectedBlogSlug(selectedBlogBaseline.slug)
-    setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, selectedBlogBaseline.slug))
+    setMediaSlug((current) => syncActiveBlogMediaSlug(current, mediaArea, selectedBlogSlug, selectedBlogBaseline.slug))
     setMediaTarget((current) => syncResetBlogMediaTarget(current, selectedBlogSlug, selectedBlogBaseline))
     setBlogStatus(null)
     setBlogConflict(null)
@@ -1973,7 +1984,7 @@ export const App = () => {
       if (!current) return current
       const post = updateBlogPost(current.post, field, value)
       if (field === 'slug') {
-        setMediaSlug(post.slug)
+        setMediaSlug((currentSlug) => syncActiveBlogMediaSlug(currentSlug, mediaArea, current.post.slug, post.slug))
         setMediaTarget((activeTarget) => (
           activeTarget && activeTarget.kind === 'blog' && activeTarget.slug === current.post.slug
             ? retargetBlogMediaSelection(activeTarget, post.slug, post.title)
@@ -1986,7 +1997,7 @@ export const App = () => {
     setBlogConflict(null)
     setError(null)
     setAuthStatus(null)
-  }, [])
+  }, [mediaArea])
 
   const blogDirty = useMemo(() => {
     if (!selectedBlogPost) return false
@@ -2022,7 +2033,7 @@ export const App = () => {
       setSelectedBlogSlug(response.post.slug)
       setSelectedBlogPost({ branch: response.branch, post: response.post, repo: response.repo })
       setSelectedBlogBaseline(structuredClone(response.post))
-      setMediaSlug((current) => syncResetBlogMediaSlug(current, selectedBlogSlug, response.post.slug))
+      setMediaSlug((current) => syncActiveBlogMediaSlug(current, mediaArea, selectedBlogSlug, response.post.slug))
       setMediaTarget((current) => syncResetBlogMediaTarget(current, selectedBlogSlug, response.post))
       setBlogActivity({
         latestCommitSha: response.latestCommitSha,
@@ -2053,7 +2064,7 @@ export const App = () => {
     } finally {
       setSavingBlog(false)
     }
-  }, [blogList, blogValidationError, handleUnauthorizedError, loadActivity, loadBlogList, selectedBlogPost, selectedBlogSlug])
+  }, [blogList, blogValidationError, handleUnauthorizedError, loadActivity, loadBlogList, mediaArea, selectedBlogPost, selectedBlogSlug])
 
   const handleBlogCreate = useCallback(() => {
     if (blogDirty && !confirmDiscardChanges('You have unsaved blog edits. Create a new draft and discard them?')) {
