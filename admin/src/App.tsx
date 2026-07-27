@@ -1862,7 +1862,7 @@ export const App = () => {
       setSelectedBlogBaseline(structuredClone(response.post))
       setSelectedBlogSlug(response.post.slug)
       setMediaArea('blog')
-      setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, mediaTarget, selectedBlogSlug, response.post.slug))
+      setMediaSlug((current) => syncEnteredBlogMediaSlug(current, 'blog', mediaTarget, selectedBlogSlug, response.post.slug))
       setMediaTarget((current) => (
         current && current.kind === 'blog'
           ? syncResetBlogMediaTarget(current, selectedBlogSlug, response.post)
@@ -2417,7 +2417,7 @@ export const App = () => {
           setSelectedProjectGalleryIndex(0)
           setMediaArea('projects')
           setMediaSlug((current) => (
-            syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, selectedProjectSlug, nextProjectSlug)
+            syncEnteredProjectMediaSlug(current, 'projects', mediaTarget, selectedProjectSlug, nextProjectSlug)
           ))
           setMediaTarget((current) => (
             current && current.area === 'projects' && current.slug !== nextProjectSlug ? null : current
@@ -2770,7 +2770,7 @@ export const App = () => {
           setMediaArea('projects')
           setMediaSlug((current) => (
             fallbackProjectSlug
-              ? syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, removedProjectSlug, fallbackProjectSlug)
+              ? syncEnteredProjectMediaSlug(current, 'projects', mediaTarget, removedProjectSlug, fallbackProjectSlug)
               : syncClearedProjectMediaSlug(current, mediaArea, removedProjectSlug)
           ))
           setMediaTarget((current) => (
@@ -3237,7 +3237,7 @@ export const App = () => {
     })
     setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
-    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, mediaTarget, selectedBlogSlug, post.slug))
+    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, 'blog', mediaTarget, selectedBlogSlug, post.slug))
     setMediaTarget((current) => (
       current && current.kind === 'blog'
         ? syncResetBlogMediaTarget(current, selectedBlogSlug, post)
@@ -3261,7 +3261,7 @@ export const App = () => {
     })
     setSelectedBlogBaseline(structuredClone(post))
     setMediaArea('blog')
-    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, mediaArea, mediaTarget, selectedBlogSlug, post.slug))
+    setMediaSlug((current) => syncEnteredBlogMediaSlug(current, 'blog', mediaTarget, selectedBlogSlug, post.slug))
     setMediaTarget((current) => (
       current && current.kind === 'blog'
         ? syncResetBlogMediaTarget(current, selectedBlogSlug, post)
@@ -3403,7 +3403,7 @@ export const App = () => {
     setSelectedProjectOutcomeIndex(0)
     setMediaArea('projects')
     setMediaSlug((current) => (
-      syncEnteredProjectMediaSlug(current, mediaArea, mediaTarget, selectedProjectSlug, slug)
+      syncEnteredProjectMediaSlug(current, 'projects', mediaTarget, selectedProjectSlug, slug)
     ))
     setMediaTarget((current) => (
       syncResetProjectMediaTarget(
@@ -3434,7 +3434,7 @@ export const App = () => {
       setSelectedProjectGalleryIndex(0)
       setMediaArea('projects')
       setMediaSlug((activeSlug) => (
-        syncEnteredProjectMediaSlug(activeSlug, mediaArea, mediaTarget, selectedProjectSlug, duplicatedProject.slug)
+        syncEnteredProjectMediaSlug(activeSlug, 'projects', mediaTarget, selectedProjectSlug, duplicatedProject.slug)
       ))
       setMediaTarget((activeTarget) => (
         activeTarget && activeTarget.area === 'projects'
