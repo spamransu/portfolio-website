@@ -31,3 +31,7 @@ ms-playwright/
 *.njsproj
 *.sln
 *.sw?
+
+.env
+.dev.vars
+.wrangler
