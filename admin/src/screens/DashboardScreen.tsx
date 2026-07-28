@@ -114,6 +114,12 @@ interface DashboardScreenProps {
   projectBranch: string | null
   projectConflict: ConflictState
   projectDirty: boolean
+  projectJsonDrafts: {
+    image: string
+    gallery: string
+    sections: string
+  }
+  projectJsonErrors: Partial<Record<'image' | 'gallery' | 'sections', string>>
   projectOptions: Array<{ slug: string; title: string }>
   projectPath: string
   projectRepo: AdminRepoInfo | null
@@ -137,8 +143,6 @@ type FieldProps = {
 }
 
 const lines = (items: string[] | undefined): string => (items ?? []).join('\n')
-const emptyImage = () => ({ src: '', alt: '', caption: '' })
-const json = (value: unknown): string => JSON.stringify(value ?? null, null, 2)
 
 const StatusMessage = ({ kind = 'info', message }: { kind?: 'info' | 'error' | 'success'; message: string | null }) => {
   if (!message) return null
@@ -226,6 +230,8 @@ export const DashboardScreen = ({
   projectBranch,
   projectConflict,
   projectDirty,
+  projectJsonDrafts,
+  projectJsonErrors,
   projectOptions,
   projectPath,
   projectRepo,
@@ -313,7 +319,7 @@ export const DashboardScreen = ({
           <div className="admin-save-group" aria-label="Project save actions">
             <button className="admin-button admin-button-secondary" type="button" onClick={onProjectReload} disabled={loadingProjects || savingProjects}>Reload</button>
             <button className="admin-button admin-button-secondary" type="button" onClick={onProjectDiscard} disabled={!projectDirty || savingProjects}>Discard</button>
-            <button className="admin-button admin-button-primary" type="button" onClick={onProjectSave} disabled={!projectDirty || Boolean(projectValidationError) || savingProjects}>{savingProjects ? 'Saving…' : 'Save projects'}</button>
+            <button className="admin-button admin-button-primary" type="button" onClick={onProjectSave} disabled={!projectDirty || Boolean(projectValidationError) || Object.values(projectJsonErrors).some(Boolean) || savingProjects}>{savingProjects ? 'Saving…' : 'Save projects'}</button>
           </div>
         </div>
         <StatusMessage message={projectStatus} />
@@ -382,9 +388,12 @@ export const DashboardScreen = ({
                 </div>
                 <Field label="Outcome" hint="One item per line."><textarea id="project-outcome" rows={5} value={lines(selectedProject.outcome)} onChange={(event) => onProjectFieldChange('outcome', event.target.value)} /></Field>
                 <div className="admin-json-group">
-                  <Field label="Hero image JSON"><textarea id="project-image" rows={5} value={json(selectedProject.image ?? emptyImage())} onChange={(event) => onProjectJsonFieldChange('image', event.target.value)} /></Field>
-                  <Field label="Gallery JSON"><textarea id="project-gallery" rows={8} value={json(selectedProject.gallery ?? [])} onChange={(event) => onProjectJsonFieldChange('gallery', event.target.value)} /></Field>
-                  <Field label="Sections JSON"><textarea id="project-sections" rows={10} value={json(selectedProject.sections ?? [])} onChange={(event) => onProjectJsonFieldChange('sections', event.target.value)} /></Field>
+                  <Field label="Hero image JSON"><textarea id="project-image" rows={5} value={projectJsonDrafts.image} onChange={(event) => onProjectJsonFieldChange('image', event.target.value)} /></Field>
+                  <StatusMessage kind="error" message={projectJsonErrors.image ?? null} />
+                  <Field label="Gallery JSON"><textarea id="project-gallery" rows={8} value={projectJsonDrafts.gallery} onChange={(event) => onProjectJsonFieldChange('gallery', event.target.value)} /></Field>
+                  <StatusMessage kind="error" message={projectJsonErrors.gallery ?? null} />
+                  <Field label="Sections JSON"><textarea id="project-sections" rows={10} value={projectJsonDrafts.sections} onChange={(event) => onProjectJsonFieldChange('sections', event.target.value)} /></Field>
+                  <StatusMessage kind="error" message={projectJsonErrors.sections ?? null} />
                 </div>
               </div>
             ) : (

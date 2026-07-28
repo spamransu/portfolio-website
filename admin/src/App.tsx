@@ -35,6 +35,11 @@ type BlogActivity = {
   summary: string
 } | null
 
+type ProjectJsonField = 'image' | 'gallery' | 'sections'
+
+type ProjectJsonDrafts = Record<ProjectJsonField, string>
+type ProjectJsonErrors = Partial<Record<ProjectJsonField, string>>
+
 const splitLines = (value: string): string[] =>
   value
     .split('\n')
@@ -184,6 +189,18 @@ const getApiErrorMessage = (error: unknown): string => {
 
 const isAdminApiError = (error: unknown): error is AdminApiError => error instanceof Error
 
+const projectJsonFieldLabels: Record<ProjectJsonField, string> = {
+  image: 'Hero image JSON',
+  gallery: 'Gallery JSON',
+  sections: 'Sections JSON',
+}
+
+const createProjectJsonDrafts = (project: Project | null): ProjectJsonDrafts => ({
+  image: JSON.stringify(project?.image ?? emptyImage(), null, 2),
+  gallery: JSON.stringify(project?.gallery ?? [], null, 2),
+  sections: JSON.stringify(project?.sections ?? [], null, 2),
+})
+
 export const App = () => {
   const [session, setSession] = useState<AdminSession>(DEFAULT_SESSION)
   const [authStatus, setAuthStatus] = useState<string | null>(null)
@@ -199,6 +216,8 @@ export const App = () => {
   const [projectConflict, setProjectConflict] = useState<ConflictState>(null)
   const [projectStatus, setProjectStatus] = useState<string | null>(null)
   const [savingProjects, setSavingProjects] = useState(false)
+  const [projectJsonDrafts, setProjectJsonDrafts] = useState<ProjectJsonDrafts>(createProjectJsonDrafts(null))
+  const [projectJsonErrors, setProjectJsonErrors] = useState<ProjectJsonErrors>({})
 
   const [blogList, setBlogList] = useState<BlogListResponse | null>(null)
   const [selectedBlogPost, setSelectedBlogPost] = useState<BlogPostResponse | null>(null)
@@ -229,6 +248,8 @@ export const App = () => {
     setSelectedProjectSlug('')
     setProjectConflict(null)
     setProjectStatus(null)
+    setProjectJsonDrafts(createProjectJsonDrafts(null))
+    setProjectJsonErrors({})
     setBlogList(null)
     setSelectedBlogPost(null)
     setOriginalBlogPost(null)
@@ -357,10 +378,36 @@ export const App = () => {
     }
   }, [loadBlogPost, selectedBlogMeta, selectedBlogPost])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const hash = window.location.hash
+    const queryIndex = hash.indexOf('?')
+    if (queryIndex === -1) return
+
+    const searchParams = new URLSearchParams(hash.slice(queryIndex + 1))
+    const auth = searchParams.get('auth')
+    if (!auth) return
+
+    if (auth === 'success') {
+      setAuthStatus('Signed in with GitHub.')
+      setError(null)
+    } else if (auth === 'error') {
+      setError('GitHub sign-in failed. Check the admin environment variables and allowed login, then try again.')
+    }
+
+    const cleanHash = hash.slice(0, queryIndex) || '#/'
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}${cleanHash}`)
+  }, [])
+
   const selectedProject = useMemo(
     () => projects.find((project) => project.slug === selectedProjectSlug) ?? projects[0] ?? null,
     [projects, selectedProjectSlug],
   )
+
+  useEffect(() => {
+    setProjectJsonDrafts(createProjectJsonDrafts(selectedProject))
+    setProjectJsonErrors({})
+  }, [selectedProject])
 
   const projectDirty = useMemo(() => {
     if (!projectResponse) return false
@@ -376,6 +423,10 @@ export const App = () => {
   const projectValidationError = useMemo(
     () => getProjectValidationError(projects, selectedProjectSlug),
     [projects, selectedProjectSlug],
+  )
+  const hasProjectJsonErrors = useMemo(
+    () => Object.values(projectJsonErrors).some(Boolean),
+    [projectJsonErrors],
   )
   const blogValidationError = useMemo(() => getBlogValidationError(selectedBlogPost), [selectedBlogPost])
   const mediaValidationError = useMemo(() => {
@@ -397,10 +448,15 @@ export const App = () => {
   }
 
   const handleLogout = async () => {
-    await adminApi.logout()
-    setSession(DEFAULT_SESSION)
-    resetAuthenticatedState()
-    setAuthStatus('Signed out.')
+    try {
+      await adminApi.logout()
+      setSession(DEFAULT_SESSION)
+      resetAuthenticatedState()
+      setError(null)
+      setAuthStatus('Signed out.')
+    } catch (caught) {
+      setError(getApiErrorMessage(caught))
+    }
   }
 
   const updateSelectedProject = useCallback((updater: (project: Project) => Project) => {
@@ -423,13 +479,21 @@ export const App = () => {
   }
 
   const handleProjectJsonFieldChange = (field: 'image' | 'gallery' | 'sections', value: string) => {
-    updateSelectedProject((project) => {
-      try {
-        return { ...project, [field]: JSON.parse(value) as Project[typeof field] }
-      } catch {
-        return project
-      }
-    })
+    setProjectJsonDrafts((current) => ({ ...current, [field]: value }))
+    try {
+      const parsedValue = JSON.parse(value) as Project[typeof field]
+      setProjectJsonErrors((current) => {
+        const next = { ...current }
+        delete next[field]
+        return next
+      })
+      updateSelectedProject((project) => ({ ...project, [field]: parsedValue }))
+    } catch {
+      setProjectJsonErrors((current) => ({
+        ...current,
+        [field]: `${projectJsonFieldLabels[field]} is invalid. Fix the JSON before saving.`,
+      }))
+    }
   }
 
   const handleProjectCreate = () => {
@@ -487,11 +551,12 @@ export const App = () => {
     setProjects(structuredClone(projectResponse.projects))
     setSelectedProjectSlug(projectResponse.projects[0]?.slug ?? '')
     setProjectConflict(null)
+    setProjectJsonErrors({})
     setProjectStatus('Discarded unsaved project changes.')
   }
 
   const handleSaveProjects = async () => {
-    if (!projectResponse || projectValidationError) return
+    if (!projectResponse || projectValidationError || hasProjectJsonErrors) return
     setSavingProjects(true)
     setProjectStatus(null)
     setProjectConflict(null)
@@ -758,6 +823,8 @@ export const App = () => {
     projectBranch: projectResponse?.branch ?? blogList?.branch ?? null,
     projectConflict,
     projectDirty,
+    projectJsonDrafts,
+    projectJsonErrors,
     projectOptions: projects.map((project) => ({ slug: project.slug, title: project.title })),
     projectPath: projectResponse?.path ?? 'content/site-content.json',
     projectRepo: projectResponse?.repo ?? null,
