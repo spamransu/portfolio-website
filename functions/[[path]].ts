@@ -91,10 +91,26 @@ type GitHubCommitSummary = {
   } | null
 }
 
-type SiteContentWriteRequest = {
+type Project = {
+  slug: string
+  title: string
+  year: string
+  client: string
+  summary: string
+  role: string
+  stack: string[]
+  challenge: string
+  approach: string[]
+  outcome: string[]
+  image?: { src: string; alt: string; caption?: string }
+  gallery?: Array<{ src: string; alt: string; caption?: string }>
+  sections?: Array<{ kind: 'default' | 'approach' | 'outcome'; title: string; body: string; image?: { src: string; alt: string; caption?: string } }>
+}
+
+type ProjectsWriteRequest = {
   branch?: unknown
   commitMessage?: unknown
-  content?: unknown
+  projects?: unknown
   sha?: unknown
 }
 
@@ -166,13 +182,13 @@ const GITHUB_OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
 const GITHUB_OAUTH_TOKEN_URL = 'https://github.com/login/oauth/access_token'
 const SITE_CONTENT_PATH = 'content/site-content.json'
 const BLOG_CONTENT_DIR = 'content/blog'
-const DEFAULT_SITE_CONTENT_COMMIT_MESSAGE = 'chore(content): update site content from admin'
+const DEFAULT_PROJECTS_COMMIT_MESSAGE = 'chore(projects): update projects from admin'
 const DEFAULT_BLOG_COMMIT_MESSAGE = 'chore(blog): update blog post from admin'
 const DEFAULT_BLOG_DELETE_COMMIT_MESSAGE = 'chore(blog): delete blog post from admin'
 const DEFAULT_MEDIA_COMMIT_MESSAGE = 'chore(media): upload asset from admin'
 const MAX_ADMIN_BODY_BYTES = 1024 * 512
 const MAX_MEDIA_FILE_BYTES = 5 * 1024 * 1024
-const ALLOWED_MEDIA_AREAS = ['about', 'blog', 'contact', 'home', 'projects', 'resume'] as const
+const ALLOWED_MEDIA_AREAS = ['blog', 'projects'] as const
 const ALLOWED_MEDIA_TYPES = ['image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'] as const
 
 const textEncoder = new TextEncoder()
@@ -362,39 +378,8 @@ const isStringRecordArray = (value: unknown, keys: string[]): value is Array<Rec
 const isImageAsset = (value: unknown): boolean =>
   isRecord(value) && typeof value.src === 'string' && typeof value.alt === 'string' && (value.caption === undefined || typeof value.caption === 'string')
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const BLOG_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-
-const isHttpUrl = (value: string): boolean => {
-  try {
-    const url = new URL(value)
-    return url.protocol === 'http:' || url.protocol === 'https:'
-  } catch {
-    return false
-  }
-}
-
-const isInternalPath = (value: string): boolean => value.startsWith('/')
-
-const isContactHref = (value: string): boolean => {
-  if (value.startsWith('mailto:')) return EMAIL_PATTERN.test(value.slice('mailto:'.length).trim())
-  if (value.startsWith('tel:')) return value.slice('tel:'.length).trim().length > 0
-  return isHttpUrl(value)
-}
-
-const validateContactFormConfig = (value: Record<string, unknown>, label: string): string | null => {
-  if (!Number.isInteger(value.messageLimit) || Number(value.messageLimit) <= 0) {
-    return `${label} message limit must be a whole number greater than 0.`
-  }
-  if (!`${value.messageCountTemplate}`.includes('{count}') || !`${value.messageCountTemplate}`.includes('{limit}')) {
-    return `${label} count template must include both {count} and {limit}.`
-  }
-  if (!`${value.messageTooLongError}`.includes('{limit}')) {
-    return `${label} message-too-long error must include {limit}.`
-  }
-  return null
-}
 
 const validateSiteContent = (value: unknown): value is Record<string, unknown> => {
   if (!isRecord(value)) return false
@@ -529,309 +514,56 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   })
 }
 
-const getSiteContentValidationError = (value: unknown): string | null => {
-  if (!validateSiteContent(value)) return 'site-content.json failed validation.'
+const validateProject = (value: unknown): value is Project => {
+  if (!isRecord(value)) return false
+  if (!['slug', 'title', 'year', 'client', 'summary', 'role', 'challenge'].every((key) => typeof value[key] === 'string')) return false
+  if (!isStringArray(value.stack) || !isStringArray(value.approach) || !isStringArray(value.outcome)) return false
+  if (value.image !== undefined && !isImageAsset(value.image)) return false
+  if (value.gallery !== undefined && (!Array.isArray(value.gallery) || !value.gallery.every(isImageAsset))) return false
+  if (
+    value.sections !== undefined
+    && (
+      !Array.isArray(value.sections)
+      || !value.sections.every(
+        (section) =>
+          isRecord(section)
+          && ['default', 'approach', 'outcome'].includes(`${section.kind}`)
+          && typeof section.title === 'string'
+          && typeof section.body === 'string'
+          && (section.image === undefined || isImageAsset(section.image)),
+      )
+    )
+  ) return false
+  return true
+}
 
-  const content = value as Record<string, unknown>
-  const site = content.site as Record<string, unknown>
-  const siteChrome = content.siteChrome as Record<string, unknown> | undefined
-  const home = content.home as Record<string, unknown>
-  const contact = content.contact as Record<string, unknown>
-  const projects = content.projects as Array<Record<string, unknown>>
-  const about = content.about as Record<string, unknown>
-  const resume = content.resume as Record<string, unknown>
-  const getProjectLabel = (project: Record<string, unknown>) => `${project.slug}` || `${project.title}` || 'this project'
-  const hasNonEmptyItems = (value: unknown): boolean =>
-    Array.isArray(value) && value.some((item) => `${item}`.trim())
-  const getImageValidationError = (label: string, image: unknown): string | null => {
-    if (!isRecord(image)) return null
-    const src = `${image.src}`.trim()
-    const alt = `${image.alt}`.trim()
-    const caption = `${image.caption ?? ''}`.trim()
-    if (!src && (alt || caption)) return `${label} image src is required when image details are set.`
-    if (src && !alt) return `${label} image alt text is required.`
-    return null
+const getProjectsValidationError = (value: unknown): string | null => {
+  if (!Array.isArray(value)) return 'Projects payload failed validation.'
+  if (!value.every(validateProject)) return 'Projects payload failed validation.'
+
+  const slugs = new Set<string>()
+  for (const project of value) {
+    const label = project.title.trim() || project.slug.trim() || 'Untitled project'
+    if (!project.slug.trim()) return `${label} needs a slug.`
+    if (!SLUG_PATTERN.test(project.slug)) return `${label} slug must use lowercase letters, numbers, and hyphens only.`
+    if (slugs.has(project.slug)) return `Project slug must be unique. Duplicate slug: ${project.slug}.`
+    slugs.add(project.slug)
+    if (!project.title.trim()) return `${label} needs a title.`
+    if (!project.year.trim()) return `${label} needs a year.`
+    if (!project.client.trim()) return `${label} needs a client.`
+    if (!project.summary.trim()) return `${label} needs a summary.`
+    if (!project.role.trim()) return `${label} needs a role.`
+    if (!project.challenge.trim()) return `${label} needs a challenge.`
+    if (!project.stack.some((item) => item.trim())) return `${label} needs at least one stack item.`
+    if (!project.approach.some((item) => item.trim())) return `${label} needs at least one approach item.`
+    if (!project.outcome.some((item) => item.trim())) return `${label} needs at least one outcome item.`
+    if (project.image?.src.trim() && !project.image.alt.trim()) return `${label} hero image alt text is required.`
+    if (!project.image?.src.trim() && project.image?.alt.trim()) return `${label} hero image src is required.`
+    const invalidGalleryImage = project.gallery?.find((image) => (image.src.trim() && !image.alt.trim()) || (!image.src.trim() && image.alt.trim()))
+    if (invalidGalleryImage) return `${label} gallery images need both src and alt text when set.`
+    const invalidSection = project.sections?.find((section) => !section.title.trim() || !section.body.trim())
+    if (invalidSection) return `${label} project sections need both title and body.`
   }
-  const getContactFormContentError = (label: string, form: Record<string, unknown>): string | null => {
-    if (!`${form.title}`.trim()) return `${label} title is required.`
-    if (!`${form.submitLabel}`.trim()) return `${label} submit label is required.`
-    if (!`${form.nameLabel}`.trim()) return `${label} name label is required.`
-    if (!`${form.emailLabel}`.trim()) return `${label} email label is required.`
-    if (!`${form.messageLabel}`.trim()) return `${label} message label is required.`
-    if (!`${form.namePlaceholder}`.trim()) return `${label} name placeholder is required.`
-    if (!`${form.emailPlaceholder}`.trim()) return `${label} email placeholder is required.`
-    if (!`${form.messagePlaceholder}`.trim()) return `${label} message placeholder is required.`
-    if (!`${form.nameRequiredError}`.trim()) return `${label} name-required error is required.`
-    if (!`${form.emailRequiredError}`.trim()) return `${label} email-required error is required.`
-    if (!`${form.emailInvalidError}`.trim()) return `${label} email-invalid error is required.`
-    if (!`${form.messageRequiredError}`.trim()) return `${label} message-required error is required.`
-    if (!`${form.mailtoSubjectTemplate}`.trim()) return `${label} mailto subject template is required.`
-    if (!`${form.mailtoNameLabel}`.trim()) return `${label} mailto name label is required.`
-    if (!`${form.mailtoEmailLabel}`.trim()) return `${label} mailto email label is required.`
-    if (!`${form.mailtoMessageLabel}`.trim()) return `${label} mailto message label is required.`
-    return null
-  }
-
-  const getProjectContentValidationError = (project: Record<string, unknown>): string | null => {
-    if (!`${project.title}`.trim()) return 'Project title is required.'
-    if (!`${project.year}`.trim()) return `Project year is required for ${getProjectLabel(project)}.`
-    if (!`${project.client}`.trim()) return `Project client is required for ${getProjectLabel(project)}.`
-    if (!`${project.summary}`.trim()) return `Project summary is required for ${getProjectLabel(project)}.`
-    if (!`${project.role}`.trim()) return `Project role is required for ${getProjectLabel(project)}.`
-    if (!`${project.challenge}`.trim()) return `Project challenge is required for ${getProjectLabel(project)}.`
-    if (!hasNonEmptyItems(project.stack)) return `Project stack must include at least one item for ${getProjectLabel(project)}.`
-    if (!hasNonEmptyItems(project.approach)) return `Project approach must include at least one item for ${getProjectLabel(project)}.`
-    if (!hasNonEmptyItems(project.outcome)) return `Project outcome must include at least one item for ${getProjectLabel(project)}.`
-
-    const sections = Array.isArray(project.sections) ? project.sections as Array<Record<string, unknown>> : []
-    if (!sections.length) return `Project sections are required for ${getProjectLabel(project)}.`
-
-    const image = isRecord(project.image) ? project.image as Record<string, unknown> : null
-    if (image) {
-      const imageSrc = `${image.src}`.trim()
-      const imageAlt = `${image.alt}`.trim()
-      const imageCaption = `${image.caption ?? ''}`.trim()
-      if (!imageSrc && (imageAlt || imageCaption)) {
-        return `Project lead image src is required when image details are set for ${getProjectLabel(project)}.`
-      }
-      if (imageSrc && !imageAlt) {
-        return `Project lead image alt text is required for ${getProjectLabel(project)}.`
-      }
-    }
-
-    const gallery = Array.isArray(project.gallery) ? project.gallery as Array<Record<string, unknown>> : []
-    const invalidGalleryItem = gallery.find((item) => !`${item.src}`.trim() || !`${item.alt}`.trim())
-    if (invalidGalleryItem) {
-      return `Every project gallery image needs both src and alt text for ${getProjectLabel(project)}.`
-    }
-
-    const invalidSection = sections.find((section) => {
-      if (!`${section.title}`.trim() || !`${section.body}`.trim()) return true
-      if (!isRecord(section.image)) return false
-      const sectionImage = section.image as Record<string, unknown>
-      const sectionImageSrc = `${sectionImage.src}`.trim()
-      const sectionImageAlt = `${sectionImage.alt}`.trim()
-      const sectionImageCaption = `${sectionImage.caption ?? ''}`.trim()
-      if (!sectionImageSrc && (sectionImageAlt || sectionImageCaption)) return true
-      if (sectionImageSrc && !sectionImageAlt) return true
-      return false
-    })
-    if (invalidSection) {
-      if (!`${invalidSection.title}`.trim()) return `Project sections need a title for ${getProjectLabel(project)}.`
-      if (!`${invalidSection.body}`.trim()) return `Project sections need body copy for ${getProjectLabel(project)}.`
-      return `Project section images need both src and alt text for ${getProjectLabel(project)}.`
-    }
-
-    return null
-  }
-
-  if (!EMAIL_PATTERN.test(`${site.email}`.trim())) return 'Site email must use a valid email address.'
-  if (!`${site.name}`.trim()) return 'Site name is required.'
-  if (!`${site.tagline}`.trim()) return 'Site tagline is required.'
-  if (!`${site.description}`.trim()) return 'Site description is required.'
-  if (!`${site.location}`.trim()) return 'Site location is required.'
-  if (!isHttpUrl(`${site.siteUrl}`.trim())) return 'Site URL must use a full http or https URL.'
-
-  const invalidSocial = (site.socials as Array<Record<string, unknown>>)
-    .find((entry) => !`${entry.label}`.trim() || !isHttpUrl(`${entry.href}`.trim()))
-  if (invalidSocial) {
-    return `Social links must have a label and a full http or https URL. Check: ${`${invalidSocial.label}` || `${invalidSocial.href}`}.`
-  }
-
-  if (siteChrome) {
-    if (!`${siteChrome.skipToContentLabel}`.trim()) return 'Skip link label is required.'
-    if (!`${siteChrome.headerNavAriaLabel}`.trim()) return 'Header nav aria label is required.'
-    if (!`${siteChrome.footerSocialsAriaLabel}`.trim()) return 'Footer socials aria label is required.'
-    if (!Array.isArray(siteChrome.headerNav) || !siteChrome.headerNav.length) return 'Header nav needs at least one link.'
-    const invalidHeaderNav = (siteChrome.headerNav as Array<Record<string, unknown>>)
-      .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
-    if (invalidHeaderNav) {
-      return `Header nav links must use internal paths that start with /. Check: ${`${invalidHeaderNav.to}` || `${invalidHeaderNav.label}`}.`
-    }
-
-    const footer = siteChrome.footer as Record<string, unknown>
-    if (!`${footer.copyrightTemplate}`.trim()) return 'Footer copyright template is required.'
-    if (!`${footer.copyrightTemplate}`.includes('{year}') || !`${footer.copyrightTemplate}`.includes('{siteName}')) {
-      return 'Footer copyright template must include both {year} and {siteName}.'
-    }
-    if (!`${footer.generalHeading}`.trim()) return 'Footer general heading is required.'
-    if (!`${footer.moreHeading}`.trim()) return 'Footer more heading is required.'
-    if (!Array.isArray(footer.generalLinks) || !footer.generalLinks.length) return 'Footer general links need at least one link.'
-    const invalidGeneralLink = (footer.generalLinks as Array<Record<string, unknown>>)
-      .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
-    if (invalidGeneralLink) {
-      return `Footer general links must use internal paths that start with /. Check: ${`${invalidGeneralLink.to}` || `${invalidGeneralLink.label}`}.`
-    }
-
-    if (!Array.isArray(footer.moreLinks) || !footer.moreLinks.length) return 'Footer more links need at least one link.'
-    const invalidMoreLink = (footer.moreLinks as Array<Record<string, unknown>>)
-      .find((entry) => !`${entry.label}`.trim() || !isInternalPath(`${entry.to}`.trim()))
-    if (invalidMoreLink) {
-      return `Footer more links must use internal paths that start with /. Check: ${`${invalidMoreLink.to}` || `${invalidMoreLink.label}`}.`
-    }
-  }
-
-  const projectSlugs = new Map<string, number>()
-  for (const project of projects) {
-    const slug = `${project.slug}`
-    projectSlugs.set(slug, (projectSlugs.get(slug) ?? 0) + 1)
-    if (!slug || !SLUG_PATTERN.test(slug)) {
-      return `Project slug must use lowercase letters, numbers, and hyphens only. Check: ${slug || '(empty slug)'}.`
-    }
-  }
-
-  const duplicateProjectSlug = [...projectSlugs.entries()].find(([, count]) => count > 1)?.[0]
-  if (duplicateProjectSlug) {
-    return `Project slug must be unique. Duplicate slug: ${duplicateProjectSlug}.`
-  }
-
-  const invalidProjectContent = projects.find((project) => getProjectContentValidationError(project))
-  if (invalidProjectContent) {
-    return getProjectContentValidationError(invalidProjectContent)
-  }
-
-  const featuredProjects = (home.featuredProjects as Record<string, unknown>).slugs as string[]
-  const missingFeatured = featuredProjects.filter((slug) => !projectSlugs.has(slug))
-  if (missingFeatured.length) {
-    return `Featured project slugs must match existing projects. Missing: ${missingFeatured.join(', ')}.`
-  }
-
-  const homeContactError = validateContactFormConfig(home.contact as Record<string, unknown>, 'Home contact')
-  if (homeContactError) return homeContactError
-
-  if (!`${(home.hero as Record<string, unknown>).eyebrow}`.trim()) return 'Home hero eyebrow is required.'
-  if (!hasNonEmptyItems((home.hero as Record<string, unknown>).titleLines)) return 'Home hero title needs at least one line.'
-  if (!`${(home.hero as Record<string, unknown>).description}`.trim()) return 'Home hero description is required.'
-  if (!`${(home.cta as Record<string, unknown>).primaryLabel}`.trim()) return 'Home primary CTA label is required.'
-
-  const homeFeaturedProjects = home.featuredProjects as Record<string, unknown>
-  if (!`${homeFeaturedProjects.title}`.trim()) return 'Featured projects title is required.'
-
-  const homeBio = home.bio as Record<string, unknown>
-  if (!`${homeBio.eyebrow}`.trim()) return 'Home bio eyebrow is required.'
-  if (!hasNonEmptyItems(homeBio.titleLines)) return 'Home bio title needs at least one line.'
-  if (!`${homeBio.description}`.trim()) return 'Home bio description is required.'
-
-  const invalidHomeStat = (home.stats as Array<Record<string, unknown>>).find((entry) => !`${entry.value}`.trim() || !`${entry.label}`.trim())
-  if (invalidHomeStat) {
-    return `Home stats need both value and label. Check: ${`${invalidHomeStat.label}` || `${invalidHomeStat.value}` || 'empty stat'}.`
-  }
-
-  const homeSkills = home.skills as Record<string, unknown>
-  if (!`${homeSkills.title}`.trim()) return 'Home skills title is required.'
-  if (!`${homeSkills.description}`.trim()) return 'Home skills description is required.'
-  if (!hasNonEmptyItems(homeSkills.items)) return 'Home skills need at least one item.'
-
-  const homeContactContentError = getContactFormContentError('Home contact form', home.contact as Record<string, unknown>)
-  if (homeContactContentError) return homeContactContentError
-
-  if (!`${about.title}`.trim()) return 'About page title is required.'
-  if (!`${about.intro}`.trim()) return 'About page intro is required.'
-  if (!`${about.bodySectionTitle}`.trim()) return 'About body section title is required.'
-  if (!`${about.processSectionTitle}`.trim()) return 'About process section title is required.'
-  if (!`${about.processSectionIntro}`.trim()) return 'About process section intro is required.'
-  if (!`${about.principlesSectionTitle}`.trim()) return 'About principles section title is required.'
-  if (!`${about.toolsSectionTitle}`.trim()) return 'About tools section title is required.'
-  if (!hasNonEmptyItems(about.body)) return 'About body needs at least one paragraph.'
-  if (!hasNonEmptyItems(about.principles)) return 'About principles need at least one item.'
-  const invalidProcessStep = (about.process as Array<Record<string, unknown>>).find((entry) => !`${entry.title}`.trim() || !`${entry.description}`.trim())
-  if (invalidProcessStep) {
-    return `About process steps need both title and description. Check: ${`${invalidProcessStep.title}` || `${invalidProcessStep.description}` || 'empty step'}.`
-  }
-  if (!hasNonEmptyItems(about.tools)) return 'About tools need at least one item.'
-  const aboutHeroError = getImageValidationError('About hero', about.heroImage)
-  if (aboutHeroError) return aboutHeroError
-
-  if (!`${resume.headline}`.trim()) return 'Resume headline is required.'
-  if (!`${resume.summary}`.trim()) return 'Resume summary is required.'
-  if (!`${resume.highlightsSectionTitle}`.trim()) return 'Resume highlights section title is required.'
-  if (!`${resume.skillsSectionTitle}`.trim()) return 'Resume skills section title is required.'
-  if (!`${resume.experienceSectionTitle}`.trim()) return 'Resume experience section title is required.'
-  const invalidHighlight = (resume.highlights as Array<Record<string, unknown>>).find((entry) => !`${entry.value}`.trim() || !`${entry.label}`.trim())
-  if (invalidHighlight) {
-    return `Resume highlights need both value and label. Check: ${`${invalidHighlight.label}` || `${invalidHighlight.value}` || 'empty highlight'}.`
-  }
-  if (!hasNonEmptyItems(resume.skills)) return 'Resume skills need at least one item.'
-  const invalidExperience = (resume.experience as Array<Record<string, unknown>>)
-    .find((entry) => !`${entry.role}`.trim() || !`${entry.company}`.trim() || !`${entry.period}`.trim() || !hasNonEmptyItems(entry.highlights))
-  if (invalidExperience) {
-    return `Resume experience entries need role, company, period, and at least one highlight. Check: ${`${invalidExperience.role}` || `${invalidExperience.company}` || 'empty experience'}.`
-  }
-  const resumeHeroError = getImageValidationError('Resume hero', resume.heroImage)
-  if (resumeHeroError) return resumeHeroError
-
-  const contactFormError = validateContactFormConfig(contact.form as Record<string, unknown>, 'Contact form')
-  if (contactFormError) return contactFormError
-
-  if (!`${contact.title}`.trim()) return 'Contact page title is required.'
-  if (!`${contact.body}`.trim()) return 'Contact page intro is required.'
-  if (!`${contact.availabilityTitle}`.trim()) return 'Contact availability title is required.'
-  if (!`${contact.availabilityStatusLabel}`.trim()) return 'Contact availability status label is required.'
-  if (!`${contact.availabilityLocationLabel}`.trim()) return 'Contact availability location label is required.'
-  if (!`${contact.availability}`.trim()) return 'Contact availability body is required.'
-  if (!`${contact.formSectionTitle}`.trim()) return 'Contact form section title is required.'
-  if (!`${contact.formSectionIntro}`.trim()) return 'Contact form section intro is required.'
-  if (!`${contact.methodsSectionTitle}`.trim()) return 'Contact methods section title is required.'
-  if (!`${contact.methodsSectionIntro}`.trim()) return 'Contact methods section intro is required.'
-
-  const contactFormContentError = getContactFormContentError('Contact form', contact.form as Record<string, unknown>)
-  if (contactFormContentError) return contactFormContentError
-
-  const invalidMethod = (contact.methods as Array<Record<string, unknown>>)
-    .find((entry) => !`${entry.title}`.trim() || !`${entry.label}`.trim() || !`${entry.description}`.trim() || !isContactHref(`${entry.href}`.trim()))
-  if (invalidMethod) {
-    return `Contact methods must have title, label, description, and a valid mailto, tel, or http/https URL. Check: ${`${invalidMethod.title}` || `${invalidMethod.href}`}.`
-  }
-  const contactHeroError = getImageValidationError('Contact hero', contact.heroImage)
-  if (contactHeroError) return contactHeroError
-
-  const projectsPage = content.projectsPage as Record<string, unknown> | undefined
-  if (!projectsPage || !`${projectsPage.title}`.trim()) return 'Projects page title is required.'
-  if (!`${projectsPage.intro}`.trim()) return 'Projects page intro is required.'
-  const projectsPageHeroError = getImageValidationError('Projects page hero', projectsPage.heroImage)
-  if (projectsPageHeroError) return projectsPageHeroError
-
-  const blogPage = content.blogPage as Record<string, unknown> | undefined
-  if (!blogPage || !`${blogPage.title}`.trim()) return 'Blog page title is required.'
-  if (!`${blogPage.intro}`.trim()) return 'Blog page intro is required.'
-  const blogPageHeroError = getImageValidationError('Blog page hero', blogPage.heroImage)
-  if (blogPageHeroError) return blogPageHeroError
-
-  const blogPostPage = content.blogPostPage as Record<string, unknown> | undefined
-  if (!blogPostPage || !`${blogPostPage.eyebrowPrefix}`.trim()) return 'Blog post eyebrow prefix is required.'
-  if (!`${blogPostPage.notFoundTitle}`.trim()) return 'Blog post not-found title is required.'
-  if (!`${blogPostPage.notFoundIntro}`.trim()) return 'Blog post not-found intro is required.'
-  if (!`${blogPostPage.backToBlogLabel}`.trim()) return 'Blog post back-to-blog label is required.'
-  if (!`${blogPostPage.startProjectLabel}`.trim()) return 'Blog post start-project label is required.'
-  if (!`${blogPostPage.articleSectionTitle}`.trim()) return 'Blog post article section title is required.'
-
-  const projectDetailPage = content.projectDetailPage as Record<string, unknown> | undefined
-  if (!projectDetailPage || !`${projectDetailPage.notFoundTitle}`.trim()) return 'Project detail not-found title is required.'
-  if (!`${projectDetailPage.notFoundIntro}`.trim()) return 'Project detail not-found intro is required.'
-  if (!`${projectDetailPage.backToProjectsLabel}`.trim()) return 'Project detail back-to-projects label is required.'
-  if (!`${projectDetailPage.startProjectLabel}`.trim()) return 'Project detail start-project label is required.'
-  if (!`${projectDetailPage.snapshotTitle}`.trim()) return 'Project detail snapshot title is required.'
-  if (!`${projectDetailPage.roleLabel}`.trim()) return 'Project detail role label is required.'
-  if (!`${projectDetailPage.clientLabel}`.trim()) return 'Project detail client label is required.'
-  if (!`${projectDetailPage.yearLabel}`.trim()) return 'Project detail year label is required.'
-  if (!`${projectDetailPage.stackLabel}`.trim()) return 'Project detail stack label is required.'
-  if (!`${projectDetailPage.stackAriaTemplate}`.trim()) return 'Project detail stack aria template is required.'
-  if (!`${projectDetailPage.galleryTitle}`.trim()) return 'Project detail gallery title is required.'
-  if (!`${projectDetailPage.galleryIntro}`.trim()) return 'Project detail gallery intro is required.'
-  if (!`${projectDetailPage.nextProjectEyebrow}`.trim()) return 'Project detail next-project eyebrow is required.'
-  if (!`${projectDetailPage.nextProjectLabel}`.trim()) return 'Project detail next-project label is required.'
-  if (!`${projectDetailPage.similarWorkEyebrow}`.trim()) return 'Project detail similar-work eyebrow is required.'
-  if (!`${projectDetailPage.similarWorkTitle}`.trim()) return 'Project detail similar-work title is required.'
-  if (!`${projectDetailPage.similarWorkIntro}`.trim()) return 'Project detail similar-work intro is required.'
-  if (!`${projectDetailPage.similarWorkLabel}`.trim()) return 'Project detail similar-work label is required.'
-
-  const notFoundPage = content.notFoundPage as Record<string, unknown> | undefined
-  if (!notFoundPage || !`${notFoundPage.eyebrow}`.trim()) return '404 page eyebrow is required.'
-  if (!`${notFoundPage.title}`.trim()) return '404 page title is required.'
-  if (!`${notFoundPage.intro}`.trim()) return '404 page intro is required.'
-  if (!`${notFoundPage.suggestionsEyebrow}`.trim()) return '404 page suggestions eyebrow is required.'
-  if (!`${notFoundPage.viewProjectsLabel}`.trim()) return '404 page view-projects label is required.'
-  if (!`${notFoundPage.backHomeLabel}`.trim()) return '404 page back-home label is required.'
 
   return null
 }
@@ -1222,7 +954,17 @@ const loadGitHubBlogPostList = async (env: Env, accessToken: string, branch: str
       )
       const markdown = textDecoder.decode(fromBase64(fileResponse.content.replace(/\n/g, '')))
       const post = parseBlogMarkdown(markdown, fileResponse.path, fileResponse.sha)
-      const { body: _body, ...meta } = post
+      const meta: BlogPostMeta = {
+        coverAlt: post.coverAlt,
+        coverImage: post.coverImage,
+        date: post.date,
+        excerpt: post.excerpt,
+        path: post.path,
+        sha: post.sha,
+        slug: post.slug,
+        status: post.status,
+        title: post.title,
+      }
       return meta
     }),
   )
@@ -1362,7 +1104,7 @@ const handleAdminAuthLogout = async ({ request }: PagesContext): Promise<Respons
     },
   )
 
-const handleAdminContentSite = async ({ request, env }: PagesContext): Promise<Response> => {
+const handleAdminProjects = async ({ request, env }: PagesContext): Promise<Response> => {
   const envCheck = getRequiredEnv(env, ['ADMIN_SESSION_SECRET', 'GITHUB_OWNER', 'GITHUB_REPO'])
   if (envCheck instanceof Response) return envCheck
 
@@ -1372,7 +1114,18 @@ const handleAdminContentSite = async ({ request, env }: PagesContext): Promise<R
   const branch = resolveRequestedBranch(request, env)
   if (branch instanceof Response) return branch
 
-  return jsonResponse(await loadGitHubSiteContent(env, session.accessToken, branch))
+  const siteContent = await loadGitHubSiteContent(env, session.accessToken, branch)
+  const validationError = getProjectsValidationError(siteContent.content?.projects)
+  if (validationError) return jsonResponse({ error: validationError }, { status: 500 })
+
+  return jsonResponse({
+    branch: siteContent.branch,
+    latestCommitSha: siteContent.latestCommitSha,
+    path: siteContent.path,
+    projects: siteContent.content.projects,
+    repo: siteContent.repo,
+    sha: siteContent.sha,
+  })
 }
 
 const handleAdminActivity = async ({ request, env }: PagesContext): Promise<Response> => {
@@ -1392,7 +1145,7 @@ const handleAdminActivity = async ({ request, env }: PagesContext): Promise<Resp
   })
 }
 
-const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Promise<Response> => {
+const handleAdminProjectsUpdate = async ({ request, env }: PagesContext): Promise<Response> => {
   const sameOriginError = requireSameOrigin(request)
   if (sameOriginError) return sameOriginError
 
@@ -1402,7 +1155,7 @@ const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Pro
   const session = await requireAdminSession({ request, env })
   if (session instanceof Response) return session
 
-  const body = await readJsonBody<SiteContentWriteRequest>(request)
+  const body = await readJsonBody<ProjectsWriteRequest>(request)
   if (body instanceof Response) return body
 
   const branch = getAllowedCmsBranch(env)
@@ -1410,18 +1163,18 @@ const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Pro
     return jsonResponse({ error: `Only the ${branch} branch is allowed for admin CMS writes.` }, { status: 403 })
   }
   if (typeof body.sha !== 'string' || !body.sha.trim()) {
-    return jsonResponse({ error: 'A base file SHA is required before saving.' }, { status: 400 })
+    return jsonResponse({ error: 'A base file SHA is required before saving projects.' }, { status: 400 })
   }
-  const siteValidationError = getSiteContentValidationError(body.content)
-  if (siteValidationError) {
-    return jsonResponse({ error: siteValidationError }, { status: 400 })
+  const projectsValidationError = getProjectsValidationError(body.projects)
+  if (projectsValidationError) {
+    return jsonResponse({ error: projectsValidationError }, { status: 400 })
   }
 
   const current = await loadGitHubSiteContent(env, session.accessToken, branch)
   if (current.sha !== body.sha) {
     return jsonResponse(
       {
-        error: 'Content changed since you opened it. Reload before saving again.',
+        error: 'Projects changed since you opened them. Reload before saving again.',
         currentSha: current.sha,
         latestCommitSha: current.latestCommitSha,
       },
@@ -1429,10 +1182,18 @@ const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Pro
     )
   }
 
+  const nextContent = {
+    ...current.content,
+    projects: body.projects,
+  }
+  if (!validateSiteContent(nextContent)) {
+    return jsonResponse({ error: 'site-content.json failed validation after merging projects.' }, { status: 500 })
+  }
+
   const updatePayload: GitHubUpdateContentRequest = {
     branch,
-    content: toBase64(`${JSON.stringify(body.content, null, 2)}\n`),
-    message: sanitizeCommitMessage(body.commitMessage, DEFAULT_SITE_CONTENT_COMMIT_MESSAGE),
+    content: toBase64(`${JSON.stringify(nextContent, null, 2)}\n`),
+    message: sanitizeCommitMessage(body.commitMessage, DEFAULT_PROJECTS_COMMIT_MESSAGE),
     sha: current.sha,
   }
 
@@ -1450,9 +1211,9 @@ const handleAdminContentSiteUpdate = async ({ request, env }: PagesContext): Pro
 
   return jsonResponse({
     branch,
-    content: body.content,
     latestCommitSha: updateResponse.commit?.sha ?? null,
     path: updateResponse.content?.path ?? SITE_CONTENT_PATH,
+    projects: body.projects,
     repo: getAdminRepoInfo(env, branch),
     sha: updateResponse.content?.sha ?? current.sha,
   })
@@ -1510,7 +1271,7 @@ const handleAdminMediaUpload = async ({ request, env }: PagesContext): Promise<R
   const file = formData.get('file')
 
   if (!area || !isAllowedMediaArea(area)) {
-    return jsonResponse({ error: 'Media area must be one of: about, blog, contact, home, projects, resume.' }, { status: 400 })
+    return jsonResponse({ error: 'Media area must be one of: blog, projects.' }, { status: 400 })
   }
 
   if (!slug) {
@@ -1755,9 +1516,9 @@ const handleAdminRequest = async (context: PagesContext, pathname: string): Prom
   if (adminPath === '/auth/callback' && context.request.method === 'GET') return handleAdminAuthCallback(context)
   if (adminPath === '/auth/me' && context.request.method === 'GET') return handleAdminAuthMe(context)
   if (adminPath === '/auth/logout' && context.request.method === 'POST') return handleAdminAuthLogout(context)
-  if (adminPath === '/content/site' && context.request.method === 'GET') return handleAdminContentSite(context)
+  if (adminPath === '/projects' && context.request.method === 'GET') return handleAdminProjects(context)
   if (adminPath === '/activity' && context.request.method === 'GET') return handleAdminActivity(context)
-  if (adminPath === '/content/site' && context.request.method === 'PUT') return handleAdminContentSiteUpdate(context)
+  if (adminPath === '/projects' && context.request.method === 'PUT') return handleAdminProjectsUpdate(context)
   if (adminPath === '/media' && context.request.method === 'POST') return handleAdminMediaUpload(context)
   if (adminPath === '/blog' && context.request.method === 'GET') return handleAdminBlogList(context)
 
@@ -1767,7 +1528,7 @@ const handleAdminRequest = async (context: PagesContext, pathname: string): Prom
   if (blogDetailMatch && context.request.method === 'DELETE') return handleAdminBlogDelete(context, blogDetailMatch[1])
 
   if (adminPath.startsWith('/')) {
-    return jsonResponse({ error: 'Admin endpoint not implemented yet.' }, { status: 501 })
+    return jsonResponse({ error: 'Admin endpoint not found.' }, { status: 404 })
   }
 
   return null

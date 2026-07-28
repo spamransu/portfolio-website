@@ -1,4 +1,4 @@
-import type { BlogPost, BlogPostMeta, BlogPostResponse, SiteContent } from '../types'
+import type { BlogPost, BlogPostMeta, BlogPostResponse, Project } from '../types'
 
 export interface AdminSession {
   authenticated: boolean
@@ -13,19 +13,19 @@ export interface AdminRepoInfo {
   repoUrl: string
 }
 
-export interface SiteContentResponse {
+export interface ProjectListResponse {
   branch: string
   sha: string
   latestCommitSha: string | null
   path: string
   repo: AdminRepoInfo
-  content: SiteContent
+  projects: Project[]
 }
 
-export interface SaveSiteContentRequest {
+export interface SaveProjectsRequest {
   branch: string
   commitMessage: string
-  content: SiteContent
+  projects: Project[]
   sha: string
 }
 
@@ -124,9 +124,9 @@ const getJson = async <T>(input: RequestInfo | URL): Promise<T> => {
 export const adminApi = {
   getSession: () => getJson<AdminSession>('/api/admin/auth/me'),
   getActivity: () => getJson<AdminActivityResponse>('/api/admin/activity'),
-  getSiteContent: () => getJson<SiteContentResponse>('/api/admin/content/site'),
-  saveSiteContent: async (payload: SaveSiteContentRequest) => {
-    const response = await fetch('/api/admin/content/site', {
+  getProjects: () => getJson<ProjectListResponse>('/api/admin/projects'),
+  saveProjects: async (payload: SaveProjectsRequest) => {
+    const response = await fetch('/api/admin/projects', {
       method: 'PUT',
       credentials: 'same-origin',
       headers: {
@@ -137,7 +137,7 @@ export const adminApi = {
     })
 
     if (!response.ok) throw await toApiError(response)
-    return (await response.json()) as SiteContentResponse
+    return (await response.json()) as ProjectListResponse
   },
   getBlogPosts: () => getJson<BlogListResponse>('/api/admin/blog'),
   getBlogPost: (slug: string) => getJson<BlogDetailResponse>(`/api/admin/blog/${slug}`),
