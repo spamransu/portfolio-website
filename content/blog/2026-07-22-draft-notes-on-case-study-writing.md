@@ -2,7 +2,7 @@
 title: "Draft notes on case-study writing"
 slug: "draft-notes-on-case-study-writing"
 date: "2026-07-22"
-status: "draft"
+status: "published"
 coverImage: ""
 coverAlt: ""
 excerpt: "An internal draft about keeping portfolio case studies concise and still useful."
