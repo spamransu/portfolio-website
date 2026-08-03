@@ -20,6 +20,7 @@ Frontend development, design systems, and case-study driven website work for bra
 - [Contact](https://lancecarteciano.com/contact.md)
 - [Resume](https://lancecarteciano.com/resume.md)
 - [My New Post](https://lancecarteciano.com/blog/my-new-post.md)
+- [Draft notes on case-study writing](https://lancecarteciano.com/blog/draft-notes-on-case-study-writing.md)
 - [Lightweight Git-backed portfolio CMS](https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms.md)
 - [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md)
 - [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md)
