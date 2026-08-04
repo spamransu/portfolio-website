@@ -222,20 +222,37 @@ Web developer and graphic designer with experience in WordPress, React, responsi
 ## Summary
 Ongoing WordPress work across company and client sites, including Elementor cleanup, reusable sections, admin workflows, spam prevention, and hosting handoff support.
 
+## Overview
+A recurring website maintenance and Elementor systems track designed to make active WordPress sites easier to update, safer to hand off, and more visually consistent over time. This is ongoing production support, not a single launch. The job is to keep company and client WordPress sites stable, easier to edit, and visually consistent while requests keep moving.
+
 ## Challenge
 Several sites needed regular updates, cleaner Elementor structure, and admin workflows that the SEO and content teams could use without breaking layout consistency.
 
 ## Approach
+I focused on the parts that make future edits safer: reusable Elementor classes, global styling variables, admin-side content fields, and cleanup work around spam, security, hosting, and handoff.
+
 - Maintained 8 active websites across company and client work.
 - Supported 4 migrations into cleaner Elementor builds with global variables and reusable class structures.
 - Built 3 custom WordPress themes or templates and reusable branded sections.
 - Used ACF and Code Snippets to simplify admin-side editing for SEO and content updates.
 - Handled spam prevention, security cleanup, styling consistency, and deployment support.
 
-## Outcome
+## Result
+The work made recurring site updates less fragile. Teams had clearer patterns to follow, and the managed sites had a stronger base for regular content and SEO updates.
+
 - Company and client sites became easier to update with more consistent section patterns.
 - Recurring maintenance work had clearer styling rules and less one-off editing.
 - SEO and content updates became safer through simpler admin workflows.
+
+## Project scope
+- WordPress Maintenance
+- Elementor System Cleanup
+- Frontend Styling
+- Admin Workflow Support
+- Hosting Handoff Support
+
+## Reflection
+Maintenance work becomes stronger when editing patterns are clear, repeatable, and safe for the next person who needs to update the site.
 
 # ABCDE Creative Studio website
 
@@ -248,20 +265,37 @@ Several sites needed regular updates, cleaner Elementor structure, and admin wor
 ## Summary
 Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.
 
+## Overview
+A frontend implementation track translating studio design direction into responsive React pages, reusable sections, and delivery-ready interface patterns. At ABCDE Creative Studio, I worked from Figma direction into responsive frontend pages. The focus was practical implementation: clean layouts, accessible behavior, and reusable patterns.
+
 ## Challenge
 The work needed to translate design direction into responsive interfaces while keeping accessibility and maintainability in mind.
 
 ## Approach
+I treated the mockups as a system instead of isolated screens. Shared sections, consistent spacing, and accessible markup made the work easier to test and adjust.
+
 - Worked on 3 web projects, including the studio website.
 - Built at least 5 responsive pages from Figma mockups.
 - Applied WCAG-based accessibility checks during implementation.
 - Contributed reusable UI patterns for future builds.
 - Supported delivery workflows through GitHub Actions and Cloudflare.
 
-## Outcome
+## Result
+The work gave the studio and client pages a steadier frontend base, with responsive behavior and delivery patterns that could carry into later pages.
+
 - Responsive pages matched the design direction more closely across screen sizes.
 - Reusable patterns made later project work easier to maintain.
 - The delivery process had clearer build and deployment support.
+
+## Project scope
+- Frontend Implementation
+- Responsive UI
+- Figma Translation
+- Reusable Components
+- Deployment Support
+
+## Reflection
+A good frontend translation keeps the energy of the design while making every section dependable across real viewport sizes.
 
 # Nsight Index blog management system
 
@@ -274,18 +308,35 @@ The work needed to translate design direction into responsive interfaces while k
 ## Summary
 A Laravel blog management system with author and reader flows for posts, comments, categories, likes, saved posts, and media handling.
 
+## Overview
+A Laravel content-management project focused on practical author and reader workflows for publishing, interaction, categorization, and media handling. Nsight Index is a Laravel blog management system. The useful part for this portfolio is the content workflow: creating posts, organizing categories, handling comments, saving posts, and supporting media.
+
 ## Challenge
 The project needed a practical content workflow where authors could manage posts and readers could interact with published content.
 
 ## Approach
+I kept the case study honest about what exists. Author and reader flows are the focus. Some admin ideas are still future work, so they do not appear here as finished features.
+
 - Built post, category, comment, like, and saved-post flows.
 - Used Blade views with Bootstrap, Tailwind CSS, and Alpine.js for interface work.
 - Integrated Spatie Media Library for media handling.
 - Kept unfinished admin ideas out of the public claims because those flows are still marked as future work.
 
-## Outcome
+## Result
+The project shows that I can work beyond static frontend pages and handle a PHP content system with real data relationships and media handling.
+
 - The public repository shows a working Laravel content-management project with author and reader features.
 - The project gives a stronger backend example without overstating unfinished admin work.
+
+## Project scope
+- Laravel Development
+- Content Workflow
+- Reader Interaction Flows
+- Media Handling
+- Interface Implementation
+
+## Reflection
+Backend-heavy portfolio work is most useful when the public case study is honest about the flows that are actually working.
 
 # Git-backed portfolio content system
 
@@ -298,19 +349,36 @@ The project needed a practical content workflow where authors could manage posts
 ## Summary
 The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.
 
+## Overview
+A Git-backed content architecture that keeps this portfolio editable from one JSON source while publishing readable React routes and markdown mirrors. A portfolio gets messy when page copy, case studies, markdown files, and machine-readable indexes all drift apart. This build treats content as the source, then generates the files other surfaces need.
+
 ## Challenge
 The site needed to work as a human portfolio and as a machine-readable content source without keeping duplicate copy in separate places.
 
 ## Approach
+The React routes read from the same JSON content used by the generation script. Blog posts stay in markdown. The prebuild step writes public markdown pages, indexes, sitemap entries, and the site navigation skill.
+
 - Kept main site copy in content/site-content.json.
 - Generated markdown mirrors for pages, projects, resume, blog, and LLM-friendly indexes.
 - Rendered public React routes from shared content instead of hardcoded page copy.
 - Used Cloudflare Pages functions to serve markdown when requested.
 
-## Outcome
+## Result
+The site stays easier to update because the copy has one main home. It also gives agents and readers a cleaner way to understand the site through markdown mirrors.
+
 - The portfolio can be edited from one content source and still publish readable markdown mirrors.
 - The site is easier for humans and agents to inspect without scraping visual pages.
 - Future case studies and posts have a clearer source path.
+
+## Project scope
+- Git-backed CMS
+- Content Architecture
+- Markdown Generation
+- Cloudflare Pages Functions
+- React Content Rendering
+
+## Reflection
+A portfolio content system earns its keep when the same source can serve visitors, editors, and agents without duplicate copy drifting apart.
 
 # React GSAP animation experiment
 
@@ -323,17 +391,34 @@ The site needed to work as a human portfolio and as a machine-readable content s
 ## Summary
 A React and GSAP practice build based on a public tutorial, useful as an animation study rather than a client case study.
 
+## Overview
+A clearly attributed React and GSAP practice build used to study motion timing, scroll interaction, and interface choreography in a codebase. This is a tutorial-based React and GSAP practice project. I keep it public because it shows animation study, but it should not carry the same weight as professional or original product work.
+
 ## Challenge
 The goal was to practice scroll and interface animation in React while understanding how tutorial patterns map into a real codebase.
 
 ## Approach
+The work was shaped around the most important interface and content decisions, keeping the scope honest and the build easier to maintain.
+
 - Followed a public tutorial inspired by Zentry and JavaScript Mastery.
 - Practiced GSAP setup, timing, layout choreography, and responsive behavior.
 - Kept this listed as an experiment so it is not mistaken for original client work.
 
-## Outcome
+## Result
+The project documents animation practice and code familiarity with GSAP in React.
+
 - The project documents animation practice and code familiarity with GSAP in React.
 - It stays in the archive with clear attribution instead of being framed as a main case study.
+
+## Project scope
+- React Animation Study
+- GSAP Timing
+- Scroll Interaction Practice
+- Responsive Motion
+- Code Attribution
+
+## Reflection
+Tutorial-based experiments still belong in a portfolio when they are labeled clearly and used to show focused practice rather than inflated authorship.
 
 # Tetherly bio link app
 
@@ -346,17 +431,34 @@ The goal was to practice scroll and interface animation in React while understan
 ## Summary
 An in-progress React and TypeScript bio link app. It stays in the archive as product UI practice while the core build is still moving.
 
+## Overview
+An in-progress React and TypeScript bio link app used as product UI practice around profile presentation, reusable cards, and responsive frontend structure. Tetherly is still in progress. It belongs in the secondary project archive because it shows frontend product practice without pretending to be finished.
+
 ## Challenge
 The project explores a small profile-link product with editable-looking cards, cleaner visual hierarchy, and reusable frontend structure.
 
 ## Approach
+The work was shaped around the most important interface and content decisions, keeping the scope honest and the build easier to maintain.
+
 - Built the app with React, TypeScript, and SCSS.
 - Focused on product UI structure, profile presentation, and reusable card patterns.
 - Kept the project marked as in progress until the product flow is more complete.
 
-## Outcome
+## Result
+The repository shows active product UI practice.
+
 - The repository shows active product UI practice.
 - The archive entry is honest about the project status and does not present it as finished client work.
+
+## Project scope
+- Product UI Practice
+- React Components
+- TypeScript Structure
+- Profile Card System
+- Responsive SCSS
+
+## Reflection
+In-progress product UI can still communicate taste and structure when the case study is clear about what is finished and what is still moving.
 
 ## Contact
 # Contact

@@ -116,14 +116,6 @@ export const useMediaUploader = ({
         gallery[index] = { ...(gallery[index] ?? emptyImage()), src: path, alt: gallery[index]?.alt || project.title }
         return { ...project, gallery }
       }
-      if (mediaTarget.field === 'sectionImage') {
-        const sections = [...(project.sections ?? [])]
-        const index = mediaTarget.index ?? 0
-        const section = sections[index]
-        if (!section) return project
-        sections[index] = { ...section, image: { ...(section.image ?? emptyImage()), src: path, alt: section.image?.alt || section.title } }
-        return { ...project, sections }
-      }
       return project
     })
   }, [mediaTarget, setSelectedBlogPost, updateSelectedProject])

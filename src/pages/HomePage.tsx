@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { ContactForm } from '../components/ContactForm'
-import { ProjectCard } from '../components/ProjectCard'
 import { siteContent, type HomeStatTone, type Project } from '../content/siteContent'
 import sty from './HomePage.module.scss'
 
@@ -10,13 +9,9 @@ const statToneClassNames: Record<HomeStatTone, string> = {
   'accent-3': sty.statAccent3,
 }
 
-function getFeaturedProjects(): Project[] {
-  const featuredSlugs = siteContent.home.featuredProjects.slugs
-  const projects = featuredSlugs
-    .map((slug) => siteContent.projects.find((project) => project.slug === slug))
-    .filter((project): project is Project => Boolean(project))
-
-  return projects.length ? projects : siteContent.projects.slice(0, 4)
+function getFeaturedProject(): Project | undefined {
+  const featuredSlug = siteContent.home.featuredProjects.slugs[0]
+  return siteContent.projects.find((project) => project.slug === featuredSlug) ?? siteContent.projects[0]
 }
 
 function renderAccentedTitle(title: string, accentPhrase?: string) {
@@ -27,10 +22,11 @@ function renderAccentedTitle(title: string, accentPhrase?: string) {
 }
 
 export function HomePage() {
-  const featuredProjects = getFeaturedProjects()
+  const featured = getFeaturedProject()
   const hero = siteContent.home.hero
   const title = hero.titleLines.join(' ')
   const skillGroups = siteContent.home.skills.groups
+  const totalFeatured = Math.max(siteContent.home.featuredProjects.slugs.length, 1)
 
   return (
     <div className={sty.root}>
@@ -65,21 +61,37 @@ export function HomePage() {
         </div>
       </section>
 
-      {featuredProjects.length ? (
+      {featured ? (
         <section className={sty.featured}>
           <div className="lg-wrapper">
             <div className={sty.sectionInner}>
               <div className={sty.featuredHeading}>
-                <div>
-                  <p className="eyebrow">{siteContent.home.featuredProjects.title}</p>
-                  {siteContent.home.featuredProjects.intro ? <p className={sty.featuredIntro}>{siteContent.home.featuredProjects.intro}</p> : null}
-                </div>
-                <p className={sty.meta}>{String(featuredProjects.length).padStart(2, '0')} projects</p>
+                <p className="eyebrow">{siteContent.home.featuredProjects.title}</p>
+                <p className={sty.meta}>01 / {String(totalFeatured).padStart(2, '0')}</p>
               </div>
-              <div className={sty.featuredCards}>
-                {featuredProjects.map((project) => (
-                  <ProjectCard key={project.slug} project={project} />
-                ))}
+              <div className={sty.featuredGrid}>
+                <div className={sty.featuredCopy}>
+                  <span className={sty.featuredIndex}>01</span>
+                  <h2>{featured.title}</h2>
+                  <p>{featured.summary}</p>
+                  <dl className={sty.projectMeta}>
+                    <div><dt>Client</dt><dd>{featured.client}</dd></div>
+                    <div><dt>Role</dt><dd>{featured.role}</dd></div>
+                    <div><dt>Year</dt><dd>{featured.year}</dd></div>
+                    <div><dt>Discipline</dt><dd>{featured.stack[0]}</dd></div>
+                  </dl>
+                  <ul className="tag-list" aria-label={(siteContent.home.featuredProjects.stackAriaTemplate ?? '{title} stack').replace('{title}', featured.title)}>
+                    {featured.stack.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                  <div className={sty.featuredLinks}>
+                    <Link to={`/projects/${featured.slug}`}>Read the case study ↗</Link>
+                    <Link to="/projects">All projects →</Link>
+                  </div>
+                </div>
+                <figure className={sty.featuredMedia}>
+                  {featured.image ? <img src={featured.image.src} alt={featured.image.alt} /> : null}
+                  <figcaption>Fig. 01 — {featured.title}, {featured.year}</figcaption>
+                </figure>
               </div>
             </div>
           </div>

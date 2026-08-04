@@ -49,7 +49,7 @@
     ],
     "headerLinktreeLabel": "Links",
     "footer": {
-      "copyrightTemplate": "\u00a9 {year} {siteName}. Built and maintained by Lance.",
+      "copyrightTemplate": "© {year} {siteName}. Built and maintained by Lance.",
       "generalHeading": "Pages",
       "moreHeading": "More",
       "generalLinks": [
@@ -357,37 +357,31 @@
           "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
           "alt": "Generic website planning image used as a placeholder for WordPress maintenance work.",
           "caption": "Placeholder visual. Client screenshots are intentionally not shown."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
+          "alt": "Generic website planning image used as a placeholder for the WordPress maintenance case study."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
+          "alt": "Generic interface planning image used as a placeholder for Elementor cleanup work."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
+          "alt": "Generic website interface image used as a placeholder for the WordPress maintenance outcome."
         }
       ],
-      "sections": [
-        {
-          "kind": "default",
-          "title": "The work",
-          "body": "This is ongoing production support, not a single launch. The job is to keep company and client WordPress sites stable, easier to edit, and visually consistent while requests keep moving.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
-            "alt": "Generic website planning image used as a placeholder for the WordPress maintenance case study."
-          }
-        },
-        {
-          "kind": "approach",
-          "title": "What I handled",
-          "body": "I focused on the parts that make future edits safer: reusable Elementor classes, global styling variables, admin-side content fields, and cleanup work around spam, security, hosting, and handoff.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
-            "alt": "Generic interface planning image used as a placeholder for Elementor cleanup work."
-          }
-        },
-        {
-          "kind": "outcome",
-          "title": "What changed",
-          "body": "The work made recurring site updates less fragile. Teams had clearer patterns to follow, and the managed sites had a stronger base for regular content and SEO updates.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
-            "alt": "Generic website interface image used as a placeholder for the WordPress maintenance outcome."
-          }
-        }
-      ]
+      "overview": "A recurring website maintenance and Elementor systems track designed to make active WordPress sites easier to update, safer to hand off, and more visually consistent over time. This is ongoing production support, not a single launch. The job is to keep company and client WordPress sites stable, easier to edit, and visually consistent while requests keep moving.",
+      "approachSummary": "I focused on the parts that make future edits safer: reusable Elementor classes, global styling variables, admin-side content fields, and cleanup work around spam, security, hosting, and handoff.",
+      "resultSummary": "The work made recurring site updates less fragile. Teams had clearer patterns to follow, and the managed sites had a stronger base for regular content and SEO updates.",
+      "scope": [
+        "WordPress Maintenance",
+        "Elementor System Cleanup",
+        "Frontend Styling",
+        "Admin Workflow Support",
+        "Hosting Handoff Support"
+      ],
+      "reflection": "Maintenance work becomes stronger when editing patterns are clear, repeatable, and safe for the next person who needs to update the site."
     },
     {
       "slug": "abcde-creative",
@@ -431,37 +425,31 @@
           "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
           "alt": "Generic responsive layout image used as a placeholder for ABCDE Creative Studio work.",
           "caption": "Placeholder visual. Production screenshots can replace this later."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
+          "alt": "Generic responsive layout image used as a placeholder for the ABCDE Creative Studio case study."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
+          "alt": "Generic frontend interface image used as a placeholder for ABCDE Creative Studio implementation."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
+          "alt": "Generic frontend interface image used as a placeholder for ABCDE Creative Studio outcome."
         }
       ],
-      "sections": [
-        {
-          "kind": "default",
-          "title": "The work",
-          "body": "At ABCDE Creative Studio, I worked from Figma direction into responsive frontend pages. The focus was practical implementation: clean layouts, accessible behavior, and reusable patterns.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
-            "alt": "Generic responsive layout image used as a placeholder for the ABCDE Creative Studio case study."
-          }
-        },
-        {
-          "kind": "approach",
-          "title": "How I built it",
-          "body": "I treated the mockups as a system instead of isolated screens. Shared sections, consistent spacing, and accessible markup made the work easier to test and adjust.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
-            "alt": "Generic frontend interface image used as a placeholder for ABCDE Creative Studio implementation."
-          }
-        },
-        {
-          "kind": "outcome",
-          "title": "Result",
-          "body": "The work gave the studio and client pages a steadier frontend base, with responsive behavior and delivery patterns that could carry into later pages.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
-            "alt": "Generic frontend interface image used as a placeholder for ABCDE Creative Studio outcome."
-          }
-        }
-      ]
+      "overview": "A frontend implementation track translating studio design direction into responsive React pages, reusable sections, and delivery-ready interface patterns. At ABCDE Creative Studio, I worked from Figma direction into responsive frontend pages. The focus was practical implementation: clean layouts, accessible behavior, and reusable patterns.",
+      "approachSummary": "I treated the mockups as a system instead of isolated screens. Shared sections, consistent spacing, and accessible markup made the work easier to test and adjust.",
+      "resultSummary": "The work gave the studio and client pages a steadier frontend base, with responsive behavior and delivery patterns that could carry into later pages.",
+      "scope": [
+        "Frontend Implementation",
+        "Responsive UI",
+        "Figma Translation",
+        "Reusable Components",
+        "Deployment Support"
+      ],
+      "reflection": "A good frontend translation keeps the energy of the design while making every section dependable across real viewport sizes."
     },
     {
       "slug": "nsight-index",
@@ -507,37 +495,31 @@
           "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
           "alt": "Generic dashboard image used as a placeholder for the Nsight Index project.",
           "caption": "Placeholder visual for the Laravel blog management system."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
+          "alt": "Generic dashboard image used as a placeholder for the Nsight Index case study."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+          "alt": "Generic content dashboard image used as a placeholder for Nsight Index scope."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+          "alt": "Generic content dashboard image used as a placeholder for Nsight Index outcome."
         }
       ],
-      "sections": [
-        {
-          "kind": "default",
-          "title": "The build",
-          "body": "Nsight Index is a Laravel blog management system. The useful part for this portfolio is the content workflow: creating posts, organizing categories, handling comments, saving posts, and supporting media.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
-            "alt": "Generic dashboard image used as a placeholder for the Nsight Index case study."
-          }
-        },
-        {
-          "kind": "approach",
-          "title": "Scope",
-          "body": "I kept the case study honest about what exists. Author and reader flows are the focus. Some admin ideas are still future work, so they do not appear here as finished features.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
-            "alt": "Generic content dashboard image used as a placeholder for Nsight Index scope."
-          }
-        },
-        {
-          "kind": "outcome",
-          "title": "What it shows",
-          "body": "The project shows that I can work beyond static frontend pages and handle a PHP content system with real data relationships and media handling.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
-            "alt": "Generic content dashboard image used as a placeholder for Nsight Index outcome."
-          }
-        }
-      ]
+      "overview": "A Laravel content-management project focused on practical author and reader workflows for publishing, interaction, categorization, and media handling. Nsight Index is a Laravel blog management system. The useful part for this portfolio is the content workflow: creating posts, organizing categories, handling comments, saving posts, and supporting media.",
+      "approachSummary": "I kept the case study honest about what exists. Author and reader flows are the focus. Some admin ideas are still future work, so they do not appear here as finished features.",
+      "resultSummary": "The project shows that I can work beyond static frontend pages and handle a PHP content system with real data relationships and media handling.",
+      "scope": [
+        "Laravel Development",
+        "Content Workflow",
+        "Reader Interaction Flows",
+        "Media Handling",
+        "Interface Implementation"
+      ],
+      "reflection": "Backend-heavy portfolio work is most useful when the public case study is honest about the flows that are actually working."
     },
     {
       "slug": "portfolio-cms",
@@ -583,37 +565,31 @@
           "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
           "alt": "Generic content editor image used as a placeholder for the portfolio CMS case study.",
           "caption": "Placeholder visual for the content system behind this portfolio."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
+          "alt": "Generic content editor image used as a placeholder for the portfolio content system."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+          "alt": "Generic file and interface image used as a placeholder for the portfolio content workflow."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+          "alt": "Generic content interface image used as a placeholder for the portfolio content system outcome."
         }
       ],
-      "sections": [
-        {
-          "kind": "default",
-          "title": "The problem",
-          "body": "A portfolio gets messy when page copy, case studies, markdown files, and machine-readable indexes all drift apart. This build treats content as the source, then generates the files other surfaces need.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
-            "alt": "Generic content editor image used as a placeholder for the portfolio content system."
-          }
-        },
-        {
-          "kind": "approach",
-          "title": "How it works",
-          "body": "The React routes read from the same JSON content used by the generation script. Blog posts stay in markdown. The prebuild step writes public markdown pages, indexes, sitemap entries, and the site navigation skill.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
-            "alt": "Generic file and interface image used as a placeholder for the portfolio content workflow."
-          }
-        },
-        {
-          "kind": "outcome",
-          "title": "Why it matters",
-          "body": "The site stays easier to update because the copy has one main home. It also gives agents and readers a cleaner way to understand the site through markdown mirrors.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
-            "alt": "Generic content interface image used as a placeholder for the portfolio content system outcome."
-          }
-        }
-      ]
+      "overview": "A Git-backed content architecture that keeps this portfolio editable from one JSON source while publishing readable React routes and markdown mirrors. A portfolio gets messy when page copy, case studies, markdown files, and machine-readable indexes all drift apart. This build treats content as the source, then generates the files other surfaces need.",
+      "approachSummary": "The React routes read from the same JSON content used by the generation script. Blog posts stay in markdown. The prebuild step writes public markdown pages, indexes, sitemap entries, and the site navigation skill.",
+      "resultSummary": "The site stays easier to update because the copy has one main home. It also gives agents and readers a cleaner way to understand the site through markdown mirrors.",
+      "scope": [
+        "Git-backed CMS",
+        "Content Architecture",
+        "Markdown Generation",
+        "Cloudflare Pages Functions",
+        "React Content Rendering"
+      ],
+      "reflection": "A portfolio content system earns its keep when the same source can serve visitors, editors, and agents without duplicate copy drifting apart."
     },
     {
       "slug": "gsap-animation",
@@ -646,11 +622,32 @@
         "The project documents animation practice and code familiarity with GSAP in React.",
         "It stays in the archive with clear attribution instead of being framed as a main case study."
       ],
-      "sections": [
+      "overview": "A clearly attributed React and GSAP practice build used to study motion timing, scroll interaction, and interface choreography in a codebase. This is a tutorial-based React and GSAP practice project. I keep it public because it shows animation study, but it should not carry the same weight as professional or original product work.",
+      "approachSummary": "The work was shaped around the most important interface and content decisions, keeping the scope honest and the build easier to maintain.",
+      "resultSummary": "The project documents animation practice and code familiarity with GSAP in React.",
+      "scope": [
+        "React Animation Study",
+        "GSAP Timing",
+        "Scroll Interaction Practice",
+        "Responsive Motion",
+        "Code Attribution"
+      ],
+      "reflection": "Tutorial-based experiments still belong in a portfolio when they are labeled clearly and used to show focused practice rather than inflated authorship.",
+      "gallery": [
         {
-          "kind": "default",
-          "title": "Archive note",
-          "body": "This is a tutorial-based React and GSAP practice project. I keep it public because it shows animation study, but it should not carry the same weight as professional or original product work."
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
+          "alt": "Generic editorial project visual 1 used as a placeholder for React GSAP animation experiment.",
+          "caption": "Placeholder visual. Public case-study imagery is intentionally generic."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+          "alt": "Generic editorial project visual 2 used as a placeholder for React GSAP animation experiment.",
+          "caption": "Placeholder visual. Public case-study imagery is intentionally generic."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-3/1600/1100.jpg",
+          "alt": "Generic editorial project visual 3 used as a placeholder for React GSAP animation experiment.",
+          "caption": "Placeholder visual. Public case-study imagery is intentionally generic."
         }
       ]
     },
@@ -684,11 +681,32 @@
         "The repository shows active product UI practice.",
         "The archive entry is honest about the project status and does not present it as finished client work."
       ],
-      "sections": [
+      "overview": "An in-progress React and TypeScript bio link app used as product UI practice around profile presentation, reusable cards, and responsive frontend structure. Tetherly is still in progress. It belongs in the secondary project archive because it shows frontend product practice without pretending to be finished.",
+      "approachSummary": "The work was shaped around the most important interface and content decisions, keeping the scope honest and the build easier to maintain.",
+      "resultSummary": "The repository shows active product UI practice.",
+      "scope": [
+        "Product UI Practice",
+        "React Components",
+        "TypeScript Structure",
+        "Profile Card System",
+        "Responsive SCSS"
+      ],
+      "reflection": "In-progress product UI can still communicate taste and structure when the case study is clear about what is finished and what is still moving.",
+      "gallery": [
         {
-          "kind": "default",
-          "title": "Archive note",
-          "body": "Tetherly is still in progress. It belongs in the secondary project archive because it shows frontend product practice without pretending to be finished."
+          "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
+          "alt": "Generic editorial project visual 1 used as a placeholder for Tetherly bio link app.",
+          "caption": "Placeholder visual. Public case-study imagery is intentionally generic."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+          "alt": "Generic editorial project visual 2 used as a placeholder for Tetherly bio link app.",
+          "caption": "Placeholder visual. Public case-study imagery is intentionally generic."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-3/1600/1100.jpg",
+          "alt": "Generic editorial project visual 3 used as a placeholder for Tetherly bio link app.",
+          "caption": "Placeholder visual. Public case-study imagery is intentionally generic."
         }
       ]
     }

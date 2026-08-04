@@ -305,8 +305,7 @@ body {
 
 .admin-code,
 .admin-field textarea[id*='image'],
-.admin-field textarea[id*='gallery'],
-.admin-field textarea[id*='sections'] {
+.admin-field textarea[id*='gallery'] {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   @include mix.type-style(body-xs);
 }
