@@ -65,15 +65,6 @@ export type HighlightStat = {
   label: string
 }
 
-export type ProjectSectionKind = 'default' | 'approach' | 'outcome'
-
-export type ProjectSection = {
-  kind: ProjectSectionKind
-  title: string
-  body: string
-  image?: ImageAsset
-}
-
 export type ProjectKind = 'case-study' | 'experiment'
 
 export type ProjectLink = {
@@ -95,9 +86,13 @@ export type Project = {
   challenge: string
   approach: string[]
   outcome: string[]
+  overview: string
+  approachSummary: string
+  resultSummary: string
+  scope: string[]
+  reflection: string
   image?: ImageAsset
-  gallery?: ImageAsset[]
-  sections?: ProjectSection[]
+  gallery: ImageAsset[]
 }
 
 export type HomeStatTone = 'accent' | 'accent-2' | 'accent-3'

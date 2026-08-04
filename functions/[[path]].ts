@@ -96,15 +96,22 @@ type Project = {
   title: string
   year: string
   client: string
+  kind?: 'case-study' | 'experiment'
+  status?: string
   summary: string
   role: string
   stack: string[]
+  links?: Array<{ label: string; href: string }>
   challenge: string
   approach: string[]
   outcome: string[]
+  overview: string
+  approachSummary: string
+  resultSummary: string
+  scope: string[]
+  reflection: string
   image?: { src: string; alt: string; caption?: string }
-  gallery?: Array<{ src: string; alt: string; caption?: string }>
-  sections?: Array<{ kind: 'default' | 'approach' | 'outcome'; title: string; body: string; image?: { src: string; alt: string; caption?: string } }>
+  gallery: Array<{ src: string; alt: string; caption?: string }>
 }
 
 type ProjectsWriteRequest = {
@@ -506,35 +513,26 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
 
   return projects.every((entry) => {
     if (!isRecord(entry)) return false
-    if (!['slug', 'title', 'year', 'client', 'summary', 'role', 'challenge'].every((key) => typeof entry[key] === 'string')) return false
-    if (!isStringArray(entry.stack) || !isStringArray(entry.approach) || !isStringArray(entry.outcome)) return false
+    if (!['slug', 'title', 'year', 'client', 'summary', 'role', 'challenge', 'overview', 'approachSummary', 'resultSummary', 'reflection'].every((key) => typeof entry[key] === 'string')) return false
+    if (entry.kind !== undefined && !['case-study', 'experiment'].includes(`${entry.kind}`)) return false
+    if (entry.status !== undefined && typeof entry.status !== 'string') return false
+    if (entry.links !== undefined && (!Array.isArray(entry.links) || !entry.links.every((link) => isRecord(link) && typeof link.label === 'string' && typeof link.href === 'string'))) return false
+    if (!isStringArray(entry.stack) || !isStringArray(entry.approach) || !isStringArray(entry.outcome) || !isStringArray(entry.scope)) return false
     if (entry.image !== undefined && !isImageAsset(entry.image)) return false
-    if (entry.gallery !== undefined && (!Array.isArray(entry.gallery) || !entry.gallery.every(isImageAsset))) return false
-    if (entry.sections !== undefined && (!Array.isArray(entry.sections) || !entry.sections.every((section) => isRecord(section) && ['default', 'approach', 'outcome'].includes(`${section.kind}`) && typeof section.title === 'string' && typeof section.body === 'string' && (section.image === undefined || isImageAsset(section.image))))) return false
+    if (!Array.isArray(entry.gallery) || !entry.gallery.every(isImageAsset)) return false
     return true
   })
 }
 
 const validateProject = (value: unknown): value is Project => {
   if (!isRecord(value)) return false
-  if (!['slug', 'title', 'year', 'client', 'summary', 'role', 'challenge'].every((key) => typeof value[key] === 'string')) return false
-  if (!isStringArray(value.stack) || !isStringArray(value.approach) || !isStringArray(value.outcome)) return false
+  if (!['slug', 'title', 'year', 'client', 'summary', 'role', 'challenge', 'overview', 'approachSummary', 'resultSummary', 'reflection'].every((key) => typeof value[key] === 'string')) return false
+  if (value.kind !== undefined && !['case-study', 'experiment'].includes(`${value.kind}`)) return false
+  if (value.status !== undefined && typeof value.status !== 'string') return false
+  if (value.links !== undefined && (!Array.isArray(value.links) || !value.links.every((link) => isRecord(link) && typeof link.label === 'string' && typeof link.href === 'string'))) return false
+  if (!isStringArray(value.stack) || !isStringArray(value.approach) || !isStringArray(value.outcome) || !isStringArray(value.scope)) return false
   if (value.image !== undefined && !isImageAsset(value.image)) return false
-  if (value.gallery !== undefined && (!Array.isArray(value.gallery) || !value.gallery.every(isImageAsset))) return false
-  if (
-    value.sections !== undefined
-    && (
-      !Array.isArray(value.sections)
-      || !value.sections.every(
-        (section) =>
-          isRecord(section)
-          && ['default', 'approach', 'outcome'].includes(`${section.kind}`)
-          && typeof section.title === 'string'
-          && typeof section.body === 'string'
-          && (section.image === undefined || isImageAsset(section.image)),
-      )
-    )
-  ) return false
+  if (!Array.isArray(value.gallery) || !value.gallery.every(isImageAsset)) return false
   return true
 }
 
@@ -555,15 +553,19 @@ const getProjectsValidationError = (value: unknown): string | null => {
     if (!project.summary.trim()) return `${label} needs a summary.`
     if (!project.role.trim()) return `${label} needs a role.`
     if (!project.challenge.trim()) return `${label} needs a challenge.`
+    if (!project.overview.trim()) return `${label} needs an overview.`
+    if (!project.approachSummary.trim()) return `${label} needs an approach summary.`
+    if (!project.resultSummary.trim()) return `${label} needs a result summary.`
+    if (!project.reflection.trim()) return `${label} needs a reflection.`
     if (!project.stack.some((item) => item.trim())) return `${label} needs at least one stack item.`
     if (!project.approach.some((item) => item.trim())) return `${label} needs at least one approach item.`
     if (!project.outcome.some((item) => item.trim())) return `${label} needs at least one outcome item.`
+    if (!project.scope.some((item) => item.trim())) return `${label} needs at least one scope item.`
+    if (project.gallery.length < 3) return `${label} needs at least three gallery images.`
     if (project.image?.src.trim() && !project.image.alt.trim()) return `${label} hero image alt text is required.`
     if (!project.image?.src.trim() && project.image?.alt.trim()) return `${label} hero image src is required.`
-    const invalidGalleryImage = project.gallery?.find((image) => (image.src.trim() && !image.alt.trim()) || (!image.src.trim() && image.alt.trim()))
-    if (invalidGalleryImage) return `${label} gallery images need both src and alt text when set.`
-    const invalidSection = project.sections?.find((section) => !section.title.trim() || !section.body.trim())
-    if (invalidSection) return `${label} project sections need both title and body.`
+    const invalidGalleryImage = project.gallery.find((image) => !image.src.trim() || !image.alt.trim())
+    if (invalidGalleryImage) return `${label} gallery images need both src and alt text.`
   }
 
   return null

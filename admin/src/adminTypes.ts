@@ -12,7 +12,7 @@ export type BlogActivity = {
   summary: string
 } | null
 
-export type ProjectJsonField = 'image' | 'gallery' | 'sections'
+export type ProjectJsonField = 'image' | 'gallery'
 export type ProjectJsonDrafts = Record<ProjectJsonField, string>
 export type ProjectJsonErrors = Partial<Record<ProjectJsonField, string>>
 
@@ -20,7 +20,7 @@ export type MediaArea = 'blog' | 'projects'
 
 export type MediaTargetSelection = {
   kind: 'blog' | 'project'
-  field: 'coverImage' | 'image' | 'gallery' | 'sectionImage'
+  field: 'coverImage' | 'image' | 'gallery'
   index?: number
   label: string
 }

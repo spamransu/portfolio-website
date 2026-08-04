@@ -58,26 +58,49 @@ export function ProjectDetailPage() {
         </Section>
       ) : null}
 
-      {project.sections?.map((section, index) => {
-        const sectionImage = section.image ?? project.gallery?.[index]
-        return (
-          <Section key={section.title} title={section.title}>
-            <div className={sty.caseStudySection}>
-              <div className={sty.proseLead}>
-                <p>{section.body}</p>
-                {section.kind === 'approach' ? <ul className="check-list">{project.approach.map((item) => <li key={item}>{item}</li>)}</ul> : null}
-                {section.kind === 'outcome' ? <ul className="check-list">{project.outcome.map((item) => <li key={item}>{item}</li>)}</ul> : null}
-              </div>
-              {sectionImage ? (
-                <figure className={sty.galleryCard}>
-                  <img className={sty.mediaImage} src={sectionImage.src} alt={sectionImage.alt} />
-                  {sectionImage.caption ? <figcaption className={sty.mediaCaption}>{sectionImage.caption}</figcaption> : null}
-                </figure>
-              ) : null}
-            </div>
-          </Section>
-        )
-      })}
+      <Section title="Overview">
+        <div className={sty.caseStudySection}>
+          <div className={sty.proseLead}>
+            <p>{project.overview}</p>
+          </div>
+          {project.gallery[0] ? (
+            <figure className={sty.galleryCard}>
+              <img className={sty.mediaImage} src={project.gallery[0].src} alt={project.gallery[0].alt} />
+              {project.gallery[0].caption ? <figcaption className={sty.mediaCaption}>{project.gallery[0].caption}</figcaption> : null}
+            </figure>
+          ) : null}
+        </div>
+      </Section>
+
+      <Section title="Challenge">
+        <div className={sty.proseLead}>
+          <p>{project.challenge}</p>
+        </div>
+      </Section>
+
+      <Section title="Approach">
+        <div className={sty.proseLead}>
+          <p>{project.approachSummary}</p>
+          <ul className="check-list">{project.approach.map((item) => <li key={item}>{item}</li>)}</ul>
+        </div>
+      </Section>
+
+      <Section title="Result">
+        <div className={sty.proseLead}>
+          <p>{project.resultSummary}</p>
+          <ul className="check-list">{project.outcome.map((item) => <li key={item}>{item}</li>)}</ul>
+        </div>
+      </Section>
+
+      <Section title="Project scope">
+        <ul className="tag-list">{project.scope.map((item) => <li key={item}>{item}</li>)}</ul>
+      </Section>
+
+      <Section title="Reflection">
+        <div className={sty.proseLead}>
+          <p>{project.reflection}</p>
+        </div>
+      </Section>
 
       {project.gallery?.length ? (
         <Section title={detailCopy?.galleryTitle ?? 'Project gallery'} intro={detailCopy?.galleryIntro ?? 'Mock visuals used to support the case-study narrative.'}>

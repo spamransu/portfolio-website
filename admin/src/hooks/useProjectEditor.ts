@@ -116,7 +116,7 @@ export const useProjectEditor = ({
     }
 
     updateSelectedProject((project) => {
-      if (field === 'stack' || field === 'approach' || field === 'outcome') return { ...project, [field]: splitLines(value) }
+      if (field === 'stack' || field === 'approach' || field === 'outcome' || field === 'scope') return { ...project, [field]: splitLines(value) }
       return { ...project, [field]: value }
     })
     return null
