@@ -2,13 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { AdminRepoInfo, AdminSession } from '../api/adminApi'
 import { parseBlogMarkdownBlocks } from '../../../src/content/blogMarkdown'
 import type { BlogPostMeta, BlogPostResponse, Project } from '../types'
-
-export type MediaTargetSelection = {
-  kind: 'blog' | 'project'
-  field: 'coverImage' | 'image' | 'gallery' | 'sectionImage'
-  index?: number
-  label: string
-}
+import type { ConflictState, MediaTargetSelection } from '../adminTypes'
 
 type SelectedMediaPreviewProps = {
   file: File
@@ -37,11 +31,6 @@ const SelectedMediaPreview = ({ file }: SelectedMediaPreviewProps) => {
     </div>
   )
 }
-
-type ConflictState = {
-  currentSha?: string
-  latestCommitSha?: string | null
-} | null
 
 interface DashboardScreenProps {
   activity: Array<{
