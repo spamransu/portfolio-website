@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import { getLinktreeUrl, siteContent } from '../content/siteContent'
 import sty from './SiteHeader.module.scss'
 
@@ -11,6 +12,8 @@ function getBrandParts(name: string) {
 }
 
 export function SiteHeader() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const location = useLocation()
   const brand = getBrandParts(siteContent.site.name)
   const linktreeUrl = getLinktreeUrl()
   const navItems = siteContent.siteChrome?.headerNav ?? [
@@ -22,6 +25,18 @@ export function SiteHeader() {
   ]
   const navAriaLabel = siteContent.siteChrome?.headerNavAriaLabel ?? 'Primary'
   const linktreeLabel = siteContent.siteChrome?.headerLinktreeLabel ?? 'Linktree'
+
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [location.pathname])
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : ''
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
 
   return (
     <header className={sty.root}>
@@ -50,8 +65,42 @@ export function SiteHeader() {
               ) : null}
             </ul>
           </nav>
+
+          <button
+            type="button"
+            className={sty.menuButton}
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setIsMenuOpen((current) => !current)}
+          >
+            <span aria-hidden="true" className={isMenuOpen ? sty.menuIconOpen : sty.menuIcon} />
+          </button>
         </div>
       </div>
+
+      {isMenuOpen ? (
+        <nav id="mobile-navigation" aria-label="Mobile" className={sty.mobileNav}>
+          <div className="lg-wrapper">
+            <ul>
+              {navItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink to={item.to} className={({ isActive }) => (isActive ? sty.active : undefined)}>
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
+              {linktreeUrl ? (
+                <li>
+                  <a href={linktreeUrl} target="_blank" rel="noreferrer">
+                    {linktreeLabel}
+                  </a>
+                </li>
+              ) : null}
+            </ul>
+          </div>
+        </nav>
+      ) : null}
     </header>
   )
 }

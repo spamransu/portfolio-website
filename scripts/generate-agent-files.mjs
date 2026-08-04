@@ -74,6 +74,7 @@ const routes = [
   { path: '/projects', md: '/projects.md', title: 'Projects', description: 'Project index and case-study summaries.' },
   { path: '/contact', md: '/contact.md', title: 'Contact', description: siteContent.contact.body },
   { path: '/resume', md: '/resume.md', title: 'Resume', description: siteContent.resume.summary },
+  { path: '/design-system', md: '/design-system.md', title: 'Design system', description: siteContent.designSystemPage?.intro ?? 'Visual system reference.' },
   ...blogPosts.map((post) => ({
     path: `/blog/${post.slug}`,
     md: `/blog/${post.slug}.md`,
@@ -104,7 +105,7 @@ ${siteContent.home.hero.description}
 
 ## Main pages
 ${routes
-  .filter((route) => ['/', '/about', '/blog', '/projects', '/contact', '/resume'].includes(route.path))
+  .filter((route) => ['/', '/about', '/blog', '/projects', '/contact', '/resume', '/design-system'].includes(route.path))
   .map((route) => `- [${route.title}](${siteUrl}${route.md}) — ${route.description}`)
   .join('\n')}
 
@@ -178,6 +179,15 @@ ${siteContent.contact.body}
 - Availability: ${siteContent.contact.availability}
 `
 
+const designSystemMd = `# ${siteContent.designSystemPage?.title ?? 'Design system reference'}
+
+${siteContent.designSystemPage?.intro ?? 'The reusable visual engine behind the site.'}
+
+${(siteContent.designSystemPage?.sections ?? [])
+  .map((section) => `## ${section.title}\n\n${section.description}`)
+  .join('\n\n')}
+`
+
 const projectMarkdown = Object.fromEntries(
   siteContent.projects.map((project) => [
     `/projects/${project.slug}.md`,
@@ -225,6 +235,7 @@ const pageMarkdown = {
   '/projects.md': projectsIndexMd,
   '/resume.md': resumeMd,
   '/contact.md': contactMd,
+  '/design-system.md': designSystemMd,
   ...blogMarkdown,
   ...projectMarkdown,
 }
@@ -242,6 +253,7 @@ ${siteContent.site.description}
 - [Project archive](${siteUrl}/projects.md)
 - [Resume](${siteUrl}/resume.md)
 - [Contact](${siteUrl}/contact.md)
+- [Design system](${siteUrl}/design-system.md)
 
 ## Core pages
 ${routes.map((route) => `- [${route.title}](${siteUrl}${route.md})`).join('\n')}
@@ -279,6 +291,9 @@ ${Object.values(projectMarkdown)
 
 ## Contact
 ${lines(contactMd).join('\n')}
+
+## Design system
+${lines(designSystemMd).join('\n')}
 `
 
 const skillMd = `---
@@ -299,6 +314,7 @@ Read these machine-friendly pages first:
 - \`/blog.md\` for published blog posts
 - \`/projects.md\` for the case-study archive
 - \`/resume.md\` for CV/resume content
+- \`/design-system.md\` for the public visual system reference
 - Project pages under \`/projects/<slug>.md\`
 - Blog posts under \`/blog/<slug>.md\`
 
@@ -312,6 +328,7 @@ Read these machine-friendly pages first:
 - \`/projects/<slug>\` — individual case study
 - \`/resume\` — resume summary and experience
 - \`/contact\` — contact and availability
+- \`/design-system\` — color, typography, spacing, layout, and component reference
 
 ## Notes
 

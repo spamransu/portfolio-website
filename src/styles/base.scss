@@ -28,6 +28,7 @@
   --color-form-border: #{tokens.color(form-border)};
   --color-form-placeholder: #{tokens.color(form-placeholder)};
   --color-form-helper: #{tokens.color(form-helper)};
+  --color-header-backdrop: #{tokens.color(header-backdrop)};
 
   /* Legacy aliases */
   --bg: var(--color-background-page);
@@ -150,10 +151,12 @@
 
 html {
   scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--color-background-page);
   color: var(--color-text-primary);
   @include mix.type-style(body-md);
@@ -166,6 +169,7 @@ h4,
 h5,
 h6 {
   margin-block: 0 0.5em;
+  text-transform: uppercase;
 }
 
 h1 {
@@ -225,6 +229,16 @@ a {
 img {
   display: block;
   max-width: 100%;
+}
+
+::selection {
+  color: var(--color-text-inverse);
+  background: var(--color-action-primary);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 :focus-visible {

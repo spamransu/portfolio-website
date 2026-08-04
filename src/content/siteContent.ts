@@ -130,6 +130,15 @@ export type SiteContent = {
       eyebrow: string
       titleLines: string[]
       description: string
+      accentPhrase?: string
+      dateline?: {
+        left: string
+        right: string
+      }
+      index?: Array<{
+        label: string
+        value: string
+      }>
     }
     cta: {
       primaryLabel: string
@@ -222,6 +231,16 @@ export type SiteContent = {
     backToBlogLabel: string
     startProjectLabel: string
     articleSectionTitle: string
+  }
+  designSystemPage?: {
+    eyebrow: string
+    title: string
+    intro: string
+    sections: Array<{
+      id: string
+      title: string
+      description: string
+    }>
   }
   projectDetailPage?: {
     eyebrow?: string

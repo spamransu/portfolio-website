@@ -1,29 +1,46 @@
 @use '../styles/mixins' as mix;
 
 .root {
-  border-top: 1px solid var(--color-border-subtle);
+  border-top: 1px solid var(--color-border-default);
   background: var(--color-background-page);
 }
 
 .inner {
   display: grid;
   gap: var(--space-lg);
-  padding-block: var(--space-footer-block);
+  padding-block: var(--space-xl);
 }
 
-.info {
+.info,
+.navigation,
+.contact,
+.linkList {
   display: grid;
+  align-content: start;
+}
+
+.info,
+.navigation,
+.contact {
   gap: var(--space-xs);
-  max-width: var(--measure-copy);
+}
+
+.brand,
+.description,
+.copyright,
+.heading,
+.contact p,
+.linkList,
+.socials {
+  margin: 0;
 }
 
 .brand {
   display: inline-flex;
   gap: var(--space-hairline);
-  margin: 0;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
   color: var(--color-action-primary);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   @include mix.type-style(h5);
   line-height: 1;
 }
@@ -32,98 +49,87 @@
   color: var(--color-text-primary);
 }
 
+.description {
+  max-width: 42ch;
+}
+
 .description,
 .copyright,
-.linkList a {
+.linkList a,
+.contact a,
+.contact p {
   color: var(--color-text-muted);
-}
-
-.description,
-.copyright,
-.heading,
-.linkList,
-.socials {
-  margin: 0;
-}
-
-.description,
-.copyright,
-.linkList a {
   @include mix.type-style(body-xs);
 }
 
-.linksWrap,
-.linkList {
-  display: grid;
-  gap: var(--space-xs);
-}
-
-.linkColumns {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--gap-inline) var(--space-lg);
-}
-
 .heading {
-  margin-block-end: var(--space-2xs);
-  color: var(--color-text-primary);
+  margin-block-end: var(--space-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   @include mix.type-style(body-xs, 600);
-  letter-spacing: 0.03em;
-  text-transform: none;
 }
 
-.linkList,
-.socials {
+.linkList {
+  gap: var(--space-xs);
   padding: 0;
   list-style: none;
 }
 
 .linkList a,
+.contact a,
 .socials a {
   text-decoration: none;
+  transition: color var(--motion-fast) var(--motion-ease-standard), border-color var(--motion-fast) var(--motion-ease-standard);
 }
 
 .linkList a:hover,
+.contact a:hover,
 .socials a:hover {
-  color: var(--color-text-primary);
+  color: var(--color-action-primary);
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  padding-block: var(--space-md);
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .socials {
   @include mix.flex(row, flex-start, center, var(--space-xs), wrap);
+  padding: 0;
+  list-style: none;
 }
 
-.socials a,
 .socialIcon {
   display: inline-flex;
-}
-
-.socialIcon {
   align-items: center;
   justify-content: center;
-  min-width: var(--footer-icon-size);
-  min-height: var(--footer-icon-size);
-  padding-inline: var(--footer-icon-padding-inline);
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  padding-inline: var(--space-xs);
   color: var(--color-text-primary);
   border: 1px solid var(--color-border-default);
-  border-radius: var(--footer-icon-radius);
-  font-size: var(--space-xs);
+  border-radius: var(--radius-sm);
+  font-size: var(--type-body-xs-size);
   font-weight: 700;
-  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
 @include mix.mq(md) {
   .inner {
-    grid-template-columns: minmax(0, 1fr) minmax(var(--measure-copy), calc(var(--measure-copy) + var(--space-2xl)));
-    align-items: start;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 
-  .linksWrap {
-    justify-items: start;
-  }
+  .info { grid-column: span 5; }
+  .navigation { grid-column: span 3; }
+  .contact { grid-column: span 4; }
 
-  .linkColumns {
-    width: 100%;
-    max-width: var(--measure-copy);
+  .bottom {
+    flex-direction: row;
+    align-items: center;
   }
 }

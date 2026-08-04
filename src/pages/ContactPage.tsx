@@ -1,56 +1,45 @@
-import { InternalHero } from '../components/InternalHero'
 import { ContactForm } from '../components/ContactForm'
-import { Section } from '../components/Section'
+import { InternalHero } from '../components/InternalHero'
 import { siteContent } from '../content/siteContent'
 import sty from './InternalPages.module.scss'
 
 export function ContactPage() {
   return (
-    <div className={`lg-wrapper ${sty.page}`}>
+    <div className={sty.page}>
       <InternalHero
         eyebrow={siteContent.contact.eyebrow ?? 'Contact'}
         title={siteContent.contact.title}
         intro={siteContent.contact.body}
-        media={siteContent.contact.heroImage}
         actions={
-          <a className="button button--primary" href={`mailto:${siteContent.site.email}`}>
-            {siteContent.contact.emailCtaPrefix ?? 'Email'} {siteContent.site.email}
-          </a>
+          <div className={sty.availabilityMeta}>
+            <span><i aria-hidden="true" />{siteContent.contact.availability}</span>
+            <span>{siteContent.site.location}</span>
+          </div>
         }
       />
 
-      <Section title={siteContent.contact.availabilityTitle}>
-        <div className={sty.infoGrid}>
-          <article className={sty.card}>
-            <h3>{siteContent.contact.availabilityStatusLabel}</h3>
-            <p>{siteContent.contact.availability}</p>
-          </article>
-          <article className={sty.card}>
-            <h3>{siteContent.contact.availabilityLocationLabel}</h3>
-            <p>{siteContent.site.location}</p>
-          </article>
+      <section className={sty.contactSection}>
+        <div className="lg-wrapper">
+          <div className={sty.contactGrid}>
+            <aside>
+              <p className="eyebrow">{siteContent.contact.methodsSectionTitle}</p>
+              <div className={sty.contactMethods}>
+                {siteContent.contact.methods.map((method, index) => (
+                  <a key={method.title} href={method.href} target={method.href.startsWith('http') ? '_blank' : undefined} rel={method.href.startsWith('http') ? 'noreferrer' : undefined}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div><strong>{method.title}</strong><small>{method.label}</small></div>
+                  </a>
+                ))}
+              </div>
+            </aside>
+            <div className={sty.contactFormWrap}>
+              <p className="eyebrow">{siteContent.contact.formSectionTitle}</p>
+              <p>{siteContent.contact.formSectionIntro}</p>
+              <ContactForm contact={siteContent.contact.form} recipientEmail={siteContent.site.email} showIntro={false} />
+            </div>
+          </div>
         </div>
-      </Section>
-
-      <Section title={siteContent.contact.formSectionTitle} intro={siteContent.contact.formSectionIntro}>
-        <div className="md-wrapper">
-          <ContactForm contact={siteContent.contact.form} recipientEmail={siteContent.site.email} />
-        </div>
-      </Section>
-
-      <Section title={siteContent.contact.methodsSectionTitle} intro={siteContent.contact.methodsSectionIntro}>
-        <div className={sty.cardGrid}>
-          {siteContent.contact.methods.map((method) => (
-            <article className={sty.methodCard} key={method.title}>
-              <h3>{method.title}</h3>
-              <p>{method.description}</p>
-              <a className="button button--ghost" href={method.href} target={method.href.startsWith('http') ? '_blank' : undefined} rel={method.href.startsWith('http') ? 'noreferrer' : undefined}>
-                {method.label}
-              </a>
-            </article>
-          ))}
-        </div>
-      </Section>
+      </section>
     </div>
   )
 }

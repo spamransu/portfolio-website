@@ -3,9 +3,10 @@
 .root {
   display: grid;
   gap: var(--space-stack);
-  padding: var(--form-padding);
+  padding: var(--space-md);
   background: var(--color-background-inverse);
   color: var(--color-text-inverse);
+  border: 1px solid var(--color-form-border);
   border-radius: var(--form-field-radius);
 }
 
@@ -51,8 +52,8 @@
 .field textarea {
   width: 100%;
   padding: var(--form-field-padding);
-  color: var(--color-text-inverse);
-  background: var(--color-transparent);
+  color: var(--color-text-primary);
+  background: var(--color-background-page);
   border: 1px solid var(--color-form-border);
   border-radius: var(--form-field-radius);
 }
@@ -68,7 +69,7 @@
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: var(--color-form-placeholder);
+  color: var(--color-text-muted);
 }
 
 .count,

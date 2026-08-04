@@ -12,11 +12,8 @@ export function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <div className={`md-wrapper ${sty.page}`}>
-        <InternalHero eyebrow={detailCopy?.eyebrow ?? 'Projects'} title={detailCopy?.notFoundTitle ?? 'Project not found'} intro={detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'} />
-        <Link className="button button--primary" to="/projects">
-          {detailCopy?.backToProjectsLabel ?? 'Back to projects'}
-        </Link>
+      <div className={sty.page}>
+        <InternalHero eyebrow={detailCopy?.eyebrow ?? 'Projects'} title={detailCopy?.notFoundTitle ?? 'Project not found'} intro={detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'} actions={<Link className="button button--primary" to="/projects">{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>} />
       </div>
     )
   }
@@ -24,82 +21,48 @@ export function ProjectDetailPage() {
   const nextProject = siteContent.projects[(projectIndex + 1) % siteContent.projects.length]
 
   return (
-    <div className={`lg-wrapper ${sty.page}`}>
+    <div className={sty.page}>
       <InternalHero
         eyebrow={`${project.year} · ${project.client}`}
         title={project.title}
         intro={project.summary}
-        media={project.gallery?.[0] ?? project.image}
+        media={project.image ?? project.gallery?.[0]}
         actions={
           <div className="button-row">
-            <Link className="button button--primary" to="/contact">
-              {detailCopy?.startProjectLabel ?? 'Start a project'}
-            </Link>
-            <Link className="button button--ghost" to="/projects">
-              {detailCopy?.backToProjectsLabel ?? 'Back to projects'}
-            </Link>
+            <Link className="button button--primary" to="/contact">{detailCopy?.startProjectLabel ?? 'Start a project'}</Link>
+            <Link className="button button--ghost" to="/projects">{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>
           </div>
         }
       />
 
-      <Section title={detailCopy?.snapshotTitle ?? 'Project snapshot'} intro={project.challenge}>
-        <dl className={sty.snapshotGrid}>
-          <div className={sty.snapshotCard}>
-            <dt>{detailCopy?.roleLabel ?? 'Role'}</dt>
-            <dd>{project.role}</dd>
-          </div>
-          <div className={sty.snapshotCard}>
-            <dt>{detailCopy?.clientLabel ?? 'Client'}</dt>
-            <dd>{project.client}</dd>
-          </div>
-          <div className={sty.snapshotCard}>
-            <dt>{detailCopy?.yearLabel ?? 'Year'}</dt>
-            <dd>{project.year}</dd>
-          </div>
-          <div className={sty.snapshotCard}>
-            <dt>{detailCopy?.stackLabel ?? 'Stack'}</dt>
-            <dd>
-              <ul className={sty.snapshotStack} aria-label={(detailCopy?.stackAriaTemplate ?? '{title} stack').replace('{title}', project.title)}>
-                {project.stack.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </dd>
-          </div>
-        </dl>
-      </Section>
+      <section className={sty.snapshotSection} aria-labelledby="project-snapshot-title">
+        <div className="lg-wrapper">
+          <h2 className="sr-only" id="project-snapshot-title">{detailCopy?.snapshotTitle ?? 'Project snapshot'}</h2>
+          <dl className={sty.snapshotGrid}>
+            <div><dt>{detailCopy?.roleLabel ?? 'Role'}</dt><dd>{project.role}</dd></div>
+            <div><dt>{detailCopy?.clientLabel ?? 'Client'}</dt><dd>{project.client}</dd></div>
+            <div><dt>{detailCopy?.yearLabel ?? 'Year'}</dt><dd>{project.year}</dd></div>
+            <div><dt>{detailCopy?.stackLabel ?? 'Stack'}</dt><dd>{project.stack.join(', ')}</dd></div>
+          </dl>
+        </div>
+      </section>
 
       {project.sections?.map((section, index) => {
-        const reverse = index % 2 === 1
         const sectionImage = section.image ?? project.gallery?.[index]
-
         return (
           <Section key={section.title} title={section.title}>
-            <div className={`${sty.mediaSplit} ${reverse ? sty.mediaSplitReverse : ''}`}>
+            <div className={sty.caseStudySection}>
+              <div className={sty.proseLead}>
+                <p>{section.body}</p>
+                {section.kind === 'approach' ? <ul className="check-list">{project.approach.map((item) => <li key={item}>{item}</li>)}</ul> : null}
+                {section.kind === 'outcome' ? <ul className="check-list">{project.outcome.map((item) => <li key={item}>{item}</li>)}</ul> : null}
+              </div>
               {sectionImage ? (
                 <figure className={sty.galleryCard}>
                   <img className={sty.mediaImage} src={sectionImage.src} alt={sectionImage.alt} />
-                  {sectionImage.caption ? <p className={sty.mediaCaption}>{sectionImage.caption}</p> : null}
+                  {sectionImage.caption ? <figcaption className={sty.mediaCaption}>{sectionImage.caption}</figcaption> : null}
                 </figure>
               ) : null}
-
-              <div className={sty.copyStack}>
-                <p>{section.body}</p>
-                {section.kind === 'approach' ? (
-                  <ul className="check-list">
-                    {project.approach.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                ) : null}
-                {section.kind === 'outcome' ? (
-                  <ul className="check-list">
-                    {project.outcome.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
             </div>
           </Section>
         )
@@ -111,30 +74,30 @@ export function ProjectDetailPage() {
             {project.gallery.map((item) => (
               <figure className={sty.galleryCard} key={`${item.src}-${item.alt}`}>
                 <img className={sty.mediaImage} src={item.src} alt={item.alt} />
-                {item.caption ? <p className={sty.mediaCaption}>{item.caption}</p> : null}
+                {item.caption ? <figcaption className={sty.mediaCaption}>{item.caption}</figcaption> : null}
               </figure>
             ))}
           </div>
         </Section>
       ) : null}
 
-      <section className={sty.infoGrid}>
-        <div className={sty.ctaPanel}>
-          <p className="eyebrow">{detailCopy?.nextProjectEyebrow ?? 'Next up'}</p>
-          <h2>{nextProject.title}</h2>
-          <p>{nextProject.summary}</p>
-          <Link className="button button--primary" to={`/projects/${nextProject.slug}`}>
-            {detailCopy?.nextProjectLabel ?? 'View next project'}
+      <section className={sty.nextProject}>
+        <div className="lg-wrapper">
+          <Link to={`/projects/${nextProject.slug}`}>
+            <span>{detailCopy?.nextProjectEyebrow ?? 'Next project'}</span>
+            <strong>{nextProject.title}</strong>
+            <span>{nextProject.year} →</span>
           </Link>
         </div>
+      </section>
 
-        <div className={sty.ctaPanel}>
-          <p className="eyebrow">{detailCopy?.similarWorkEyebrow ?? 'Need something similar?'}</p>
-          <h2>{detailCopy?.similarWorkTitle ?? 'Open for frontend and design-to-code work.'}</h2>
-          <p>{detailCopy?.similarWorkIntro ?? 'Available for portfolio sites, landing pages, responsive cleanup, and interface implementation.'}</p>
-          <Link className="button button--ghost" to="/contact">
-            {detailCopy?.similarWorkLabel ?? 'Contact me'}
-          </Link>
+      <section className={sty.projectCta}>
+        <div className="lg-wrapper">
+          <div>
+            <p className="eyebrow">{detailCopy?.similarWorkEyebrow ?? 'Have a project in mind?'}</p>
+            <h2>{detailCopy?.similarWorkTitle ?? 'Let’s make something deliberate.'}</h2>
+            <Link className="button" to="/contact">{detailCopy?.similarWorkLabel ?? 'Get in touch'}</Link>
+          </div>
         </div>
       </section>
     </div>
