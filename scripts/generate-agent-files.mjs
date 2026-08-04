@@ -106,14 +106,14 @@ ${siteContent.home.hero.description}
 ## Main pages
 ${routes
   .filter((route) => ['/', '/about', '/blog', '/projects', '/contact', '/resume', '/design-system'].includes(route.path))
-  .map((route) => `- [${route.title}](${siteUrl}${route.md}) — ${route.description}`)
+  .map((route) => `- [${route.title}](${siteUrl}${route.md}): ${route.description}`)
   .join('\n')}
 
 ## Featured case studies
-${featuredProjects.map((project) => `- [${project.title}](${siteUrl}/projects/${project.slug}.md) — ${project.summary}`).join('\n')}
+${featuredProjects.map((project) => `- [${project.title}](${siteUrl}/projects/${project.slug}.md): ${project.summary}`).join('\n')}
 
 ## Homepage stats
-${siteContent.home.stats.map((stat) => `- ${stat.value} — ${stat.label}`).join('\n')}
+${siteContent.home.stats.map((stat) => `- ${stat.value}: ${stat.label}`).join('\n')}
 
 ## Highlighted skills
 ${bullets(siteContent.home.skills.items)}
@@ -163,7 +163,7 @@ ${bullets(siteContent.resume.skills)}
 ## Experience
 ${siteContent.resume.experience
   .map(
-    (job) => `### ${job.role} — ${job.company} (${job.period})\n${bullets(job.highlights)}`,
+    (job) => `### ${job.role}, ${job.company} (${job.period})\n${bullets(job.highlights)}`,
   )
   .join('\n\n')}
 `
@@ -259,7 +259,7 @@ ${siteContent.site.description}
 ${routes.map((route) => `- [${route.title}](${siteUrl}${route.md})`).join('\n')}
 `
 
-const llmsFull = `# ${siteContent.site.name} — full machine-readable content
+const llmsFull = `# ${siteContent.site.name}: full machine-readable content
 
 ## Site summary
 - Name: ${siteContent.site.name}
@@ -320,15 +320,15 @@ Read these machine-friendly pages first:
 
 ## Human page mapping
 
-- \`/\` — homepage and overview
-- \`/about\` — background, principles, and positioning
-- \`/blog\` — published notes and articles
-- \`/blog/<slug>\` — individual blog post
-- \`/projects\` — project archive
-- \`/projects/<slug>\` — individual case study
-- \`/resume\` — resume summary and experience
-- \`/contact\` — contact and availability
-- \`/design-system\` — color, typography, spacing, layout, and component reference
+- \`/\`: homepage and overview
+- \`/about\`: background, principles, and positioning
+- \`/blog\`: published notes and articles
+- \`/blog/<slug>\`: individual blog post
+- \`/projects\`: project archive
+- \`/projects/<slug>\`: individual case study
+- \`/resume\`: resume summary and experience
+- \`/contact\`: contact and availability
+- \`/design-system\`: color, typography, spacing, layout, and component reference
 
 ## Notes
 

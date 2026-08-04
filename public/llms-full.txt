@@ -1,315 +1,395 @@
-# LanceCarteciano — full machine-readable content
+# Lance Carteciano: full machine-readable content
 
 ## Site summary
-- Name: LanceCarteciano
-- Tagline: Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.
-- Description: Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.
-- Contact email: hello@lancecarteciano.com
+- Name: Lance Carteciano
+- Tagline: Frontend web developer and graphic designer in the Philippines.
+- Description: Frontend, WordPress, and design-to-code work for websites that need clear pages, reusable sections, and practical maintenance after launch.
+- Contact email: cartecianolance@gmail.com
 - Location: Philippines
 
 ## Home
-# LanceCarteciano
+# Lance Carteciano
 
-Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.
+Frontend web developer and graphic designer in the Philippines.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit
+Portfolio of Lance Carteciano
 
 ## Homepage hero
-HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
+Frontend web developer and graphic designer based in the Philippines.
 
-
+I build responsive websites, WordPress systems, and design-to-code interfaces that stay organized after launch.
 
 ## Main pages
-- [Home](https://lancecarteciano.com/index.md) — Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.
-- [About](https://lancecarteciano.com/about.md) — I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.
-- [Blog](https://lancecarteciano.com/blog.md) — Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site.
-- [Projects](https://lancecarteciano.com/projects.md) — Project index and case-study summaries.
-- [Contact](https://lancecarteciano.com/contact.md) — If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
-- [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
-- [Design system](https://lancecarteciano.com/design-system.md) — The reusable visual engine behind the site — color, typography, spacing, layout, components, and interaction states.
+- [Home](https://384721.xyz/index.md): Frontend, WordPress, and design-to-code work for websites that need clear pages, reusable sections, and practical maintenance after launch.
+- [About](https://384721.xyz/about.md): I work on websites that need both clean implementation and visual care.
+- [Blog](https://384721.xyz/blog.md): Short writing about portfolio structure, Git-backed content, and how I turn project work into useful case studies.
+- [Projects](https://384721.xyz/projects.md): Project index and case-study summaries.
+- [Contact](https://384721.xyz/contact.md): I am open to frontend developer, WordPress developer, React developer, and web developer roles. I also take selected freelance work for websites, landing pages, Elementor cleanup, and Figma-to-code builds.
+- [Resume](https://384721.xyz/resume.md): Web developer and graphic designer with experience in WordPress, React, responsive UI implementation, website maintenance, and visual asset creation.
+- [Design system](https://384721.xyz/design-system.md): A public reference for the colors, type, spacing, grid, components, and motion rules used on this site.
 
 ## Featured case studies
-- [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md) — A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
-- [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md) — A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.
-- [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md) — A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
-- [TETHERLY](https://lancecarteciano.com/projects/tetherly.md) — A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.
+- [WordPress maintenance and Elementor system work](https://384721.xyz/projects/wordpress-maintenance-system.md): Ongoing WordPress work across company and client sites, including Elementor cleanup, reusable sections, admin workflows, spam prevention, and hosting handoff support.
+- [ABCDE Creative Studio website](https://384721.xyz/projects/abcde-creative.md): Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.
+- [Nsight Index blog management system](https://384721.xyz/projects/nsight-index.md): A Laravel blog management system with author and reader flows for posts, comments, categories, likes, saved posts, and media handling.
+- [Git-backed portfolio content system](https://384721.xyz/projects/portfolio-cms.md): The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.
 
 ## Homepage stats
-- 2+ — Years of experience
-- 5+ — Projects completed
-- 4+ — Happy clients
+- 8: active websites maintained across company and client work
+- 4: website migrations supported into cleaner Elementor builds
+- 3: custom WordPress themes or templates built
 
 ## Highlighted skills
 - React
-- ASP.NET Core
+- TypeScript
+- JavaScript
+- HTML
+- CSS
+- SCSS
 - Tailwind CSS
-- MongoDB
-- Stripe API
-- GraphQL
+- Bootstrap
+- WordPress
+- Elementor
+- PHP
+- Laravel
+- MySQL
+- Figma
+- Adobe Creative Suite
+- Git
+- GitHub Actions
+- Cloudflare
+- cPanel
+- Hostinger
 
 ## About
 # About
 
-I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.
+I work on websites that need both clean implementation and visual care.
 
-My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.
+I am a frontend web developer and graphic designer at Tech Support Plus I.T Services. My current work covers WordPress maintenance, Elementor migrations, reusable templates, content workflows, styling systems, security cleanup, and deployment support.
 
-I care about visual rhythm, content hierarchy, and practical structure. That usually means reusable sections, token-driven styling, and layouts that still feel deliberate on smaller screens.
+Before that, I worked at ABCDE Creative Studio, where I translated Figma designs into responsive React pages and helped with accessible frontend delivery. I also have production design experience from print and social media work, which shaped how I handle details, revisions, and visual consistency.
 
-Most of the projects I enjoy combine interface polish with real delivery work: shipping pages, tightening responsive behavior, organizing content, and making the next update easier instead of harder.
+I like projects where design and implementation have to meet in the middle. A good page should look intentional, read clearly, and stay editable for the team that owns it after launch.
 
 ## Working principles
-- Content should read clearly before decoration starts.
-- Reusable layout systems beat one-off page fixes.
-- Mockups matter, but shipped code has to stay editable.
-- Frontend polish should improve trust, not add noise.
+- Start with the content and page purpose.
+- Use reusable sections instead of scattered fixes.
+- Keep responsive behavior readable on real screens.
+- Make the handoff easier for the next person editing the site.
 
 ## Blog
 # Blog
 
-Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site.
+Short writing about portfolio structure, Git-backed content, and how I turn project work into useful case studies.
 
-## [My New Post](https://lancecarteciano.com/blog/my-new-post.md)
-
-- Date: 2026-07-28
-
-One short summary sentence for the blog index.
-
-## [Draft notes on case-study writing](https://lancecarteciano.com/blog/draft-notes-on-case-study-writing.md)
+## [Writing useful portfolio case studies](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
 
 - Date: 2026-07-22
 
-An internal draft about keeping portfolio case studies concise and still useful.
+A practical note on turning real project work into a case study without padding it with vague claims.
 
-## [Lightweight Git-backed portfolio CMS](https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms.md)
-
-- Date: 2026-07-22
-
-Why the portfolio admin is being built around GitHub, Cloudflare Pages Functions, and structured content files instead of a database CMS.
-
-# My New Post
-
-- Date: 2026-07-28
-- Excerpt: One short summary sentence for the blog index.
-- Cover image: /images/home/featured-project-1.png
-
-Write your post here.
-
-## Section heading
-
-- point one
-- point two
-
-# Draft notes on case-study writing
+## [Why I built a Git-backed portfolio CMS](https://384721.xyz/blog/git-backed-portfolio-cms.md)
 
 - Date: 2026-07-22
-- Excerpt: An internal draft about keeping portfolio case studies concise and still useful.
 
+The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents.
 
-Case studies work better when they explain the problem, constraints, and decisions without turning into a wall of process theater.
-
-## Keep the structure simple
-
-- lead with the project outcome
-- explain the challenge in plain language
-- show the implementation choices that actually mattered
-
-# Lightweight Git-backed portfolio CMS
+# Writing useful portfolio case studies
 
 - Date: 2026-07-22
-- Excerpt: Why the portfolio admin is being built around GitHub, Cloudflare Pages Functions, and structured content files instead of a database CMS.
-- Cover image: /images/home/featured-project-1.png
+- Excerpt: A practical note on turning real project work into a case study without padding it with vague claims.
+- Cover image: https://picsum.photos/seed/portfolio-case-study-writing/1600/900.jpg
 
-A portfolio does not need a heavy CMS just to edit a few durable content types.
+A portfolio case study should help someone understand the work quickly. It does not need to make every project sound bigger than it was. The stronger move is usually simpler: name the problem, explain what you handled, and show what changed.
 
-The better fit here is a small admin layer that writes back to the repository, keeps content reviewable in Git, and still deploys through the existing Cloudflare Pages pipeline.
+## Start with the real scope
 
-## Why this direction
+I like case studies that say what the project actually was. A maintenance project can be useful. A migration can be useful. A small React build can be useful. The scope only becomes weak when the writing pretends it was something else.
 
-- The site already treats structured content files as the source of truth.
-- Git history is enough for audit, rollback, and change review.
-- Cloudflare Pages Functions can proxy the authenticated write flow without exposing a token to the browser.
+For my own portfolio, that means separating professional work, personal projects, and tutorial-based experiments. They can all belong on the site, but they should not sit under the same claim.
 
-## What this unlocks
+## Keep the proof close to the sentence
 
-The admin app can stay focused on the actual editing surfaces: site settings, projects, blog posts, and media references. It does not need roles, workflow engines, or a separate database layer to ship useful updates.
+If I write that I maintained 8 active websites, that number comes from my resume source. If I write that Nsight Index has author and reader flows, that comes from the repository. If a detail is not verified, it should either be removed or softened until it is true.
+
+This keeps the writing calmer. It also makes the site easier to update later because each claim has a source behind it.
+
+## Do not hide the boring parts
+
+The boring parts are often the useful parts. Reusable classes, admin fields, spam cleanup, deployment handoff, responsive fixes, and content organization are not flashy, but they are exactly the details hiring managers and clients need to understand how you work.
+
+A good case study does not need a fake dramatic arc. It needs enough context for another person to trust the work.
+
+# Why I built a Git-backed portfolio CMS
+
+- Date: 2026-07-22
+- Excerpt: The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents.
+- Cover image: https://picsum.photos/seed/git-backed-portfolio-cms/1600/900.jpg
+
+This portfolio uses source files as the content system. The main site copy lives in JSON. Blog posts live in markdown. A prebuild script generates public markdown mirrors, sitemap entries, and a small navigation skill for agents.
+
+That sounds heavier than a normal portfolio until the site starts changing often. Then it helps.
+
+## One source is easier to trust
+
+Portfolio copy drifts fast. A project title changes in one card but not on the detail page. A resume line gets updated in markdown but not in the public page. A contact email changes in the footer and gets missed somewhere else.
+
+The fix is not complicated. Keep the main content in one place, then render or generate the other surfaces from it.
+
+## Markdown mirrors make the site easier to inspect
+
+The visual site is for people. The markdown mirrors are for quick reading, search, and agent inspection. A person can browse the React routes. An agent can read `/llms-full.txt`, `/projects.md`, or an individual project markdown file without scraping layout.
+
+That fits how I want the portfolio to work. It should be understandable without needing to inspect every component first.
+
+## Git keeps changes reviewable
+
+Because the content is in files, every rewrite shows up in a diff. That makes it easier to catch unsupported claims, stale project pages, and accidental placeholder text before the site ships.
+
+It is not a fancy CMS. It is a small system that fits the way this site is maintained.
 
 ## Resume
 # Resume
 
 ## Frontend Web Developer and Graphic Designer
 
-Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
+Web developer and graphic designer with experience in WordPress, React, responsive UI implementation, website maintenance, and visual asset creation.
 
 ## Skills
 - React
 - TypeScript
 - JavaScript
 - HTML
-- CSS / SCSS
+- CSS
+- SCSS
+- Tailwind CSS
+- Bootstrap
 - WordPress
 - Elementor
+- PHP
+- Laravel
+- MySQL
 - Figma
-- Accessibility-minded frontend work
-- Responsive UI implementation
-- Design systems / reusable templates
-- Git / GitHub
+- Accessibility
+- Adobe Creative Suite
+- Git
+- GitHub Actions
+- Vitest
+- Cloudflare
+- cPanel
+- Hostinger
+- Linux
+- VS Code
 
 ## Experience
-### Frontend Web Developer / Graphic Designer — Tech Support Plus I.T Services (Jan 2026 — Present)
-- Support Elementor v2 and v3 to v4 migrations by setting up global variables and reusable class structures for more consistent styling and easier maintenance.
-- Build custom WordPress themes and reusable templates for company websites.
-- Maintain 8+ company websites and 3+ client websites, including updates, security cleanup, spam prevention, audits, and performance work.
-- Create branding and marketing assets for internal and client use, and prepare websites for SEO handoff and deployment through cPanel and Hostinger.
+### Frontend Web Developer / Graphic Designer, Tech Support Plus I.T Services (Jan 2026 to present)
+- Maintain 8 active websites across 5 company sites and 3 client sites, plus periodic updates for 8 additional company websites every 2 weeks.
+- Built 3 custom WordPress themes or templates and reusable branded page sections for company and client websites.
+- Supported the migration of 4 websites to cleaner Elementor builds using global variables and reusable class structures.
+- Improved WordPress admin content workflows with ACF and Code Snippets, mainly for SEO and content updates.
+- Supported spam prevention, security cleanup, styling systems, cPanel, and Hostinger handoff work.
 
-### Web Developer — ABCDE Creative Studio (Apr 2025 — Dec 2025)
-- Developed and maintained client websites across WordPress and React projects.
-- Translated Figma designs into responsive React interfaces with accessibility in mind.
-- Contributed to reusable UI patterns and design-system work that made project builds easier to maintain.
-- Supported delivery workflows using Git, GitHub Actions, Vitest, and Cloudflare.
+### Web Developer, ABCDE Creative Studio (Apr 2025 to Dec 2025)
+- Worked on 3 web projects, including the studio website.
+- Built at least 5 responsive pages from Figma mockups using React, HTML, CSS, JavaScript, and TypeScript.
+- Applied WCAG-based accessibility checks during frontend implementation.
+- Contributed reusable UI patterns and helped improve delivery workflows with GitHub Actions and Cloudflare.
 
-### Print Machine Operator / Graphic Designer — Young Alpha Advertising Corp. (Jan 2024 — Oct 2024)
-- Improved large-format print workflows through RIP setup, color calibration, and cutting-process cleanup.
-- Created reusable templates and organized asset libraries to reduce manual revisions across production work.
-- Troubleshot hardware and software issues across production workstations and print systems.
+### Print Machine Operator / Graphic Designer, Young Alpha Advertising Corp. (Jan 2024 to Oct 2024)
+- Supported print production for food trucks, businesses, and signage work across a 7-person team.
+- Improved production workflows through RIP setup, color calibration, and cutting-process cleanup across machines and workstations.
+- Created reusable templates and troubleshot hardware and software issues to keep production moving.
 
-### Social Media Designer — But First, Coffee (Multiple Branches) (Jan 2023 — Jul 2024)
-- Designed social media graphics and branded marketing assets for multiple branches.
-- Worked with branch managers and marketing teams to refine assets and keep campaign visuals consistent.
+### Social Media Designer, But First, Coffee (Multiple Branches) (Jan 2023 to Jul 2024)
+- Designed weekly social media graphics and branded marketing assets for 3 branches.
+- Produced promotional assets for seasonal and recurring drink campaigns.
+- Worked with stakeholders to keep campaign visuals consistent with branch needs.
 
 ## Projects
-# ABCDE CREATIVE
+# WordPress maintenance and Elementor system work
 
 - Year: 2026
-- Client: ABCDE Creative
-- Role: Frontend developer
-- Stack: React, TypeScript, SCSS, Content modeling
-- Homepage image: https://lancecarteciano.com/images/home/featured-project-1.png
+- Client: Tech Support Plus I.T Services
+- Role: Frontend web developer / graphic designer
+- Stack: WordPress, Elementor, PHP, HTML, CSS, ACF, Code Snippets, cPanel, Hostinger
+- Homepage image: https://384721.xyz/images/home/featured-project-1.png
 
 ## Summary
-A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
+Ongoing WordPress work across company and client sites, including Elementor cleanup, reusable sections, admin workflows, spam prevention, and hosting handoff support.
 
 ## Challenge
-The site needed stronger hierarchy and more reusable structure so new case-study and service pages could be added without layout drift.
+Several sites needed regular updates, cleaner Elementor structure, and admin workflows that the SEO and content teams could use without breaking layout consistency.
 
 ## Approach
-- Reworked marketing sections into reusable content blocks.
-- Tightened spacing and type rhythm for clearer scanning.
-- Aligned page components so future pages could follow the same system.
+- Maintained 8 active websites across company and client work.
+- Supported 4 migrations into cleaner Elementor builds with global variables and reusable class structures.
+- Built 3 custom WordPress themes or templates and reusable branded sections.
+- Used ACF and Code Snippets to simplify admin-side editing for SEO and content updates.
+- Handled spam prevention, security cleanup, styling consistency, and deployment support.
 
 ## Outcome
-- Cleaner presentation across portfolio and services content.
-- More consistent page-building patterns for future updates.
-- A stronger visual-first case-study experience.
+- Company and client sites became easier to update with more consistent section patterns.
+- Recurring maintenance work had clearer styling rules and less one-off editing.
+- SEO and content updates became safer through simpler admin workflows.
 
-# INSIGHT INDEX
+# ABCDE Creative Studio website
+
+- Year: 2025
+- Client: ABCDE Creative Studio
+- Role: Web developer
+- Stack: React, TypeScript, JavaScript, HTML, CSS, Figma, GitHub Actions, Cloudflare
+- Homepage image: https://384721.xyz/images/home/featured-project-2.png
+
+## Summary
+Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.
+
+## Challenge
+The work needed to translate design direction into responsive interfaces while keeping accessibility and maintainability in mind.
+
+## Approach
+- Worked on 3 web projects, including the studio website.
+- Built at least 5 responsive pages from Figma mockups.
+- Applied WCAG-based accessibility checks during implementation.
+- Contributed reusable UI patterns for future builds.
+- Supported delivery workflows through GitHub Actions and Cloudflare.
+
+## Outcome
+- Responsive pages matched the design direction more closely across screen sizes.
+- Reusable patterns made later project work easier to maintain.
+- The delivery process had clearer build and deployment support.
+
+# Nsight Index blog management system
 
 - Year: 2026
-- Client: Insight Index
-- Role: Frontend developer
-- Stack: React, Tailwind CSS, API integration, Responsive UI
-- Homepage image: https://lancecarteciano.com/images/home/featured-project-2.png
+- Client: Personal project
+- Role: Full-stack training project
+- Stack: Laravel 12, PHP, Blade, Bootstrap, Tailwind CSS, Alpine.js, Spatie Media Library
+- Homepage image: https://384721.xyz/images/home/featured-project-3.png
 
 ## Summary
-A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.
+A Laravel blog management system with author and reader flows for posts, comments, categories, likes, saved posts, and media handling.
 
 ## Challenge
-The product needed a clearer story. Interface screenshots existed, but the surrounding content was not doing enough to frame why the product mattered.
+The project needed a practical content workflow where authors could manage posts and readers could interact with published content.
 
 ## Approach
-- Introduced content blocks that explained value before details.
-- Paired interface imagery with concise product context.
-- Used a cleaner card rhythm for related sections and previews.
+- Built post, category, comment, like, and saved-post flows.
+- Used Blade views with Bootstrap, Tailwind CSS, and Alpine.js for interface work.
+- Integrated Spatie Media Library for media handling.
+- Kept unfinished admin ideas out of the public claims because those flows are still marked as future work.
 
 ## Outcome
-- Improved clarity around the product offering.
-- A better balance of visuals and explanatory copy.
-- Stronger consistency across overview and feature sections.
+- The public repository shows a working Laravel content-management project with author and reader features.
+- The project gives a stronger backend example without overstating unfinished admin work.
 
-# GSAP ANIMATION
+# Git-backed portfolio content system
 
 - Year: 2026
-- Client: Animation Showcase
+- Client: Personal portfolio
 - Role: Frontend developer
-- Stack: React, GSAP, SCSS, Performance tuning
-- Homepage image: https://lancecarteciano.com/images/home/featured-project-3.png
+- Stack: React, TypeScript, JSON content, Markdown, Cloudflare Pages, Vite
+- Homepage image: https://384721.xyz/images/home/featured-project-4.png
 
 ## Summary
-A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
+The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.
 
 ## Challenge
-The motion needed to feel expressive without overwhelming the content or creating a site that only worked on ideal hardware.
+The site needed to work as a human portfolio and as a machine-readable content source without keeping duplicate copy in separate places.
 
 ## Approach
-- Used animation to support hierarchy instead of replacing it.
-- Focused on transforms and staged reveals for smoother motion.
-- Preserved a readable static structure underneath the effects.
+- Kept main site copy in content/site-content.json.
+- Generated markdown mirrors for pages, projects, resume, blog, and LLM-friendly indexes.
+- Rendered public React routes from shared content instead of hardcoded page copy.
+- Used Cloudflare Pages functions to serve markdown when requested.
 
 ## Outcome
-- More memorable visual pacing without losing clarity.
-- Reusable motion patterns for future sections.
-- A better balance between flair and restraint.
+- The portfolio can be edited from one content source and still publish readable markdown mirrors.
+- The site is easier for humans and agents to inspect without scraping visual pages.
+- Future case studies and posts have a clearer source path.
 
-# TETHERLY
+# React GSAP animation experiment
 
 - Year: 2026
-- Client: Tetherly
-- Role: Frontend developer
-- Stack: React, Design systems, SCSS, Content-first UI
-- Homepage image: https://lancecarteciano.com/images/home/featured-project-4.png
+- Client: Personal experiment
+- Role: Frontend practice
+- Stack: React, Vite, GSAP, Tailwind CSS
+
 
 ## Summary
-A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.
+A React and GSAP practice build based on a public tutorial, useful as an animation study rather than a client case study.
 
 ## Challenge
-The product presentation needed more consistency across cards, sections, and preview imagery so the brand could feel more cohesive.
+The goal was to practice scroll and interface animation in React while understanding how tutorial patterns map into a real codebase.
 
 ## Approach
-- Standardized the card hierarchy and supporting metadata.
-- Built a cleaner visual rhythm between sections and imagery.
-- Used mock product views to make the content more tangible.
+- Followed a public tutorial inspired by Zentry and JavaScript Mastery.
+- Practiced GSAP setup, timing, layout choreography, and responsive behavior.
+- Kept this listed as an experiment so it is not mistaken for original client work.
 
 ## Outcome
-- A more cohesive product-marketing presentation.
-- Clearer card patterns and stronger visual consistency.
-- Better readiness for future landing-page variations.
+- The project documents animation practice and code familiarity with GSAP in React.
+- It stays in the archive with clear attribution instead of being framed as a main case study.
+
+# Tetherly bio link app
+
+- Year: 2026
+- Client: Personal project
+- Role: Frontend developer
+- Stack: React, TypeScript, SCSS
+
+
+## Summary
+An in-progress React and TypeScript bio link app. It stays in the archive as product UI practice while the core build is still moving.
+
+## Challenge
+The project explores a small profile-link product with editable-looking cards, cleaner visual hierarchy, and reusable frontend structure.
+
+## Approach
+- Built the app with React, TypeScript, and SCSS.
+- Focused on product UI structure, profile presentation, and reusable card patterns.
+- Kept the project marked as in progress until the product flow is more complete.
+
+## Outcome
+- The repository shows active product UI practice.
+- The archive entry is honest about the project status and does not present it as finished client work.
 
 ## Contact
 # Contact
 
-Let's connect!
+Tell me what you need built or cleaned up.
 
-If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
+I am open to frontend developer, WordPress developer, React developer, and web developer roles. I also take selected freelance work for websites, landing pages, Elementor cleanup, and Figma-to-code builds.
 
-- Email: hello@lancecarteciano.com
+- Email: cartecianolance@gmail.com
 - Location: Philippines
-- Availability: Available for freelance builds, design-to-code support, and selected frontend roles.
+- Availability: Open to roles and selected freelance work
 
 ## Design system
-# Design system reference
+# The visual system behind the portfolio.
 
-The reusable visual engine behind the site — color, typography, spacing, layout, components, and interaction states.
+A public reference for the colors, type, spacing, grid, components, and motion rules used on this site.
 
 ## Color
 
-Dark editorial surfaces use acid lime for primary actions, with orange and violet reserved for supporting accents.
+The palette uses a dark page background, quiet borders, and a small set of accent colors for actions and state.
 
 ## Typography
 
-Oswald carries display hierarchy while Inter keeps interface copy and long-form reading clear.
+Oswald handles short display text. Inter carries body copy, labels, forms, and longer reading.
 
 ## Spacing
 
-A fluid scale interpolates between the approved 767px and 1366px viewport range.
+Spacing uses shared tokens so sections feel related instead of hand-tuned one by one.
 
 ## Grid
 
-Shared small, medium, and large wrappers sit on a twelve-column editorial composition.
+Small, medium, and large wrappers keep page width predictable across the public routes.
 
 ## Components
 
-Buttons, tags, fields, cards, dividers, and images use the same production tokens as the public pages.
+Buttons, tags, fields, cards, dividers, and images reuse the same tokens as the production pages.
 
 ## Motion
 
-Movement is brief and restrained, and reduced-motion preferences remove decorative transforms.
+Motion stays brief. Reduced-motion preferences remove decorative transforms.

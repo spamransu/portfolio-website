@@ -1,12 +1,9 @@
----
-title: "Why I built a Git-backed portfolio CMS"
-slug: "git-backed-portfolio-cms"
-date: "2026-07-22"
-status: "published"
-excerpt: "The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents."
-coverImage: "https://picsum.photos/seed/git-backed-portfolio-cms/1600/900.jpg"
-coverAlt: "Generic file editor image used as a placeholder for a Git-backed portfolio CMS article."
----
+# Why I built a Git-backed portfolio CMS
+
+- Date: 2026-07-22
+- Excerpt: The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents.
+- Cover image: https://picsum.photos/seed/git-backed-portfolio-cms/1600/900.jpg
+
 This portfolio uses source files as the content system. The main site copy lives in JSON. Blog posts live in markdown. A prebuild script generates public markdown mirrors, sitemap entries, and a small navigation skill for agents.
 
 That sounds heavier than a normal portfolio until the site starts changing often. Then it helps.

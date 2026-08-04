@@ -2,38 +2,56 @@
 
 Case-study style project archive.
 
-## [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md)
+## [WordPress maintenance and Elementor system work](https://384721.xyz/projects/wordpress-maintenance-system.md)
 
 - Year: 2026
-- Client: ABCDE Creative
-- Role: Frontend developer
-- Stack: React, TypeScript, SCSS, Content modeling
+- Client: Tech Support Plus I.T Services
+- Role: Frontend web developer / graphic designer
+- Stack: WordPress, Elementor, PHP, HTML, CSS, ACF, Code Snippets, cPanel, Hostinger
 
-A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
+Ongoing WordPress work across company and client sites, including Elementor cleanup, reusable sections, admin workflows, spam prevention, and hosting handoff support.
 
-## [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md)
+## [ABCDE Creative Studio website](https://384721.xyz/projects/abcde-creative.md)
 
-- Year: 2026
-- Client: Insight Index
-- Role: Frontend developer
-- Stack: React, Tailwind CSS, API integration, Responsive UI
+- Year: 2025
+- Client: ABCDE Creative Studio
+- Role: Web developer
+- Stack: React, TypeScript, JavaScript, HTML, CSS, Figma, GitHub Actions, Cloudflare
 
-A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.
+Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.
 
-## [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md)
-
-- Year: 2026
-- Client: Animation Showcase
-- Role: Frontend developer
-- Stack: React, GSAP, SCSS, Performance tuning
-
-A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
-
-## [TETHERLY](https://lancecarteciano.com/projects/tetherly.md)
+## [Nsight Index blog management system](https://384721.xyz/projects/nsight-index.md)
 
 - Year: 2026
-- Client: Tetherly
-- Role: Frontend developer
-- Stack: React, Design systems, SCSS, Content-first UI
+- Client: Personal project
+- Role: Full-stack training project
+- Stack: Laravel 12, PHP, Blade, Bootstrap, Tailwind CSS, Alpine.js, Spatie Media Library
 
-A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.
+A Laravel blog management system with author and reader flows for posts, comments, categories, likes, saved posts, and media handling.
+
+## [Git-backed portfolio content system](https://384721.xyz/projects/portfolio-cms.md)
+
+- Year: 2026
+- Client: Personal portfolio
+- Role: Frontend developer
+- Stack: React, TypeScript, JSON content, Markdown, Cloudflare Pages, Vite
+
+The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.
+
+## [React GSAP animation experiment](https://384721.xyz/projects/gsap-animation.md)
+
+- Year: 2026
+- Client: Personal experiment
+- Role: Frontend practice
+- Stack: React, Vite, GSAP, Tailwind CSS
+
+A React and GSAP practice build based on a public tutorial, useful as an animation study rather than a client case study.
+
+## [Tetherly bio link app](https://384721.xyz/projects/tetherly.md)
+
+- Year: 2026
+- Client: Personal project
+- Role: Frontend developer
+- Stack: React, TypeScript, SCSS
+
+An in-progress React and TypeScript bio link app. It stays in the archive as product UI practice while the core build is still moving.

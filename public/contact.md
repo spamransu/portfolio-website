@@ -1,9 +1,9 @@
 # Contact
 
-Let's connect!
+Tell me what you need built or cleaned up.
 
-If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
+I am open to frontend developer, WordPress developer, React developer, and web developer roles. I also take selected freelance work for websites, landing pages, Elementor cleanup, and Figma-to-code builds.
 
-- Email: hello@lancecarteciano.com
+- Email: cartecianolance@gmail.com
 - Location: Philippines
-- Availability: Available for freelance builds, design-to-code support, and selected frontend roles.
+- Availability: Open to roles and selected freelance work

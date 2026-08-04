@@ -2,40 +2,54 @@
 
 ## Frontend Web Developer and Graphic Designer
 
-Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
+Web developer and graphic designer with experience in WordPress, React, responsive UI implementation, website maintenance, and visual asset creation.
 
 ## Skills
 - React
 - TypeScript
 - JavaScript
 - HTML
-- CSS / SCSS
+- CSS
+- SCSS
+- Tailwind CSS
+- Bootstrap
 - WordPress
 - Elementor
+- PHP
+- Laravel
+- MySQL
 - Figma
-- Accessibility-minded frontend work
-- Responsive UI implementation
-- Design systems / reusable templates
-- Git / GitHub
+- Accessibility
+- Adobe Creative Suite
+- Git
+- GitHub Actions
+- Vitest
+- Cloudflare
+- cPanel
+- Hostinger
+- Linux
+- VS Code
 
 ## Experience
-### Frontend Web Developer / Graphic Designer — Tech Support Plus I.T Services (Jan 2026 — Present)
-- Support Elementor v2 and v3 to v4 migrations by setting up global variables and reusable class structures for more consistent styling and easier maintenance.
-- Build custom WordPress themes and reusable templates for company websites.
-- Maintain 8+ company websites and 3+ client websites, including updates, security cleanup, spam prevention, audits, and performance work.
-- Create branding and marketing assets for internal and client use, and prepare websites for SEO handoff and deployment through cPanel and Hostinger.
+### Frontend Web Developer / Graphic Designer, Tech Support Plus I.T Services (Jan 2026 to present)
+- Maintain 8 active websites across 5 company sites and 3 client sites, plus periodic updates for 8 additional company websites every 2 weeks.
+- Built 3 custom WordPress themes or templates and reusable branded page sections for company and client websites.
+- Supported the migration of 4 websites to cleaner Elementor builds using global variables and reusable class structures.
+- Improved WordPress admin content workflows with ACF and Code Snippets, mainly for SEO and content updates.
+- Supported spam prevention, security cleanup, styling systems, cPanel, and Hostinger handoff work.
 
-### Web Developer — ABCDE Creative Studio (Apr 2025 — Dec 2025)
-- Developed and maintained client websites across WordPress and React projects.
-- Translated Figma designs into responsive React interfaces with accessibility in mind.
-- Contributed to reusable UI patterns and design-system work that made project builds easier to maintain.
-- Supported delivery workflows using Git, GitHub Actions, Vitest, and Cloudflare.
+### Web Developer, ABCDE Creative Studio (Apr 2025 to Dec 2025)
+- Worked on 3 web projects, including the studio website.
+- Built at least 5 responsive pages from Figma mockups using React, HTML, CSS, JavaScript, and TypeScript.
+- Applied WCAG-based accessibility checks during frontend implementation.
+- Contributed reusable UI patterns and helped improve delivery workflows with GitHub Actions and Cloudflare.
 
-### Print Machine Operator / Graphic Designer — Young Alpha Advertising Corp. (Jan 2024 — Oct 2024)
-- Improved large-format print workflows through RIP setup, color calibration, and cutting-process cleanup.
-- Created reusable templates and organized asset libraries to reduce manual revisions across production work.
-- Troubleshot hardware and software issues across production workstations and print systems.
+### Print Machine Operator / Graphic Designer, Young Alpha Advertising Corp. (Jan 2024 to Oct 2024)
+- Supported print production for food trucks, businesses, and signage work across a 7-person team.
+- Improved production workflows through RIP setup, color calibration, and cutting-process cleanup across machines and workstations.
+- Created reusable templates and troubleshot hardware and software issues to keep production moving.
 
-### Social Media Designer — But First, Coffee (Multiple Branches) (Jan 2023 — Jul 2024)
-- Designed social media graphics and branded marketing assets for multiple branches.
-- Worked with branch managers and marketing teams to refine assets and keep campaign visuals consistent.
+### Social Media Designer, But First, Coffee (Multiple Branches) (Jan 2023 to Jul 2024)
+- Designed weekly social media graphics and branded marketing assets for 3 branches.
+- Produced promotional assets for seasonal and recurring drink campaigns.
+- Worked with stakeholders to keep campaign visuals consistent with branch needs.
