@@ -1,30 +1,31 @@
-# LanceCarteciano
+# Lance Carteciano
 
-> Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.
+> Frontend web developer and graphic designer in the Philippines.
 
-Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.
+Frontend, WordPress, and design-to-code work for websites that need clear pages, reusable sections, and practical maintenance after launch.
 
 ## Preferred machine-readable entry points
-- [Site index](https://lancecarteciano.com/index.md)
-- [Full site content](https://lancecarteciano.com/llms-full.txt)
-- [Blog index](https://lancecarteciano.com/blog.md)
-- [Project archive](https://lancecarteciano.com/projects.md)
-- [Resume](https://lancecarteciano.com/resume.md)
-- [Contact](https://lancecarteciano.com/contact.md)
-- [Design system](https://lancecarteciano.com/design-system.md)
+- [Site index](https://384721.xyz/index.md)
+- [Full site content](https://384721.xyz/llms-full.txt)
+- [Blog index](https://384721.xyz/blog.md)
+- [Project archive](https://384721.xyz/projects.md)
+- [Resume](https://384721.xyz/resume.md)
+- [Contact](https://384721.xyz/contact.md)
+- [Design system](https://384721.xyz/design-system.md)
 
 ## Core pages
-- [Home](https://lancecarteciano.com/index.md)
-- [About](https://lancecarteciano.com/about.md)
-- [Blog](https://lancecarteciano.com/blog.md)
-- [Projects](https://lancecarteciano.com/projects.md)
-- [Contact](https://lancecarteciano.com/contact.md)
-- [Resume](https://lancecarteciano.com/resume.md)
-- [Design system](https://lancecarteciano.com/design-system.md)
-- [My New Post](https://lancecarteciano.com/blog/my-new-post.md)
-- [Draft notes on case-study writing](https://lancecarteciano.com/blog/draft-notes-on-case-study-writing.md)
-- [Lightweight Git-backed portfolio CMS](https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms.md)
-- [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md)
-- [INSIGHT INDEX](https://lancecarteciano.com/projects/insight-index.md)
-- [GSAP ANIMATION](https://lancecarteciano.com/projects/gsap-animation.md)
-- [TETHERLY](https://lancecarteciano.com/projects/tetherly.md)
+- [Home](https://384721.xyz/index.md)
+- [About](https://384721.xyz/about.md)
+- [Blog](https://384721.xyz/blog.md)
+- [Projects](https://384721.xyz/projects.md)
+- [Contact](https://384721.xyz/contact.md)
+- [Resume](https://384721.xyz/resume.md)
+- [Design system](https://384721.xyz/design-system.md)
+- [Writing useful portfolio case studies](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
+- [Why I built a Git-backed portfolio CMS](https://384721.xyz/blog/git-backed-portfolio-cms.md)
+- [WordPress maintenance and Elementor system work](https://384721.xyz/projects/wordpress-maintenance-system.md)
+- [ABCDE Creative Studio website](https://384721.xyz/projects/abcde-creative.md)
+- [Nsight Index blog management system](https://384721.xyz/projects/nsight-index.md)
+- [Git-backed portfolio content system](https://384721.xyz/projects/portfolio-cms.md)
+- [React GSAP animation experiment](https://384721.xyz/projects/gsap-animation.md)
+- [Tetherly bio link app](https://384721.xyz/projects/tetherly.md)

@@ -1,21 +1,15 @@
 # Blog
 
-Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site.
+Short writing about portfolio structure, Git-backed content, and how I turn project work into useful case studies.
 
-## [My New Post](https://lancecarteciano.com/blog/my-new-post.md)
-
-- Date: 2026-07-28
-
-One short summary sentence for the blog index.
-
-## [Draft notes on case-study writing](https://lancecarteciano.com/blog/draft-notes-on-case-study-writing.md)
+## [Writing useful portfolio case studies](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
 
 - Date: 2026-07-22
 
-An internal draft about keeping portfolio case studies concise and still useful.
+A practical note on turning real project work into a case study without padding it with vague claims.
 
-## [Lightweight Git-backed portfolio CMS](https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms.md)
+## [Why I built a Git-backed portfolio CMS](https://384721.xyz/blog/git-backed-portfolio-cms.md)
 
 - Date: 2026-07-22
 
-Why the portfolio admin is being built around GitHub, Cloudflare Pages Functions, and structured content files instead of a database CMS.
+The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents.

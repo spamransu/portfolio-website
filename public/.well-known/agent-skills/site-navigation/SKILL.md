@@ -22,15 +22,15 @@ Read these machine-friendly pages first:
 
 ## Human page mapping
 
-- `/` — homepage and overview
-- `/about` — background, principles, and positioning
-- `/blog` — published notes and articles
-- `/blog/<slug>` — individual blog post
-- `/projects` — project archive
-- `/projects/<slug>` — individual case study
-- `/resume` — resume summary and experience
-- `/contact` — contact and availability
-- `/design-system` — color, typography, spacing, layout, and component reference
+- `/`: homepage and overview
+- `/about`: background, principles, and positioning
+- `/blog`: published notes and articles
+- `/blog/<slug>`: individual blog post
+- `/projects`: project archive
+- `/projects/<slug>`: individual case study
+- `/resume`: resume summary and experience
+- `/contact`: contact and availability
+- `/design-system`: color, typography, spacing, layout, and component reference
 
 ## Notes
 

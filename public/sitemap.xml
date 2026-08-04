@@ -1,72 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lancecarteciano.com/</loc>
+    <loc>https://384721.xyz/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/about</loc>
+    <loc>https://384721.xyz/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/blog</loc>
+    <loc>https://384721.xyz/blog</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/projects</loc>
+    <loc>https://384721.xyz/projects</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/contact</loc>
+    <loc>https://384721.xyz/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/resume</loc>
+    <loc>https://384721.xyz/resume</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/design-system</loc>
+    <loc>https://384721.xyz/design-system</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/blog/my-new-post</loc>
+    <loc>https://384721.xyz/blog/writing-useful-portfolio-case-studies</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/blog/draft-notes-on-case-study-writing</loc>
+    <loc>https://384721.xyz/blog/git-backed-portfolio-cms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms</loc>
+    <loc>https://384721.xyz/projects/wordpress-maintenance-system</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/projects/abcde-creative</loc>
+    <loc>https://384721.xyz/projects/abcde-creative</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/projects/insight-index</loc>
+    <loc>https://384721.xyz/projects/nsight-index</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/projects/gsap-animation</loc>
+    <loc>https://384721.xyz/projects/portfolio-cms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lancecarteciano.com/projects/tetherly</loc>
+    <loc>https://384721.xyz/projects/gsap-animation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://384721.xyz/projects/tetherly</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

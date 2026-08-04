@@ -24,6 +24,22 @@ export function ResumePage() {
         </ul>
       </Section>
 
+
+
+      {siteContent.resume.education?.length ? (
+        <Section title={siteContent.resume.educationSectionTitle ?? 'Education and training'}>
+          <ol className={sty.experienceList}>
+            {siteContent.resume.education.map((item) => (
+              <li key={`${item.school}-${item.program}`}>
+                <div><h3>{item.program}</h3><p>{item.school}</p></div>
+                <span>{item.period}</span>
+                <ul>{item.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}</ul>
+              </li>
+            ))}
+          </ol>
+        </Section>
+      ) : null}
+
       <Section title={siteContent.resume.experienceSectionTitle}>
         <ol className={sty.experienceList}>
           {siteContent.resume.experience.map((item) => (

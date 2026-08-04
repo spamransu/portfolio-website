@@ -1,34 +1,30 @@
 {
   "site": {
-    "name": "LanceCarteciano",
-    "tagline": "Frontend developer and designer building content-first portfolio sites, case studies, and polished product interfaces.",
-    "description": "Frontend development, design systems, and case-study driven website work for brands, teams, and client projects.",
-    "email": "hello@lancecarteciano.com",
+    "name": "Lance Carteciano",
+    "tagline": "Frontend web developer and graphic designer in the Philippines.",
+    "description": "Frontend, WordPress, and design-to-code work for websites that need clear pages, reusable sections, and practical maintenance after launch.",
+    "email": "cartecianolance@gmail.com",
     "location": "Philippines",
-    "siteUrl": "https://lancecarteciano.com",
+    "siteUrl": "https://384721.xyz",
     "socials": [
       {
         "label": "LinkedIn",
-        "href": "https://www.linkedin.com/in/lancecarteciano"
+        "href": "https://www.linkedin.com/in/lance-carteciano/"
       },
       {
         "label": "GitHub",
-        "href": "https://github.com/lancecarteciano"
-      },
-      {
-        "label": "X",
-        "href": "https://x.com/lancecarteciano"
+        "href": "https://github.com/ransuhaneda"
       },
       {
         "label": "Linktree",
-        "href": "https://linktr.ee/lancecarteciano"
+        "href": "https://linktr.ee/ransuhaneda"
       }
     ]
   },
   "siteChrome": {
     "skipToContentLabel": "Skip to main content",
     "headerNavAriaLabel": "Primary",
-    "footerSocialsAriaLabel": "Social links",
+    "footerSocialsAriaLabel": "Profile links",
     "headerNav": [
       {
         "to": "/projects",
@@ -36,7 +32,7 @@
       },
       {
         "to": "/blog",
-        "label": "Blog"
+        "label": "Notes"
       },
       {
         "to": "/about",
@@ -48,13 +44,13 @@
       },
       {
         "to": "/resume",
-        "label": "CV"
+        "label": "Resume"
       }
     ],
-    "headerLinktreeLabel": "Linktree",
+    "headerLinktreeLabel": "Links",
     "footer": {
-      "copyrightTemplate": "\u00a9 {year} {siteName}. All rights reserved.",
-      "generalHeading": "General",
+      "copyrightTemplate": "\u00a9 {year} {siteName}. Built and maintained by Lance.",
+      "generalHeading": "Pages",
       "moreHeading": "More",
       "generalLinks": [
         {
@@ -62,176 +58,213 @@
           "label": "Home"
         },
         {
-          "to": "/about",
-          "label": "About"
-        },
-        {
           "to": "/projects",
           "label": "Projects"
+        },
+        {
+          "to": "/about",
+          "label": "About"
         }
       ],
       "moreLinks": [
         {
           "to": "/#contact",
-          "label": "Book a call"
+          "label": "Project note"
         },
         {
           "to": "/resume",
-          "label": "View CV"
+          "label": "Resume"
         },
         {
           "to": "/design-system",
           "label": "Design system"
         }
       ],
-      "linktreeLabel": "Linktree"
+      "linktreeLabel": "Links"
     }
   },
   "about": {
     "eyebrow": "About",
-    "title": "A designer-minded frontend practice.",
-    "intro": "I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.",
-    "bodySectionTitle": "How I work",
-    "processSectionTitle": "Process",
-    "processSectionIntro": "A simple working rhythm that keeps pages readable and maintainable.",
+    "title": "A frontend developer with a graphic design eye.",
+    "intro": "I work on websites that need both clean implementation and visual care.",
+    "bodySectionTitle": "Background",
+    "processSectionTitle": "How I work",
+    "processSectionIntro": "Simple habits that keep projects from turning into fragile one-off pages.",
     "principlesSectionTitle": "Working principles",
-    "toolsSectionTitle": "Tools and delivery stack",
+    "toolsSectionTitle": "Tools I use often",
     "body": [
-      "My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.",
-      "I care about visual rhythm, content hierarchy, and practical structure. That usually means reusable sections, token-driven styling, and layouts that still feel deliberate on smaller screens.",
-      "Most of the projects I enjoy combine interface polish with real delivery work: shipping pages, tightening responsive behavior, organizing content, and making the next update easier instead of harder."
+      "I am a frontend web developer and graphic designer at Tech Support Plus I.T Services. My current work covers WordPress maintenance, Elementor migrations, reusable templates, content workflows, styling systems, security cleanup, and deployment support.",
+      "Before that, I worked at ABCDE Creative Studio, where I translated Figma designs into responsive React pages and helped with accessible frontend delivery. I also have production design experience from print and social media work, which shaped how I handle details, revisions, and visual consistency.",
+      "I like projects where design and implementation have to meet in the middle. A good page should look intentional, read clearly, and stay editable for the team that owns it after launch."
     ],
     "principles": [
-      "Content should read clearly before decoration starts.",
-      "Reusable layout systems beat one-off page fixes.",
-      "Mockups matter, but shipped code has to stay editable.",
-      "Frontend polish should improve trust, not add noise."
+      "Start with the content and page purpose.",
+      "Use reusable sections instead of scattered fixes.",
+      "Keep responsive behavior readable on real screens.",
+      "Make the handoff easier for the next person editing the site."
     ],
     "process": [
       {
-        "title": "Structure first",
-        "description": "Map the page flow, content hierarchy, and reusable sections before styling details."
+        "title": "Read the source",
+        "description": "I check the real content, existing structure, and constraints before touching the interface."
       },
       {
-        "title": "Design into code",
-        "description": "Translate mockups into token-based components with responsive spacing and readable markup."
+        "title": "Build the reusable path",
+        "description": "I turn repeated patterns into sections, classes, or components that can survive later edits."
       },
       {
-        "title": "Refine the system",
-        "description": "Clean repetition, tighten edge cases, and leave the page easier to extend after launch."
+        "title": "Tighten the page",
+        "description": "I test the layout, clean the copy, and fix the details that make the page feel unfinished."
       }
     ],
     "tools": [
       "React",
       "TypeScript",
+      "JavaScript",
+      "HTML",
+      "CSS",
       "SCSS",
+      "Tailwind CSS",
+      "Bootstrap",
       "WordPress",
-      "Figma",
       "Elementor",
-      "GitHub",
-      "Cloudflare Pages"
+      "PHP",
+      "Laravel",
+      "MySQL",
+      "Figma",
+      "Adobe Creative Suite",
+      "Git",
+      "GitHub Actions",
+      "Cloudflare Pages",
+      "cPanel",
+      "Hostinger"
     ],
     "heroImage": {
       "src": "https://picsum.photos/seed/portfolio-about-workspace/1600/1100.jpg",
-      "alt": "Mock workspace scene showing a laptop, interface panels, and layout notes for a design-to-code workflow.",
-      "caption": "A mock workspace view showing the kind of design-to-code system thinking behind the work."
+      "alt": "Generic workspace image used as a visual placeholder for Lance Carteciano about page.",
+      "caption": "Placeholder image. Replace with a real workspace or profile image when available."
     }
   },
   "resume": {
-    "eyebrow": "CV / Resume",
+    "eyebrow": "Resume",
     "headline": "Frontend Web Developer and Graphic Designer",
-    "summary": "Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.",
-    "highlightsSectionTitle": "Quick highlights",
+    "summary": "Web developer and graphic designer with experience in WordPress, React, responsive UI implementation, website maintenance, and visual asset creation.",
+    "highlightsSectionTitle": "Quick proof",
     "skillsSectionTitle": "Core skills",
     "experienceSectionTitle": "Experience",
+    "educationSectionTitle": "Education and training",
     "skills": [
       "React",
       "TypeScript",
       "JavaScript",
       "HTML",
-      "CSS / SCSS",
+      "CSS",
+      "SCSS",
+      "Tailwind CSS",
+      "Bootstrap",
       "WordPress",
       "Elementor",
+      "PHP",
+      "Laravel",
+      "MySQL",
       "Figma",
-      "Accessibility-minded frontend work",
-      "Responsive UI implementation",
-      "Design systems / reusable templates",
-      "Git / GitHub"
+      "Accessibility",
+      "Adobe Creative Suite",
+      "Git",
+      "GitHub Actions",
+      "Vitest",
+      "Cloudflare",
+      "cPanel",
+      "Hostinger",
+      "Linux",
+      "VS Code"
     ],
     "experience": [
       {
         "role": "Frontend Web Developer / Graphic Designer",
         "company": "Tech Support Plus I.T Services",
-        "period": "Jan 2026 \u2014 Present",
+        "period": "Jan 2026 to present",
         "highlights": [
-          "Support Elementor v2 and v3 to v4 migrations by setting up global variables and reusable class structures for more consistent styling and easier maintenance.",
-          "Build custom WordPress themes and reusable templates for company websites.",
-          "Maintain 8+ company websites and 3+ client websites, including updates, security cleanup, spam prevention, audits, and performance work.",
-          "Create branding and marketing assets for internal and client use, and prepare websites for SEO handoff and deployment through cPanel and Hostinger."
+          "Maintain 8 active websites across 5 company sites and 3 client sites, plus periodic updates for 8 additional company websites every 2 weeks.",
+          "Built 3 custom WordPress themes or templates and reusable branded page sections for company and client websites.",
+          "Supported the migration of 4 websites to cleaner Elementor builds using global variables and reusable class structures.",
+          "Improved WordPress admin content workflows with ACF and Code Snippets, mainly for SEO and content updates.",
+          "Supported spam prevention, security cleanup, styling systems, cPanel, and Hostinger handoff work."
         ]
       },
       {
         "role": "Web Developer",
         "company": "ABCDE Creative Studio",
-        "period": "Apr 2025 \u2014 Dec 2025",
+        "period": "Apr 2025 to Dec 2025",
         "highlights": [
-          "Developed and maintained client websites across WordPress and React projects.",
-          "Translated Figma designs into responsive React interfaces with accessibility in mind.",
-          "Contributed to reusable UI patterns and design-system work that made project builds easier to maintain.",
-          "Supported delivery workflows using Git, GitHub Actions, Vitest, and Cloudflare."
+          "Worked on 3 web projects, including the studio website.",
+          "Built at least 5 responsive pages from Figma mockups using React, HTML, CSS, JavaScript, and TypeScript.",
+          "Applied WCAG-based accessibility checks during frontend implementation.",
+          "Contributed reusable UI patterns and helped improve delivery workflows with GitHub Actions and Cloudflare."
         ]
       },
       {
         "role": "Print Machine Operator / Graphic Designer",
         "company": "Young Alpha Advertising Corp.",
-        "period": "Jan 2024 \u2014 Oct 2024",
+        "period": "Jan 2024 to Oct 2024",
         "highlights": [
-          "Improved large-format print workflows through RIP setup, color calibration, and cutting-process cleanup.",
-          "Created reusable templates and organized asset libraries to reduce manual revisions across production work.",
-          "Troubleshot hardware and software issues across production workstations and print systems."
+          "Supported print production for food trucks, businesses, and signage work across a 7-person team.",
+          "Improved production workflows through RIP setup, color calibration, and cutting-process cleanup across machines and workstations.",
+          "Created reusable templates and troubleshot hardware and software issues to keep production moving."
         ]
       },
       {
         "role": "Social Media Designer",
         "company": "But First, Coffee (Multiple Branches)",
-        "period": "Jan 2023 \u2014 Jul 2024",
+        "period": "Jan 2023 to Jul 2024",
         "highlights": [
-          "Designed social media graphics and branded marketing assets for multiple branches.",
-          "Worked with branch managers and marketing teams to refine assets and keep campaign visuals consistent."
+          "Designed weekly social media graphics and branded marketing assets for 3 branches.",
+          "Produced promotional assets for seasonal and recurring drink campaigns.",
+          "Worked with stakeholders to keep campaign visuals consistent with branch needs."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "program": "Full-stack web developer training",
+        "school": "CIIT College of Arts and Technology",
+        "period": "2025",
+        "highlights": [
+          "Training covered PHP, Laravel, MySQL, HTML, CSS, JavaScript, frontend fundamentals, backend fundamentals, and database work."
         ]
       }
     ],
     "highlights": [
       {
-        "value": "8+",
-        "label": "Sites maintained"
+        "value": "8",
+        "label": "active websites maintained"
       },
       {
-        "value": "3+",
-        "label": "Client websites supported"
+        "value": "4",
+        "label": "Elementor migrations supported"
       },
       {
-        "value": "React + WP",
-        "label": "Main delivery stack"
+        "value": "3",
+        "label": "WordPress themes or templates built"
       }
     ],
     "heroImage": {
       "src": "https://picsum.photos/seed/portfolio-resume-profile/1600/1100.jpg",
-      "alt": "Mock profile presentation with resume cards, experience timeline, and frontend tooling highlights."
+      "alt": "Generic resume image used as a visual placeholder for Lance Carteciano profile details."
     }
   },
   "contact": {
     "eyebrow": "Contact",
-    "title": "Let's connect!",
-    "body": "If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.",
+    "title": "Tell me what you need built or cleaned up.",
+    "body": "I am open to frontend developer, WordPress developer, React developer, and web developer roles. I also take selected freelance work for websites, landing pages, Elementor cleanup, and Figma-to-code builds.",
     "emailCtaPrefix": "Email",
-    "availability": "Available for freelance builds, design-to-code support, and selected frontend roles.",
+    "availability": "Open to roles and selected freelance work",
     "availabilityTitle": "Availability",
     "availabilityStatusLabel": "Status",
     "availabilityLocationLabel": "Location",
     "form": {
-      "title": "Start the conversation",
-      "intro": "Share a few details about the project, page, or frontend cleanup you need help with and I will reply by email.",
+      "title": "Send a project note",
+      "intro": "Share the page, build, or cleanup you need help with. I will reply by email.",
       "submitLabel": "Draft email inquiry",
       "messageLimit": 800,
       "nameLabel": "Name",
@@ -239,7 +272,7 @@
       "messageLabel": "Message",
       "namePlaceholder": "Your full name",
       "emailPlaceholder": "your.email@example.com",
-      "messagePlaceholder": "Tell me about your project or just say hello...",
+      "messagePlaceholder": "Tell me what you need help with, what already exists, and the timeline if you have one.",
       "nameRequiredError": "Please enter your name.",
       "emailRequiredError": "Please enter your email.",
       "emailInvalidError": "Please enter a valid email address.",
@@ -251,417 +284,569 @@
       "mailtoEmailLabel": "Email",
       "mailtoMessageLabel": "Message"
     },
-    "formSectionTitle": "Send a project brief",
-    "formSectionIntro": "Use the form if you want to draft the email with the main details already filled in.",
+    "formSectionTitle": "Send the details",
+    "formSectionIntro": "The form drafts an email so you can review it before sending.",
     "methods": [
       {
         "title": "Email",
-        "label": "hello@lancecarteciano.com",
-        "href": "mailto:hello@lancecarteciano.com",
-        "description": "Best for project briefs, collaboration inquiries, and longer notes."
+        "label": "cartecianolance@gmail.com",
+        "href": "mailto:cartecianolance@gmail.com",
+        "description": "Best for project briefs, role conversations, and longer notes."
       },
       {
         "title": "LinkedIn",
-        "label": "View profile",
-        "href": "https://www.linkedin.com/in/lancecarteciano",
-        "description": "Good for role discussions, networking, and professional background."
+        "label": "lance-carteciano",
+        "href": "https://www.linkedin.com/in/lance-carteciano/",
+        "description": "Use this for role discussions, professional background, and networking."
       },
       {
         "title": "GitHub",
-        "label": "Browse work",
-        "href": "https://github.com/lancecarteciano",
-        "description": "See code samples, repositories, and ongoing frontend work."
+        "label": "ransuhaneda",
+        "href": "https://github.com/ransuhaneda",
+        "description": "Browse public code projects and current experiments."
       }
     ],
-    "methodsSectionTitle": "Preferred contact methods",
-    "methodsSectionIntro": "Pick the channel that fits the kind of conversation you want to have.",
+    "methodsSectionTitle": "Contact options",
+    "methodsSectionIntro": "Email is best for details. LinkedIn works for role conversations.",
     "heroImage": {
       "src": "https://picsum.photos/seed/portfolio-contact-desk/1600/1100.jpg",
-      "alt": "Mock desk setup with message panels, contact cards, and a highlighted email call to action."
+      "alt": "Generic desk image used as a visual placeholder for contact information."
     }
   },
   "projects": [
     {
-      "slug": "abcde-creative",
-      "title": "ABCDE CREATIVE",
+      "slug": "wordpress-maintenance-system",
+      "title": "WordPress maintenance and Elementor system work",
       "year": "2026",
-      "client": "ABCDE Creative",
-      "summary": "A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.",
-      "role": "Frontend developer",
+      "client": "Tech Support Plus I.T Services",
+      "kind": "case-study",
+      "status": "current work",
+      "summary": "Ongoing WordPress work across company and client sites, including Elementor cleanup, reusable sections, admin workflows, spam prevention, and hosting handoff support.",
+      "role": "Frontend web developer / graphic designer",
       "stack": [
-        "React",
-        "TypeScript",
-        "SCSS",
-        "Content modeling"
+        "WordPress",
+        "Elementor",
+        "PHP",
+        "HTML",
+        "CSS",
+        "ACF",
+        "Code Snippets",
+        "cPanel",
+        "Hostinger"
       ],
-      "challenge": "The site needed stronger hierarchy and more reusable structure so new case-study and service pages could be added without layout drift.",
+      "links": [],
+      "challenge": "Several sites needed regular updates, cleaner Elementor structure, and admin workflows that the SEO and content teams could use without breaking layout consistency.",
       "approach": [
-        "Reworked marketing sections into reusable content blocks.",
-        "Tightened spacing and type rhythm for clearer scanning.",
-        "Aligned page components so future pages could follow the same system."
+        "Maintained 8 active websites across company and client work.",
+        "Supported 4 migrations into cleaner Elementor builds with global variables and reusable class structures.",
+        "Built 3 custom WordPress themes or templates and reusable branded sections.",
+        "Used ACF and Code Snippets to simplify admin-side editing for SEO and content updates.",
+        "Handled spam prevention, security cleanup, styling consistency, and deployment support."
       ],
       "outcome": [
-        "Cleaner presentation across portfolio and services content.",
-        "More consistent page-building patterns for future updates.",
-        "A stronger visual-first case-study experience."
+        "Company and client sites became easier to update with more consistent section patterns.",
+        "Recurring maintenance work had clearer styling rules and less one-off editing.",
+        "SEO and content updates became safer through simpler admin workflows."
       ],
       "image": {
         "src": "/images/home/featured-project-1.png",
-        "alt": "Phone mockup for ABCDE Creative."
+        "alt": "Generic device mockup used as a placeholder for WordPress maintenance and Elementor system work."
       },
       "gallery": [
         {
           "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
-          "alt": "Mock landing page composition for ABCDE Creative with modular sections and structured content blocks.",
-          "caption": "Homepage direction with reusable marketing sections."
-        },
-        {
-          "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
-          "alt": "Mock case-study detail screen showing typography hierarchy, stats, and project modules.",
-          "caption": "Case-study system built for easier expansion."
+          "alt": "Generic website planning image used as a placeholder for WordPress maintenance work.",
+          "caption": "Placeholder visual. Client screenshots are intentionally not shown."
         }
       ],
       "sections": [
         {
-          "title": "Challenge",
-          "body": "The original content felt serviceable but flat. New pages risked turning into one-off layouts, which made the system harder to extend with confidence.",
+          "kind": "default",
+          "title": "The work",
+          "body": "This is ongoing production support, not a single launch. The job is to keep company and client WordPress sites stable, easier to edit, and visually consistent while requests keep moving.",
           "image": {
             "src": "https://picsum.photos/seed/portfolio-abcde-creative-1/1600/1100.jpg",
-            "alt": "Mock layout showing the challenge phase for ABCDE Creative with uneven blocks being reorganized."
-          },
-          "kind": "default"
+            "alt": "Generic website planning image used as a placeholder for the WordPress maintenance case study."
+          }
         },
         {
-          "title": "Approach",
-          "body": "I focused on reusable page sections, stronger headings, and a more disciplined layout rhythm so content blocks could carry more of the page without feeling repetitive.",
+          "kind": "approach",
+          "title": "What I handled",
+          "body": "I focused on the parts that make future edits safer: reusable Elementor classes, global styling variables, admin-side content fields, and cleanup work around spam, security, hosting, and handoff.",
           "image": {
             "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
-            "alt": "Mock layout demonstrating the reusable section system and visual cleanup for ABCDE Creative."
-          },
-          "kind": "approach"
+            "alt": "Generic interface planning image used as a placeholder for Elementor cleanup work."
+          }
         },
         {
-          "title": "Outcome",
-          "body": "The result was a cleaner portfolio experience with better section reuse, stronger content hierarchy, and an easier path for future case studies and service pages.",
+          "kind": "outcome",
+          "title": "What changed",
+          "body": "The work made recurring site updates less fragile. Teams had clearer patterns to follow, and the managed sites had a stronger base for regular content and SEO updates.",
           "image": {
             "src": "https://picsum.photos/seed/portfolio-abcde-creative-2/1600/1100.jpg",
-            "alt": "Mock layout representing the final polished project presentation for ABCDE Creative."
-          },
-          "kind": "outcome"
+            "alt": "Generic website interface image used as a placeholder for the WordPress maintenance outcome."
+          }
         }
       ]
     },
     {
-      "slug": "insight-index",
-      "title": "INSIGHT INDEX",
-      "year": "2026",
-      "client": "Insight Index",
-      "summary": "A more editorial product showcase for a data-led brand, balancing interface previews with enough context to explain the work.",
-      "role": "Frontend developer",
+      "slug": "abcde-creative",
+      "title": "ABCDE Creative Studio website",
+      "year": "2025",
+      "client": "ABCDE Creative Studio",
+      "kind": "case-study",
+      "status": "professional work",
+      "summary": "Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.",
+      "role": "Web developer",
       "stack": [
         "React",
-        "Tailwind CSS",
-        "API integration",
-        "Responsive UI"
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Figma",
+        "GitHub Actions",
+        "Cloudflare"
       ],
-      "challenge": "The product needed a clearer story. Interface screenshots existed, but the surrounding content was not doing enough to frame why the product mattered.",
+      "links": [],
+      "challenge": "The work needed to translate design direction into responsive interfaces while keeping accessibility and maintainability in mind.",
       "approach": [
-        "Introduced content blocks that explained value before details.",
-        "Paired interface imagery with concise product context.",
-        "Used a cleaner card rhythm for related sections and previews."
+        "Worked on 3 web projects, including the studio website.",
+        "Built at least 5 responsive pages from Figma mockups.",
+        "Applied WCAG-based accessibility checks during implementation.",
+        "Contributed reusable UI patterns for future builds.",
+        "Supported delivery workflows through GitHub Actions and Cloudflare."
       ],
       "outcome": [
-        "Improved clarity around the product offering.",
-        "A better balance of visuals and explanatory copy.",
-        "Stronger consistency across overview and feature sections."
+        "Responsive pages matched the design direction more closely across screen sizes.",
+        "Reusable patterns made later project work easier to maintain.",
+        "The delivery process had clearer build and deployment support."
       ],
       "image": {
         "src": "/images/home/featured-project-2.png",
-        "alt": "Laptop mockup for Insight Index."
+        "alt": "Generic device mockup used as a placeholder for ABCDE Creative Studio frontend work."
       },
       "gallery": [
         {
           "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
-          "alt": "Mock product overview page for Insight Index with cards, charts, and interface previews.",
-          "caption": "Product storytelling framed around interface previews."
-        },
-        {
-          "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
-          "alt": "Mock feature detail layout for Insight Index showing metrics, annotations, and supporting content.",
-          "caption": "Feature detail layout pairing metrics and explanation."
+          "alt": "Generic responsive layout image used as a placeholder for ABCDE Creative Studio work.",
+          "caption": "Placeholder visual. Production screenshots can replace this later."
         }
       ],
       "sections": [
         {
-          "title": "Challenge",
-          "body": "The visual assets were there, but the page still felt like a gallery. It needed context that made the interface feel meaningful instead of decorative.",
+          "kind": "default",
+          "title": "The work",
+          "body": "At ABCDE Creative Studio, I worked from Figma direction into responsive frontend pages. The focus was practical implementation: clean layouts, accessible behavior, and reusable patterns.",
           "image": {
             "src": "https://picsum.photos/seed/portfolio-insight-index-1/1600/1100.jpg",
-            "alt": "Mock product page illustrating the challenge of unexplained interface visuals."
-          },
-          "kind": "default"
+            "alt": "Generic responsive layout image used as a placeholder for the ABCDE Creative Studio case study."
+          }
         },
         {
-          "title": "Approach",
-          "body": "I paired each visual block with a tighter explanation, leaned on modular cards, and used cleaner spacing so the product story could unfold in a more readable order.",
+          "kind": "approach",
+          "title": "How I built it",
+          "body": "I treated the mockups as a system instead of isolated screens. Shared sections, consistent spacing, and accessible markup made the work easier to test and adjust.",
           "image": {
             "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
-            "alt": "Mock product page showing the clearer approach for Insight Index."
-          },
-          "kind": "approach"
+            "alt": "Generic frontend interface image used as a placeholder for ABCDE Creative Studio implementation."
+          }
         },
         {
-          "title": "Outcome",
-          "body": "The updated page communicated both interface quality and product value more clearly, giving the work a stronger case-study feel without becoming text-heavy.",
+          "kind": "outcome",
+          "title": "Result",
+          "body": "The work gave the studio and client pages a steadier frontend base, with responsive behavior and delivery patterns that could carry into later pages.",
           "image": {
             "src": "https://picsum.photos/seed/portfolio-insight-index-2/1600/1100.jpg",
-            "alt": "Mock product page showing the final polished case-study presentation for Insight Index."
-          },
-          "kind": "outcome"
+            "alt": "Generic frontend interface image used as a placeholder for ABCDE Creative Studio outcome."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "nsight-index",
+      "title": "Nsight Index blog management system",
+      "year": "2026",
+      "client": "Personal project",
+      "kind": "case-study",
+      "status": "public repository",
+      "summary": "A Laravel blog management system with author and reader flows for posts, comments, categories, likes, saved posts, and media handling.",
+      "role": "Full-stack training project",
+      "stack": [
+        "Laravel 12",
+        "PHP",
+        "Blade",
+        "Bootstrap",
+        "Tailwind CSS",
+        "Alpine.js",
+        "Spatie Media Library"
+      ],
+      "links": [
+        {
+          "label": "GitHub repository",
+          "href": "https://github.com/ransuhaneda/nsight-index_blog-management-system"
+        }
+      ],
+      "challenge": "The project needed a practical content workflow where authors could manage posts and readers could interact with published content.",
+      "approach": [
+        "Built post, category, comment, like, and saved-post flows.",
+        "Used Blade views with Bootstrap, Tailwind CSS, and Alpine.js for interface work.",
+        "Integrated Spatie Media Library for media handling.",
+        "Kept unfinished admin ideas out of the public claims because those flows are still marked as future work."
+      ],
+      "outcome": [
+        "The public repository shows a working Laravel content-management project with author and reader features.",
+        "The project gives a stronger backend example without overstating unfinished admin work."
+      ],
+      "image": {
+        "src": "/images/home/featured-project-3.png",
+        "alt": "Generic laptop mockup used as a placeholder for the Nsight Index Laravel project."
+      },
+      "gallery": [
+        {
+          "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
+          "alt": "Generic dashboard image used as a placeholder for the Nsight Index project.",
+          "caption": "Placeholder visual for the Laravel blog management system."
+        }
+      ],
+      "sections": [
+        {
+          "kind": "default",
+          "title": "The build",
+          "body": "Nsight Index is a Laravel blog management system. The useful part for this portfolio is the content workflow: creating posts, organizing categories, handling comments, saving posts, and supporting media.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
+            "alt": "Generic dashboard image used as a placeholder for the Nsight Index case study."
+          }
+        },
+        {
+          "kind": "approach",
+          "title": "Scope",
+          "body": "I kept the case study honest about what exists. Author and reader flows are the focus. Some admin ideas are still future work, so they do not appear here as finished features.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+            "alt": "Generic content dashboard image used as a placeholder for Nsight Index scope."
+          }
+        },
+        {
+          "kind": "outcome",
+          "title": "What it shows",
+          "body": "The project shows that I can work beyond static frontend pages and handle a PHP content system with real data relationships and media handling.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
+            "alt": "Generic content dashboard image used as a placeholder for Nsight Index outcome."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "portfolio-cms",
+      "title": "Git-backed portfolio content system",
+      "year": "2026",
+      "client": "Personal portfolio",
+      "kind": "case-study",
+      "status": "live site",
+      "summary": "The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.",
+      "role": "Frontend developer",
+      "stack": [
+        "React",
+        "TypeScript",
+        "JSON content",
+        "Markdown",
+        "Cloudflare Pages",
+        "Vite"
+      ],
+      "links": [
+        {
+          "label": "Live site",
+          "href": "https://384721.xyz"
+        }
+      ],
+      "challenge": "The site needed to work as a human portfolio and as a machine-readable content source without keeping duplicate copy in separate places.",
+      "approach": [
+        "Kept main site copy in content/site-content.json.",
+        "Generated markdown mirrors for pages, projects, resume, blog, and LLM-friendly indexes.",
+        "Rendered public React routes from shared content instead of hardcoded page copy.",
+        "Used Cloudflare Pages functions to serve markdown when requested."
+      ],
+      "outcome": [
+        "The portfolio can be edited from one content source and still publish readable markdown mirrors.",
+        "The site is easier for humans and agents to inspect without scraping visual pages.",
+        "Future case studies and posts have a clearer source path."
+      ],
+      "image": {
+        "src": "/images/home/featured-project-4.png",
+        "alt": "Generic tablet mockup used as a placeholder for the portfolio content system."
+      },
+      "gallery": [
+        {
+          "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
+          "alt": "Generic content editor image used as a placeholder for the portfolio CMS case study.",
+          "caption": "Placeholder visual for the content system behind this portfolio."
+        }
+      ],
+      "sections": [
+        {
+          "kind": "default",
+          "title": "The problem",
+          "body": "A portfolio gets messy when page copy, case studies, markdown files, and machine-readable indexes all drift apart. This build treats content as the source, then generates the files other surfaces need.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
+            "alt": "Generic content editor image used as a placeholder for the portfolio content system."
+          }
+        },
+        {
+          "kind": "approach",
+          "title": "How it works",
+          "body": "The React routes read from the same JSON content used by the generation script. Blog posts stay in markdown. The prebuild step writes public markdown pages, indexes, sitemap entries, and the site navigation skill.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+            "alt": "Generic file and interface image used as a placeholder for the portfolio content workflow."
+          }
+        },
+        {
+          "kind": "outcome",
+          "title": "Why it matters",
+          "body": "The site stays easier to update because the copy has one main home. It also gives agents and readers a cleaner way to understand the site through markdown mirrors.",
+          "image": {
+            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
+            "alt": "Generic content interface image used as a placeholder for the portfolio content system outcome."
+          }
         }
       ]
     },
     {
       "slug": "gsap-animation",
-      "title": "GSAP ANIMATION",
+      "title": "React GSAP animation experiment",
       "year": "2026",
-      "client": "Animation Showcase",
-      "summary": "A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.",
-      "role": "Frontend developer",
+      "client": "Personal experiment",
+      "kind": "experiment",
+      "status": "tutorial-based archive",
+      "summary": "A React and GSAP practice build based on a public tutorial, useful as an animation study rather than a client case study.",
+      "role": "Frontend practice",
       "stack": [
         "React",
+        "Vite",
         "GSAP",
-        "SCSS",
-        "Performance tuning"
+        "Tailwind CSS"
       ],
-      "challenge": "The motion needed to feel expressive without overwhelming the content or creating a site that only worked on ideal hardware.",
+      "links": [
+        {
+          "label": "GitHub repository",
+          "href": "https://github.com/ransuhaneda/react-gsap-acd"
+        }
+      ],
+      "challenge": "The goal was to practice scroll and interface animation in React while understanding how tutorial patterns map into a real codebase.",
       "approach": [
-        "Used animation to support hierarchy instead of replacing it.",
-        "Focused on transforms and staged reveals for smoother motion.",
-        "Preserved a readable static structure underneath the effects."
+        "Followed a public tutorial inspired by Zentry and JavaScript Mastery.",
+        "Practiced GSAP setup, timing, layout choreography, and responsive behavior.",
+        "Kept this listed as an experiment so it is not mistaken for original client work."
       ],
       "outcome": [
-        "More memorable visual pacing without losing clarity.",
-        "Reusable motion patterns for future sections.",
-        "A better balance between flair and restraint."
-      ],
-      "image": {
-        "src": "/images/home/featured-project-3.png",
-        "alt": "Laptop mockup for GSAP Animation."
-      },
-      "gallery": [
-        {
-          "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
-          "alt": "Mock animation sequence board showing staggered cards and scroll-linked reveals.",
-          "caption": "Motion storyboard focused on hierarchy and pacing."
-        },
-        {
-          "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
-          "alt": "Mock UI panels showing transitions, overlays, and motion annotation details.",
-          "caption": "Interface details designed for expressive but controlled motion."
-        }
+        "The project documents animation practice and code familiarity with GSAP in React.",
+        "It stays in the archive with clear attribution instead of being framed as a main case study."
       ],
       "sections": [
         {
-          "title": "Challenge",
-          "body": "Motion-heavy work can collapse into spectacle fast. The real challenge was making the animations enhance the story instead of competing with it.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-gsap-animation-1/1600/1100.jpg",
-            "alt": "Mock storyboard showing the motion challenge for the GSAP Animation project."
-          },
-          "kind": "default"
-        },
-        {
-          "title": "Approach",
-          "body": "I kept the base layout readable, built the motion on transforms, and treated reveal timing as part of content hierarchy instead of as decoration.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
-            "alt": "Mock storyboard showing the motion approach for the GSAP Animation project."
-          },
-          "kind": "approach"
-        },
-        {
-          "title": "Outcome",
-          "body": "The final experience felt more polished and memorable, while the static structure still held up for reduced-motion users and smaller screens.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-gsap-animation-2/1600/1100.jpg",
-            "alt": "Mock storyboard showing the finished motion-led presentation for the GSAP Animation project."
-          },
-          "kind": "outcome"
+          "kind": "default",
+          "title": "Archive note",
+          "body": "This is a tutorial-based React and GSAP practice project. I keep it public because it shows animation study, but it should not carry the same weight as professional or original product work."
         }
       ]
     },
     {
       "slug": "tetherly",
-      "title": "TETHERLY",
+      "title": "Tetherly bio link app",
       "year": "2026",
-      "client": "Tetherly",
-      "summary": "A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.",
+      "client": "Personal project",
+      "kind": "experiment",
+      "status": "in progress",
+      "summary": "An in-progress React and TypeScript bio link app. It stays in the archive as product UI practice while the core build is still moving.",
       "role": "Frontend developer",
       "stack": [
         "React",
-        "Design systems",
-        "SCSS",
-        "Content-first UI"
+        "TypeScript",
+        "SCSS"
       ],
-      "challenge": "The product presentation needed more consistency across cards, sections, and preview imagery so the brand could feel more cohesive.",
+      "links": [
+        {
+          "label": "GitHub repository",
+          "href": "https://github.com/ransuhaneda/tetherly_bio-link-app"
+        }
+      ],
+      "challenge": "The project explores a small profile-link product with editable-looking cards, cleaner visual hierarchy, and reusable frontend structure.",
       "approach": [
-        "Standardized the card hierarchy and supporting metadata.",
-        "Built a cleaner visual rhythm between sections and imagery.",
-        "Used mock product views to make the content more tangible."
+        "Built the app with React, TypeScript, and SCSS.",
+        "Focused on product UI structure, profile presentation, and reusable card patterns.",
+        "Kept the project marked as in progress until the product flow is more complete."
       ],
       "outcome": [
-        "A more cohesive product-marketing presentation.",
-        "Clearer card patterns and stronger visual consistency.",
-        "Better readiness for future landing-page variations."
-      ],
-      "image": {
-        "src": "/images/home/featured-project-4.png",
-        "alt": "Tablet mockup for Tetherly."
-      },
-      "gallery": [
-        {
-          "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
-          "alt": "Mock product marketing page for Tetherly with cards, feature blocks, and device imagery.",
-          "caption": "Card-led product marketing direction."
-        },
-        {
-          "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
-          "alt": "Mock feature comparison and CTA layout for Tetherly with tablet and content panels.",
-          "caption": "A calmer layout rhythm built around reusable sections."
-        }
+        "The repository shows active product UI practice.",
+        "The archive entry is honest about the project status and does not present it as finished client work."
       ],
       "sections": [
         {
-          "title": "Challenge",
-          "body": "The experience needed stronger consistency. Cards, metadata, and image treatments were all pulling in slightly different directions.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-tetherly-1/1600/1100.jpg",
-            "alt": "Mock product marketing page showing the initial consistency challenge for Tetherly."
-          },
-          "kind": "default"
-        },
-        {
-          "title": "Approach",
-          "body": "I simplified the section rhythm, tightened the card treatment, and used clearer mockups so the product story felt more unified from top to bottom.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
-            "alt": "Mock product marketing page showing the cleaner section and card approach for Tetherly."
-          },
-          "kind": "approach"
-        },
-        {
-          "title": "Outcome",
-          "body": "The resulting concept felt more cohesive, easier to scan, and more reusable as a foundation for future product and landing pages.",
-          "image": {
-            "src": "https://picsum.photos/seed/portfolio-tetherly-2/1600/1100.jpg",
-            "alt": "Mock product marketing page showing the final cohesive presentation for Tetherly."
-          },
-          "kind": "outcome"
+          "kind": "default",
+          "title": "Archive note",
+          "body": "Tetherly is still in progress. It belongs in the secondary project archive because it shows frontend product practice without pretending to be finished."
         }
       ]
     }
   ],
   "home": {
     "hero": {
-      "eyebrow": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "eyebrow": "Portfolio of Lance Carteciano",
       "titleLines": [
-        "HI! I'M A FULL-STACK",
-        "WEB DEVELOPER",
-        "BASED IN THE PHILIPPINES."
+        "Frontend web developer",
+        "and graphic designer",
+        "based in the Philippines."
       ],
-      "description": "",
-      "accentPhrase": "WEB DEVELOPER",
+      "description": "I build responsive websites, WordPress systems, and design-to-code interfaces that stay organized after launch.",
+      "accentPhrase": "Frontend web developer",
       "dateline": {
-        "left": "Portfolio \u2014 2026",
-        "right": "Frontend & design practice"
+        "left": "Portfolio 2026",
+        "right": "Frontend, WordPress, and visual design"
       },
       "index": [
         {
-          "label": "Focus",
-          "value": "Frontend development"
+          "label": "Current role",
+          "value": "Tech Support Plus I.T Services"
         },
         {
-          "label": "Medium",
-          "value": "Web experiences"
+          "label": "Main stack",
+          "value": "WordPress, React, TypeScript"
         },
         {
-          "label": "Practice",
-          "value": "Design systems"
+          "label": "Work type",
+          "value": "Websites, UI builds, maintenance"
         },
         {
-          "label": "Output",
-          "value": "Case studies & notes"
+          "label": "Availability",
+          "value": "Roles and selected freelance work"
         }
       ]
     },
     "cta": {
-      "primaryLabel": "Book a call",
-      "secondaryLabel": "View CV"
+      "primaryLabel": "Send a project note",
+      "secondaryLabel": "View resume"
     },
     "featuredProjects": {
-      "title": "FEATURED PROJECTS",
-      "intro": "",
+      "title": "Selected work",
+      "intro": "Four source-backed projects that show current WordPress work, Figma-to-code delivery, a Laravel blog system, and this portfolio content system.",
       "slugs": [
+        "wordpress-maintenance-system",
         "abcde-creative",
-        "insight-index",
-        "gsap-animation",
-        "tetherly"
+        "nsight-index",
+        "portfolio-cms"
       ],
-      "fallbackLabel": "",
-      "fallbackDescription": "",
-      "stackAriaTemplate": "{title} stack"
+      "fallbackLabel": "No featured project selected",
+      "fallbackDescription": "Add project slugs in the site content file to feature work here.",
+      "stackAriaTemplate": "{title} tools"
     },
     "bio": {
-      "eyebrow": "Lance S. Carteciano",
+      "eyebrow": "What I do",
       "titleLines": [
-        "FREELANCE FULL-STACK",
-        "WEB DEVELOPER AND",
-        "GRAPHIC DESIGNER."
+        "I sit between",
+        "design direction",
+        "and shipped pages."
       ],
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"
+      "description": "My work usually starts with a page that needs better structure: an Elementor build that has drifted, a Figma design that needs careful responsive code, or a content system that should be easier to update. I care about the visual side, but I care just as much about whether the next edit is painless."
     },
     "stats": [
       {
-        "value": "2+",
-        "label": "Years of experience",
+        "value": "8",
+        "label": "active websites maintained across company and client work",
         "tone": "accent"
       },
       {
-        "value": "5+",
-        "label": "Projects completed",
+        "value": "4",
+        "label": "website migrations supported into cleaner Elementor builds",
         "tone": "accent-2"
       },
       {
-        "value": "4+",
-        "label": "Happy clients",
+        "value": "3",
+        "label": "custom WordPress themes or templates built",
         "tone": "accent-3"
       }
     ],
     "skills": {
-      "title": "MY SKILLS",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam",
+      "title": "Capabilities",
+      "description": "The focus is practical frontend delivery: clear markup, responsive layouts, reusable sections, and WordPress workflows that other people can keep using.",
       "items": [
         "React",
-        "ASP.NET Core",
+        "TypeScript",
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "SCSS",
         "Tailwind CSS",
-        "MongoDB",
-        "Stripe API",
-        "GraphQL"
+        "Bootstrap",
+        "WordPress",
+        "Elementor",
+        "PHP",
+        "Laravel",
+        "MySQL",
+        "Figma",
+        "Adobe Creative Suite",
+        "Git",
+        "GitHub Actions",
+        "Cloudflare",
+        "cPanel",
+        "Hostinger"
       ],
-      "cloudAriaLabel": "Skills cloud"
+      "groups": [
+        {
+          "title": "Frontend",
+          "items": [
+            "React",
+            "TypeScript",
+            "JavaScript",
+            "HTML",
+            "CSS",
+            "SCSS",
+            "Tailwind CSS",
+            "Bootstrap"
+          ]
+        },
+        {
+          "title": "WordPress and backend basics",
+          "items": [
+            "WordPress",
+            "Elementor",
+            "PHP",
+            "Laravel",
+            "MySQL",
+            "ACF",
+            "Code Snippets"
+          ]
+        },
+        {
+          "title": "Design and delivery",
+          "items": [
+            "Figma",
+            "Adobe Creative Suite",
+            "Accessibility",
+            "Git",
+            "GitHub Actions",
+            "Cloudflare",
+            "cPanel",
+            "Hostinger"
+          ]
+        }
+      ],
+      "cloudAriaLabel": "Frontend, WordPress, design, and delivery skills"
     },
     "contact": {
-      "title": "LET'S CONNECT!",
-      "intro": "",
-      "submitLabel": "Send message",
-      "messageLimit": 500,
+      "title": "Start the conversation",
+      "intro": "Share the page, build, or cleanup you need help with. I will reply by email.",
+      "submitLabel": "Draft email inquiry",
+      "messageLimit": 800,
       "nameLabel": "Name",
       "emailLabel": "Email",
       "messageLabel": "Message",
       "namePlaceholder": "Your full name",
       "emailPlaceholder": "your.email@example.com",
-      "messagePlaceholder": "Tell me about your project or just say hello...",
+      "messagePlaceholder": "Tell me what you need help with, what already exists, and the timeline if you have one.",
       "nameRequiredError": "Please enter your name.",
       "emailRequiredError": "Please enter your email.",
       "emailInvalidError": "Please enter a valid email address.",
@@ -676,97 +861,118 @@
   },
   "projectsPage": {
     "eyebrow": "Projects",
-    "title": "Case studies with enough context to be useful.",
-    "intro": "Selected frontend and design-to-code work, presented as short case studies with mock visuals and enough context to explain the thinking behind the build.",
+    "title": "Case studies first, experiments second.",
+    "intro": "The main set focuses on verified work from my current role, studio work, a Laravel blog system, and this portfolio content system. Smaller experiments stay in the archive with clear labels.",
     "heroImage": {
       "src": "https://picsum.photos/seed/portfolio-projects-grid/1600/1100.jpg",
-      "alt": "Mock overview board showing portfolio project cards and visual case-study panels.",
-      "caption": "Mock overview for the internal projects archive."
+      "alt": "Generic project grid image used as a visual placeholder for the projects archive.",
+      "caption": "Placeholder image for the projects archive."
     },
     "roleLabelPrefix": "Role",
-    "stackAriaTemplate": "{title} technologies"
+    "stackAriaTemplate": "{title} tools",
+    "groups": [
+      {
+        "title": "Case studies",
+        "description": "Verified work and source-backed projects.",
+        "kinds": [
+          "case-study"
+        ]
+      },
+      {
+        "title": "Experiments",
+        "description": "Practice builds and in-progress projects with honest labels.",
+        "kinds": [
+          "experiment"
+        ]
+      }
+    ]
   },
   "blogPage": {
-    "eyebrow": "Blog",
-    "title": "Notes from build, design, and frontend delivery work.",
-    "intro": "Short posts about content-first frontend work, portfolio systems, and practical implementation decisions behind the site.",
+    "eyebrow": "Notes",
+    "title": "Notes about content, case studies, and the build behind this site.",
+    "intro": "Short writing about portfolio structure, Git-backed content, and how I turn project work into useful case studies.",
     "heroImage": {
       "src": "https://picsum.photos/seed/portfolio-blog-index/1600/1100.jpg",
-      "alt": "Mock editorial collage showing article cards, a content editor, and development notes.",
-      "caption": "Published notes pulled from content/blog markdown files."
+      "alt": "Generic editorial image used as a visual placeholder for the blog archive.",
+      "caption": "Published notes come from markdown files in content/blog."
     }
   },
   "projectDetailPage": {
     "eyebrow": "Projects",
     "notFoundTitle": "Project not found",
-    "notFoundIntro": "That case study is missing or has not been published yet.",
+    "notFoundIntro": "That case study is not published here.",
     "backToProjectsLabel": "Back to projects",
-    "startProjectLabel": "Start a project",
+    "startProjectLabel": "Send a project note",
     "snapshotTitle": "Project snapshot",
-    "galleryTitle": "Project gallery",
-    "galleryIntro": "Mock visuals used to support the case-study narrative.",
-    "nextProjectEyebrow": "Next up",
+    "galleryTitle": "Supporting visuals",
+    "galleryIntro": "Some visuals are placeholders until public-safe screenshots are available.",
+    "nextProjectEyebrow": "Next project",
     "nextProjectLabel": "View next project",
-    "similarWorkEyebrow": "Need something similar?",
-    "similarWorkTitle": "Open for frontend and design-to-code work.",
-    "similarWorkIntro": "Available for portfolio sites, landing pages, responsive cleanup, and interface implementation.",
+    "similarWorkEyebrow": "Need help with something similar?",
+    "similarWorkTitle": "I am open to frontend, WordPress, and selected freelance work.",
+    "similarWorkIntro": "Send a short note about the site, page, or cleanup you need.",
     "similarWorkLabel": "Contact me",
     "roleLabel": "Role",
-    "clientLabel": "Client",
+    "clientLabel": "Context",
     "yearLabel": "Year",
-    "stackLabel": "Stack",
-    "stackAriaTemplate": "{title} stack"
+    "statusLabel": "Status",
+    "stackLabel": "Tools",
+    "linksTitle": "Links",
+    "stackAriaTemplate": "{title} tools"
   },
   "blogPostPage": {
-    "eyebrowPrefix": "Blog",
+    "eyebrowPrefix": "Notes",
     "notFoundTitle": "Post not found",
-    "notFoundIntro": "That post is missing, unpublished, or still in draft.",
-    "backToBlogLabel": "Back to blog",
-    "startProjectLabel": "Start a project",
-    "articleSectionTitle": "Article"
+    "notFoundIntro": "That note is missing, unpublished, or still a draft.",
+    "backToBlogLabel": "Back to notes",
+    "startProjectLabel": "Send a project note",
+    "articleSectionTitle": "Article",
+    "articleCtaEyebrow": "Related work",
+    "articleCtaTitle": "Read the project archive.",
+    "articleCtaLabel": "View projects"
   },
   "notFoundPage": {
     "eyebrow": "404",
-    "title": "Page not found",
-    "intro": "That route does not exist yet, but the rest of the portfolio is still intact.",
+    "title": "This page is not here.",
+    "intro": "The route may have moved, or I may not have published it. The project archive and resume are the safest places to start.",
     "suggestionsEyebrow": "Try these instead",
     "viewProjectsLabel": "View projects",
     "backHomeLabel": "Back home"
   },
   "designSystemPage": {
-    "eyebrow": "Technical blueprint",
-    "title": "Design system reference",
-    "intro": "The reusable visual engine behind the site \u2014 color, typography, spacing, layout, components, and interaction states.",
+    "eyebrow": "Design system",
+    "title": "The visual system behind the portfolio.",
+    "intro": "A public reference for the colors, type, spacing, grid, components, and motion rules used on this site.",
     "sections": [
       {
         "id": "color",
         "title": "Color",
-        "description": "Dark editorial surfaces use acid lime for primary actions, with orange and violet reserved for supporting accents."
+        "description": "The palette uses a dark page background, quiet borders, and a small set of accent colors for actions and state."
       },
       {
         "id": "type",
         "title": "Typography",
-        "description": "Oswald carries display hierarchy while Inter keeps interface copy and long-form reading clear."
+        "description": "Oswald handles short display text. Inter carries body copy, labels, forms, and longer reading."
       },
       {
         "id": "spacing",
         "title": "Spacing",
-        "description": "A fluid scale interpolates between the approved 767px and 1366px viewport range."
+        "description": "Spacing uses shared tokens so sections feel related instead of hand-tuned one by one."
       },
       {
         "id": "grid",
         "title": "Grid",
-        "description": "Shared small, medium, and large wrappers sit on a twelve-column editorial composition."
+        "description": "Small, medium, and large wrappers keep page width predictable across the public routes."
       },
       {
         "id": "components",
         "title": "Components",
-        "description": "Buttons, tags, fields, cards, dividers, and images use the same production tokens as the public pages."
+        "description": "Buttons, tags, fields, cards, dividers, and images reuse the same tokens as the production pages."
       },
       {
         "id": "motion",
         "title": "Motion",
-        "description": "Movement is brief and restrained, and reduced-motion preferences remove decorative transforms."
+        "description": "Motion stays brief. Reduced-motion preferences remove decorative transforms."
       }
     ]
   }
