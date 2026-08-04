@@ -4,6 +4,7 @@ import { AboutPage } from '../pages/AboutPage'
 import { BlogPage } from '../pages/BlogPage'
 import { BlogPostPage } from '../pages/BlogPostPage'
 import { ContactPage } from '../pages/ContactPage'
+import { DesignSystemPage } from '../pages/DesignSystemPage'
 import { HomePage } from '../pages/HomePage'
 import { NotFoundPage } from '../pages/NotFoundPage'
 import { ProjectDetailPage } from '../pages/ProjectDetailPage'
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
       { path: 'projects', element: <ProjectsPage /> },
       { path: 'projects/:slug', element: <ProjectDetailPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'design-system', element: <DesignSystemPage /> },
       { path: 'resume', element: <ResumePage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

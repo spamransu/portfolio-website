@@ -78,6 +78,10 @@
         {
           "to": "/resume",
           "label": "View CV"
+        },
+        {
+          "to": "/design-system",
+          "label": "Design system"
         }
       ],
       "linktreeLabel": "Linktree"
@@ -728,5 +732,42 @@
     "suggestionsEyebrow": "Try these instead",
     "viewProjectsLabel": "View projects",
     "backHomeLabel": "Back home"
+  },
+  "designSystemPage": {
+    "eyebrow": "Technical blueprint",
+    "title": "Design system reference",
+    "intro": "The reusable visual engine behind the site \u2014 color, typography, spacing, layout, components, and interaction states.",
+    "sections": [
+      {
+        "id": "color",
+        "title": "Color",
+        "description": "Dark editorial surfaces use acid lime for primary actions, with orange and violet reserved for supporting accents."
+      },
+      {
+        "id": "type",
+        "title": "Typography",
+        "description": "Oswald carries display hierarchy while Inter keeps interface copy and long-form reading clear."
+      },
+      {
+        "id": "spacing",
+        "title": "Spacing",
+        "description": "A fluid scale interpolates between the approved 767px and 1366px viewport range."
+      },
+      {
+        "id": "grid",
+        "title": "Grid",
+        "description": "Shared small, medium, and large wrappers sit on a twelve-column editorial composition."
+      },
+      {
+        "id": "components",
+        "title": "Components",
+        "description": "Buttons, tags, fields, cards, dividers, and images use the same production tokens as the public pages."
+      },
+      {
+        "id": "motion",
+        "title": "Motion",
+        "description": "Movement is brief and restrained, and reduced-motion preferences remove decorative transforms."
+      }
+    ]
   }
 }

@@ -232,6 +232,16 @@ export type SiteContent = {
     startProjectLabel: string
     articleSectionTitle: string
   }
+  designSystemPage?: {
+    eyebrow: string
+    title: string
+    intro: string
+    sections: Array<{
+      id: string
+      title: string
+      description: string
+    }>
+  }
   projectDetailPage?: {
     eyebrow?: string
     notFoundTitle: string
