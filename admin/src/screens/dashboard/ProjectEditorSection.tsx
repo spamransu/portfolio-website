@@ -98,20 +98,34 @@ export const ProjectEditorSection = ({
               <Field label="Client"><input id="project-client" value={selected.client} onChange={(event) => onFieldChange('client', event.target.value)} /></Field>
               <Field label="Role"><input id="project-role" value={selected.role} onChange={(event) => onFieldChange('role', event.target.value)} /></Field>
             </div>
+            <div className="admin-form-row admin-form-row--split">
+              <Field label="Kind">
+                <select id="project-kind" value={selected.kind ?? 'case-study'} onChange={(event) => onFieldChange('kind', event.target.value)}>
+                  <option value="case-study">Case study</option>
+                  <option value="experiment">Experiment</option>
+                </select>
+              </Field>
+              <Field label="Status"><input id="project-status" value={selected.status ?? ''} onChange={(event) => onFieldChange('status', event.target.value)} /></Field>
+            </div>
             <Field label="Summary"><textarea id="project-summary" rows={3} value={selected.summary} onChange={(event) => onFieldChange('summary', event.target.value)} /></Field>
+            <Field label="Overview"><textarea id="project-overview" rows={5} value={selected.overview} onChange={(event) => onFieldChange('overview', event.target.value)} /></Field>
             <Field label="Challenge"><textarea id="project-challenge" rows={4} value={selected.challenge} onChange={(event) => onFieldChange('challenge', event.target.value)} /></Field>
+            <Field label="Approach summary"><textarea id="project-approach-summary" rows={4} value={selected.approachSummary} onChange={(event) => onFieldChange('approachSummary', event.target.value)} /></Field>
+            <Field label="Result summary"><textarea id="project-result-summary" rows={4} value={selected.resultSummary} onChange={(event) => onFieldChange('resultSummary', event.target.value)} /></Field>
+            <Field label="Reflection"><textarea id="project-reflection" rows={4} value={selected.reflection} onChange={(event) => onFieldChange('reflection', event.target.value)} /></Field>
             <div className="admin-form-row admin-form-row--split">
               <Field label="Stack" hint="One item per line."><textarea id="project-stack" rows={4} value={lines(selected.stack)} onChange={(event) => onFieldChange('stack', event.target.value)} /></Field>
-              <Field label="Approach" hint="One item per line."><textarea id="project-approach" rows={5} value={lines(selected.approach)} onChange={(event) => onFieldChange('approach', event.target.value)} /></Field>
+              <Field label="Project scope" hint="One item per line."><textarea id="project-scope" rows={4} value={lines(selected.scope)} onChange={(event) => onFieldChange('scope', event.target.value)} /></Field>
             </div>
-            <Field label="Outcome" hint="One item per line."><textarea id="project-outcome" rows={5} value={lines(selected.outcome)} onChange={(event) => onFieldChange('outcome', event.target.value)} /></Field>
+            <div className="admin-form-row admin-form-row--split">
+              <Field label="Approach notes" hint="One item per line."><textarea id="project-approach" rows={5} value={lines(selected.approach)} onChange={(event) => onFieldChange('approach', event.target.value)} /></Field>
+              <Field label="Outcome notes" hint="One item per line."><textarea id="project-outcome" rows={5} value={lines(selected.outcome)} onChange={(event) => onFieldChange('outcome', event.target.value)} /></Field>
+            </div>
             <div className="admin-json-group">
               <Field label="Hero image JSON"><textarea id="project-image" rows={5} value={jsonDrafts.image} onChange={(event) => onJsonFieldChange('image', event.target.value)} /></Field>
               <StatusMessage kind="error" message={jsonErrors.image ?? null} />
-              <Field label="Gallery JSON"><textarea id="project-gallery" rows={8} value={jsonDrafts.gallery} onChange={(event) => onJsonFieldChange('gallery', event.target.value)} /></Field>
+              <Field label="Gallery JSON" hint="At least three images. Each image needs src and alt text."><textarea id="project-gallery" rows={8} value={jsonDrafts.gallery} onChange={(event) => onJsonFieldChange('gallery', event.target.value)} /></Field>
               <StatusMessage kind="error" message={jsonErrors.gallery ?? null} />
-              <Field label="Sections JSON"><textarea id="project-sections" rows={10} value={jsonDrafts.sections} onChange={(event) => onJsonFieldChange('sections', event.target.value)} /></Field>
-              <StatusMessage kind="error" message={jsonErrors.sections ?? null} />
             </div>
           </div>
         ) : (

@@ -26,9 +26,17 @@ const project = (overrides: Partial<Project> = {}): Project => ({
   challenge: 'Make content editing focused.',
   approach: ['Keep admin scoped.'],
   outcome: ['Projects and blog stay editable.'],
+  overview: 'A Git-backed admin editor for portfolio content.',
+  approachSummary: 'The editor keeps project updates focused and content-first.',
+  resultSummary: 'Projects and blog content stay editable from the CMS.',
+  scope: ['Admin UI', 'Git CMS', 'Content Structure'],
+  reflection: 'Good admin tools make the correct content shape easy to maintain.',
   image: { src: '', alt: '', caption: '' },
-  gallery: [],
-  sections: [],
+  gallery: [
+    { src: '/gallery-1.png', alt: 'Gallery 1' },
+    { src: '/gallery-2.png', alt: 'Gallery 2' },
+    { src: '/gallery-3.png', alt: 'Gallery 3' },
+  ],
   ...overrides,
 })
 
@@ -91,6 +99,8 @@ describe('admin helper functions', () => {
   it('validates project and blog save requirements', () => {
     expect(getProjectValidationError([project()], 'portfolio-admin')).toBeNull()
     expect(getProjectValidationError([project({ image: { src: '/image.png', alt: '' } })], 'portfolio-admin')).toBe('Portfolio Admin hero image alt text is required.')
+    expect(getProjectValidationError([project({ gallery: [{ src: '/one.png', alt: 'One' }] })], 'portfolio-admin')).toBe('Portfolio Admin needs at least three gallery images.')
+    expect(getProjectValidationError([project({ gallery: [{ src: '/one.png', alt: 'One' }, { src: '/two.png', alt: '' }, { src: '/three.png', alt: 'Three' }] })], 'portfolio-admin')).toBe('Portfolio Admin gallery images need both src and alt text.')
     expect(getProjectValidationError([project(), project({ title: 'Duplicate', slug: 'portfolio-admin' })], 'portfolio-admin')).toBe('Project slug must be unique. Duplicate slug: portfolio-admin.')
 
     expect(getBlogValidationError(blogPost({ status: 'published', excerpt: '' }))).toBe('Published blog posts require an excerpt.')

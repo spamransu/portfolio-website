@@ -208,14 +208,27 @@ ${project.image ? `- Homepage image: ${siteUrl}${project.image.src}` : ''}
 ## Summary
 ${project.summary}
 
+## Overview
+${project.overview}
+
 ## Challenge
 ${project.challenge}
 
 ## Approach
+${project.approachSummary}
+
 ${bullets(project.approach)}
 
-## Outcome
+## Result
+${project.resultSummary}
+
 ${bullets(project.outcome)}
+
+## Project scope
+${bullets(project.scope)}
+
+## Reflection
+${project.reflection}
 `,
   ]),
 )

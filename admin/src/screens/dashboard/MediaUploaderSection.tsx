@@ -47,7 +47,6 @@ export const MediaUploaderSection = ({
     if (media.area === 'projects' && selectedProject) {
       targets.push({ kind: 'project', field: 'image', label: 'Project hero image' })
       ;(selectedProject.gallery ?? []).forEach((_, index) => targets.push({ kind: 'project', field: 'gallery', index, label: `Gallery image ${index + 1}` }))
-      ;(selectedProject.sections ?? []).forEach((section, index) => targets.push({ kind: 'project', field: 'sectionImage', index, label: `Section image: ${section.title || index + 1}` }))
     }
     return targets
   }, [blogPost, media.area, selectedProject])

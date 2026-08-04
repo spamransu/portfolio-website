@@ -103,9 +103,13 @@ export const createEmptyProject = (existingProjects: Project[], year = `${new Da
   challenge: 'Describe the problem this project solved.',
   approach: ['Describe the approach.'],
   outcome: ['Describe the outcome.'],
+  overview: 'Describe the broader case-study overview.',
+  approachSummary: 'Describe the editorial approach in one focused paragraph.',
+  resultSummary: 'Describe the result in one focused paragraph.',
+  scope: ['Interface Design', 'Frontend Development', 'Content Structure'],
+  reflection: 'Add a short project reflection.',
   image: emptyImage(),
-  gallery: [],
-  sections: [],
+  gallery: [emptyImage(), emptyImage(), emptyImage()],
 })
 
 export const createClonedProject = (source: Project, existingProjects: Project[]): Project => ({
@@ -128,11 +132,19 @@ export const getProjectValidationError = (projects: Project[], selectedSlug: str
     if (!project.summary.trim()) return `${label} needs a summary.`
     if (!project.role.trim()) return `${label} needs a role.`
     if (!project.challenge.trim()) return `${label} needs a challenge.`
+    if (!project.overview.trim()) return `${label} needs an overview.`
+    if (!project.approachSummary.trim()) return `${label} needs an approach summary.`
+    if (!project.resultSummary.trim()) return `${label} needs a result summary.`
+    if (!project.reflection.trim()) return `${label} needs a reflection.`
     if (!project.stack.some(Boolean)) return `${label} needs at least one stack item.`
     if (!project.approach.some(Boolean)) return `${label} needs at least one approach item.`
     if (!project.outcome.some(Boolean)) return `${label} needs at least one outcome item.`
+    if (!project.scope.some(Boolean)) return `${label} needs at least one scope item.`
+    if (!project.gallery || project.gallery.length < 3) return `${label} needs at least three gallery images.`
     if (project.image?.src.trim() && !project.image.alt.trim()) return `${label} hero image alt text is required.`
     if (!project.image?.src.trim() && project.image?.alt.trim()) return `${label} hero image src is required.`
+    const invalidGalleryImage = project.gallery.find((image) => !image.src.trim() || !image.alt.trim())
+    if (invalidGalleryImage) return `${label} gallery images need both src and alt text.`
   }
 
   if (projects.length > 0 && selectedSlug && !projects.some((project) => project.slug === selectedSlug)) {
@@ -164,13 +176,11 @@ export const isAdminApiError = (error: unknown): error is AdminApiError => error
 export const projectJsonFieldLabels: Record<ProjectJsonField, string> = {
   image: 'Hero image JSON',
   gallery: 'Gallery JSON',
-  sections: 'Sections JSON',
 }
 
 export const createProjectJsonDrafts = (project: Project | null): ProjectJsonDrafts => ({
   image: JSON.stringify(project?.image ?? emptyImage(), null, 2),
-  gallery: JSON.stringify(project?.gallery ?? [], null, 2),
-  sections: JSON.stringify(project?.sections ?? [], null, 2),
+  gallery: JSON.stringify(project?.gallery ?? [emptyImage(), emptyImage(), emptyImage()], null, 2),
 })
 
 export const parseProjectJsonField = <Field extends ProjectJsonField>(

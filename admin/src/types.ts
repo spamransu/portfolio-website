@@ -64,13 +64,11 @@ export type Job = {
   highlights: string[]
 }
 
-export type ProjectSectionKind = 'default' | 'approach' | 'outcome'
+export type ProjectKind = 'case-study' | 'experiment'
 
-export type ProjectSection = {
-  kind: ProjectSectionKind
-  title: string
-  body: string
-  image?: ImageAsset
+export type ProjectLink = {
+  label: string
+  href: string
 }
 
 export type Project = {
@@ -78,15 +76,22 @@ export type Project = {
   title: string
   year: string
   client: string
+  kind?: ProjectKind
+  status?: string
   summary: string
   role: string
   stack: string[]
+  links?: ProjectLink[]
   challenge: string
   approach: string[]
   outcome: string[]
+  overview: string
+  approachSummary: string
+  resultSummary: string
+  scope: string[]
+  reflection: string
   image?: ImageAsset
-  gallery?: ImageAsset[]
-  sections?: ProjectSection[]
+  gallery: ImageAsset[]
 }
 
 export type SiteContent = {
