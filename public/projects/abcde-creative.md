@@ -1,23 +1,25 @@
-# ABCDE CREATIVE
+# ABCDE Creative Studio website
 
-- Year: 2026
-- Client: ABCDE Creative
-- Role: Frontend developer
-- Stack: React, TypeScript, SCSS, Content modeling
-- Homepage image: https://lancecarteciano.com/images/home/featured-project-1.png
+- Year: 2025
+- Client: ABCDE Creative Studio
+- Role: Web developer
+- Stack: React, TypeScript, JavaScript, HTML, CSS, Figma, GitHub Actions, Cloudflare
+- Homepage image: https://384721.xyz/images/home/featured-project-2.png
 
 ## Summary
-A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
+Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.
 
 ## Challenge
-The site needed stronger hierarchy and more reusable structure so new case-study and service pages could be added without layout drift.
+The work needed to translate design direction into responsive interfaces while keeping accessibility and maintainability in mind.
 
 ## Approach
-- Reworked marketing sections into reusable content blocks.
-- Tightened spacing and type rhythm for clearer scanning.
-- Aligned page components so future pages could follow the same system.
+- Worked on 3 web projects, including the studio website.
+- Built at least 5 responsive pages from Figma mockups.
+- Applied WCAG-based accessibility checks during implementation.
+- Contributed reusable UI patterns for future builds.
+- Supported delivery workflows through GitHub Actions and Cloudflare.
 
 ## Outcome
-- Cleaner presentation across portfolio and services content.
-- More consistent page-building patterns for future updates.
-- A stronger visual-first case-study experience.
+- Responsive pages matched the design direction more closely across screen sizes.
+- Reusable patterns made later project work easier to maintain.
+- The delivery process had clearer build and deployment support.

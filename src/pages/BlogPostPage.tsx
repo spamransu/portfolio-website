@@ -36,7 +36,7 @@ export function BlogPostPage() {
 
       {post.coverImage ? (
         <section className={sty.articleCover}>
-          <div className="lg-wrapper"><figure><img src={post.coverImage} alt={post.coverAlt ?? post.title} /><figcaption>Cover image — {post.title}</figcaption></figure></div>
+          <div className="lg-wrapper"><figure><img src={post.coverImage} alt={post.coverAlt ?? post.title} /><figcaption>Cover image: {post.title}</figcaption></figure></div>
         </section>
       ) : null}
 
@@ -54,8 +54,8 @@ export function BlogPostPage() {
 
       <section className={sty.articleCta}>
         <div className="lg-wrapper">
-          <div><p className="eyebrow">See it in practice</p><h2>Explore the case studies.</h2></div>
-          <Link className="button button--ghost" to="/projects">View projects</Link>
+          <div><p className="eyebrow">{blogPostCopy?.articleCtaEyebrow ?? 'Related work'}</p><h2>{blogPostCopy?.articleCtaTitle ?? 'Read the project archive.'}</h2></div>
+          <Link className="button button--ghost" to="/projects">{blogPostCopy?.articleCtaLabel ?? 'View projects'}</Link>
         </div>
       </section>
     </div>

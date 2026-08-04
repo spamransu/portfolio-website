@@ -22,11 +22,31 @@
   padding-block: var(--space-xl);
 }
 
+.projectGroups,
+.projectGroup,
 .projectGrid,
 .cardGrid,
 .gallery {
   display: grid;
   gap: var(--space-lg);
+}
+
+
+.projectGroup header {
+  display: grid;
+  gap: var(--space-xs);
+  padding-block-end: var(--space-md);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.projectGroup header p {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.projectGroup header :global(.eyebrow) {
+  color: var(--color-action-primary);
 }
 
 .proseLead {
@@ -208,7 +228,7 @@
 }
 
 @include mix.mq(md) {
-  .snapshotGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .snapshotGrid { grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); }
   .snapshotGrid > div + div { border-top: 0; border-inline-start: 1px solid var(--color-border-default); }
   .caseStudySection { grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.9fr); }
   .nextProject a { grid-template-columns: repeat(12, minmax(0, 1fr)); }

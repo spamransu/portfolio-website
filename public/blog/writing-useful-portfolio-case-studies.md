@@ -1,12 +1,9 @@
----
-title: "Writing useful portfolio case studies"
-slug: "writing-useful-portfolio-case-studies"
-date: "2026-07-22"
-status: "published"
-excerpt: "A practical note on turning real project work into a case study without padding it with vague claims."
-coverImage: "https://picsum.photos/seed/portfolio-case-study-writing/1600/900.jpg"
-coverAlt: "Generic notebook and laptop image used as a placeholder for a case study writing article."
----
+# Writing useful portfolio case studies
+
+- Date: 2026-07-22
+- Excerpt: A practical note on turning real project work into a case study without padding it with vague claims.
+- Cover image: https://picsum.photos/seed/portfolio-case-study-writing/1600/900.jpg
+
 A portfolio case study should help someone understand the work quickly. It does not need to make every project sound bigger than it was. The stronger move is usually simpler: name the problem, explain what you handled, and show what changed.
 
 ## Start with the real scope

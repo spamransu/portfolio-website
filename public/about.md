@@ -1,15 +1,15 @@
 # About
 
-I build portfolio and business websites that feel considered, readable, and easy to maintain after launch.
+I work on websites that need both clean implementation and visual care.
 
-My work sits between design and implementation. I translate layouts, content, and interaction ideas into frontend systems that stay clean when pages grow and revisions pile up.
+I am a frontend web developer and graphic designer at Tech Support Plus I.T Services. My current work covers WordPress maintenance, Elementor migrations, reusable templates, content workflows, styling systems, security cleanup, and deployment support.
 
-I care about visual rhythm, content hierarchy, and practical structure. That usually means reusable sections, token-driven styling, and layouts that still feel deliberate on smaller screens.
+Before that, I worked at ABCDE Creative Studio, where I translated Figma designs into responsive React pages and helped with accessible frontend delivery. I also have production design experience from print and social media work, which shaped how I handle details, revisions, and visual consistency.
 
-Most of the projects I enjoy combine interface polish with real delivery work: shipping pages, tightening responsive behavior, organizing content, and making the next update easier instead of harder.
+I like projects where design and implementation have to meet in the middle. A good page should look intentional, read clearly, and stay editable for the team that owns it after launch.
 
 ## Working principles
-- Content should read clearly before decoration starts.
-- Reusable layout systems beat one-off page fixes.
-- Mockups matter, but shipped code has to stay editable.
-- Frontend polish should improve trust, not add noise.
+- Start with the content and page purpose.
+- Use reusable sections instead of scattered fixes.
+- Keep responsive behavior readable on real screens.
+- Make the handoff easier for the next person editing the site.

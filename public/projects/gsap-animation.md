@@ -1,23 +1,21 @@
-# GSAP ANIMATION
+# React GSAP animation experiment
 
 - Year: 2026
-- Client: Animation Showcase
-- Role: Frontend developer
-- Stack: React, GSAP, SCSS, Performance tuning
-- Homepage image: https://lancecarteciano.com/images/home/featured-project-3.png
+- Client: Personal experiment
+- Role: Frontend practice
+- Stack: React, Vite, GSAP, Tailwind CSS
 
 ## Summary
-A motion-led frontend experiment focused on scroll choreography, visual pacing, and interaction details that still respected performance.
+A React and GSAP practice build based on a public tutorial, useful as an animation study rather than a client case study.
 
 ## Challenge
-The motion needed to feel expressive without overwhelming the content or creating a site that only worked on ideal hardware.
+The goal was to practice scroll and interface animation in React while understanding how tutorial patterns map into a real codebase.
 
 ## Approach
-- Used animation to support hierarchy instead of replacing it.
-- Focused on transforms and staged reveals for smoother motion.
-- Preserved a readable static structure underneath the effects.
+- Followed a public tutorial inspired by Zentry and JavaScript Mastery.
+- Practiced GSAP setup, timing, layout choreography, and responsive behavior.
+- Kept this listed as an experiment so it is not mistaken for original client work.
 
 ## Outcome
-- More memorable visual pacing without losing clarity.
-- Reusable motion patterns for future sections.
-- A better balance between flair and restraint.
+- The project documents animation practice and code familiarity with GSAP in React.
+- It stays in the archive with clear attribution instead of being framed as a main case study.

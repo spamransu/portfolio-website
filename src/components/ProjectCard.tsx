@@ -24,9 +24,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <p>{project.summary}</p>
         <div className={sty.meta}>
           <span>{project.client}</span>
+          {project.status ? <span>{project.status}</span> : null}
           <span>{roleLabelPrefix}: {project.role}</span>
         </div>
         <ul className="tag-list" aria-label={stackAriaLabel}>
+          {project.kind ? <li>{project.kind === 'case-study' ? 'Case study' : 'Experiment'}</li> : null}
           {project.stack.map((item) => (
             <li key={item}>{item}</li>
           ))}

@@ -1,23 +1,21 @@
-# TETHERLY
+# Tetherly bio link app
 
 - Year: 2026
-- Client: Tetherly
+- Client: Personal project
 - Role: Frontend developer
-- Stack: React, Design systems, SCSS, Content-first UI
-- Homepage image: https://lancecarteciano.com/images/home/featured-project-4.png
+- Stack: React, TypeScript, SCSS
 
 ## Summary
-A polished product-marketing concept centered on stronger card systems, clean device mockups, and a calmer visual rhythm.
+An in-progress React and TypeScript bio link app. It stays in the archive as product UI practice while the core build is still moving.
 
 ## Challenge
-The product presentation needed more consistency across cards, sections, and preview imagery so the brand could feel more cohesive.
+The project explores a small profile-link product with editable-looking cards, cleaner visual hierarchy, and reusable frontend structure.
 
 ## Approach
-- Standardized the card hierarchy and supporting metadata.
-- Built a cleaner visual rhythm between sections and imagery.
-- Used mock product views to make the content more tangible.
+- Built the app with React, TypeScript, and SCSS.
+- Focused on product UI structure, profile presentation, and reusable card patterns.
+- Kept the project marked as in progress until the product flow is more complete.
 
 ## Outcome
-- A more cohesive product-marketing presentation.
-- Clearer card patterns and stronger visual consistency.
-- Better readiness for future landing-page variations.
+- The repository shows active product UI practice.
+- The archive entry is honest about the project status and does not present it as finished client work.

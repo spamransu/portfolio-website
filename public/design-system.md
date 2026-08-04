@@ -1,27 +1,27 @@
-# Design system reference
+# The visual system behind the portfolio.
 
-The reusable visual engine behind the site — color, typography, spacing, layout, components, and interaction states.
+A public reference for the colors, type, spacing, grid, components, and motion rules used on this site.
 
 ## Color
 
-Dark editorial surfaces use acid lime for primary actions, with orange and violet reserved for supporting accents.
+The palette uses a dark page background, quiet borders, and a small set of accent colors for actions and state.
 
 ## Typography
 
-Oswald carries display hierarchy while Inter keeps interface copy and long-form reading clear.
+Oswald handles short display text. Inter carries body copy, labels, forms, and longer reading.
 
 ## Spacing
 
-A fluid scale interpolates between the approved 767px and 1366px viewport range.
+Spacing uses shared tokens so sections feel related instead of hand-tuned one by one.
 
 ## Grid
 
-Shared small, medium, and large wrappers sit on a twelve-column editorial composition.
+Small, medium, and large wrappers keep page width predictable across the public routes.
 
 ## Components
 
-Buttons, tags, fields, cards, dividers, and images use the same production tokens as the public pages.
+Buttons, tags, fields, cards, dividers, and images reuse the same tokens as the production pages.
 
 ## Motion
 
-Movement is brief and restrained, and reduced-motion preferences remove decorative transforms.
+Motion stays brief. Reduced-motion preferences remove decorative transforms.
