@@ -5,7 +5,7 @@
 .blockGrid { display: grid; gap: var(--space-lg); padding-block: var(--space-xl); }
 .blockGrid > header { display: grid; align-content: start; gap: var(--space-sm); }
 .blockGrid > header p { margin: 0; }
-.blockGrid > header p:last-child { max-width: 36ch; color: var(--color-text-muted); }
+.blockGrid > header p:last-child { color: var(--color-text-muted); }
 .swatches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; padding: 1px; background: var(--color-border-default); }
 .swatches article { display: grid; gap: var(--space-2xs); padding: var(--space-sm); background: var(--color-background-page); }
 .swatches article > div { aspect-ratio: 3 / 2; margin: calc(var(--space-sm) * -1) calc(var(--space-sm) * -1) var(--space-xs); border-bottom: 1px solid var(--color-border-default); }

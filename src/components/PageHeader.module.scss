@@ -8,10 +8,8 @@
 }
 
 .root h1 {
-  max-width: var(--page-header-title-measure);
   margin: 0;
   @include mix.type-style(h1);
-  text-wrap: balance;
 }
 
 .eyebrow {
