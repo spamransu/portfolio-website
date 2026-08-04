@@ -14,6 +14,7 @@ HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
 - [Projects](https://lancecarteciano.com/projects.md) — Project index and case-study summaries.
 - [Contact](https://lancecarteciano.com/contact.md) — If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
 - [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
+- [Design system](https://lancecarteciano.com/design-system.md) — The reusable visual engine behind the site — color, typography, spacing, layout, components, and interaction states.
 
 ## Featured case studies
 - [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md) — A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.

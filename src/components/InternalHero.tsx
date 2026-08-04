@@ -16,19 +16,23 @@ type InternalHeroProps = {
 export function InternalHero({ eyebrow, title, intro, media, actions }: InternalHeroProps) {
   return (
     <section className={sty.root}>
-      <div className={sty.copy}>
-        {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-        <h1>{title}</h1>
-        <p className={sty.intro}>{intro}</p>
-        {actions ? <div className={sty.actions}>{actions}</div> : null}
-      </div>
+      <div className="lg-wrapper">
+        <div className={sty.inner}>
+          <div className={sty.copy}>
+            {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+            <h1>{title}</h1>
+            <p className={sty.intro}>{intro}</p>
+            {actions ? <div className={sty.actions}>{actions}</div> : null}
+          </div>
 
-      {media ? (
-        <figure className={sty.media}>
-          <img src={media.src} alt={media.alt} />
-          {media.caption ? <figcaption>{media.caption}</figcaption> : null}
-        </figure>
-      ) : null}
+          {media ? (
+            <figure className={sty.media}>
+              <img src={media.src} alt={media.alt} />
+              {media.caption ? <figcaption>{media.caption}</figcaption> : null}
+            </figure>
+          ) : null}
+        </div>
+      </div>
     </section>
   )
 }

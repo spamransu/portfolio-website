@@ -1,19 +1,19 @@
 @use '../styles/mixins' as mix;
 
 .root {
-  display: grid;
-  gap: var(--section-stack-gap);
-  padding-block-start: var(--space-stack);
-  border-top: var(--section-divider);
+  border-bottom: var(--section-divider);
 }
 
-.root > :last-child {
-  min-width: 0;
+.inner {
+  display: grid;
+  gap: var(--space-lg);
+  padding-block: var(--space-xl);
 }
 
 .heading {
   display: grid;
-  gap: var(--section-stack-gap);
+  align-content: start;
+  gap: var(--space-stack);
 }
 
 .heading h2,
@@ -22,9 +22,32 @@
 }
 
 .heading h2 {
+  max-width: 14ch;
+  text-transform: uppercase;
   @include mix.type-style(h3);
 }
 
 .heading p {
+  max-width: 36ch;
   color: var(--color-text-muted);
+}
+
+.content {
+  min-width: 0;
+}
+
+@include mix.mq(md) {
+  .inner {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .heading {
+    grid-column: span 4;
+  }
+
+  .content {
+    grid-column: span 8;
+    padding-inline-start: var(--space-lg);
+    border-inline-start: 1px solid var(--color-border-default);
+  }
 }

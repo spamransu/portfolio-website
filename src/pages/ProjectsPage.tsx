@@ -7,7 +7,7 @@ export function ProjectsPage() {
   const projectsHeroImage = siteContent.projectsPage?.heroImage
 
   return (
-    <div className={`lg-wrapper ${sty.page}`}>
+    <div className={sty.page}>
       <InternalHero
         eyebrow={siteContent.projectsPage?.eyebrow ?? 'Projects'}
         title={siteContent.projectsPage?.title ?? 'Case studies with enough context to be useful.'}
@@ -15,11 +15,15 @@ export function ProjectsPage() {
         media={projectsHeroImage}
       />
 
-      <div className="project-grid">
-        {siteContent.projects.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </div>
+      <section className={sty.archiveSection}>
+        <div className="lg-wrapper">
+          <div className={sty.projectGrid}>
+            {siteContent.projects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

@@ -26,6 +26,7 @@ HI! I'M A FULL-STACK WEB DEVELOPER BASED IN THE PHILIPPINES.
 - [Projects](https://lancecarteciano.com/projects.md) — Project index and case-study summaries.
 - [Contact](https://lancecarteciano.com/contact.md) — If you need help with a portfolio, landing page, design-to-code build, or frontend cleanup, send the brief and I will reply by email.
 - [Resume](https://lancecarteciano.com/resume.md) — Frontend web developer and graphic designer focused on responsive implementation, WordPress builds, Figma-to-code work, and maintainable content-driven websites.
+- [Design system](https://lancecarteciano.com/design-system.md) — The reusable visual engine behind the site — color, typography, spacing, layout, components, and interaction states.
 
 ## Featured case studies
 - [ABCDE CREATIVE](https://lancecarteciano.com/projects/abcde-creative.md) — A portfolio and services website focused on clear service messaging, modular page sections, and a sharper visual rhythm across marketing pages.
@@ -283,3 +284,32 @@ If you need help with a portfolio, landing page, design-to-code build, or fronte
 - Email: hello@lancecarteciano.com
 - Location: Philippines
 - Availability: Available for freelance builds, design-to-code support, and selected frontend roles.
+
+## Design system
+# Design system reference
+
+The reusable visual engine behind the site — color, typography, spacing, layout, components, and interaction states.
+
+## Color
+
+Dark editorial surfaces use acid lime for primary actions, with orange and violet reserved for supporting accents.
+
+## Typography
+
+Oswald carries display hierarchy while Inter keeps interface copy and long-form reading clear.
+
+## Spacing
+
+A fluid scale interpolates between the approved 767px and 1366px viewport range.
+
+## Grid
+
+Shared small, medium, and large wrappers sit on a twelve-column editorial composition.
+
+## Components
+
+Buttons, tags, fields, cards, dividers, and images use the same production tokens as the public pages.
+
+## Motion
+
+Movement is brief and restrained, and reduced-motion preferences remove decorative transforms.

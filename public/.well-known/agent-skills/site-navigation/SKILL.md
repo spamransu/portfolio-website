@@ -16,6 +16,7 @@ Read these machine-friendly pages first:
 - `/blog.md` for published blog posts
 - `/projects.md` for the case-study archive
 - `/resume.md` for CV/resume content
+- `/design-system.md` for the public visual system reference
 - Project pages under `/projects/<slug>.md`
 - Blog posts under `/blog/<slug>.md`
 
@@ -29,6 +30,7 @@ Read these machine-friendly pages first:
 - `/projects/<slug>` — individual case study
 - `/resume` — resume summary and experience
 - `/contact` — contact and availability
+- `/design-system` — color, typography, spacing, layout, and component reference
 
 ## Notes
 

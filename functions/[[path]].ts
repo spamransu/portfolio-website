@@ -361,6 +361,7 @@ const toMarkdownPath = (pathname: string): string | null => {
   if (pathname === '/projects') return '/projects.md'
   if (pathname === '/contact') return '/contact.md'
   if (pathname === '/resume') return '/resume.md'
+  if (pathname === '/design-system') return '/design-system.md'
   if (pathname.startsWith('/projects/')) return `${pathname}.md`
   if (pathname.startsWith('/blog/')) return `${pathname}.md`
   return null

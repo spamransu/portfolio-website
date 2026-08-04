@@ -11,6 +11,7 @@ Frontend development, design systems, and case-study driven website work for bra
 - [Project archive](https://lancecarteciano.com/projects.md)
 - [Resume](https://lancecarteciano.com/resume.md)
 - [Contact](https://lancecarteciano.com/contact.md)
+- [Design system](https://lancecarteciano.com/design-system.md)
 
 ## Core pages
 - [Home](https://lancecarteciano.com/index.md)
@@ -19,6 +20,7 @@ Frontend development, design systems, and case-study driven website work for bra
 - [Projects](https://lancecarteciano.com/projects.md)
 - [Contact](https://lancecarteciano.com/contact.md)
 - [Resume](https://lancecarteciano.com/resume.md)
+- [Design system](https://lancecarteciano.com/design-system.md)
 - [My New Post](https://lancecarteciano.com/blog/my-new-post.md)
 - [Draft notes on case-study writing](https://lancecarteciano.com/blog/draft-notes-on-case-study-writing.md)
 - [Lightweight Git-backed portfolio CMS](https://lancecarteciano.com/blog/lightweight-git-backed-portfolio-cms.md)
