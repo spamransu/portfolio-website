@@ -53,3 +53,7 @@ Web developer and graphic designer with experience in WordPress, React, responsi
 - Designed weekly social media graphics and branded marketing assets for 3 branches.
 - Produced promotional assets for seasonal and recurring drink campaigns.
 - Worked with stakeholders to keep campaign visuals consistent with branch needs.
+
+## Education and training
+### Full-stack web developer training, CIIT College of Arts and Technology (2025)
+- Training covered PHP, Laravel, MySQL, HTML, CSS, JavaScript, frontend fundamentals, backend fundamentals, and database work.

@@ -166,6 +166,12 @@ ${siteContent.resume.experience
     (job) => `### ${job.role}, ${job.company} (${job.period})\n${bullets(job.highlights)}`,
   )
   .join('\n\n')}
+
+${siteContent.resume.education?.length ? `## ${siteContent.resume.educationSectionTitle ?? 'Education and training'}\n${siteContent.resume.education
+  .map(
+    (item) => `### ${item.program}, ${item.school} (${item.period})\n${bullets(item.highlights)}`,
+  )
+  .join('\n\n')}` : ''}
 `
 
 const contactMd = `# Contact

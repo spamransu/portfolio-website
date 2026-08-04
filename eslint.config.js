@@ -5,7 +5,7 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
-  { ignores: ['dist', '.playwright', '.playwright-cli', '.playwright-mcp'] },
+  { ignores: ['dist', '.wrangler', '.playwright', '.playwright-cli', '.playwright-mcp'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
