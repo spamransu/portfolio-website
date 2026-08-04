@@ -4,4 +4,4 @@ Allow: /
 # Content Signals preference
 Content-Signal: search=yes, ai-input=yes, ai-train=no
 
-Sitemap: https://lancecarteciano.com/sitemap.xml
+Sitemap: https://384721.xyz/sitemap.xml

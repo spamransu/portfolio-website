@@ -42,10 +42,21 @@ export function ProjectDetailPage() {
             <div><dt>{detailCopy?.roleLabel ?? 'Role'}</dt><dd>{project.role}</dd></div>
             <div><dt>{detailCopy?.clientLabel ?? 'Client'}</dt><dd>{project.client}</dd></div>
             <div><dt>{detailCopy?.yearLabel ?? 'Year'}</dt><dd>{project.year}</dd></div>
+            {project.status ? <div><dt>{detailCopy?.statusLabel ?? 'Status'}</dt><dd>{project.status}</dd></div> : null}
             <div><dt>{detailCopy?.stackLabel ?? 'Stack'}</dt><dd>{project.stack.join(', ')}</dd></div>
           </dl>
         </div>
       </section>
+
+      {project.links?.length ? (
+        <Section title={detailCopy?.linksTitle ?? 'Links'}>
+          <ul className="tag-list">
+            {project.links.map((link) => (
+              <li key={link.href}><a href={link.href} target="_blank" rel="noreferrer">{link.label}</a></li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
 
       {project.sections?.map((section, index) => {
         const sectionImage = section.image ?? project.gallery?.[index]
@@ -86,7 +97,7 @@ export function ProjectDetailPage() {
           <Link to={`/projects/${nextProject.slug}`}>
             <span>{detailCopy?.nextProjectEyebrow ?? 'Next project'}</span>
             <strong>{nextProject.title}</strong>
-            <span>{nextProject.year} →</span>
+            <span>{nextProject.year}</span>
           </Link>
         </div>
       </section>

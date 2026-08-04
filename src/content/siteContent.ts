@@ -12,6 +12,13 @@ export type Job = {
   highlights: string[]
 }
 
+export type EducationItem = {
+  program: string
+  school: string
+  period: string
+  highlights: string[]
+}
+
 export type ImageAsset = {
   src: string
   alt: string
@@ -67,14 +74,24 @@ export type ProjectSection = {
   image?: ImageAsset
 }
 
+export type ProjectKind = 'case-study' | 'experiment'
+
+export type ProjectLink = {
+  label: string
+  href: string
+}
+
 export type Project = {
   slug: string
   title: string
   year: string
   client: string
+  kind?: ProjectKind
+  status?: string
   summary: string
   role: string
   stack: string[]
+  links?: ProjectLink[]
   challenge: string
   approach: string[]
   outcome: string[]
@@ -162,6 +179,10 @@ export type SiteContent = {
       title: string
       description: string
       items: string[]
+      groups?: Array<{
+        title: string
+        items: string[]
+      }>
       cloudAriaLabel?: string
     }
     contact: ContactFormContent
@@ -190,6 +211,8 @@ export type SiteContent = {
     experienceSectionTitle: string
     skills: string[]
     highlights: HighlightStat[]
+    educationSectionTitle?: string
+    education?: EducationItem[]
     heroImage?: ImageAsset
     experience: Job[]
   }
@@ -216,6 +239,11 @@ export type SiteContent = {
     intro: string
     roleLabelPrefix?: string
     stackAriaTemplate?: string
+    groups?: Array<{
+      title: string
+      description?: string
+      kinds: ProjectKind[]
+    }>
     heroImage?: ImageAsset
   }
   blogPage?: {
@@ -231,6 +259,9 @@ export type SiteContent = {
     backToBlogLabel: string
     startProjectLabel: string
     articleSectionTitle: string
+    articleCtaEyebrow?: string
+    articleCtaTitle?: string
+    articleCtaLabel?: string
   }
   designSystemPage?: {
     eyebrow: string
@@ -252,7 +283,9 @@ export type SiteContent = {
     roleLabel: string
     clientLabel: string
     yearLabel: string
+    statusLabel?: string
     stackLabel: string
+    linksTitle?: string
     stackAriaTemplate: string
     galleryTitle: string
     galleryIntro: string

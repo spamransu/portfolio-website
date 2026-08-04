@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ContactForm } from '../components/ContactForm'
+import { ProjectCard } from '../components/ProjectCard'
 import { siteContent, type HomeStatTone, type Project } from '../content/siteContent'
 import sty from './HomePage.module.scss'
 
@@ -9,9 +10,13 @@ const statToneClassNames: Record<HomeStatTone, string> = {
   'accent-3': sty.statAccent3,
 }
 
-function getFeaturedProject(): Project | undefined {
-  const featuredSlug = siteContent.home.featuredProjects.slugs[0]
-  return siteContent.projects.find((project) => project.slug === featuredSlug) ?? siteContent.projects[0]
+function getFeaturedProjects(): Project[] {
+  const featuredSlugs = siteContent.home.featuredProjects.slugs
+  const projects = featuredSlugs
+    .map((slug) => siteContent.projects.find((project) => project.slug === slug))
+    .filter((project): project is Project => Boolean(project))
+
+  return projects.length ? projects : siteContent.projects.slice(0, 4)
 }
 
 function renderAccentedTitle(title: string, accentPhrase?: string) {
@@ -22,10 +27,10 @@ function renderAccentedTitle(title: string, accentPhrase?: string) {
 }
 
 export function HomePage() {
-  const featured = getFeaturedProject()
+  const featuredProjects = getFeaturedProjects()
   const hero = siteContent.home.hero
   const title = hero.titleLines.join(' ')
-  const totalFeatured = Math.max(siteContent.home.featuredProjects.slugs.length, 1)
+  const skillGroups = siteContent.home.skills.groups
 
   return (
     <div className={sty.root}>
@@ -60,37 +65,21 @@ export function HomePage() {
         </div>
       </section>
 
-      {featured ? (
+      {featuredProjects.length ? (
         <section className={sty.featured}>
           <div className="lg-wrapper">
             <div className={sty.sectionInner}>
               <div className={sty.featuredHeading}>
-                <p className="eyebrow">{siteContent.home.featuredProjects.title}</p>
-                <p className={sty.meta}>01 / {String(totalFeatured).padStart(2, '0')}</p>
-              </div>
-              <div className={sty.featuredGrid}>
-                <div className={sty.featuredCopy}>
-                  <span className={sty.featuredIndex}>01</span>
-                  <h2>{featured.title}</h2>
-                  <p>{featured.summary}</p>
-                  <dl className={sty.projectMeta}>
-                    <div><dt>Client</dt><dd>{featured.client}</dd></div>
-                    <div><dt>Role</dt><dd>{featured.role}</dd></div>
-                    <div><dt>Year</dt><dd>{featured.year}</dd></div>
-                    <div><dt>Discipline</dt><dd>{featured.stack[0]}</dd></div>
-                  </dl>
-                  <ul className="tag-list" aria-label={(siteContent.home.featuredProjects.stackAriaTemplate ?? '{title} stack').replace('{title}', featured.title)}>
-                    {featured.stack.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                  <div className={sty.featuredLinks}>
-                    <Link to={`/projects/${featured.slug}`}>Read the case study ↗</Link>
-                    <Link to="/projects">All projects →</Link>
-                  </div>
+                <div>
+                  <p className="eyebrow">{siteContent.home.featuredProjects.title}</p>
+                  {siteContent.home.featuredProjects.intro ? <p className={sty.featuredIntro}>{siteContent.home.featuredProjects.intro}</p> : null}
                 </div>
-                <figure className={sty.featuredMedia}>
-                  {featured.image ? <img src={featured.image.src} alt={featured.image.alt} /> : null}
-                  <figcaption>Fig. 01 — {featured.title}, {featured.year}</figcaption>
-                </figure>
+                <p className={sty.meta}>{String(featuredProjects.length).padStart(2, '0')} projects</p>
+              </div>
+              <div className={sty.featuredCards}>
+                {featuredProjects.map((project) => (
+                  <ProjectCard key={project.slug} project={project} />
+                ))}
               </div>
             </div>
           </div>
@@ -127,11 +116,26 @@ export function HomePage() {
               <h2>{siteContent.home.skills.title}</h2>
               <p>{siteContent.home.skills.description}</p>
             </div>
-            <ul aria-label={siteContent.home.skills.cloudAriaLabel ?? 'Skills cloud'}>
-              {siteContent.home.skills.items.map((skill, index) => (
-                <li className={index % 3 === 1 ? sty.skillFlare : index % 3 === 2 ? sty.skillIris : undefined} key={skill}>{skill}</li>
-              ))}
-            </ul>
+            {skillGroups?.length ? (
+              <div className={sty.skillGroups}>
+                {skillGroups.map((group) => (
+                  <article key={group.title}>
+                    <h3>{group.title}</h3>
+                    <ul aria-label={`${group.title} skills`}>
+                      {group.items.map((skill, index) => (
+                        <li className={index % 3 === 1 ? sty.skillFlare : index % 3 === 2 ? sty.skillIris : undefined} key={skill}>{skill}</li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <ul aria-label={siteContent.home.skills.cloudAriaLabel ?? 'Skills cloud'}>
+                {siteContent.home.skills.items.map((skill, index) => (
+                  <li className={index % 3 === 1 ? sty.skillFlare : index % 3 === 2 ? sty.skillIris : undefined} key={skill}>{skill}</li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </section>
@@ -142,7 +146,7 @@ export function HomePage() {
             <div className={sty.contactCopy}>
               <p className="eyebrow">Start a conversation</p>
               <h2>{siteContent.home.contact.title}</h2>
-              <p>{siteContent.site.location}. Reach directly at <a href={`mailto:${siteContent.site.email}`}>{siteContent.site.email}</a>.</p>
+              <p>{siteContent.contact.availability}. Reach directly at <a href={`mailto:${siteContent.site.email}`}>{siteContent.site.email}</a>.</p>
             </div>
             <ContactForm contact={siteContent.home.contact} recipientEmail={siteContent.site.email} showIntro={false} />
           </div>
