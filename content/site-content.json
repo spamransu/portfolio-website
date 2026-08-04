@@ -566,7 +566,30 @@
         "WEB DEVELOPER",
         "BASED IN THE PHILIPPINES."
       ],
-      "description": ""
+      "description": "",
+      "accentPhrase": "WEB DEVELOPER",
+      "dateline": {
+        "left": "Portfolio \u2014 2026",
+        "right": "Frontend & design practice"
+      },
+      "index": [
+        {
+          "label": "Focus",
+          "value": "Frontend development"
+        },
+        {
+          "label": "Medium",
+          "value": "Web experiences"
+        },
+        {
+          "label": "Practice",
+          "value": "Design systems"
+        },
+        {
+          "label": "Output",
+          "value": "Case studies & notes"
+        }
+      ]
     },
     "cta": {
       "primaryLabel": "Book a call",

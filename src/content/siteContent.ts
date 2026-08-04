@@ -130,6 +130,15 @@ export type SiteContent = {
       eyebrow: string
       titleLines: string[]
       description: string
+      accentPhrase?: string
+      dateline?: {
+        left: string
+        right: string
+      }
+      index?: Array<{
+        label: string
+        value: string
+      }>
     }
     cta: {
       primaryLabel: string
