@@ -1,11 +1,25 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
 import { siteContent } from '../content/siteContent'
 
 export function RootLayout() {
   const location = useLocation()
+  const navigationType = useNavigationType()
   const isHomePage = location.pathname === '/'
+
+  useEffect(() => {
+    if (navigationType === 'POP') return
+
+    if (location.hash) {
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)))
+      target?.scrollIntoView({ behavior: 'smooth' })
+      return
+    }
+
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }, [location.hash, location.pathname, navigationType])
 
   return (
     <div className="site-shell">

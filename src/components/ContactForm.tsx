@@ -5,6 +5,7 @@ import sty from './ContactForm.module.scss'
 type ContactFormProps = {
   contact: ContactFormContent
   recipientEmail: string
+  showIntro?: boolean
 }
 
 type ContactFormState = {
@@ -56,7 +57,7 @@ function validateForm(values: ContactFormState, contact: ContactFormContent) {
   return errors
 }
 
-export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
+export function ContactForm({ contact, recipientEmail, showIntro = true }: ContactFormProps) {
   const [formValues, setFormValues] = useState(initialFormState)
   const [formErrors, setFormErrors] = useState<ContactFormErrors>({})
   const formId = useId()
@@ -107,10 +108,12 @@ export function ContactForm({ contact, recipientEmail }: ContactFormProps) {
 
   return (
     <div className={sty.root}>
-      <div className={sty.intro}>
-        <h2>{contact.title}</h2>
-        {contact.intro ? <p>{contact.intro}</p> : null}
-      </div>
+      {showIntro ? (
+        <div className={sty.intro}>
+          <h2>{contact.title}</h2>
+          {contact.intro ? <p>{contact.intro}</p> : null}
+        </div>
+      ) : null}
 
       <form className={sty.form} onSubmit={handleSubmit} noValidate>
         <div className={sty.field}>

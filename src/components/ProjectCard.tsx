@@ -17,15 +17,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </Link>
 
       <div className={sty.content}>
-        <div className={sty.meta}>
-          <span>{project.year}</span>
-          <span>{project.client}</span>
+        <div className={sty.titleRow}>
+          <h2><Link to={`/projects/${project.slug}`}>{project.title}</Link></h2>
+          <span className={sty.year}>{project.year}</span>
         </div>
-        <h2>
-          <Link to={`/projects/${project.slug}`}>{project.title}</Link>
-        </h2>
         <p>{project.summary}</p>
-        <p className={sty.role}>{roleLabelPrefix}: {project.role}</p>
+        <div className={sty.meta}>
+          <span>{project.client}</span>
+          <span>{roleLabelPrefix}: {project.role}</span>
+        </div>
         <ul className="tag-list" aria-label={stackAriaLabel}>
           {project.stack.map((item) => (
             <li key={item}>{item}</li>

@@ -51,52 +51,46 @@ export function SiteFooter() {
               {brand.secondary ? <span className={sty.brandSecondary}>{brand.secondary}</span> : null}
             </p>
             <p className={sty.description}>{siteContent.site.description}</p>
-            <p className={sty.copyright}>{copyright}</p>
           </div>
 
-          <div className={sty.linksWrap}>
-            <div className={sty.linkColumns}>
-              <div>
-                <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
-                <ul className={sty.linkList}>
-                  {generalLinks.map((link) => (
-                    <li key={`${link.to}-${link.label}`}>
-                      <Link to={link.to}>{link.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className={sty.heading}>{footerCopy?.moreHeading ?? 'More'}</p>
-                <ul className={sty.linkList}>
-                  {moreLinks.map((link) => (
-                    <li key={`${link.to}-${link.label}`}>
-                      {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')
-                        ? <a href={link.to}>{link.label}</a>
-                        : <Link to={link.to}>{link.label}</Link>}
-                    </li>
-                  ))}
-                  {linktreeUrl ? (
-                    <li>
-                      <a href={linktreeUrl} target="_blank" rel="noreferrer">
-                        {footerCopy?.linktreeLabel ?? 'Linktree'}
-                      </a>
-                    </li>
-                  ) : null}
-                </ul>
-              </div>
-            </div>
-
-            <ul className={sty.socials} aria-label={siteContent.siteChrome?.footerSocialsAriaLabel ?? 'Social links'}>
-              {visibleSocials.map((social) => (
-                <li key={social.href}>
-                  <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>
-                    <span aria-hidden="true" className={sty.socialIcon}>{getSocialGlyph(social.label)}</span>
-                  </a>
+          <nav className={sty.navigation} aria-label="Footer">
+            <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
+            <ul className={sty.linkList}>
+              {generalLinks.map((link) => (
+                <li key={`${link.to}-${link.label}`}><Link to={link.to}>{link.label}</Link></li>
+              ))}
+              {moreLinks.map((link) => (
+                <li key={`${link.to}-${link.label}`}>
+                  {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')
+                    ? <a href={link.to}>{link.label}</a>
+                    : <Link to={link.to}>{link.label}</Link>}
                 </li>
               ))}
+              {linktreeUrl ? (
+                <li><a href={linktreeUrl} target="_blank" rel="noreferrer">{footerCopy?.linktreeLabel ?? 'Linktree'}</a></li>
+              ) : null}
             </ul>
+          </nav>
+
+          <div className={sty.contact}>
+            <p className={sty.heading}>Contact</p>
+            <a href={`mailto:${siteContent.site.email}`}>{siteContent.site.email}</a>
+            <a href={siteContent.site.siteUrl}>{siteContent.site.siteUrl.replace(/^https?:\/\//, '')}</a>
+            <p>{siteContent.site.location}</p>
           </div>
+        </div>
+
+        <div className={sty.bottom}>
+          <p className={sty.copyright}>{copyright}</p>
+          <ul className={sty.socials} aria-label={siteContent.siteChrome?.footerSocialsAriaLabel ?? 'Social links'}>
+            {visibleSocials.map((social) => (
+              <li key={social.href}>
+                <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>
+                  <span aria-hidden="true" className={sty.socialIcon}>{getSocialGlyph(social.label)}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>
