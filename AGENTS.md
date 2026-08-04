@@ -55,10 +55,13 @@
 
 ## Git workflow
 
-- Follow the project Git workflow in `agent-generated-docs/git-branch-release-workflow.md` for feature/fix branches, `development`, `release/vX.Y.Z`, `main`, annotated tags, sync-back merges, and cleanup.
-- Default branch flow: `feat/*` or `fix/*` -> `development` -> `release/vX.Y.Z` -> `main` + annotated tag -> merge `main` back into `development`.
-- Preserve merge commits; do not squash or rebase completed branch merges unless the user explicitly asks.
-- Do not push feature work directly to `main`; release merges into `main` should come from `release/vX.Y.Z`.
+- Follow `agent-generated-docs/git-branch-release-workflow.md` for feature/fix branches, release preflight, optional stabilization branches, annotated tags, atomic publication, fast-forward synchronization, and cleanup.
+- Default branch flow: `feat/*` or `fix/*` -> merge commit into `development` -> one release merge into `main` + annotated tag -> fast-forward `development` to `main`.
+- Create `release/vX.Y.Z` only when release preparation, stabilization, or release-blocking fixes require commits beyond the validated `development` tip. Otherwise release directly from `development`.
+- Refuse an unchanged release, unexpected `main`/release-source divergence, or an existing local or remote version tag.
+- Push `main` and its release tag atomically. Never add a second `--no-ff` sync-back merge; synchronization must be `--ff-only`.
+- Preserve feature/fix branch commits and the single release merge. Do not squash or rebase completed branch merges unless the user explicitly asks.
+- Do not push feature work directly to `main`.
 
 ## Goal
 
