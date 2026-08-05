@@ -116,7 +116,7 @@
 .latestPost h2 { text-transform: uppercase; @include mix.type-style(h3); }
 .latestPost p,
 .postRow p { max-width: var(--measure-prose); color: var(--color-text-muted); }
-.latestPost strong { display: inline-block; margin-block-start: var(--space-sm); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs, 600); }
+.latestPost strong { display: inline-flex; align-items: center; gap: var(--space-2xs); margin-block-start: var(--space-sm); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs, 600); }
 .latestPost:hover h2,
 .postRow:hover h2 { color: var(--color-action-primary); }
 .postMeta { display: flex; flex-wrap: wrap; align-content: start; gap: var(--space-xs); color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
@@ -149,8 +149,9 @@
 .articleCta h2 { margin-block-start: var(--space-xs); text-transform: uppercase; @include mix.type-style(h4); }
 
 .availabilityMeta { display: flex; flex-wrap: wrap; gap: var(--space-md); color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
-.availabilityMeta span:first-child { display: inline-flex; align-items: center; gap: var(--space-xs); color: var(--color-text-primary); }
-.availabilityMeta i { width: 0.5rem; aspect-ratio: 1; background: var(--color-action-primary); border-radius: 50%; }
+.availabilityMeta span { display: inline-flex; align-items: center; gap: var(--space-xs); }
+.availabilityMeta span:first-child { color: var(--color-text-primary); }
+.availabilityMeta svg { color: var(--color-action-primary); }
 .contactGrid { display: grid; gap: var(--space-lg); }
 .contactGrid aside,
 .contactFormWrap { display: grid; align-content: start; gap: var(--space-md); }

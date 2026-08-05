@@ -1,7 +1,9 @@
 import { useMemo } from 'react'
+import { LuCopy, LuEraser, LuPlus, LuRefreshCw, LuSave, LuTrash2 } from 'react-icons/lu'
 import { parseBlogMarkdownBlocks } from '../../../../src/content/blogMarkdown'
 import type { DashboardBlogProps } from './dashboardTypes'
 import { Field, StatusMessage } from './AdminUi'
+import { AdminIcon } from './AdminIcon'
 
 export const BlogEditorSection = ({
   activity,
@@ -34,9 +36,9 @@ export const BlogEditorSection = ({
           <p className="admin-note">Markdown files in <span className="admin-code">content/blog</span>. Create, edit, delete, duplicate, and upload blog media remain supported.</p>
         </div>
         <div className="admin-save-group" aria-label="Blog save actions">
-          <button className="admin-button admin-button-secondary" type="button" onClick={onReload} disabled={!post?.sha || loading || saving}>Reload post</button>
-          <button className="admin-button admin-button-secondary" type="button" onClick={onDiscard} disabled={!dirty || saving}>Discard</button>
-          <button className="admin-button admin-button-primary" type="button" onClick={onSave} disabled={!post || !dirty || Boolean(validationError) || saving}>{saving ? 'Saving…' : 'Save blog post'}</button>
+          <button className="admin-button admin-button-secondary" type="button" onClick={onReload} disabled={!post?.sha || loading || saving}><AdminIcon icon={LuRefreshCw} />Reload post</button>
+          <button className="admin-button admin-button-secondary" type="button" onClick={onDiscard} disabled={!dirty || saving}><AdminIcon icon={LuEraser} />Discard</button>
+          <button className="admin-button admin-button-primary" type="button" onClick={onSave} disabled={!post || !dirty || Boolean(validationError) || saving}>{saving ? 'Saving…' : <><AdminIcon icon={LuSave} />Save blog post</>}</button>
         </div>
       </div>
       <StatusMessage message={status} />
@@ -53,9 +55,9 @@ export const BlogEditorSection = ({
             {dirty ? <span className="admin-badge">Unsaved</span> : null}
           </div>
           <div className="admin-actions admin-actions--wrap">
-            <button className="admin-button admin-button-secondary" type="button" onClick={onCreate}>New</button>
-            <button className="admin-button admin-button-secondary" type="button" onClick={onDuplicate} disabled={!post}>Duplicate</button>
-            <button className="admin-button admin-button-danger" type="button" onClick={onDelete} disabled={!post?.sha || saving}>Delete</button>
+            <button className="admin-button admin-button-secondary" type="button" onClick={onCreate}><AdminIcon icon={LuPlus} />New</button>
+            <button className="admin-button admin-button-secondary" type="button" onClick={onDuplicate} disabled={!post}><AdminIcon icon={LuCopy} />Duplicate</button>
+            <button className="admin-button admin-button-danger" type="button" onClick={onDelete} disabled={!post?.sha || saving}><AdminIcon icon={LuTrash2} />Delete</button>
           </div>
           <Field label="Blog selector">
             <select id="blog-select" value={selectedSlug} onChange={(event) => onSelect(event.target.value)}>

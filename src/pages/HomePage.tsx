@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { LuArrowRight, LuCalendarCheck, LuDownload, LuExternalLink, LuMessageCircle } from 'react-icons/lu'
 import { ContactForm } from '../components/ContactForm'
 import { siteContent, type HomeStatTone, type Project } from '../content/siteContent'
 import sty from './HomePage.module.scss'
@@ -50,9 +51,9 @@ export function HomePage() {
                   </dl>
                 ) : null}
                 <div className="button-row">
-                  <a className="button button--primary" href="#contact">{siteContent.home.cta.primaryLabel}</a>
+                  <a className="button button--primary" href="#contact">{siteContent.home.cta.primaryLabel}<LuMessageCircle aria-hidden="true" focusable="false" /></a>
                   {siteContent.home.cta.secondaryLabel ? (
-                    <Link className="button button--ghost" to="/resume">{siteContent.home.cta.secondaryLabel}</Link>
+                    <Link className="button button--ghost" to="/resume">{siteContent.home.cta.secondaryLabel}<LuDownload aria-hidden="true" focusable="false" /></Link>
                   ) : null}
                 </div>
               </div>
@@ -84,8 +85,8 @@ export function HomePage() {
                     {featured.stack.map((item) => <li key={item}>{item}</li>)}
                   </ul>
                   <div className={sty.featuredLinks}>
-                    <Link to={`/projects/${featured.slug}`}>Read the case study ↗</Link>
-                    <Link to="/projects">All projects →</Link>
+                    <Link to={`/projects/${featured.slug}`}>Read the case study<LuExternalLink aria-hidden="true" focusable="false" /></Link>
+                    <Link to="/projects">All projects<LuArrowRight aria-hidden="true" focusable="false" /></Link>
                   </div>
                 </div>
                 <figure className={sty.featuredMedia}>
@@ -158,7 +159,7 @@ export function HomePage() {
             <div className={sty.contactCopy}>
               <p className="eyebrow">Start a conversation</p>
               <h2>{siteContent.home.contact.title}</h2>
-              <p>{siteContent.contact.availability}. Reach directly at <a href={`mailto:${siteContent.site.email}`}>{siteContent.site.email}</a>.</p>
+              <p><LuCalendarCheck aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.contact.availability}. Reach directly at <a href={`mailto:${siteContent.site.email}`}>{siteContent.site.email}</a>.</p>
             </div>
             <ContactForm contact={siteContent.home.contact} recipientEmail={siteContent.site.email} showIntro={false} />
           </div>
