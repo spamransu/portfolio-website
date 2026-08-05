@@ -130,11 +130,11 @@
   --form-field-padding: #{tokens.component-token(form-field-padding)};
   --form-field-radius: #{tokens.component-token(form-field-radius)};
   --form-field-min-block-size: var(--target-min-size);
+  --icon-size: 1rem;
   --tag-padding: #{tokens.component-token(tag-padding)};
   --tag-radius: #{tokens.component-token(tag-radius)};
   --tag-border-color: var(--color-border-default);
   --header-link-min-block-size: var(--target-min-size);
-  --footer-icon-size: var(--target-min-size);
   --footer-icon-padding-inline: #{tokens.component-token(social-icon-padding-inline)};
   --footer-icon-radius: #{tokens.component-token(social-icon-radius)};
   --section-divider: 1px solid var(--color-border-default);
@@ -240,6 +240,12 @@ a {
 img {
   display: block;
   max-width: 100%;
+}
+
+:where(svg[focusable='false']) {
+  flex: 0 0 var(--icon-size);
+  width: var(--icon-size);
+  height: var(--icon-size);
 }
 
 ::selection {

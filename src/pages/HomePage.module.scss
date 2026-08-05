@@ -173,6 +173,9 @@
 }
 
 .featuredLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
   color: var(--color-text-primary);
   font-weight: 600;
   text-decoration: none;
@@ -315,7 +318,15 @@
 }
 
 .contactCopy p {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs);
   color: var(--color-form-helper);
+}
+
+.inlineIcon {
+  flex: 0 0 auto;
 }
 
 @include mix.mq(sm) {

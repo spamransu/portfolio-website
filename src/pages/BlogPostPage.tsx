@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { InternalHero } from '../components/InternalHero'
 import { parseBlogMarkdownBlocks } from '../content/blogMarkdown'
 import { getBlogPostBySlug } from '../content/blogContent'
@@ -18,7 +19,7 @@ export function BlogPostPage() {
   if (!post) {
     return (
       <div className={sty.page}>
-        <InternalHero eyebrow={blogPostCopy?.eyebrowPrefix ?? 'Blog'} title={blogPostCopy?.notFoundTitle ?? 'Post not found'} intro={blogPostCopy?.notFoundIntro ?? 'That post is missing, unpublished, or still in draft.'} actions={<Link className="button button--primary" to="/blog">{blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>} />
+        <InternalHero eyebrow={blogPostCopy?.eyebrowPrefix ?? 'Blog'} title={blogPostCopy?.notFoundTitle ?? 'Post not found'} intro={blogPostCopy?.notFoundIntro ?? 'That post is missing, unpublished, or still in draft.'} actions={<Link className="button button--primary" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>} />
       </div>
     )
   }
@@ -31,7 +32,7 @@ export function BlogPostPage() {
         eyebrow={`${blogPostCopy?.eyebrowPrefix ?? 'Blog'} · ${post.date} · ${getReadingTime(post.body)}`}
         title={post.title}
         intro={post.excerpt ?? post.body.split('\n')[0]}
-        actions={<Link className="button button--ghost" to="/blog">← {blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>}
+        actions={<Link className="button button--ghost" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>}
       />
 
       {post.coverImage ? (
@@ -55,7 +56,7 @@ export function BlogPostPage() {
       <section className={sty.articleCta}>
         <div className="lg-wrapper">
           <div><p className="eyebrow">{blogPostCopy?.articleCtaEyebrow ?? 'Related work'}</p><h2>{blogPostCopy?.articleCtaTitle ?? 'Read the project archive.'}</h2></div>
-          <Link className="button button--ghost" to="/projects">{blogPostCopy?.articleCtaLabel ?? 'View projects'}</Link>
+          <Link className="button button--ghost" to="/projects">{blogPostCopy?.articleCtaLabel ?? 'View projects'}<LuArrowRight aria-hidden="true" focusable="false" /></Link>
         </div>
       </section>
     </div>

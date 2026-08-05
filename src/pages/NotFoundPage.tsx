@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { LuArrowLeft, LuFolderOpen } from 'react-icons/lu'
 import { InternalHero } from '../components/InternalHero'
 import { siteContent } from '../content/siteContent'
 import sty from './InternalPages.module.scss'
@@ -18,8 +19,8 @@ export function NotFoundPage() {
           <div>
             <p className="eyebrow">{notFoundCopy?.suggestionsEyebrow ?? 'Try these instead'}</p>
             <div className="button-row">
-              <Link className="button button--primary" to="/projects">{notFoundCopy?.viewProjectsLabel ?? 'View projects'}</Link>
-              <Link className="button button--ghost" to="/">{notFoundCopy?.backHomeLabel ?? 'Back home'}</Link>
+              <Link className="button button--primary" to="/projects">{notFoundCopy?.viewProjectsLabel ?? 'View projects'}<LuFolderOpen aria-hidden="true" focusable="false" /></Link>
+              <Link className="button button--ghost" to="/"><LuArrowLeft aria-hidden="true" focusable="false" />{notFoundCopy?.backHomeLabel ?? 'Back home'}</Link>
             </div>
           </div>
         </div>

@@ -91,31 +91,6 @@
   border-radius: var(--radius-sm);
 }
 
-.menuIcon,
-.menuIconOpen {
-  position: relative;
-  width: 1rem;
-  height: 0.75rem;
-}
-
-.menuIcon::before,
-.menuIcon::after,
-.menuIconOpen::before,
-.menuIconOpen::after {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  content: '';
-  background: currentColor;
-  transition: transform var(--motion-fast) var(--motion-ease-standard), top var(--motion-fast) var(--motion-ease-standard);
-}
-
-.menuIcon::before { top: 0.125rem; }
-.menuIcon::after { top: 0.625rem; }
-.menuIconOpen::before { top: 0.375rem; transform: rotate(45deg); }
-.menuIconOpen::after { top: 0.375rem; transform: rotate(-45deg); }
-
 .mobileNav {
   position: absolute;
   inset: 100% 0 auto;

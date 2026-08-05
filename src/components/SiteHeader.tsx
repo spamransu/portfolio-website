@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { LuMenu, LuX } from 'react-icons/lu'
 import { getLinktreeUrl, siteContent } from '../content/siteContent'
 import sty from './SiteHeader.module.scss'
 
@@ -74,7 +75,7 @@ export function SiteHeader() {
             aria-controls="mobile-navigation"
             onClick={() => setIsMenuOpen((current) => !current)}
           >
-            <span aria-hidden="true" className={isMenuOpen ? sty.menuIconOpen : sty.menuIcon} />
+            {isMenuOpen ? <LuX aria-hidden="true" className={sty.menuIcon} focusable="false" /> : <LuMenu aria-hidden="true" className={sty.menuIcon} focusable="false" />}
           </button>
         </div>
       </div>

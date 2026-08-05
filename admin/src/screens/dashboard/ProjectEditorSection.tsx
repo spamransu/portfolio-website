@@ -1,4 +1,6 @@
+import { LuArrowDown, LuArrowUp, LuCopy, LuEraser, LuPlus, LuRefreshCw, LuSave, LuTrash2 } from 'react-icons/lu'
 import type { DashboardProjectProps } from './dashboardTypes'
+import { AdminIcon } from './AdminIcon'
 import { Field, StatusMessage } from './AdminUi'
 
 const lines = (items: string[] | undefined): string => (items ?? []).join('\n')
@@ -35,9 +37,9 @@ export const ProjectEditorSection = ({
         <p className="admin-note">Stored in <span className="admin-code">{path}</span>. Saves merge only the projects array back into the JSON file.</p>
       </div>
       <div className="admin-save-group" aria-label="Project save actions">
-        <button className="admin-button admin-button-secondary" type="button" onClick={onReload} disabled={loading || saving}>Reload</button>
-        <button className="admin-button admin-button-secondary" type="button" onClick={onDiscard} disabled={!dirty || saving}>Discard</button>
-        <button className="admin-button admin-button-primary" type="button" onClick={onSave} disabled={!dirty || Boolean(validationError) || Object.values(jsonErrors).some(Boolean) || saving}>{saving ? 'Saving…' : 'Save projects'}</button>
+        <button className="admin-button admin-button-secondary" type="button" onClick={onReload} disabled={loading || saving}><AdminIcon icon={LuRefreshCw} />Reload</button>
+        <button className="admin-button admin-button-secondary" type="button" onClick={onDiscard} disabled={!dirty || saving}><AdminIcon icon={LuEraser} />Discard</button>
+        <button className="admin-button admin-button-primary" type="button" onClick={onSave} disabled={!dirty || Boolean(validationError) || Object.values(jsonErrors).some(Boolean) || saving}>{saving ? 'Saving…' : <><AdminIcon icon={LuSave} />Save projects</>}</button>
       </div>
     </div>
     <StatusMessage message={status} />
@@ -53,11 +55,11 @@ export const ProjectEditorSection = ({
           {dirty ? <span className="admin-badge">Unsaved</span> : null}
         </div>
         <div className="admin-actions admin-actions--wrap">
-          <button className="admin-button admin-button-secondary" type="button" onClick={onCreate}>New</button>
-          <button className="admin-button admin-button-secondary" type="button" onClick={onDuplicate} disabled={!selected}>Duplicate</button>
-          <button className="admin-button admin-button-secondary" type="button" onClick={() => onMove('up')} disabled={!selected}>Move up</button>
-          <button className="admin-button admin-button-secondary" type="button" onClick={() => onMove('down')} disabled={!selected}>Move down</button>
-          <button className="admin-button admin-button-danger" type="button" onClick={onDelete} disabled={!selected}>Delete</button>
+          <button className="admin-button admin-button-secondary" type="button" onClick={onCreate}><AdminIcon icon={LuPlus} />New</button>
+          <button className="admin-button admin-button-secondary" type="button" onClick={onDuplicate} disabled={!selected}><AdminIcon icon={LuCopy} />Duplicate</button>
+          <button className="admin-button admin-button-secondary" type="button" onClick={() => onMove('up')} disabled={!selected}><AdminIcon icon={LuArrowUp} />Move up</button>
+          <button className="admin-button admin-button-secondary" type="button" onClick={() => onMove('down')} disabled={!selected}><AdminIcon icon={LuArrowDown} />Move down</button>
+          <button className="admin-button admin-button-danger" type="button" onClick={onDelete} disabled={!selected}><AdminIcon icon={LuTrash2} />Delete</button>
         </div>
         <Field label="Project selector">
           <select id="project-select" value={selectedSlug} onChange={(event) => onSelect(event.target.value)}>

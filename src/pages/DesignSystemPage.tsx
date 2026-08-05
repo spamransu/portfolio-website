@@ -1,3 +1,4 @@
+import { LuArrowRight, LuCheck, LuLock } from 'react-icons/lu'
 import { InternalHero } from '../components/InternalHero'
 import { siteContent } from '../content/siteContent'
 import sty from './DesignSystemPage.module.scss'
@@ -42,7 +43,7 @@ export function DesignSystemPage() {
 
       <section className={sty.block} id="components">
         <div className="lg-wrapper"><div className={sty.blockGrid}><header><p className="eyebrow">{section('components')?.title ?? 'Components'}</p><p>{section('components')?.description}</p></header><div className={sty.components}>
-          <div className="button-row"><button className="button button--primary">Primary</button><button className="button button--ghost">Secondary</button><button className="button" disabled>Disabled</button></div>
+          <div className="button-row"><button className="button button--primary">Primary<LuArrowRight aria-hidden="true" focusable="false" /></button><button className="button button--ghost">Secondary<LuCheck aria-hidden="true" focusable="false" /></button><button className="button" disabled>Disabled<LuLock aria-hidden="true" focusable="false" /></button></div>
           <ul className="tag-list"><li>Neutral</li><li className={sty.tagAcid}>Acid</li><li className={sty.tagFlare}>Flare</li><li className={sty.tagIris}>Iris</li></ul>
           <div className={sty.fieldDemo}><label htmlFor="design-system-field">Field label</label><input id="design-system-field" placeholder="Click or tab to focus" /><small>Production focus and field treatment.</small></div>
           <div className={sty.surfaceDemo}><article><span>Card overlay</span><h3>Raised card</h3><p>Low-contrast border and restrained radius.</p></article><article><span>Top divider only</span><h3>Quiet group</h3><p>Many sections need no surrounding card.</p></article></div>

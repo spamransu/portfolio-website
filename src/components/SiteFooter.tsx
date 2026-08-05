@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
+import { LuExternalLink, LuGlobe, LuMail, LuMapPin } from 'react-icons/lu'
 import { getLinktreeUrl, siteContent } from '../content/siteContent'
+import { BrandIcon } from './BrandIcon'
 import sty from './SiteFooter.module.scss'
 
 function getBrandParts(name: string) {
@@ -10,16 +12,6 @@ function getBrandParts(name: string) {
   }
 }
 
-function getSocialGlyph(label: string) {
-  const normalized = label.toLowerCase()
-
-  if (normalized === 'linkedin') return 'in'
-  if (normalized === 'github') return 'gh'
-  if (normalized === 'x') return 'x'
-  if (normalized === 'figma') return 'fg'
-
-  return label.slice(0, 2).toLowerCase()
-}
 
 export function SiteFooter() {
   const brand = getBrandParts(siteContent.site.name)
@@ -67,16 +59,16 @@ export function SiteFooter() {
                 </li>
               ))}
               {linktreeUrl ? (
-                <li><a href={linktreeUrl} target="_blank" rel="noreferrer">{footerCopy?.linktreeLabel ?? 'Linktree'}</a></li>
+                <li><a href={linktreeUrl} target="_blank" rel="noreferrer">{footerCopy?.linktreeLabel ?? 'Linktree'}<LuExternalLink aria-hidden="true" className={sty.inlineIcon} focusable="false" /></a></li>
               ) : null}
             </ul>
           </nav>
 
           <div className={sty.contact}>
             <p className={sty.heading}>Contact</p>
-            <a href={`mailto:${siteContent.site.email}`}>{siteContent.site.email}</a>
-            <a href={siteContent.site.siteUrl}>{siteContent.site.siteUrl.replace(/^https?:\/\//, '')}</a>
-            <p>{siteContent.site.location}</p>
+            <a href={`mailto:${siteContent.site.email}`}><LuMail aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.email}</a>
+            <a href={siteContent.site.siteUrl}><LuGlobe aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.siteUrl.replace(/^https?:\/\//, '')}</a>
+            <p><LuMapPin aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.location}</p>
           </div>
         </div>
 
@@ -86,7 +78,7 @@ export function SiteFooter() {
             {visibleSocials.map((social) => (
               <li key={social.href}>
                 <a href={social.href} target="_blank" rel="noreferrer" aria-label={social.label} title={social.label}>
-                  <span aria-hidden="true" className={sty.socialIcon}>{getSocialGlyph(social.label)}</span>
+                  <span className={sty.socialIcon}><BrandIcon label={social.label} /></span>
                 </a>
               </li>
             ))}

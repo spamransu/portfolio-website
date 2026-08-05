@@ -134,6 +134,10 @@ body {
   background: var(--color-transparent);
 }
 
+.admin-icon {
+  flex: 0 0 var(--icon-size);
+}
+
 .admin-tabs a:hover,
 .admin-tabs a[aria-current='page'] {
   color: var(--color-text-inverse);
@@ -409,6 +413,19 @@ body {
 .admin-status,
 .admin-alert {
   padding: var(--admin-gap-xs);
+}
+
+.admin-status,
+.admin-alert strong,
+.admin-login-card h1,
+.admin-empty-state h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--admin-gap-2xs);
+}
+
+.admin-status {
+  flex-wrap: wrap;
 }
 
 .admin-status--info {

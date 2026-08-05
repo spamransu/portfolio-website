@@ -1,7 +1,17 @@
+import { LuCircleDot, LuGithub, LuLinkedin, LuMail, LuMapPin } from 'react-icons/lu'
 import { ContactForm } from '../components/ContactForm'
 import { InternalHero } from '../components/InternalHero'
 import { siteContent } from '../content/siteContent'
 import sty from './InternalPages.module.scss'
+
+function getContactIcon(title: string) {
+  const normalized = title.toLowerCase()
+
+  if (normalized.includes('linkedin')) return LuLinkedin
+  if (normalized.includes('github')) return LuGithub
+
+  return LuMail
+}
 
 export function ContactPage() {
   return (
@@ -12,8 +22,8 @@ export function ContactPage() {
         intro={siteContent.contact.body}
         actions={
           <div className={sty.availabilityMeta}>
-            <span><i aria-hidden="true" />{siteContent.contact.availability}</span>
-            <span>{siteContent.site.location}</span>
+            <span><LuCircleDot aria-hidden="true" focusable="false" />{siteContent.contact.availability}</span>
+            <span><LuMapPin aria-hidden="true" focusable="false" />{siteContent.site.location}</span>
           </div>
         }
       />
@@ -24,12 +34,16 @@ export function ContactPage() {
             <aside>
               <p className="eyebrow">{siteContent.contact.methodsSectionTitle}</p>
               <div className={sty.contactMethods}>
-                {siteContent.contact.methods.map((method, index) => (
-                  <a key={method.title} href={method.href} target={method.href.startsWith('http') ? '_blank' : undefined} rel={method.href.startsWith('http') ? 'noreferrer' : undefined}>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <div><strong>{method.title}</strong><small>{method.label}</small></div>
-                  </a>
-                ))}
+                {siteContent.contact.methods.map((method) => {
+                  const Icon = getContactIcon(method.title)
+
+                  return (
+                    <a key={method.title} href={method.href} target={method.href.startsWith('http') ? '_blank' : undefined} rel={method.href.startsWith('http') ? 'noreferrer' : undefined}>
+                      <span><Icon aria-hidden="true" focusable="false" /></span>
+                      <div><strong>{method.title}</strong><small>{method.label}</small></div>
+                    </a>
+                  )
+                })}
               </div>
             </aside>
             <div className={sty.contactFormWrap}>
