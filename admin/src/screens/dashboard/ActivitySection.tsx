@@ -1,4 +1,6 @@
+import { LuExternalLink, LuRefreshCw } from 'react-icons/lu'
 import type { DashboardActivityProps } from './dashboardTypes'
+import { AdminIcon } from './AdminIcon'
 import { StatusMessage } from './AdminUi'
 
 export const ActivitySection = ({
@@ -19,14 +21,14 @@ export const ActivitySection = ({
         <h2 id="admin-activity-title">Recent commits</h2>
         <p className="admin-note">{loadedAt ? `Loaded ${loadedAt}` : 'Not loaded yet'}</p>
       </div>
-      <button className="admin-button admin-button-secondary" type="button" onClick={onReload} disabled={loading}>Refresh</button>
+      <button className="admin-button admin-button-secondary" type="button" onClick={onReload} disabled={loading}><AdminIcon icon={LuRefreshCw} />Refresh</button>
     </div>
     <dl className="admin-metadata">
       <dt>Branch</dt><dd>{branch ?? 'unknown'}</dd>
       <dt>Projects source file</dt><dd>{projectPath}</dd>
       <dt>Repository</dt><dd>{projectRepo ? `${projectRepo.owner}/${projectRepo.repo}` : blogRepo ? `${blogRepo.owner}/${blogRepo.repo}` : 'unknown'}</dd>
     </dl>
-    {projectRepo ? <a className="admin-button admin-button-secondary admin-button-inline" href={projectRepo.branchUrl} target="_blank" rel="noreferrer">Open branch</a> : null}
+    {projectRepo ? <a className="admin-button admin-button-secondary admin-button-inline" href={projectRepo.branchUrl} target="_blank" rel="noreferrer"><AdminIcon icon={LuExternalLink} />Open branch</a> : null}
     <StatusMessage kind="error" message={error} />
     {commits.length ? (
       <ul className="admin-activity-list">

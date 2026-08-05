@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
+import { LuCircleCheck, LuEraser, LuImage, LuUpload } from 'react-icons/lu'
 import type { MediaTargetSelection } from '../../adminTypes'
 import type { BlogPostResponse, Project } from '../../types'
 import type { DashboardMediaProps } from './dashboardTypes'
 import { Field, StatusMessage } from './AdminUi'
+import { AdminIcon } from './AdminIcon'
 
 type SelectedMediaPreviewProps = {
   file: File
@@ -60,13 +62,13 @@ export const MediaUploaderSection = ({
           <p className="admin-note">Uploads are limited to <span className="admin-code">/images/blog/...</span> and <span className="admin-code">/images/projects/...</span>.</p>
         </div>
         <div className="admin-save-group" aria-label="Media upload actions">
-          <button className="admin-button admin-button-primary" type="button" onClick={media.onUpload} disabled={!media.file || Boolean(media.validationError) || media.uploading}>{media.uploading ? 'Uploading…' : 'Upload media'}</button>
+          <button className="admin-button admin-button-primary" type="button" onClick={media.onUpload} disabled={!media.file || Boolean(media.validationError) || media.uploading}>{media.uploading ? 'Uploading…' : <><AdminIcon icon={LuUpload} />Upload media</>}</button>
         </div>
       </div>
       <StatusMessage message={media.status} />
       <StatusMessage kind="error" message={media.validationError} />
       {media.path ? (
-        <p className="admin-status admin-status--success">Uploaded path: <span className="admin-code">{media.path}</span> <button className="admin-button admin-button-secondary" type="button" onClick={media.onResultClear}>Clear</button></p>
+        <p className="admin-status admin-status--success"><AdminIcon icon={LuCircleCheck} />Uploaded path: <span className="admin-code">{media.path}</span> <button className="admin-button admin-button-secondary" type="button" onClick={media.onResultClear}><AdminIcon icon={LuEraser} />Clear</button></p>
       ) : null}
       <div className="admin-editor-shell admin-editor-shell--media">
         <div className="admin-collection-panel">
@@ -95,14 +97,14 @@ export const MediaUploaderSection = ({
             <Field label="File" hint="GIF, JPEG, PNG, SVG, or WebP up to the configured upload limit.">
               <input key={media.fileInputKey} id="media-file" type="file" accept="image/gif,image/jpeg,image/png,image/svg+xml,image/webp" onChange={(event) => media.onFileChange(event.target.files?.[0] ?? null)} />
             </Field>
-            {media.file ? <button className="admin-button admin-button-secondary" type="button" onClick={media.onFileClear}>Clear file</button> : null}
+            {media.file ? <button className="admin-button admin-button-secondary" type="button" onClick={media.onFileClear}><AdminIcon icon={LuEraser} />Clear file</button> : null}
           </div>
         </div>
         <div className="admin-editor-panel">
           {media.file ? <SelectedMediaPreview file={media.file} /> : (
             <div className="admin-empty-state admin-empty-state--large">
               <p className="admin-kicker">Preview</p>
-              <h3>Choose an image</h3>
+              <h3><AdminIcon icon={LuImage} />Choose an image</h3>
               <p>The selected media preview and file details appear here before upload.</p>
             </div>
           )}

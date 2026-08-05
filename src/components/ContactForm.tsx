@@ -1,4 +1,5 @@
 import { useId, useState, type ChangeEvent, type FormEvent } from 'react'
+import { LuSend } from 'react-icons/lu'
 import type { ContactFormContent } from '../content/siteContent'
 import sty from './ContactForm.module.scss'
 
@@ -184,7 +185,7 @@ export function ContactForm({ contact, recipientEmail, showIntro = true }: Conta
         </div>
 
         <button type="submit" className={sty.submitButton}>
-          {contact.submitLabel}
+          {contact.submitLabel}<LuSend aria-hidden="true" focusable="false" />
         </button>
       </form>
     </div>

@@ -64,7 +64,6 @@
 }
 
 .content > p {
-  max-width: 60ch;
   color: var(--color-text-muted);
   @include mix.type-style(body-sm);
 }

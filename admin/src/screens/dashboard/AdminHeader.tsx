@@ -1,4 +1,6 @@
+import { LuExternalLink, LuLogOut } from 'react-icons/lu'
 import type { DashboardSessionProps } from './dashboardTypes'
+import { AdminIcon } from './AdminIcon'
 
 export const AdminHeader = ({ onLogout, session, siteUrl }: DashboardSessionProps) => (
   <header className="admin-hero" aria-labelledby="admin-page-title">
@@ -12,8 +14,8 @@ export const AdminHeader = ({ onLogout, session, siteUrl }: DashboardSessionProp
       <p className="admin-session-user">{session.login ? `Signed in as ${session.login}` : 'Signed in'}</p>
       <p className="admin-note">Expires: {session.expiresAt ?? 'unknown'}</p>
       <div className="admin-actions admin-actions--compact">
-        <a className="admin-button admin-button-secondary" href={siteUrl || '/'} target="_blank" rel="noreferrer">Open site</a>
-        <button className="admin-button admin-button-secondary" type="button" onClick={onLogout}>Sign out</button>
+        <a className="admin-button admin-button-secondary" href={siteUrl || '/'} target="_blank" rel="noreferrer"><AdminIcon icon={LuExternalLink} />Open site</a>
+        <button className="admin-button admin-button-secondary" type="button" onClick={onLogout}><AdminIcon icon={LuLogOut} />Sign out</button>
       </div>
     </div>
   </header>

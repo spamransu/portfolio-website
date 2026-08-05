@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { LuArrowRight, LuBookOpen } from 'react-icons/lu'
 import { InternalHero } from '../components/InternalHero'
 import { blogPosts, type BlogPost } from '../content/blogContent'
 import { siteContent } from '../content/siteContent'
@@ -44,7 +45,7 @@ export function BlogPage() {
               <div>
                 <h2>{latest.title}</h2>
                 <p>{latest.excerpt ?? latest.body.split('\n')[0]}</p>
-                <strong>Read post</strong>
+                <strong>Read post<LuBookOpen aria-hidden="true" focusable="false" /></strong>
               </div>
               <div className={sty.postMeta}>
                 <span>{formatDate(latest.date)}</span>
@@ -60,7 +61,7 @@ export function BlogPage() {
                 <Link className={sty.postRow} key={post.slug} to={`/blog/${post.slug}`}>
                   <div className={sty.postMeta}><span>{formatDate(post.date)}</span><span>{getReadingTime(post)}</span></div>
                   <div><h2>{post.title}</h2><p>{post.excerpt ?? post.body.split('\n')[0]}</p></div>
-                  <span aria-hidden="true">Read</span>
+                  <span aria-hidden="true"><LuArrowRight focusable="false" /></span>
                 </Link>
               ))}
             </div>

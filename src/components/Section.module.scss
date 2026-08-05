@@ -22,13 +22,11 @@
 }
 
 .heading h2 {
-  max-width: 14ch;
   text-transform: uppercase;
   @include mix.type-style(h3);
 }
 
 .heading p {
-  max-width: 36ch;
   color: var(--color-text-muted);
 }
 

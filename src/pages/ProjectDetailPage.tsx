@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { siteContent, type ImageAsset, type Project } from '../content/siteContent'
 import sty from './ProjectDetailPage.module.scss'
 
@@ -37,7 +38,7 @@ export function ProjectDetailPage() {
               <p className={sty.kicker}>{detailCopy?.eyebrow ?? '[ PROJECTS ]'}</p>
               <h1>{detailCopy?.notFoundTitle ?? 'Project not found'}</h1>
               <p>{detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'}</p>
-              <Link className="button button--primary" to="/projects">{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>
+              <Link className="button button--primary" to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>
             </div>
           </div>
         </section>
@@ -58,7 +59,7 @@ export function ProjectDetailPage() {
       <section className={sty.hero} aria-labelledby="project-title">
         <div className="lg-wrapper">
           <div className={sty.heroInner}>
-            <Link className={sty.backLink} to="/projects">← {detailCopy?.backToProjectsLabel ?? 'All Projects'}</Link>
+            <Link className={sty.backLink} to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'All Projects'}</Link>
             <div className={sty.heroCopy}>
               <p className={sty.kicker}>[ SELECTED CASE STUDY ]</p>
               <h1 id="project-title">{project.title}</h1>
@@ -176,11 +177,11 @@ export function ProjectDetailPage() {
         <div className="lg-wrapper">
           <div>
             <Link to={`/projects/${nextProject.slug}`}>
-              <span>Next Project →</span>
+              <span>Next Project<LuArrowRight aria-hidden="true" focusable="false" /></span>
               <strong>{nextProject.title}</strong>
             </Link>
             <Link to={`/projects/${previousProject.slug}`}>
-              <span>← Previous Project</span>
+              <span><LuArrowLeft aria-hidden="true" focusable="false" />Previous Project</span>
               <strong>{previousProject.title}</strong>
             </Link>
           </div>
@@ -194,7 +195,7 @@ export function ProjectDetailPage() {
               <p className={sty.kicker}>[ MORE PROJECTS ]</p>
               <h2 id="related-title">More Selected Work</h2>
             </div>
-            <Link className={sty.viewAll} to="/projects">View All Work</Link>
+            <Link className={sty.viewAll} to="/projects">View All Work<LuArrowRight aria-hidden="true" focusable="false" /></Link>
           </div>
           <div className={sty.relatedGrid}>
             {relatedProjects.map((entry) => (
