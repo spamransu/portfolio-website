@@ -14,7 +14,7 @@ export function AboutPage() {
       />
 
       <Section title={siteContent.about.bodySectionTitle}>
-        <div className={sty.proseLead}>
+        <div className={sty.proseLead} data-text-reveal="copy">
           {siteContent.about.body.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
@@ -22,7 +22,7 @@ export function AboutPage() {
       </Section>
 
       <Section title={siteContent.about.processSectionTitle} intro={siteContent.about.processSectionIntro}>
-        <div className={sty.cardGrid}>
+        <div className={sty.cardGrid} data-text-reveal="copy">
           {siteContent.about.process.map((step, index) => (
             <article className={sty.numberedCard} key={step.title}>
               <span>{String(index + 1).padStart(2, '0')}</span>
@@ -34,7 +34,7 @@ export function AboutPage() {
       </Section>
 
       <Section title={siteContent.about.principlesSectionTitle}>
-        <div className={sty.cardGrid}>
+        <div className={sty.cardGrid} data-text-reveal="copy">
           {siteContent.about.principles.map((principle) => (
             <article className={sty.card} key={principle}>
               <h3>{principle}</h3>
@@ -44,7 +44,7 @@ export function AboutPage() {
       </Section>
 
       <Section title={siteContent.about.toolsSectionTitle}>
-        <div className={sty.toolCloud}>
+        <div className={sty.toolCloud} data-text-reveal="copy">
           {siteContent.about.tools.map((tool) => (
             <span key={tool}>{tool}</span>
           ))}

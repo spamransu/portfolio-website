@@ -3,11 +3,13 @@ import { Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
 import { siteContent } from '../content/siteContent'
+import { useScrollTextAnimations } from '../animations/useScrollTextAnimations'
 
 export function RootLayout() {
   const location = useLocation()
   const navigationType = useNavigationType()
   const isHomePage = location.pathname === '/'
+  const mainRef = useScrollTextAnimations(location.pathname)
 
   useEffect(() => {
     if (navigationType === 'POP') return
@@ -25,7 +27,7 @@ export function RootLayout() {
     <div className="site-shell">
       <a className="skip-link" href="#main-content">{siteContent.siteChrome?.skipToContentLabel ?? 'Skip to main content'}</a>
       <SiteHeader />
-      <main id="main-content" className={isHomePage ? 'site-main site-main--home' : 'site-main site-main--inner'}>
+      <main ref={mainRef} id="main-content" className={isHomePage ? 'site-main site-main--home' : 'site-main site-main--inner'}>
         <Outlet />
       </main>
       <SiteFooter />

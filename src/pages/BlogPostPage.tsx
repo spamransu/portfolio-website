@@ -41,9 +41,9 @@ export function BlogPostPage() {
         </section>
       ) : null}
 
-      <article className={sty.article}>
+      <article className={sty.article} data-text-reveal-group="scrub">
         <div className="sm-wrapper">
-          <div className={sty.articleBody}>
+          <div className={sty.articleBody} data-text-reveal="copy">
             {blocks.map((block, index) => {
               if (block.type === 'list') return <ul key={`${post.slug}-${index}`}>{block.items.map((item) => <li key={item}>{item}</li>)}</ul>
               if (block.type === 'section') return <section key={`${post.slug}-${index}`}><h2>{block.heading}</h2>{block.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</section>
@@ -55,7 +55,7 @@ export function BlogPostPage() {
 
       <section className={sty.articleCta}>
         <div className="lg-wrapper">
-          <div><p className="eyebrow">{blogPostCopy?.articleCtaEyebrow ?? 'Related work'}</p><h2>{blogPostCopy?.articleCtaTitle ?? 'Read the project archive.'}</h2></div>
+          <div data-text-reveal-group="scrub"><p className="eyebrow" data-text-reveal="copy">{blogPostCopy?.articleCtaEyebrow ?? 'Related work'}</p><h2 data-text-reveal="heading">{blogPostCopy?.articleCtaTitle ?? 'Read the project archive.'}</h2></div>
           <Link className="button button--ghost" to="/projects">{blogPostCopy?.articleCtaLabel ?? 'View projects'}<LuArrowRight aria-hidden="true" focusable="false" /></Link>
         </div>
       </section>

@@ -9,12 +9,12 @@ type SectionProps = {
 
 export function Section({ title, intro, children }: SectionProps) {
   return (
-    <section className={sty.root}>
+    <section className={sty.root} data-text-reveal-group="scrub">
       <div className="lg-wrapper">
         <div className={sty.inner}>
           <div className={sty.heading}>
-            <h2>{title}</h2>
-            {intro ? <p>{intro}</p> : null}
+            <h2 data-text-reveal="heading">{title}</h2>
+            {intro ? <p data-text-reveal="copy">{intro}</p> : null}
           </div>
           <div className={sty.content}>{children}</div>
         </div>
