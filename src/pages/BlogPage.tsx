@@ -34,20 +34,20 @@ export function BlogPage() {
 
       <section className={sty.blogArchive}>
         <div className="lg-wrapper">
-          <div className={sty.archiveMeta}>
-            <span>Writing archive</span>
-            <span>{String(blogPosts.length).padStart(2, '0')} entries</span>
-          </div>
+          <div className={sty.archiveMeta} data-text-reveal-group="scrub">
+              <span data-text-reveal="copy">Writing archive</span>
+              <span data-text-reveal="copy">{String(blogPosts.length).padStart(2, '0')} entries</span>
+            </div>
 
           {latest ? (
-            <Link className={sty.latestPost} to={`/blog/${latest.slug}`}>
-              <span className="eyebrow">Latest</span>
+            <Link className={sty.latestPost} data-text-reveal-group="scrub" to={`/blog/${latest.slug}`}>
+              <span className="eyebrow" data-text-reveal="copy">Latest</span>
               <div>
-                <h2>{latest.title}</h2>
-                <p>{latest.excerpt ?? latest.body.split('\n')[0]}</p>
-                <strong>Read post<LuBookOpen aria-hidden="true" focusable="false" /></strong>
+                <h2 data-text-reveal="copy">{latest.title}</h2>
+                <p data-text-reveal="copy">{latest.excerpt ?? latest.body.split('\n')[0]}</p>
+                <strong data-text-reveal="copy">Read post<LuBookOpen aria-hidden="true" focusable="false" /></strong>
               </div>
-              <div className={sty.postMeta}>
+              <div className={sty.postMeta} data-text-reveal="copy">
                 <span>{formatDate(latest.date)}</span>
                 <span>{getReadingTime(latest)}</span>
               </div>
@@ -56,11 +56,11 @@ export function BlogPage() {
 
           {groups.map((group) => (
             <div className={sty.yearGroup} key={group.year}>
-              <div className={sty.yearHeading}><span>{group.year}</span><span>{String(group.posts.length).padStart(2, '0')} entries</span></div>
+              <div className={sty.yearHeading} data-text-reveal-group="scrub"><span data-text-reveal="copy">{group.year}</span><span data-text-reveal="copy">{String(group.posts.length).padStart(2, '0')} entries</span></div>
               {group.posts.map((post) => (
-                <Link className={sty.postRow} key={post.slug} to={`/blog/${post.slug}`}>
-                  <div className={sty.postMeta}><span>{formatDate(post.date)}</span><span>{getReadingTime(post)}</span></div>
-                  <div><h2>{post.title}</h2><p>{post.excerpt ?? post.body.split('\n')[0]}</p></div>
+                <Link className={sty.postRow} data-text-reveal-group="scrub" key={post.slug} to={`/blog/${post.slug}`}>
+                  <div className={sty.postMeta} data-text-reveal="copy"><span>{formatDate(post.date)}</span><span>{getReadingTime(post)}</span></div>
+                  <div><h2 data-text-reveal="copy">{post.title}</h2><p data-text-reveal="copy">{post.excerpt ?? post.body.split('\n')[0]}</p></div>
                   <span aria-hidden="true"><LuArrowRight focusable="false" /></span>
                 </Link>
               ))}

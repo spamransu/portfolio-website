@@ -749,11 +749,11 @@
       "secondaryLabel": "View resume"
     },
     "featuredProjects": {
-      "title": "Selected work",
+      "title": "Featured work",
       "intro": "Four source-backed projects that show current WordPress work, Figma-to-code delivery, a Laravel blog system, and this portfolio content system.",
       "slugs": [
-        "wordpress-maintenance-system",
         "abcde-creative",
+        "wordpress-maintenance-system",
         "nsight-index",
         "portfolio-cms"
       ],
@@ -772,18 +772,18 @@
     },
     "stats": [
       {
-        "value": "8",
-        "label": "active websites maintained across company and client work",
+        "value": "3+",
+        "label": "Years of experience",
         "tone": "accent"
       },
       {
-        "value": "4",
-        "label": "website migrations supported into cleaner Elementor builds",
+        "value": "5+",
+        "label": "Projects completed",
         "tone": "accent-2"
       },
       {
-        "value": "3",
-        "label": "custom WordPress themes or templates built",
+        "value": "4+",
+        "label": "Happy clients",
         "tone": "accent-3"
       }
     ],

@@ -16,8 +16,8 @@ export function NotFoundPage() {
       />
       <section className={sty.notFoundActions}>
         <div className="lg-wrapper">
-          <div>
-            <p className="eyebrow">{notFoundCopy?.suggestionsEyebrow ?? 'Try these instead'}</p>
+          <div data-text-reveal-group="scrub">
+            <p className="eyebrow" data-text-reveal="copy">{notFoundCopy?.suggestionsEyebrow ?? 'Try these instead'}</p>
             <div className="button-row">
               <Link className="button button--primary" to="/projects">{notFoundCopy?.viewProjectsLabel ?? 'View projects'}<LuFolderOpen aria-hidden="true" focusable="false" /></Link>
               <Link className="button button--ghost" to="/"><LuArrowLeft aria-hidden="true" focusable="false" />{notFoundCopy?.backHomeLabel ?? 'Back home'}</Link>

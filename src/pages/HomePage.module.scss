@@ -15,8 +15,7 @@
   padding-block: var(--space-xl);
 }
 
-.dateline,
-.featuredHeading {
+.dateline {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
@@ -36,17 +35,12 @@
 }
 
 .heroGrid h1,
-.featuredCopy h2,
-.featuredCopy p,
 .practice h2,
 .practice p,
 .skills h2,
 .skills p,
 .contact h2,
-.contact p,
-.featuredHeading p,
-.featuredMedia,
-.featuredMedia figcaption {
+.contact p {
   margin: 0;
 }
 
@@ -73,8 +67,7 @@
   @include mix.type-style(body-lg);
 }
 
-.index,
-.projectMeta {
+.index {
   margin: 0;
 }
 
@@ -91,18 +84,14 @@
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
-.index dt,
-.projectMeta dt,
-.meta,
-.featuredMedia figcaption {
+.index dt {
   color: var(--color-text-muted);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   @include mix.type-style(body-xs);
 }
 
-.index dd,
-.projectMeta dd {
+.index dd {
   margin: 0;
   @include mix.type-style(body-sm);
 }
@@ -113,32 +102,6 @@
   padding-block: var(--space-xl);
 }
 
-.featuredHeading .meta {
-  margin: 0;
-}
-
-
-.featuredGrid {
-  display: grid;
-  gap: var(--space-lg);
-  padding-block-start: var(--space-lg);
-}
-
-.featuredCopy {
-  display: grid;
-  align-content: start;
-  gap: var(--space-sm);
-}
-
-.featuredIndex {
-  color: var(--color-action-primary);
-  font-family: Oswald, sans-serif;
-  font-size: clamp(3.5rem, 7vw, 5.5rem);
-  font-weight: 600;
-  line-height: 0.9;
-}
-
-.featuredCopy h2,
 .practice h2,
 .skills h2,
 .contact h2 {
@@ -146,75 +109,23 @@
   @include mix.type-style(h3);
 }
 
-.featuredCopy > p,
 .practiceCopy > p,
 .skillsGrid > div > p:last-child {
   color: var(--color-text-muted);
 }
-
-.projectMeta {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-sm);
-  padding-block-start: var(--space-sm);
-  border-top: 1px solid var(--color-border-default);
-}
-
-.projectMeta > div {
-  display: grid;
-  gap: var(--space-2xs);
-}
-
-.featuredLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  padding-block-start: var(--space-sm);
-}
-
-.featuredLinks a {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2xs);
-  color: var(--color-text-primary);
-  font-weight: 600;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  @include mix.type-style(body-xs);
-}
-
-.featuredLinks a:last-child {
-  color: var(--color-text-muted);
-}
-
-.featuredLinks a:hover {
-  color: var(--color-action-primary);
-}
-
-.featuredMedia {
-  display: grid;
-  align-content: start;
-  gap: var(--space-xs);
-}
-
-.featuredMedia img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--card-radius);
-}
-
 .practiceCopy {
   display: grid;
   gap: var(--space-lg);
 }
 
+.practiceCopy > div > h2 {
+  margin-top: var(--space-sm);
+}
+
 .stats {
   display: grid;
   margin-block-start: var(--space-lg);
-  border-block: 1px solid var(--color-border-default);
+  border: 1px solid var(--color-border-default);
 }
 
 .stats > div {
@@ -325,10 +236,6 @@
   color: var(--color-form-helper);
 }
 
-.inlineIcon {
-  flex: 0 0 auto;
-}
-
 @include mix.mq(sm) {
   .stats {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -342,7 +249,6 @@
 
 @include mix.mq(md) {
   .heroGrid,
-  .featuredGrid,
   .practiceCopy,
   .skillsGrid,
   .contactGrid {
@@ -350,9 +256,7 @@
   }
 
   .heroGrid > h1 { grid-column: span 7; }
-  .heroSupport { grid-column: span 5; padding-block-start: var(--space-sm); }
-  .featuredCopy { grid-column: span 5; }
-  .featuredMedia { grid-column: 6 / span 7; grid-row: 1; }
+  .heroSupport { grid-column: span 5; }
   .practiceCopy > div { grid-column: span 5; }
   .practiceCopy > p { grid-column: 6 / span 7; }
   .skillsGrid > div { grid-column: span 4; }

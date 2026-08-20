@@ -36,10 +36,10 @@ export function ProjectsPage() {
         <div className="lg-wrapper">
           <div className={sty.projectGroups}>
             {groups.map((group) => (
-              <section key={group.title} className={sty.projectGroup} aria-labelledby={`project-group-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+              <section key={group.title} className={sty.projectGroup} data-text-reveal-group="scrub" aria-labelledby={`project-group-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
                 <header>
-                  <p className="eyebrow" id={`project-group-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>{group.title}</p>
-                  {group.description ? <p>{group.description}</p> : null}
+                  <p className="eyebrow" data-text-reveal="copy" id={`project-group-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>{group.title}</p>
+                  {group.description ? <p data-text-reveal="copy">{group.description}</p> : null}
                 </header>
                 <div className={sty.projectGrid}>
                   {group.projects.map((project) => (

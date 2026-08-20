@@ -30,10 +30,10 @@ export function ContactPage() {
 
       <section className={sty.contactSection}>
         <div className="lg-wrapper">
-          <div className={sty.contactGrid}>
+          <div className={sty.contactGrid} data-text-reveal-group="scrub">
             <aside>
-              <p className="eyebrow">{siteContent.contact.methodsSectionTitle}</p>
-              <div className={sty.contactMethods}>
+              <p className="eyebrow" data-text-reveal="copy">{siteContent.contact.methodsSectionTitle}</p>
+              <div className={sty.contactMethods} data-text-reveal="copy">
                 {siteContent.contact.methods.map((method) => {
                   const Icon = getContactIcon(method.title)
 
@@ -47,8 +47,8 @@ export function ContactPage() {
               </div>
             </aside>
             <div className={sty.contactFormWrap}>
-              <p className="eyebrow">{siteContent.contact.formSectionTitle}</p>
-              <p>{siteContent.contact.formSectionIntro}</p>
+              <p className="eyebrow" data-text-reveal="copy">{siteContent.contact.formSectionTitle}</p>
+              <p data-text-reveal="copy">{siteContent.contact.formSectionIntro}</p>
               <ContactForm contact={siteContent.contact.form} recipientEmail={siteContent.site.email} showIntro={false} />
             </div>
           </div>
