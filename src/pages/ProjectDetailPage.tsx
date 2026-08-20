@@ -121,7 +121,14 @@ export function ProjectDetailPage() {
             <div className={sty.prose}>
               <h2 id="approach-title" data-text-reveal="heading">Approach</h2>
               <p data-text-reveal="copy">{project.approachSummary}</p>
-              <ul className={sty.noteList} data-text-reveal="copy">{project.approach.map((item) => <li key={item}>{item}</li>)}</ul>
+              <ol className={sty.cardGrid} data-text-reveal="copy">
+                {project.approach.map((item, index) => (
+                  <li className={sty.numberedCard} key={item}>
+                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    <p>{item}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>
@@ -143,7 +150,14 @@ export function ProjectDetailPage() {
             <div className={sty.prose}>
               <h2 id="result-title" data-text-reveal="heading">Result</h2>
               <p data-text-reveal="copy">{project.resultSummary}</p>
-              <ul className={sty.outcomes} data-text-reveal="copy">{project.outcome.map((item) => <li key={item}>{item}</li>)}</ul>
+              <ol className={sty.cardGrid} data-text-reveal="copy">
+                {project.outcome.map((item, index) => (
+                  <li className={sty.numberedCard} key={item}>
+                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    <p>{item}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>

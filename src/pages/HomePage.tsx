@@ -1,18 +1,14 @@
 import { Link } from 'react-router-dom'
-import { LuArrowRight, LuCalendarCheck, LuDownload, LuExternalLink, LuMessageCircle } from 'react-icons/lu'
+import { LuCalendarCheck, LuDownload, LuMessageCircle } from 'react-icons/lu'
 import { ContactForm } from '../components/ContactForm'
-import { siteContent, type HomeStatTone, type Project } from '../content/siteContent'
+import { FeaturedProjectCarousel } from '../components/FeaturedProjectCarousel'
+import { siteContent, type HomeStatTone } from '../content/siteContent'
 import sty from './HomePage.module.scss'
 
 const statToneClassNames: Record<HomeStatTone, string> = {
   accent: sty.statAccent,
   'accent-2': sty.statAccent2,
   'accent-3': sty.statAccent3,
-}
-
-function getFeaturedProject(): Project | undefined {
-  const featuredSlug = siteContent.home.featuredProjects.slugs[0]
-  return siteContent.projects.find((project) => project.slug === featuredSlug) ?? siteContent.projects[0]
 }
 
 function renderAccentedTitle(title: string, accentPhrase?: string) {
@@ -23,11 +19,9 @@ function renderAccentedTitle(title: string, accentPhrase?: string) {
 }
 
 export function HomePage() {
-  const featured = getFeaturedProject()
   const hero = siteContent.home.hero
   const title = hero.titleLines.join(' ')
   const skillGroups = siteContent.home.skills.groups
-  const totalFeatured = Math.max(siteContent.home.featuredProjects.slugs.length, 1)
 
   return (
     <div className={sty.root}>
@@ -62,38 +56,16 @@ export function HomePage() {
         </div>
       </section>
 
-      {featured ? (
+      {siteContent.home.featuredProjects.slugs.length ? (
         <section className={sty.featured}>
           <div className="lg-wrapper">
             <div className={sty.sectionInner} data-text-reveal-group="scrub">
-              <div className={sty.featuredHeading}>
-                <p className="eyebrow" data-text-reveal="copy">{siteContent.home.featuredProjects.title}</p>
-                <p className={sty.meta} data-text-reveal="copy">01 / {String(totalFeatured).padStart(2, '0')}</p>
-              </div>
-              <div className={sty.featuredGrid}>
-                <div className={sty.featuredCopy}>
-                  <span className={sty.featuredIndex}>01</span>
-                  <h2 data-text-reveal="heading">{featured.title}</h2>
-                  <p data-text-reveal="copy">{featured.summary}</p>
-                  <dl className={sty.projectMeta} data-text-reveal="copy">
-                    <div><dt>Client</dt><dd>{featured.client}</dd></div>
-                    <div><dt>Role</dt><dd>{featured.role}</dd></div>
-                    <div><dt>Year</dt><dd>{featured.year}</dd></div>
-                    <div><dt>Discipline</dt><dd>{featured.stack[0]}</dd></div>
-                  </dl>
-                  <ul className="tag-list" data-text-reveal="copy" aria-label={(siteContent.home.featuredProjects.stackAriaTemplate ?? '{title} stack').replace('{title}', featured.title)}>
-                    {featured.stack.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
-                  <div className={sty.featuredLinks} data-text-reveal="copy">
-                    <Link to={`/projects/${featured.slug}`}>Read the case study<LuExternalLink aria-hidden="true" focusable="false" /></Link>
-                    <Link to="/projects">All projects<LuArrowRight aria-hidden="true" focusable="false" /></Link>
-                  </div>
-                </div>
-                <figure className={sty.featuredMedia}>
-                  {featured.image ? <img src={featured.image.src} alt={featured.image.alt} /> : null}
-                  <figcaption>Fig. 01 — {featured.title}, {featured.year}</figcaption>
-                </figure>
-              </div>
+              <FeaturedProjectCarousel
+                projects={siteContent.projects}
+                slugs={siteContent.home.featuredProjects.slugs}
+                title={siteContent.home.featuredProjects.title}
+                stackAriaTemplate={siteContent.home.featuredProjects.stackAriaTemplate}
+              />
             </div>
           </div>
         </section>
@@ -159,7 +131,12 @@ export function HomePage() {
             <div className={sty.contactCopy}>
               <p className="eyebrow" data-text-reveal="copy">Start a conversation</p>
               <h2 data-text-reveal="heading">{siteContent.home.contact.title}</h2>
-              <p data-text-reveal="copy"><LuCalendarCheck aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.contact.availability}. Reach directly at <a href={`mailto:${siteContent.site.email}`}>{siteContent.site.email}</a>.</p>
+              <p data-text-reveal="copy"><LuCalendarCheck aria-hidden="true" className={sty.inlineIcon} focusable="false" />
+                {siteContent.contact.availability}. Reach directly at 
+                <a href={`mailto:${siteContent.site.email}`}>
+                  {siteContent.site.email}
+                </a>.
+              </p>
             </div>
             <ContactForm contact={siteContent.home.contact} recipientEmail={siteContent.site.email} showIntro={false} />
           </div>

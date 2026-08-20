@@ -21,21 +21,25 @@ function scheduleScrollTriggerRefresh() {
 
 function createTimeline(
   group: TextRevealGroup,
+  heading: HTMLElement | undefined,
   words: Element[] | null,
   copyTargets: Element[],
 ) {
   const isEntry = group.dataset.textRevealGroup === 'entry'
   const timeline = gsap.timeline({
+    paused: true,
     defaults: { duration: isEntry ? 0.8 : 1, ease: 'power2.out' },
     scrollTrigger: {
       trigger: group,
-      start: isEntry ? 'top 90%' : 'clamp(top 90%)',
-      end: isEntry ? undefined : 'clamp(top 45%)',
-      scrub: isEntry ? false : 0.6,
-      toggleActions: isEntry ? 'play none none none' : undefined,
+      start: isEntry ? 'top 90%' : 'top 75%',
+      toggleActions: isEntry ? 'play none none none' : 'play none none reverse',
       invalidateOnRefresh: true,
     },
   })
+
+  if (heading) {
+    timeline.set(heading, { autoAlpha: 1 }, 0)
+  }
 
   if (words?.length) {
     timeline.from(words, {
@@ -46,9 +50,12 @@ function createTimeline(
   }
 
   if (copyTargets.length) {
-    timeline.from(copyTargets, {
+    timeline.fromTo(copyTargets, {
       y: 24,
       autoAlpha: 0,
+    }, {
+      y: 0,
+      autoAlpha: 1,
       stagger: { each: 0.08, from: 'start' },
     }, words?.length ? '<0.12' : 0)
   }
@@ -64,7 +71,7 @@ function setupTextGroup(group: TextRevealGroup) {
   if (!heading && !copyTargets.length) return
 
   if (!heading) {
-    createTimeline(group, null, copyTargets)
+    createTimeline(group, undefined, null, copyTargets)
     return
   }
 
@@ -76,7 +83,7 @@ function setupTextGroup(group: TextRevealGroup) {
     linesClass: 'text-reveal-line',
     wordsClass: 'text-reveal-word',
     onSplit: (split) => {
-      const timeline = createTimeline(group, split.words, copyTargets)
+      const timeline = createTimeline(group, heading, split.words, copyTargets)
       scheduleScrollTriggerRefresh()
       return timeline
     },
