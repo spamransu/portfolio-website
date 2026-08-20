@@ -16,7 +16,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.image ? <img src={project.image.src} alt={project.image.alt} className={sty.image} /> : null}
       </Link>
 
-      <div className={sty.content}>
+      <div className={sty.content} data-text-reveal="copy">
         <div className={sty.titleRow}>
           <h2><Link to={`/projects/${project.slug}`}>{project.title}</Link></h2>
           <span className={sty.year}>{project.year}</span>

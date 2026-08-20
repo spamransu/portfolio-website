@@ -32,12 +32,12 @@ export function ProjectDetailPage() {
   if (!project) {
     return (
       <main className={sty.page}>
-        <section className={sty.notFound}>
+        <section className={sty.notFound} data-text-reveal-group="entry">
           <div className="lg-wrapper">
             <div>
-              <p className={sty.kicker}>{detailCopy?.eyebrow ?? '[ PROJECTS ]'}</p>
-              <h1>{detailCopy?.notFoundTitle ?? 'Project not found'}</h1>
-              <p>{detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'}</p>
+              <p className={sty.kicker} data-text-reveal="copy">{detailCopy?.eyebrow ?? '[ PROJECTS ]'}</p>
+              <h1 data-text-reveal="heading">{detailCopy?.notFoundTitle ?? 'Project not found'}</h1>
+              <p data-text-reveal="copy">{detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'}</p>
               <Link className="button button--primary" to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>
             </div>
           </div>
@@ -56,16 +56,16 @@ export function ProjectDetailPage() {
 
   return (
     <main className={sty.page}>
-      <section className={sty.hero} aria-labelledby="project-title">
+      <section className={sty.hero} data-text-reveal-group="entry" aria-labelledby="project-title">
         <div className="lg-wrapper">
           <div className={sty.heroInner}>
             <Link className={sty.backLink} to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'All Projects'}</Link>
             <div className={sty.heroCopy}>
-              <p className={sty.kicker}>[ SELECTED CASE STUDY ]</p>
-              <h1 id="project-title">{project.title}</h1>
-              <p>{project.summary}</p>
+              <p className={sty.kicker} data-text-reveal="copy">[ SELECTED CASE STUDY ]</p>
+              <h1 id="project-title" data-text-reveal="heading">{project.title}</h1>
+              <p data-text-reveal="copy">{project.summary}</p>
             </div>
-            <dl className={sty.metaTable} aria-label="Project metadata">
+            <dl className={sty.metaTable} data-text-reveal="copy" aria-label="Project metadata">
               <div><dt>{detailCopy?.clientLabel ?? 'Client'}</dt><dd>{project.client}</dd></div>
               <div><dt>{detailCopy?.yearLabel ?? 'Year'}</dt><dd>{project.year}</dd></div>
               <div><dt>{detailCopy?.roleLabel ?? 'Role'}</dt><dd>{project.role}</dd></div>
@@ -81,12 +81,12 @@ export function ProjectDetailPage() {
         </div>
       </section>
 
-      <section className={sty.paperSection} aria-labelledby="overview-title">
+      <section className={sty.paperSection} data-text-reveal-group="scrub" aria-labelledby="overview-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.lightLabel}>{sectionLabel('01', 'OVERVIEW')}</p>
+            <p className={sty.lightLabel} data-text-reveal="copy">{sectionLabel('01', 'OVERVIEW')}</p>
             <div>
-              <h2 id="overview-title" className={sty.statement}>{project.overview}</h2>
+              <h2 id="overview-title" className={sty.statement} data-text-reveal="heading">{project.overview}</h2>
             </div>
           </div>
         </div>
@@ -101,27 +101,34 @@ export function ProjectDetailPage() {
         </div>
       </section>
 
-      <section className={sty.narrativeSection} aria-labelledby="challenge-title">
+      <section className={sty.narrativeSection} data-text-reveal-group="scrub" aria-labelledby="challenge-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.kicker}>{sectionLabel('02', 'CHALLENGE')}</p>
+            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('02', 'CHALLENGE')}</p>
             <div className={sty.prose}>
-              <h2 id="challenge-title">Challenge</h2>
-              <p>{project.challenge}</p>
-              <p>{project.summary}</p>
+              <h2 id="challenge-title" data-text-reveal="heading">Challenge</h2>
+              <p data-text-reveal="copy">{project.challenge}</p>
+              <p data-text-reveal="copy">{project.summary}</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className={sty.narrativeSection} aria-labelledby="approach-title">
+      <section className={sty.narrativeSection} data-text-reveal-group="scrub" aria-labelledby="approach-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.kicker}>{sectionLabel('03', 'APPROACH')}</p>
+            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('03', 'APPROACH')}</p>
             <div className={sty.prose}>
-              <h2 id="approach-title">Approach</h2>
-              <p>{project.approachSummary}</p>
-              <ul className={sty.noteList}>{project.approach.map((item) => <li key={item}>{item}</li>)}</ul>
+              <h2 id="approach-title" data-text-reveal="heading">Approach</h2>
+              <p data-text-reveal="copy">{project.approachSummary}</p>
+              <ol className={sty.cardGrid} data-text-reveal="copy">
+                {project.approach.map((item, index) => (
+                  <li className={sty.numberedCard} key={item}>
+                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    <p>{item}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>
@@ -136,27 +143,34 @@ export function ProjectDetailPage() {
         </div>
       </section>
 
-      <section className={sty.narrativeSection} aria-labelledby="result-title">
+      <section className={sty.narrativeSection} data-text-reveal-group="scrub" aria-labelledby="result-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.kicker}>{sectionLabel('04', 'RESULT')}</p>
+            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('04', 'RESULT')}</p>
             <div className={sty.prose}>
-              <h2 id="result-title">Result</h2>
-              <p>{project.resultSummary}</p>
-              <ul className={sty.outcomes}>{project.outcome.map((item) => <li key={item}>{item}</li>)}</ul>
+              <h2 id="result-title" data-text-reveal="heading">Result</h2>
+              <p data-text-reveal="copy">{project.resultSummary}</p>
+              <ol className={sty.cardGrid} data-text-reveal="copy">
+                {project.outcome.map((item, index) => (
+                  <li className={sty.numberedCard} key={item}>
+                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    <p>{item}</p>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>
       </section>
 
-      <section className={sty.scopeSection} aria-labelledby="scope-title">
+      <section className={sty.scopeSection} data-text-reveal-group="scrub" aria-labelledby="scope-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.kicker}>[ PROJECT SCOPE ]</p>
+            <p className={sty.kicker} data-text-reveal="copy">[ PROJECT SCOPE ]</p>
             <div>
-              <h2 id="scope-title">Services / Role / Tools</h2>
-              <ul className={sty.scopeList}>{project.scope.map((item) => <li key={item}>{item}</li>)}</ul>
-              <ul className={sty.stackList} aria-label={detailCopy?.stackAriaTemplate?.replace('{title}', project.title) ?? `${project.title} tools`}>
+              <h2 id="scope-title" data-text-reveal="heading">Services / Role / Tools</h2>
+              <ul className={sty.scopeList} data-text-reveal="copy">{project.scope.map((item) => <li key={item}>{item}</li>)}</ul>
+              <ul className={sty.stackList} data-text-reveal="copy" aria-label={detailCopy?.stackAriaTemplate?.replace('{title}', project.title) ?? `${project.title} tools`}>
                 {project.stack.map((item) => <li key={item}>{item}</li>)}
               </ul>
             </div>
@@ -164,11 +178,11 @@ export function ProjectDetailPage() {
         </div>
       </section>
 
-      <section className={sty.quoteBand} aria-label="Project reflection">
+      <section className={sty.quoteBand} data-text-reveal-group="scrub" aria-label="Project reflection">
         <div className="lg-wrapper">
           <div>
-            <p className={sty.quoteLabel}>Project Reflection</p>
-            <blockquote>“{project.reflection}”</blockquote>
+            <p className={sty.quoteLabel} data-text-reveal="copy">Project Reflection</p>
+            <blockquote data-text-reveal="copy">“{project.reflection}”</blockquote>
           </div>
         </div>
       </section>
@@ -188,12 +202,12 @@ export function ProjectDetailPage() {
         </div>
       </nav>
 
-      <section className={sty.relatedSection} aria-labelledby="related-title">
+      <section className={sty.relatedSection} data-text-reveal-group="scrub" aria-labelledby="related-title">
         <div className="lg-wrapper">
           <div className={sty.relatedHeader}>
             <div>
-              <p className={sty.kicker}>[ MORE PROJECTS ]</p>
-              <h2 id="related-title">More Selected Work</h2>
+              <p className={sty.kicker} data-text-reveal="copy">[ MORE PROJECTS ]</p>
+              <h2 id="related-title" data-text-reveal="heading">More Selected Work</h2>
             </div>
             <Link className={sty.viewAll} to="/projects">View All Work<LuArrowRight aria-hidden="true" focusable="false" /></Link>
           </div>
@@ -203,7 +217,7 @@ export function ProjectDetailPage() {
                 <Link to={`/projects/${entry.slug}`}>
                   <span>{entry.year} / {entry.kind === 'experiment' ? 'Experiment' : 'Case study'}</span>
                   <ProjectVisual image={getProjectImage(entry)} />
-                  <h3>{entry.title}</h3>
+                  <h3 data-text-reveal="copy">{entry.title}</h3>
                 </Link>
               </article>
             ))}

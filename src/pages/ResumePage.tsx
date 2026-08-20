@@ -8,18 +8,18 @@ export function ResumePage() {
     <div className={sty.page}>
       <InternalHero eyebrow={siteContent.resume.eyebrow ?? 'CV / Resume'} title={siteContent.resume.headline} intro={siteContent.resume.summary} />
 
-      <section className={sty.resumeStats} aria-label={siteContent.resume.highlightsSectionTitle}>
+      <section className={sty.resumeStats} data-text-reveal-group="scrub" aria-label={siteContent.resume.highlightsSectionTitle}>
         <div className="lg-wrapper">
           <div>
             {siteContent.resume.highlights.map((item, index) => (
-              <article key={item.label}><strong className={index === 1 ? sty.textFlare : index === 2 ? sty.textIris : undefined}>{item.value}</strong><span>{item.label}</span></article>
+              <article key={item.label} data-text-reveal="copy"><strong className={index === 1 ? sty.textFlare : index === 2 ? sty.textIris : undefined}>{item.value}</strong><span>{item.label}</span></article>
             ))}
           </div>
         </div>
       </section>
 
       <Section title={siteContent.resume.skillsSectionTitle}>
-        <ul className={sty.capabilityList}>
+        <ul className={sty.capabilityList} data-text-reveal="copy">
           {siteContent.resume.skills.map((skill, index) => <li className={index % 3 === 1 ? sty.skillFlare : index % 3 === 2 ? sty.skillIris : undefined} key={skill}>{skill}</li>)}
         </ul>
       </Section>
@@ -28,7 +28,7 @@ export function ResumePage() {
 
       {siteContent.resume.education?.length ? (
         <Section title={siteContent.resume.educationSectionTitle ?? 'Education and training'}>
-          <ol className={sty.experienceList}>
+          <ol className={sty.experienceList} data-text-reveal="copy">
             {siteContent.resume.education.map((item) => (
               <li key={`${item.school}-${item.program}`}>
                 <div><h3>{item.program}</h3><p>{item.school}</p></div>
@@ -41,7 +41,7 @@ export function ResumePage() {
       ) : null}
 
       <Section title={siteContent.resume.experienceSectionTitle}>
-        <ol className={sty.experienceList}>
+        <ol className={sty.experienceList} data-text-reveal="copy">
           {siteContent.resume.experience.map((item) => (
             <li key={`${item.company}-${item.role}`}>
               <div><h3>{item.role}</h3><p>{item.company}</p></div>

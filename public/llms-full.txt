@@ -35,9 +35,9 @@ I build responsive websites, WordPress systems, and design-to-code interfaces th
 - [Git-backed portfolio content system](https://384721.xyz/projects/portfolio-cms.md): The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.
 
 ## Homepage stats
-- 8: active websites maintained across company and client work
-- 4: website migrations supported into cleaner Elementor builds
-- 3: custom WordPress themes or templates built
+- 3+: Years of experience
+- 5+: Projects completed
+- 4+: Happy clients
 
 ## Highlighted skills
 - React
