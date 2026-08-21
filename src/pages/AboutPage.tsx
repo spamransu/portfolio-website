@@ -9,7 +9,6 @@ export function AboutPage() {
       <InternalHero
         title={siteContent.about.title}
         intro={siteContent.about.intro}
-        media={siteContent.about.heroImage}
       />
 
       <Section title={siteContent.about.bodySectionTitle}>

@@ -74,7 +74,7 @@
 .check-list {
   @include mix.flex(row, null, null, var(--gap-inline), wrap);
   padding: 0;
-  margin: 0;
+  margin-block: 0;
   list-style: none;
 }
 
@@ -110,6 +110,6 @@
   gap: var(--space-stack);
 
   p {
-    margin: 0;
+    margin-block: 0;
   }
 }

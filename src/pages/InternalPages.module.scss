@@ -49,15 +49,17 @@
 
 
 .projectGroup header {
-  display: grid;
-  gap: var(--space-xs);
-  padding-block-end: var(--space-md);
-  border-bottom: 1px solid var(--color-border-default);
+  // display: grid;
+  // justify-content: space-between;
+  // align-items: center;
+  // gap: var(--space-xs);
+  // padding-block-end: var(--space-md);
+  // border-bottom: 1px solid var(--color-border-default);
 }
 
 .projectGroup header p {
   max-width: var(--measure-intro);
-  margin: 0;
+  margin-block: 0;
   color: var(--color-text-muted);
 }
 
@@ -71,7 +73,7 @@
   max-width: var(--measure-prose);
 }
 
-.proseLead p { margin: 0; color: var(--color-text-muted); @include mix.type-style(body-lg); }
+.proseLead p { margin-block: 0; color: var(--color-text-muted); @include mix.type-style(body-lg); }
 
 .cardGrid { gap: 1px; padding: 1px; background: var(--color-border-default); }
 
@@ -88,7 +90,7 @@
 .card h3,
 .card p,
 .numberedCard h3,
-.numberedCard p { margin: 0; }
+.numberedCard p { margin-block: 0; }
 .card h3,
 .numberedCard h3 { text-transform: uppercase; @include mix.type-style(h6); }
 .card p,
@@ -101,7 +103,7 @@
   flex-wrap: wrap;
   gap: var(--space-xs);
   padding: 0;
-  margin: 0;
+  margin-block: 0;
   list-style: none;
 }
 
@@ -130,7 +132,7 @@
 .latestPost h2,
 .latestPost p,
 .postRow h2,
-.postRow p { margin: 0; }
+.postRow p { margin-block: 0; }
 .latestPost h2 { text-transform: uppercase; @include mix.type-style(h3); }
 .latestPost p,
 .postRow p { max-width: var(--measure-prose); color: var(--color-text-muted); }
@@ -145,7 +147,7 @@
 .postRow > span:last-child { color: var(--color-action-primary); }
 
 .articleCover > :global(.lg-wrapper) > * { padding-block: var(--space-lg); }
-.articleCover figure { display: grid; gap: var(--space-xs); margin: 0; }
+.articleCover figure { display: grid; gap: var(--space-xs); margin-block: 0; }
 .articleCover img { width: 100%; max-height: 50rem; aspect-ratio: 3 / 2; object-fit: cover; border: 1px solid var(--color-border-default); border-radius: var(--card-radius); }
 .articleCover figcaption { color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
 .article > :global(.sm-wrapper) > * { padding-block: var(--space-xl); }
@@ -154,7 +156,7 @@
 .articleBody > section { display: grid; gap: var(--space-sm); }
 .articleBody h2,
 .articleBody p,
-.articleBody ul { margin: 0; }
+.articleBody ul { margin-block: 0; }
 .articleBody h2 { margin-block-start: var(--space-md); text-transform: uppercase; @include mix.type-style(h4); }
 .articleBody p { color: var(--color-text-muted); @include mix.type-style(body-lg); line-height: 1.7; }
 .articleBody > :first-child p:first-child { color: var(--color-text-primary); }
@@ -163,7 +165,7 @@
 .articleCta { background: var(--color-background-surface-subtle); }
 .articleCta > :global(.lg-wrapper) > * { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-lg); justify-content: space-between; padding-block: var(--space-xl); }
 .articleCta h2,
-.articleCta p { margin: 0; }
+.articleCta p { margin-block: 0; }
 .articleCta h2 { margin-block-start: var(--space-xs); text-transform: uppercase; @include mix.type-style(h4); }
 
 .availabilityMeta { display: flex; flex-wrap: wrap; gap: var(--space-md); color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
@@ -180,7 +182,7 @@
 .contactMethods strong { text-transform: uppercase; @include mix.type-style(body-sm, 700); }
 .contactMethods small,
 .contactFormWrap > p { color: var(--color-text-muted); @include mix.type-style(body-xs); }
-.contactFormWrap > p { max-width: var(--measure-intro); margin: 0; }
+.contactFormWrap > p { max-width: var(--measure-intro); margin-block: 0; }
 
 .resumeStats > :global(.lg-wrapper) > * { padding-block: 0; }
 .resumeStats > :global(.lg-wrapper) > div { display: grid; border-block: 1px solid var(--color-border-default); }
@@ -192,11 +194,11 @@
 .resumeStats span { color: var(--color-text-muted); @include mix.type-style(body-sm); }
 
 .experienceList,
-.experienceList ul { padding: 0; margin: 0; list-style: none; }
+.experienceList ul { padding: 0; margin-block: 0; list-style: none; }
 .experienceList > li { display: grid; gap: var(--space-md); padding-block: var(--space-lg); border-top: 1px solid var(--color-border-default); }
 .experienceList > li:first-child { padding-block-start: 0; border-top: 0; }
 .experienceList h3,
-.experienceList p { margin: 0; }
+.experienceList p { margin-block: 0; }
 .experienceList h3 { text-transform: uppercase; @include mix.type-style(h6); }
 .experienceList p,
 .experienceList > li > span,

@@ -20,7 +20,6 @@ function getProjectGroups(): Array<{ title: string; description?: string; projec
 }
 
 export function ProjectsPage() {
-  const projectsHeroImage = siteContent.projectsPage?.heroImage
   const groups = getProjectGroups()
 
   return (
@@ -28,7 +27,6 @@ export function ProjectsPage() {
       <InternalHero
         title={siteContent.projectsPage?.title ?? 'Case studies with enough context to be useful.'}
         intro={siteContent.projectsPage?.intro ?? 'Selected frontend and design-to-code work presented as concise case studies.'}
-        media={projectsHeroImage}
       />
 
       <section className={sty.archiveSection}>
