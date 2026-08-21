@@ -21,6 +21,7 @@ I build responsive React interfaces and WordPress systems, then make the content
 - [Contact](https://384721.xyz/contact.md)
 - [Resume](https://384721.xyz/resume.md)
 - [Design system](https://384721.xyz/design-system.md)
+- [A Git release workflow for small teams](https://384721.xyz/blog/git-release-workflow-for-small-teams.md)
 - [Writing portfolio case studies people can trust](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
 - [Why this portfolio uses a Git-backed content system](https://384721.xyz/blog/git-backed-portfolio-cms.md)
 - [WordPress maintenance and Elementor system work](https://384721.xyz/projects/wordpress-maintenance-system.md)

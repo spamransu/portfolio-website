@@ -40,15 +40,15 @@ export function BlogPage() {
 
           {latest ? (
             <Link className={sty.latestPost} data-text-reveal-group="scrub" to={`/blog/${latest.slug}`}>
-              <div>
-                <h2 data-text-reveal="copy">{latest.title}</h2>
-                <p data-text-reveal="copy">{latest.excerpt ?? latest.body.split('\n')[0]}</p>
-                <strong data-text-reveal="copy">Read post</strong>
-              </div>
               <div className={sty.postMeta} data-text-reveal="copy">
                 <span>{formatDate(latest.date)}</span>
                 <span>{getReadingTime(latest)}</span>
               </div>
+              <div>
+                <h2 data-text-reveal="copy">{latest.title}</h2>
+                <p data-text-reveal="copy">{latest.excerpt ?? latest.body.split('\n')[0]}</p>
+              </div>
+              <strong data-text-reveal="copy">Read post</strong>
             </Link>
           ) : null}
 

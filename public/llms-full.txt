@@ -83,11 +83,17 @@ I am most useful when a project sits between design and maintenance. I can take 
 
 Short notes on case-study writing, content systems, and the practical decisions that keep a portfolio maintainable.
 
+## [A Git release workflow for small teams](https://384721.xyz/blog/git-release-workflow-for-small-teams.md)
+
+- Date: 2026-08-21
+
+A practical branch, merge, tag, and cleanup workflow for teams that want reviewable Git history without release ceremony for its own sake.
+
 ## [Writing portfolio case studies people can trust](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
 
 - Date: 2026-07-22
 
-A practical way to turn real project work into a case study without inflating the scope.
+A practical way to turn real project work into a case study without inflating the scope or losing the useful details.
 
 ## [Why this portfolio uses a Git-backed content system](https://384721.xyz/blog/git-backed-portfolio-cms.md)
 
@@ -95,31 +101,167 @@ A practical way to turn real project work into a case study without inflating th
 
 How JSON and Markdown keep the portfolio's visible pages, mirrors, and project notes in sync.
 
+# A Git release workflow for small teams
+
+- Date: 2026-08-21
+- Excerpt: A practical branch, merge, tag, and cleanup workflow for teams that want reviewable Git history without release ceremony for its own sake.
+- Cover image: https://picsum.photos/seed/git-release-workflow-small-teams/1600/900.jpg
+
+A small team does not need a complicated Git process. It does need a clear boundary between work in progress, integrated work, and what is in production.
+
+The workflow I use keeps `development` as the integration branch and `main` as the production branch. Short-lived feature or fix branches merge into `development`. A release is one explicit merge into `main`, followed by an annotated tag. After that, `development` fast-forwards to the released `main`.
+
+## Start work from development
+
+Feature and fix branches start from an up-to-date `development` branch. The branch name describes the work, such as `feat/blog-post` or `fix/mobile-header`.
+
+```bash
+git switch development
+git pull --ff-only origin development
+git switch -c feat/blog-post
+git push -u origin feat/blog-post
+```
+
+Keeping work branches short makes review easier. Commits stay focused and use a Conventional Commit prefix when it helps explain the change: `feat:`, `fix:`, `docs:`, or `chore:`.
+
+I add specific files rather than every file in the working tree. That matters when generated files, screenshots, or another unfinished change are present.
+
+```bash
+git status --short
+git diff
+git add content/blog/2026-08-21-git-workflow-for-small-teams.md
+git diff --cached
+git commit -m "docs: add git release workflow post"
+git push
+```
+
+## Merge focused work into development
+
+The branch is reviewed and validated before it is merged. For this portfolio, content changes run `pnpm run prebuild`; structural changes also run `pnpm build`. Browser checks belong in the dedicated `.playwright/` folders when the change affects rendered behavior.
+
+The merge into `development` preserves the work branch in history:
+
+```bash
+git switch development
+git pull --ff-only origin development
+git merge --no-ff feat/blog-post -m "Merge branch 'feat/blog-post' into development"
+git push origin development
+```
+
+A merge commit records the integration boundary without rewriting the individual commits from the work branch. Squashing or rebasing a completed branch would remove that history, so I do not use either unless the project explicitly asks for it.
+
+## Release from validated development
+
+Most releases do not need another branch. If `development` already contains the validated work and no release-only changes are required, it is the release source.
+
+Before merging, I fetch both long-lived branches and check four conditions:
+
+```bash
+git fetch --all --prune
+git switch development && git pull --ff-only origin development
+git switch main && git pull --ff-only origin main
+
+RELEASE_SOURCE=development
+VERSION=0.0.7
+
+git merge-base --is-ancestor main "$RELEASE_SOURCE"
+git log --oneline main.."$RELEASE_SOURCE"
+git diff --quiet main "$RELEASE_SOURCE" && exit 1
+git tag --list "v$VERSION"
+git ls-remote --tags origin "refs/tags/v$VERSION"
+```
+
+The ancestry check prevents an unexpected branch divergence from being hidden by a release merge. The tree-difference check prevents an unchanged release. The local and remote tag checks prevent reusing a published version.
+
+A `release/vX.Y.Z` branch is only useful when it contains release preparation, stabilization, or a release-blocking fix. A branch that points at the unchanged `development` tip adds ceremony without adding a review boundary.
+
+## Merge once, tag once, publish together
+
+The production merge is explicit and non-fast-forward. The annotated tag points at that merge commit so the version identifies the exact release boundary.
+
+```bash
+git switch main
+git merge --no-ff "$RELEASE_SOURCE" -m "chore(release): publish v$VERSION"
+git tag -a "v$VERSION" -m "v$VERSION"
+git push --atomic origin main "v$VERSION"
+```
+
+`--atomic` publishes the branch and tag as one remote update. If either reference cannot be published, neither should move. I inspect the merge and tag before pushing when the release is consequential.
+
+## Fast-forward development after the release
+
+After `main` is published, `development` should catch up without a second content-identical merge commit:
+
+```bash
+git switch development
+git pull --ff-only origin development
+git merge --ff-only main
+git push origin development
+```
+
+The release merge already contains the release source as a parent, so a fast-forward keeps both long-lived branches aligned while preserving the one release boundary.
+
+## Clean up only after verifying history
+
+Short-lived branches are deleted only after the merge and remote state are verified. First check which local branches are merged into `main`, then remove the specific work branch locally and remotely.
+
+```bash
+git fetch --all --prune
+git branch --merged main
+git branch -d feat/blog-post
+git push origin --delete feat/blog-post
+git branch -vv
+```
+
+The cleanup is part of the workflow, not a substitute for checking history. A branch is safe to delete when its commits are reachable from the intended integration or release branch and the remote deletion is confirmed.
+
+## The workflow in one line
+
+Use `feat/*` or `fix/*` branches for focused work, merge them into `development`, release validated `development` into `main` once with an annotated tag, fast-forward `development`, and delete branches only after verifying reachability. The process is small enough to follow and explicit enough to explain what reached production.
+
 # Writing portfolio case studies people can trust
 
 - Date: 2026-07-22
-- Excerpt: A practical way to turn real project work into a case study without inflating the scope.
+- Excerpt: A practical way to turn real project work into a case study without inflating the scope or losing the useful details.
 - Cover image: https://picsum.photos/seed/portfolio-case-study-writing/1600/900.jpg
 
-A portfolio case study has one job: help a reader understand the work without making them reconstruct it from adjectives. Name the problem, say what you handled, and show what changed.
+A portfolio case study should help a reader understand the work without reconstructing it from adjectives. Name the problem, explain the part you handled, and show what changed.
+
+The scope does not need to be dramatic. A maintenance project, migration, small React build, or training project can all be useful when the description is accurate.
 
 ## Start with the actual scope
 
-A maintenance project can be useful. So can a migration, a small React build, or a training project. The scope is not the problem. The problem is calling a maintenance task a transformation or presenting a practice build as client work.
+Separate production work, personal projects, and tutorial-based experiments. They can share a visual system, but they should not make the same promise.
 
-I separate production work, personal projects, and tutorial-based experiments in this portfolio. They can share the same visual system, but they should not make the same promise.
+A maintenance task can include responsive fixes, content organization, reusable classes, admin fields, deployment handoff, or spam cleanup. Those details describe the work more accurately than calling the project a transformation.
 
-## Put the proof beside the claim
+A practice build can still demonstrate how you structure components or solve an interface problem. Labeling it as client work removes useful context and makes the case study harder to trust.
 
-When I write that I maintain 8 active websites, the number comes from my resume. When I describe author and reader flows in Nsight Index, I check the repository. If I cannot trace a detail to a source, I remove it or label it as an estimate.
+## Put proof beside the claim
 
-That habit keeps the writing easier to revise. A future update has a place to start instead of a sentence that only sounds plausible.
+Every important detail needs a source. A number can come from a resume. A feature description can come from the repository. A project timeline can come from the work log. If a detail cannot be traced, remove it or label it as an estimate.
+
+This applies to performance claims, team size, page counts, integrations, and business outcomes. A sentence that sounds plausible is not evidence.
+
+The source does not need to interrupt the page. A short note in the editing file, a linked project artifact, or a clear methodology is enough to make the claim reviewable later.
+
+## Describe decisions, not just deliverables
+
+“Built a website” is a deliverable. “Moved editable project content into JSON, generated Markdown mirrors during prebuild, and kept React pages reading from one source” describes decisions and their effect.
+
+The same approach works for smaller changes. Say which page was adjusted, which constraint shaped the solution, and what another person can verify in the result. Screenshots can show the surface; the written case study should explain the system behind it.
 
 ## Include the work people usually skip
 
-Reusable classes, admin fields, spam cleanup, deployment handoff, responsive fixes, and content organization are not dramatic. They are often the parts a hiring manager or client needs to understand.
+The unglamorous parts often answer the reader's real questions: reusable styles, admin fields, responsive corrections, content migration, accessibility fixes, deployment handoff, and cleanup after launch.
 
-A useful case study does not need a manufactured story arc. It needs enough context for another person to decide whether the work matches their problem.
+They also show where the work stopped. If analytics were not available, do not imply a conversion result. If a redesign was not shipped, call it a prototype. Clear boundaries are part of the evidence.
+
+## A useful case study is a record
+
+A strong case study does not need a manufactured story arc. It needs enough context for a hiring manager, client, or collaborator to decide whether the work matches their problem.
+
+Use the smallest accurate claim, place the proof near it, and leave the reader with a clear account of what changed.
 
 # Why this portfolio uses a Git-backed content system
 
@@ -127,27 +269,39 @@ A useful case study does not need a manufactured story arc. It needs enough cont
 - Excerpt: How JSON and Markdown keep the portfolio's visible pages, mirrors, and project notes in sync.
 - Cover image: https://picsum.photos/seed/git-backed-portfolio-cms/1600/900.jpg
 
-This portfolio keeps its editable content in the repository. Site copy lives in JSON. Notes live in Markdown. A prebuild script generates the public mirrors, sitemap entries, and agent-readable navigation files.
+This portfolio keeps its editable content in the repository. Site copy lives in JSON. Blog and project notes live in Markdown. A prebuild script generates the public mirrors, sitemap entries, and agent-readable navigation files.
 
 That is more deliberate than a tiny hosted CMS, but it solves a real problem: portfolio copy changes in several places unless one source owns it.
 
 ## One source prevents drift
 
-A project title can change in a card, a detail page, and a resume entry. A contact address can be correct in the footer and stale in a generated page. Editing each copy by hand is an invitation to miss one.
+A project title can appear in a card, a detail page, a project index, and a resume entry. A contact address can be correct in the footer and stale in a generated page. Editing each copy by hand makes it easy to miss one.
 
-The content file is the source of truth. React pages read from it, and the prebuild script creates the derived Markdown and metadata files. The generated files are outputs, not a second place to edit.
+The editable content file is the source of truth. React pages read from it, and the prebuild script creates derived Markdown and metadata files. Generated files are outputs, not a second place to edit.
+
+This arrangement also gives each change a visible diff. A reviewer can see whether a title, description, or link changed without comparing screenshots manually.
 
 ## Markdown mirrors make the site inspectable
 
-The visual routes are for people. Files such as `/llms-full.txt`, `/projects.md`, and the individual project pages make the same material quick to read, search, or inspect without scraping layout.
+The visual routes are for people. Files such as `/llms-full.txt`, `/projects.md`, and individual project pages expose the same material in a form that is quick to read, search, or inspect without scraping layout.
 
-That is useful for accessibility, search, and agents. It also makes a content review a file review instead of a tour through every component.
+The mirrors support accessibility, search, and agent workflows. They also make content review a file review. If a claim is outdated, the source file and its generated copies have a predictable relationship.
+
+The generated files should not be edited directly. The next prebuild can replace them, so a direct change would be temporary and easy to lose.
 
 ## Git keeps the rewrite visible
 
-When the content is in files, a rewrite appears in a diff. I can review changed claims, spot placeholder text, and see whether a project page was updated everywhere before building.
+When content is stored in files, a rewrite appears in a diff. I can review changed claims, spot placeholder text, and see whether a project page was updated everywhere before building.
 
-It is not a general-purpose CMS. It is a small content workflow that matches how this portfolio is maintained.
+Git also preserves the history of those edits. A future maintainer can identify when a description changed, which files changed together, and whether the update was content-only or part of a structural change.
+
+For this workflow, a focused content commit can be validated with `pnpm run prebuild`. A structural change also runs `pnpm build`, and rendered changes get a browser check.
+
+## This is not a general-purpose CMS
+
+The system does not provide every feature of a hosted CMS. It favors a small set of files, predictable generation, and reviewable changes.
+
+That trade-off fits a portfolio that is edited by its developer. The content remains portable, the outputs can be regenerated, and a rewrite does not disappear inside an opaque admin interface.
 
 ## Resume
 # Resume

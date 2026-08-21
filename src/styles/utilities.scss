@@ -21,6 +21,24 @@
   text-transform: uppercase;
 }
 
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  width: fit-content;
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  @include mix.type-style(body-xs, 700);
+  transition: color var(--motion-emphasized) var(--motion-ease-emphasized), transform var(--motion-emphasized) var(--motion-ease-emphasized);
+}
+
+.backLink:hover {
+  color: var(--color-action-primary);
+  transform: translateX(-0.15rem);
+}
+
 .skip-link {
   position: absolute;
   top: var(--space-xs);

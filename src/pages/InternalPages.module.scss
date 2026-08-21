@@ -2,6 +2,24 @@
 
 .page { background: var(--color-background-page); }
 
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  width: fit-content;
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  @include mix.type-style(body-xs, 700);
+  transition: color var(--motion-emphasized) var(--motion-ease-emphasized), transform var(--motion-emphasized) var(--motion-ease-emphasized);
+}
+
+.backLink:hover {
+  color: var(--color-action-primary);
+  transform: translateX(-0.15rem);
+}
+
 .archiveSection,
 .blogArchive,
 .contactSection,
@@ -116,7 +134,7 @@
 .latestPost h2 { text-transform: uppercase; @include mix.type-style(h3); }
 .latestPost p,
 .postRow p { max-width: var(--measure-prose); color: var(--color-text-muted); }
-.latestPost strong { display: inline-flex; align-items: center; gap: var(--space-2xs); margin-block-start: var(--space-sm); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs, 700); }
+.latestPost strong {display: inline-flex; align-items: center; gap: var(--space-2xs); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs, 700);}
 .latestPost:hover h2,
 .postRow:hover h2 { color: var(--color-action-primary); }
 .postMeta { display: flex; flex-wrap: wrap; align-content: start; gap: var(--space-xs); color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
@@ -200,7 +218,8 @@
   .latestPost { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .latestPost > :first-child { grid-column: span 3; }
   .latestPost > div:nth-child(2) { grid-column: span 7; }
-  .latestPost > .postMeta { grid-column: span 2; justify-content: flex-end; text-align: right; }
+  .latestPost > .postMeta { grid-column: span 3; }
+  .latestPost > span:last-child { grid-column: span 1; color: var(--color-action-primary); text-align: right; }
   .postRow { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .postRow > .postMeta { grid-column: span 3; }
   .postRow > div:nth-child(2) { grid-column: span 8; }

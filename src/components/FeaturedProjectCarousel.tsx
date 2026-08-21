@@ -124,7 +124,7 @@ export function FeaturedProjectCarousel({
       aria-busy={isBusy}
     >
       <div className={sty.featuredHeading}>
-        <h2>{title}</h2>
+        <p className="eyebrow">{title}</p>
         <div className={sty.featuredHeaderActions}>
           <p className={sty.meta}>{position} / {total}</p>
           <nav className={sty.carouselControls} aria-label="Featured project navigation">

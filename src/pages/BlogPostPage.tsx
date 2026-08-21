@@ -26,7 +26,7 @@ export function BlogPostPage() {
       <InternalHero
         title={post.title}
         intro={post.excerpt ?? post.body.split('\n')[0]}
-        actions={<Link className="button button--ghost" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>}
+        beforeTitle={<Link className="backLink" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to notes'}</Link>}
       />
 
       {post.coverImage ? (
