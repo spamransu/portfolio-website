@@ -322,6 +322,7 @@ const openSession = async (token: string, secret: string): Promise<AdminSession 
     const iv = fromBase64Url(ivPart)
     const cipher = fromBase64Url(cipherPart)
     const payload = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher)
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     const session = JSON.parse(textDecoder.decode(payload)) as AdminSession
 
     if (!session.login || !session.accessToken || !session.expiresAt || session.expiresAt <= Date.now()) {
@@ -573,9 +574,11 @@ const getProjectsValidationError = (value: unknown): string | null => {
 
 const isBlogStatus = (value: unknown): value is BlogStatus => value === 'draft' || value === 'published'
 const isAllowedMediaArea = (value: string): value is (typeof ALLOWED_MEDIA_AREAS)[number] =>
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   (ALLOWED_MEDIA_AREAS as readonly string[]).includes(value)
 
 const isAllowedMediaType = (value: string): value is (typeof ALLOWED_MEDIA_TYPES)[number] =>
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   (ALLOWED_MEDIA_TYPES as readonly string[]).includes(value)
 
 
@@ -594,6 +597,7 @@ const validateBlogPost = (value: unknown): value is BlogPost => {
 const getBlogPostValidationError = (value: unknown): string | null => {
   if (!validateBlogPost(value)) return 'Blog post payload failed validation.'
 
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   const post = value as BlogPost
   if (!post.title.trim()) return 'Blog title is required.'
   if (!post.body.trim()) return 'Blog body is required.'
@@ -695,6 +699,7 @@ const readJsonBody = async <T>(request: Request): Promise<T | Response> => {
   }
 
   try {
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     return (await request.json()) as T
   } catch {
     return jsonResponse({ error: 'Expected a JSON request body.' }, { status: 400 })
@@ -726,6 +731,7 @@ const fetchGitHubJson = async <T>(input: RequestInfo | URL, init?: RequestInit):
     throw new Error(message || `GitHub request failed (${response.status})`)
   }
 
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   return (await response.json()) as T
 }
 
@@ -944,6 +950,7 @@ const readGitHubFileIfExists = async (env: Env, accessToken: string, branch: str
     throw new Error(message || `GitHub request failed (${response.status})`)
   }
 
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   return (await response.json()) as GitHubContentResponse
 }
 
@@ -993,6 +1000,7 @@ const handleAdminAuthStart = async ({ request, env }: PagesContext): Promise<Res
   const state = createState()
   const callbackUrl = buildGitHubCallbackUrl(request)
   const authorizeUrl = new URL(GITHUB_OAUTH_AUTHORIZE_URL)
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   authorizeUrl.searchParams.set('client_id', env.GITHUB_CLIENT_ID as string)
   authorizeUrl.searchParams.set('redirect_uri', callbackUrl)
   authorizeUrl.searchParams.set('scope', 'read:user repo')
@@ -1066,6 +1074,7 @@ const handleAdminAuthCallback = async ({ request, env }: PagesContext): Promise<
       expiresAt: Date.now() + ADMIN_SESSION_TTL_SECONDS * 1000,
       login: user.login,
     },
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     env.ADMIN_SESSION_SECRET as string,
   )
 

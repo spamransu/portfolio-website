@@ -16,7 +16,7 @@ import {
 type UseBlogEditorOptions = {
   confirmDiscardChanges: (message: string) => boolean
   fallbackBranch: string | null
-  handleUnauthorizedError: (caught: unknown) => boolean
+  handleUnauthorizedError: (caught: Error) => boolean
   onAfterGitWrite: () => void
   onBlogResourceSelected: (slug: string) => void
   onBlogSlugEdited: (slug: string) => void
@@ -72,7 +72,7 @@ export const useBlogEditor = ({
         return response.posts[0] ?? null
       })
     } catch (caught) {
-      if (!handleUnauthorizedError(caught)) setGlobalError(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setGlobalError(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setLoadingBlog(false)
     }
@@ -91,7 +91,7 @@ export const useBlogEditor = ({
       onBlogResourceSelected(response.post.slug)
       setBlogConflict(null)
     } catch (caught) {
-      if (!handleUnauthorizedError(caught)) setBlogStatus(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setBlogStatus(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setLoadingBlog(false)
     }
@@ -184,10 +184,11 @@ export const useBlogEditor = ({
       await loadBlogList()
       onAfterGitWrite()
     } catch (caught) {
-      if (isAdminApiError(caught) && caught.status === 409) {
-        setBlogConflict({ currentSha: caught.currentSha, latestCommitSha: caught.latestCommitSha })
+      const error = caught instanceof Error ? caught : new Error(String(caught))
+      if (isAdminApiError(error) && error.status === 409) {
+        setBlogConflict({ currentSha: error.currentSha, latestCommitSha: error.latestCommitSha })
       }
-      if (!handleUnauthorizedError(caught)) setBlogStatus(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setBlogStatus(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setSavingBlog(false)
     }
@@ -219,7 +220,7 @@ export const useBlogEditor = ({
       await loadBlogList()
       onAfterGitWrite()
     } catch (caught) {
-      if (!handleUnauthorizedError(caught)) setBlogStatus(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setBlogStatus(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setSavingBlog(false)
     }

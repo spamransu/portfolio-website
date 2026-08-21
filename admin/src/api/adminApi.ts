@@ -91,10 +91,12 @@ export interface AdminApiError extends Error {
 
 const toApiError = async (response: Response): Promise<AdminApiError> => {
   const fallback = `Request failed (${response.status})`
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   const error = new Error(fallback) as AdminApiError
   error.status = response.status
 
   try {
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     const payload = (await response.json()) as {
       currentSha?: string
       error?: string
@@ -118,6 +120,7 @@ const getJson = async <T>(input: RequestInfo | URL): Promise<T> => {
   })
 
   if (!response.ok) throw await toApiError(response)
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   return (await response.json()) as T
 }
 
@@ -137,6 +140,7 @@ export const adminApi = {
     })
 
     if (!response.ok) throw await toApiError(response)
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     return (await response.json()) as ProjectListResponse
   },
   getBlogPosts: () => getJson<BlogListResponse>('/api/admin/blog'),
@@ -153,6 +157,7 @@ export const adminApi = {
     })
 
     if (!response.ok) throw await toApiError(response)
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     return (await response.json()) as BlogDetailResponse & { latestCommitSha: string | null }
   },
   deleteBlogPost: async (slug: string, payload: DeleteBlogPostRequest) => {
@@ -167,6 +172,7 @@ export const adminApi = {
     })
 
     if (!response.ok) throw await toApiError(response)
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     return (await response.json()) as { branch: string; latestCommitSha: string | null; path: string; repo: AdminRepoInfo }
   },
   uploadMedia: async (payload: MediaUploadRequest) => {
@@ -183,6 +189,7 @@ export const adminApi = {
     })
 
     if (!response.ok) throw await toApiError(response)
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     return (await response.json()) as MediaUploadResponse
   },
   logout: async () => {

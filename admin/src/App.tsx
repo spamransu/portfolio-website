@@ -22,11 +22,11 @@ export const App = () => {
   const syncProjectMediaSlugRef = useRef<(slug: string) => void>(() => undefined)
 
   const confirmDiscardChanges = useCallback((message: string): boolean => {
-    if (typeof window === 'undefined') return true
+    if (!globalThis.window) return true
     return window.confirm(message)
   }, [])
 
-  const handleUnauthorizedError = useCallback((caught: unknown): boolean => {
+  const handleUnauthorizedError = useCallback((caught: Error): boolean => {
     if (isAdminApiError(caught) && caught.status === 401) {
       setSession(DEFAULT_SESSION)
       resetAuthenticatedStateRef.current()
@@ -114,7 +114,7 @@ export const App = () => {
         }
       } catch (caught) {
         if (!mounted) return
-        setError(getApiErrorMessage(caught))
+        setError(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
         setSession(DEFAULT_SESSION)
       } finally {
         if (mounted) setLoading(false)
@@ -128,7 +128,7 @@ export const App = () => {
   }, [loadActivity, loadBlogList, loadProjects, resetAuthenticatedState])
 
   useEffect(() => {
-    if (typeof window === 'undefined') return
+    if (!globalThis.window) return
     const hash = window.location.hash
     const queryIndex = hash.indexOf('?')
     if (queryIndex === -1) return
@@ -160,7 +160,7 @@ export const App = () => {
       setError(null)
       setAuthStatus('Signed out.')
     } catch (caught) {
-      setError(getApiErrorMessage(caught))
+      setError(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     }
   }
 
@@ -200,7 +200,7 @@ export const App = () => {
       onLogin: handleLogin,
       onLogout: () => { void handleLogout() },
       session,
-      siteUrl: typeof window === 'undefined' ? '' : window.location.origin,
+      siteUrl: !globalThis.window ? '' : window.location.origin,
     },
     projects: {
       conflict: projects.projectConflict,

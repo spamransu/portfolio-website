@@ -5,11 +5,11 @@ import { FeaturedProjectCarousel } from '../components/FeaturedProjectCarousel'
 import { siteContent, type HomeStatTone } from '../content/siteContent'
 import sty from './HomePage.module.scss'
 
-const statToneClassNames: Record<HomeStatTone, string> = {
+const statToneClassNames = {
   accent: sty.statAccent,
   'accent-2': sty.statAccent2,
   'accent-3': sty.statAccent3,
-}
+} satisfies Record<HomeStatTone, string>
 
 function renderAccentedTitle(title: string, accentPhrase?: string) {
   if (!accentPhrase || !title.includes(accentPhrase)) return title
