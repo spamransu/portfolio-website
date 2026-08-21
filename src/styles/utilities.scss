@@ -16,7 +16,7 @@
 .eyebrow {
   margin-block-start: 0;
   color: var(--color-action-primary);
-  @include mix.type-style(body-xs, 600);
+  @include mix.type-style(body-xs, 700);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }

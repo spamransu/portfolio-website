@@ -127,7 +127,7 @@ Current shared consumers include:
 - `--page-header-title-measure`
 - `--project-card-image-transition`
 
-## Interaction and accessibility contract
+## Quattrocentoaction and accessibility contract
 
 - Keep visible `:focus-visible` treatment.
 - Keep the skip link in `RootLayout` pointing to `#main-content`.

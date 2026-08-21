@@ -18,7 +18,7 @@
   margin: 0;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  @include mix.type-style(body-xs, 600);
+  @include mix.type-style(body-xs, 700);
 }
 
 .kicker,
@@ -105,7 +105,7 @@
 .metaTable dd {
   margin: 0;
   color: var(--color-text-primary);
-  @include mix.type-style(body-sm, 500);
+  @include mix.type-style(body-sm, 400);
 }
 
 .openingVisual,
@@ -162,9 +162,9 @@
 .statement {
   margin: 0;
   text-transform: none;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: clamp(2rem, 4.8vw, 5rem);
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.06;
   letter-spacing: -0.04em;
   text-wrap: balance;
@@ -258,9 +258,9 @@
 
 .numberedCard > span {
   color: var(--color-action-primary);
-  font-family: Oswald, sans-serif;
+  font-family: var(--font-display);
   font-size: var(--type-h3-size);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
 }
 
@@ -277,7 +277,7 @@
   padding: var(--space-xs) var(--space-sm);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-sm);
-  @include mix.type-style(body-xs, 600);
+  @include mix.type-style(body-xs, 700);
 }
 
 .stackList li {

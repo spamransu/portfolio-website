@@ -30,7 +30,7 @@ export function DesignSystemPage() {
       </section>
 
       <section className={sty.block} id="type">
-        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('type')?.title ?? 'Typography'}</p><p data-text-reveal="copy">{section('type')?.description}</p></header><div className={sty.typeScale} data-text-reveal="copy">{(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const).map((role) => <div key={role}><code>{role.toUpperCase()}</code><p className={`text-${role}`}>Structure before decoration.</p></div>)}<div><code>BODY</code><p>Inter keeps long-form copy readable and interface labels quiet.</p></div><p className="eyebrow">Eyebrow example</p></div></div></div>
+        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('type')?.title ?? 'Typography'}</p><p data-text-reveal="copy">{section('type')?.description}</p></header><div className={sty.typeScale} data-text-reveal="copy">{(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const).map((role) => <div key={role}><code>{role.toUpperCase()}</code><p className={`text-${role}`}>Structure before decoration.</p></div>)}<div><code>BODY</code><p>Quattrocento keeps long-form copy readable and interface labels quiet.</p></div><p className="eyebrow">Eyebrow example</p></div></div></div>
       </section>
 
       <section className={sty.block} id="spacing">

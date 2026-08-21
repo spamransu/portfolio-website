@@ -25,7 +25,7 @@
   text-decoration: none;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  @include mix.type-style(body-sm, 600);
+  @include mix.type-style(body-sm, 700);
 }
 
 .brandPrimary {
@@ -58,7 +58,7 @@
   text-decoration: none;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  @include mix.type-style(body-xs, 500);
+  @include mix.type-style(body-xs, 400);
   transition: color var(--motion-fast) var(--motion-ease-standard);
 }
 

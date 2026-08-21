@@ -90,6 +90,9 @@
   --measure-sidebar: 12rem;
   --measure-form: #{tokens.fluid(16.8rem, 19rem)};
 
+  --font-body: #{tokens.font-family(sans)};
+  --font-display: #{tokens.font-family(display)};
+
   /* Typography roles */
   --type-h1-size: #{tokens.type-prop(h1, size)};
   --type-h1-line: #{tokens.type-prop(h1, line-height)};
@@ -168,7 +171,6 @@ h4,
 h5,
 h6 {
   margin-block: 0 0.5em;
-  text-transform: uppercase;
 }
 
 h1,

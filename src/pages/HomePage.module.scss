@@ -25,7 +25,7 @@
   border-bottom: 1px solid var(--color-border-subtle);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  @include mix.type-style(body-xs, 500);
+  @include mix.type-style(body-xs, 400);
 }
 
 .heroGrid {
@@ -139,7 +139,7 @@
 }
 
 .stats strong {
-  font-family: Oswald, sans-serif;
+  font-family: var(--font-display);
   font-size: var(--type-h2-size);
   line-height: 1;
 }
@@ -199,7 +199,7 @@
   padding: var(--tag-padding);
   border: 1px solid var(--color-border-default);
   border-radius: var(--tag-radius);
-  @include mix.type-style(body-xs, 500);
+  @include mix.type-style(body-xs, 400);
 }
 
 .skillsGrid li::before {

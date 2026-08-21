@@ -25,7 +25,7 @@ Skill used: `ui-ux-pro-max`
 
 The skill returned a portfolio/case-study direction: portfolio grid, visuals first, dark cinematic/editorial tone, project-card CTA emphasis, minimal accent color, spacious density, standard/subtle motion, and responsive/accessibility checks at 375px, 768px, 1024px, and 1440px.
 
-Important adaptation: the repo already has a real brand basis: dark ink background, cream text, lime/orange/violet accents, Oswald display, Inter body, and Figma-derived type values. We should preserve those instead of replacing them with the skill’s generic Archivo/Space Grotesk or slate/green palette.
+Important adaptation: the repo already has a real brand basis: dark ink background, cream text, lime/orange/violet accents, Oswald display, Quattrocento body, and Figma-derived type values. We should preserve those instead of replacing them with the skill’s generic Archivo/Space Grotesk or slate/green palette.
 
 ## Current design-system strengths
 

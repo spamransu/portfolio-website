@@ -34,4 +34,4 @@ Note: mobile `h4` line-height is zero in the export. The system uses its mobile 
 ## Font families
 
 - Display/headings: `Oswald`, then narrow/display fallbacks.
-- Body/copy: `Inter`, then system sans-serif fallbacks.
+- Body/copy: `Quattrocento Sans`, then system sans-serif fallbacks.

@@ -66,7 +66,7 @@
   color: var(--color-text-muted);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  @include mix.type-style(body-xs, 600);
+  @include mix.type-style(body-xs, 700);
 }
 
 .linkList {
