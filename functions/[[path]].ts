@@ -115,10 +115,10 @@ type Project = {
 }
 
 type ProjectsWriteRequest = {
-  branch?: unknown
-  commitMessage?: unknown
-  projects?: unknown
-  sha?: unknown
+  branch?: string
+  commitMessage?: string
+  projects: unknown
+  sha?: string
 }
 
 type BlogStatus = 'draft' | 'published'
@@ -144,16 +144,26 @@ type BlogPostResponse = BlogPostMeta & {
 }
 
 type BlogPostWriteRequest = {
-  branch?: unknown
-  commitMessage?: unknown
-  post?: unknown
-  sha?: unknown
+  branch?: string
+  commitMessage?: string
+  post: unknown
+  sha?: string
 }
 
 type BlogPostDeleteRequest = {
-  branch?: unknown
-  commitMessage?: unknown
-  sha?: unknown
+  branch?: string
+  commitMessage?: string
+  sha: string
+}
+
+type BlogFrontmatter = {
+  title?: string
+  slug?: string
+  date?: string
+  status?: string
+  coverImage?: string
+  coverAlt?: string
+  excerpt?: string
 }
 
 type MediaUploadResponse = {
@@ -692,19 +702,45 @@ const requireSameOrigin = (request: Request): Response | null => {
   return null
 }
 
-const readJsonBody = async <T>(request: Request): Promise<T | Response> => {
+const readJsonBody = async (request: Request): Promise<unknown | Response> => {
   const contentLengthHeader = request.headers.get('content-length')
   if (contentLengthHeader && Number(contentLengthHeader) > MAX_ADMIN_BODY_BYTES) {
     return jsonResponse({ error: 'Admin request body is too large.' }, { status: 413 })
   }
 
   try {
-// SAFETY: This assertion is safe after the surrounding boundary validation.
-    return (await request.json()) as T
+    return await request.json()
   } catch {
     return jsonResponse({ error: 'Expected a JSON request body.' }, { status: 400 })
   }
 }
+
+const parseRequestBody = async <T>(request: Request, parser: (value: unknown) => value is T): Promise<T | Response> => {
+  const payload = await readJsonBody(request)
+  if (payload instanceof Response) return payload
+  if (!parser(payload)) return jsonResponse({ error: 'Request body failed validation.' }, { status: 400 })
+  return payload
+}
+
+const isProjectsWriteRequest = (value: unknown): value is ProjectsWriteRequest =>
+  isRecord(value)
+  && (value.branch === undefined || typeof value.branch === 'string')
+  && (value.commitMessage === undefined || typeof value.commitMessage === 'string')
+  && 'projects' in value
+  && (value.sha === undefined || typeof value.sha === 'string')
+
+const isBlogPostWriteRequest = (value: unknown): value is BlogPostWriteRequest =>
+  isRecord(value)
+  && (value.branch === undefined || typeof value.branch === 'string')
+  && (value.commitMessage === undefined || typeof value.commitMessage === 'string')
+  && 'post' in value
+  && (value.sha === undefined || typeof value.sha === 'string')
+
+const isBlogPostDeleteRequest = (value: unknown): value is BlogPostDeleteRequest =>
+  isRecord(value)
+  && (value.branch === undefined || typeof value.branch === 'string')
+  && (value.commitMessage === undefined || typeof value.commitMessage === 'string')
+  && typeof value.sha === 'string'
 
 const getGitHubHeaders = (token: string): HeadersInit => ({
   Accept: 'application/vnd.github+json',
@@ -852,13 +888,13 @@ const listGitHubBlogEntries = async (env: Env, accessToken: string, branch: stri
   return entries.filter((entry) => entry.type === 'file' && entry.name.endsWith('.md'))
 }
 
-const parseFrontmatter = (markdown: string): { frontmatter: Record<string, string>; body: string } => {
+const parseFrontmatter = (markdown: string): { frontmatter: BlogFrontmatter; body: string } => {
   const match = markdown.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
   if (!match) {
     throw new Error('Markdown file is missing frontmatter.')
   }
 
-  const frontmatter = Object.fromEntries(
+  const values = Object.fromEntries(
     match[1]
       .split('\n')
       .map((line) => line.trim())
@@ -871,6 +907,16 @@ const parseFrontmatter = (markdown: string): { frontmatter: Record<string, strin
         return [key, value]
       }),
   )
+
+  const frontmatter: BlogFrontmatter = {
+    title: values.title,
+    slug: values.slug,
+    date: values.date,
+    status: values.status,
+    coverImage: values.coverImage,
+    coverAlt: values.coverAlt,
+    excerpt: values.excerpt,
+  }
 
   return {
     frontmatter,
@@ -1167,14 +1213,14 @@ const handleAdminProjectsUpdate = async ({ request, env }: PagesContext): Promis
   const session = await requireAdminSession({ request, env })
   if (session instanceof Response) return session
 
-  const body = await readJsonBody<ProjectsWriteRequest>(request)
+  const body = await parseRequestBody(request, isProjectsWriteRequest)
   if (body instanceof Response) return body
 
   const branch = getAllowedCmsBranch(env)
   if (body.branch !== undefined && body.branch !== branch) {
     return jsonResponse({ error: `Only the ${branch} branch is allowed for admin CMS writes.` }, { status: 403 })
   }
-  if (typeof body.sha !== 'string' || !body.sha.trim()) {
+  if (!body.sha?.trim()) {
     return jsonResponse({ error: 'A base file SHA is required before saving projects.' }, { status: 400 })
   }
   const projectsValidationError = getProjectsValidationError(body.projects)
@@ -1349,7 +1395,7 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
   const session = await requireAdminSession({ request, env })
   if (session instanceof Response) return session
 
-  const body = await readJsonBody<BlogPostWriteRequest>(request)
+  const body = await parseRequestBody(request, isBlogPostWriteRequest)
   if (body instanceof Response) return body
 
   const branch = getAllowedCmsBranch(env)
@@ -1362,7 +1408,7 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
   }
 
   const existingPost = await loadGitHubBlogPostBySlug(env, session.accessToken, branch, slug)
-  if (existingPost && typeof body.sha !== 'string') {
+  if (existingPost && !body.sha) {
     return jsonResponse({ error: 'A base file SHA is required before updating an existing blog post.' }, { status: 400 })
   }
   if (existingPost && body.sha !== existingPost.sha) {
@@ -1466,7 +1512,7 @@ const handleAdminBlogDelete = async (context: PagesContext, slug: string): Promi
   const session = await requireAdminSession({ request, env })
   if (session instanceof Response) return session
 
-  const body = await readJsonBody<BlogPostDeleteRequest>(request)
+  const body = await parseRequestBody(request, isBlogPostDeleteRequest)
   if (body instanceof Response) return body
 
   const branch = getAllowedCmsBranch(env)
@@ -1479,7 +1525,7 @@ const handleAdminBlogDelete = async (context: PagesContext, slug: string): Promi
     return jsonResponse({ error: 'Blog post not found.' }, { status: 404 })
   }
 
-  if (typeof body.sha !== 'string' || !body.sha.trim()) {
+  if (!body.sha.trim()) {
     return jsonResponse({ error: 'A base file SHA is required before deleting a blog post.' }, { status: 400 })
   }
 
