@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { LuArrowRight, LuBookOpen } from 'react-icons/lu'
+import { LuArrowRight } from 'react-icons/lu'
 import { InternalHero } from '../components/InternalHero'
 import { blogPosts, type BlogPost } from '../content/blogContent'
 import { siteContent } from '../content/siteContent'
@@ -27,7 +27,6 @@ export function BlogPage() {
   return (
     <div className={sty.page}>
       <InternalHero
-        eyebrow={siteContent.blogPage?.eyebrow ?? 'Blog'}
         title={siteContent.blogPage?.title ?? 'Build notes and frontend delivery posts.'}
         intro={siteContent.blogPage?.intro ?? 'Short posts about implementation, content systems, and frontend delivery work.'}
       />
@@ -41,11 +40,10 @@ export function BlogPage() {
 
           {latest ? (
             <Link className={sty.latestPost} data-text-reveal-group="scrub" to={`/blog/${latest.slug}`}>
-              <span className="eyebrow" data-text-reveal="copy">Latest</span>
               <div>
                 <h2 data-text-reveal="copy">{latest.title}</h2>
                 <p data-text-reveal="copy">{latest.excerpt ?? latest.body.split('\n')[0]}</p>
-                <strong data-text-reveal="copy">Read post<LuBookOpen aria-hidden="true" focusable="false" /></strong>
+                <strong data-text-reveal="copy">Read post</strong>
               </div>
               <div className={sty.postMeta} data-text-reveal="copy">
                 <span>{formatDate(latest.date)}</span>

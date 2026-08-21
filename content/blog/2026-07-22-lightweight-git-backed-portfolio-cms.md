@@ -1,30 +1,30 @@
 ---
-title: "Why I built a Git-backed portfolio CMS"
+title: "Why this portfolio uses a Git-backed content system"
 slug: "git-backed-portfolio-cms"
 date: "2026-07-22"
 status: "published"
-excerpt: "The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents."
+excerpt: "How JSON and Markdown keep the portfolio's visible pages, mirrors, and project notes in sync."
 coverImage: "https://picsum.photos/seed/git-backed-portfolio-cms/1600/900.jpg"
-coverAlt: "Generic file editor image used as a placeholder for a Git-backed portfolio CMS article."
+coverAlt: "File editor beside a notebook, used as a placeholder cover for a note about the portfolio content system."
 ---
-This portfolio uses source files as the content system. The main site copy lives in JSON. Blog posts live in markdown. A prebuild script generates public markdown mirrors, sitemap entries, and a small navigation skill for agents.
+This portfolio keeps its editable content in the repository. Site copy lives in JSON. Notes live in Markdown. A prebuild script generates the public mirrors, sitemap entries, and agent-readable navigation files.
 
-That sounds heavier than a normal portfolio until the site starts changing often. Then it helps.
+That is more deliberate than a tiny hosted CMS, but it solves a real problem: portfolio copy changes in several places unless one source owns it.
 
-## One source is easier to trust
+## One source prevents drift
 
-Portfolio copy drifts fast. A project title changes in one card but not on the detail page. A resume line gets updated in markdown but not in the public page. A contact email changes in the footer and gets missed somewhere else.
+A project title can change in a card, a detail page, and a resume entry. A contact address can be correct in the footer and stale in a generated page. Editing each copy by hand is an invitation to miss one.
 
-The fix is not complicated. Keep the main content in one place, then render or generate the other surfaces from it.
+The content file is the source of truth. React pages read from it, and the prebuild script creates the derived Markdown and metadata files. The generated files are outputs, not a second place to edit.
 
-## Markdown mirrors make the site easier to inspect
+## Markdown mirrors make the site inspectable
 
-The visual site is for people. The markdown mirrors are for quick reading, search, and agent inspection. A person can browse the React routes. An agent can read `/llms-full.txt`, `/projects.md`, or an individual project markdown file without scraping layout.
+The visual routes are for people. Files such as `/llms-full.txt`, `/projects.md`, and the individual project pages make the same material quick to read, search, or inspect without scraping layout.
 
-That fits how I want the portfolio to work. It should be understandable without needing to inspect every component first.
+That is useful for accessibility, search, and agents. It also makes a content review a file review instead of a tour through every component.
 
-## Git keeps changes reviewable
+## Git keeps the rewrite visible
 
-Because the content is in files, every rewrite shows up in a diff. That makes it easier to catch unsupported claims, stale project pages, and accidental placeholder text before the site ships.
+When the content is in files, a rewrite appears in a diff. I can review changed claims, spot placeholder text, and see whether a project page was updated everywhere before building.
 
-It is not a fancy CMS. It is a small system that fits the way this site is maintained.
+It is not a general-purpose CMS. It is a small content workflow that matches how this portfolio is maintained.

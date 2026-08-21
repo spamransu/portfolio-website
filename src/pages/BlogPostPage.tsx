@@ -6,11 +6,6 @@ import { getBlogPostBySlug } from '../content/blogContent'
 import { siteContent } from '../content/siteContent'
 import sty from './InternalPages.module.scss'
 
-function getReadingTime(body: string) {
-  const words = body.trim().split(/\s+/).filter(Boolean).length
-  return `${Math.max(1, Math.ceil(words / 220))} min read`
-}
-
 export function BlogPostPage() {
   const { slug } = useParams()
   const post = slug ? getBlogPostBySlug(slug) : undefined
@@ -19,7 +14,7 @@ export function BlogPostPage() {
   if (!post) {
     return (
       <div className={sty.page}>
-        <InternalHero eyebrow={blogPostCopy?.eyebrowPrefix ?? 'Blog'} title={blogPostCopy?.notFoundTitle ?? 'Post not found'} intro={blogPostCopy?.notFoundIntro ?? 'That post is missing, unpublished, or still in draft.'} actions={<Link className="button button--primary" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>} />
+        <InternalHero title={blogPostCopy?.notFoundTitle ?? 'Post not found'} intro={blogPostCopy?.notFoundIntro ?? 'That post is missing, unpublished, or still in draft.'} actions={<Link className="button button--primary" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>} />
       </div>
     )
   }
@@ -29,7 +24,6 @@ export function BlogPostPage() {
   return (
     <div className={sty.page}>
       <InternalHero
-        eyebrow={`${blogPostCopy?.eyebrowPrefix ?? 'Blog'} · ${post.date} · ${getReadingTime(post.body)}`}
         title={post.title}
         intro={post.excerpt ?? post.body.split('\n')[0]}
         actions={<Link className="button button--ghost" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to blog'}</Link>}
@@ -55,7 +49,7 @@ export function BlogPostPage() {
 
       <section className={sty.articleCta}>
         <div className="lg-wrapper">
-          <div data-text-reveal-group="scrub"><p className="eyebrow" data-text-reveal="copy">{blogPostCopy?.articleCtaEyebrow ?? 'Related work'}</p><h2 data-text-reveal="heading">{blogPostCopy?.articleCtaTitle ?? 'Read the project archive.'}</h2></div>
+          <div data-text-reveal-group="scrub"><h2 data-text-reveal="heading">{blogPostCopy?.articleCtaTitle ?? 'Read the project archive.'}</h2></div>
           <Link className="button button--ghost" to="/projects">{blogPostCopy?.articleCtaLabel ?? 'View projects'}<LuArrowRight aria-hidden="true" focusable="false" /></Link>
         </div>
       </section>

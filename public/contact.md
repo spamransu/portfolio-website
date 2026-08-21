@@ -1,8 +1,8 @@
 # Contact
 
-Tell me what you need built or cleaned up.
+Have a page that needs building or untangling?
 
-I am open to frontend developer, WordPress developer, React developer, and web developer roles. I also take selected freelance work for websites, landing pages, Elementor cleanup, and Figma-to-code builds.
+I am open to frontend and WordPress roles, plus selected freelance work. Send a brief with what exists, what is blocked, and what a useful result would look like.
 
 - Email: cartecianolance@gmail.com
 - Location: Philippines

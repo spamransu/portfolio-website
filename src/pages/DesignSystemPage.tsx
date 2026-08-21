@@ -23,26 +23,26 @@ export function DesignSystemPage() {
 
   return (
     <div className={sty.page}>
-      <InternalHero eyebrow={content?.eyebrow ?? 'Technical blueprint'} title={content?.title ?? 'Design system reference'} intro={content?.intro ?? 'The reusable visual engine behind the site.'} />
+      <InternalHero title={content?.title ?? 'Design system reference'} intro={content?.intro ?? 'The reusable visual engine behind the site.'} />
 
       <section className={sty.block} id="color">
-        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('color')?.title ?? 'Color'}</p><p data-text-reveal="copy">{section('color')?.description}</p></header><div className={sty.swatches} data-text-reveal="copy">{colors.map(([name, token, role]) => <article key={token}><div style={{ background: `var(${token})` }} /><strong>{name}</strong><code>{token}</code><p>{role}</p></article>)}</div></div></div>
+        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><h2 data-text-reveal="heading">{section('color')?.title ?? 'Color'}</h2><p data-text-reveal="copy">{section('color')?.description}</p></header><div className={sty.swatches} data-text-reveal="copy">{colors.map(([name, token, role]) => <article key={token}><div style={{ background: `var(${token})` }} /><strong>{name}</strong><code>{token}</code><p>{role}</p></article>)}</div></div></div>
       </section>
 
       <section className={sty.block} id="type">
-        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('type')?.title ?? 'Typography'}</p><p data-text-reveal="copy">{section('type')?.description}</p></header><div className={sty.typeScale} data-text-reveal="copy">{(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const).map((role) => <div key={role}><code>{role.toUpperCase()}</code><p className={`text-${role}`}>Structure before decoration.</p></div>)}<div><code>BODY</code><p>Quattrocento keeps long-form copy readable and interface labels quiet.</p></div><p className="eyebrow">Eyebrow example</p></div></div></div>
+        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><h2 data-text-reveal="heading">{section('type')?.title ?? 'Typography'}</h2><p data-text-reveal="copy">{section('type')?.description}</p></header><div className={sty.typeScale} data-text-reveal="copy">{(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const).map((role) => <div key={role}><code>{role.toUpperCase()}</code><p className={`text-${role}`}>Structure before decoration.</p></div>)}<div><code>BODY</code><p>Quattrocento keeps long-form copy readable and interface labels quiet.</p></div></div></div></div>
       </section>
 
       <section className={sty.block} id="spacing">
-        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('spacing')?.title ?? 'Spacing'}</p><p data-text-reveal="copy">{section('spacing')?.description}</p></header><div className={sty.spacingScale} data-text-reveal="copy">{spacing.map((size) => <div key={size}><code>{size.toUpperCase()}</code><span style={{ width: `var(--space-${size})` }} /><small>{`--space-${size}`}</small></div>)}</div></div></div>
+        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><h2 data-text-reveal="heading">{section('spacing')?.title ?? 'Spacing'}</h2><p data-text-reveal="copy">{section('spacing')?.description}</p></header><div className={sty.spacingScale} data-text-reveal="copy">{spacing.map((size) => <div key={size}><code>{size.toUpperCase()}</code><span style={{ width: `var(--space-${size})` }} /><small>{`--space-${size}`}</small></div>)}</div></div></div>
       </section>
 
       <section className={sty.block} id="grid">
-        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('grid')?.title ?? 'Grid'}</p><p data-text-reveal="copy">{section('grid')?.description}</p></header><div data-text-reveal="copy"><div className={sty.gridDemo}>{Array.from({ length: 12 }, (_, index) => <span key={index}>{index + 1}</span>)}</div><div className={sty.wrapperList}><article><code>SM</code><strong>700px</strong></article><article><code>MD</code><strong>960px</strong></article><article><code>LG</code><strong>1440px</strong></article></div></div></div></div>
+        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><h2 data-text-reveal="heading">{section('grid')?.title ?? 'Grid'}</h2><p data-text-reveal="copy">{section('grid')?.description}</p></header><div data-text-reveal="copy"><div className={sty.gridDemo}>{Array.from({ length: 12 }, (_, index) => <span key={index}>{index + 1}</span>)}</div><div className={sty.wrapperList}><article><code>SM</code><strong>700px</strong></article><article><code>MD</code><strong>960px</strong></article><article><code>LG</code><strong>1440px</strong></article></div></div></div></div>
       </section>
 
       <section className={sty.block} id="components">
-        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('components')?.title ?? 'Components'}</p><p data-text-reveal="copy">{section('components')?.description}</p></header><div className={sty.components}>
+        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><h2 data-text-reveal="heading">{section('components')?.title ?? 'Components'}</h2><p data-text-reveal="copy">{section('components')?.description}</p></header><div className={sty.components}>
           <div className="button-row"><button className="button button--primary">Primary<LuArrowRight aria-hidden="true" focusable="false" /></button><button className="button button--ghost">Secondary<LuCheck aria-hidden="true" focusable="false" /></button><button className="button" disabled>Disabled<LuLock aria-hidden="true" focusable="false" /></button></div>
           <ul className="tag-list"><li>Neutral</li><li className={sty.tagAcid}>Acid</li><li className={sty.tagFlare}>Flare</li><li className={sty.tagIris}>Iris</li></ul>
           <div className={sty.fieldDemo}><label htmlFor="design-system-field">Field label</label><input id="design-system-field" placeholder="Click or tab to focus" /><small>Production focus and field treatment.</small></div>
@@ -53,7 +53,7 @@ export function DesignSystemPage() {
       </section>
 
       <section className={sty.block} id="motion">
-        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><p className="eyebrow" data-text-reveal="copy">{section('motion')?.title ?? 'Motion'}</p><p data-text-reveal="copy">{section('motion')?.description}</p></header><div className={sty.motionDemo} tabIndex={0}><span>Hover or focus</span><strong>Restrained lift</strong></div></div></div>
+        <div className="lg-wrapper"><div className={sty.blockGrid} data-text-reveal-group="scrub"><header><h2 data-text-reveal="heading">{section('motion')?.title ?? 'Motion'}</h2><p data-text-reveal="copy">{section('motion')?.description}</p></header><div className={sty.motionDemo} tabIndex={0}><span>Hover or focus</span><strong>Restrained lift</strong></div></div></div>
       </section>
     </div>
   )

@@ -76,8 +76,7 @@ export function HomePage() {
           <div className={sty.sectionInner} data-text-reveal-group="scrub">
             <div className={sty.practiceCopy}>
               <div>
-                <p className="eyebrow" data-text-reveal="copy">{siteContent.home.bio.eyebrow}</p>
-                <h2 data-text-reveal="heading">{siteContent.home.bio.titleLines.join(' ')}</h2>
+                                <h2 data-text-reveal="heading">{siteContent.home.bio.titleLines.join(' ')}</h2>
               </div>
               <p data-text-reveal="copy">{siteContent.home.bio.description}</p>
             </div>
@@ -97,7 +96,6 @@ export function HomePage() {
         <div className="lg-wrapper">
           <div className={sty.skillsGrid} data-text-reveal-group="scrub">
             <div>
-              <p className="eyebrow" data-text-reveal="copy">Capabilities</p>
               <h2 data-text-reveal="heading">{siteContent.home.skills.title}</h2>
               <p data-text-reveal="copy">{siteContent.home.skills.description}</p>
             </div>
@@ -129,7 +127,6 @@ export function HomePage() {
         <div className="lg-wrapper">
           <div className={sty.contactGrid} data-text-reveal-group="scrub">
             <div className={sty.contactCopy}>
-              <p className="eyebrow" data-text-reveal="copy">Start a conversation</p>
               <h2 data-text-reveal="heading">{siteContent.home.contact.title}</h2>
               <p data-text-reveal="copy"><LuCalendarCheck aria-hidden="true" className={sty.inlineIcon} focusable="false" />
                 {siteContent.contact.availability}. Reach directly at 

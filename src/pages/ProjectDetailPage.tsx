@@ -35,7 +35,6 @@ export function ProjectDetailPage() {
         <section className={sty.notFound} data-text-reveal-group="entry">
           <div className="lg-wrapper">
             <div>
-              <p className={sty.kicker} data-text-reveal="copy">{detailCopy?.eyebrow ?? '[ PROJECTS ]'}</p>
               <h1 data-text-reveal="heading">{detailCopy?.notFoundTitle ?? 'Project not found'}</h1>
               <p data-text-reveal="copy">{detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'}</p>
               <Link className="button button--primary" to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>

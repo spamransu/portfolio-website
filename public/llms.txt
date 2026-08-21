@@ -1,8 +1,8 @@
 # Lance Carteciano
 
-> Frontend web developer and graphic designer in the Philippines.
+> Frontend developer and designer building maintainable websites in the Philippines.
 
-Frontend, WordPress, and design-to-code work for websites that need clear pages, reusable sections, and practical maintenance after launch.
+I build responsive React interfaces and WordPress systems, then make the content and maintenance work easier for the people who use them.
 
 ## Preferred machine-readable entry points
 - [Site index](https://384721.xyz/index.md)
@@ -21,8 +21,8 @@ Frontend, WordPress, and design-to-code work for websites that need clear pages,
 - [Contact](https://384721.xyz/contact.md)
 - [Resume](https://384721.xyz/resume.md)
 - [Design system](https://384721.xyz/design-system.md)
-- [Writing useful portfolio case studies](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
-- [Why I built a Git-backed portfolio CMS](https://384721.xyz/blog/git-backed-portfolio-cms.md)
+- [Writing portfolio case studies people can trust](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
+- [Why this portfolio uses a Git-backed content system](https://384721.xyz/blog/git-backed-portfolio-cms.md)
 - [WordPress maintenance and Elementor system work](https://384721.xyz/projects/wordpress-maintenance-system.md)
 - [ABCDE Creative Studio website](https://384721.xyz/projects/abcde-creative.md)
 - [Nsight Index blog management system](https://384721.xyz/projects/nsight-index.md)

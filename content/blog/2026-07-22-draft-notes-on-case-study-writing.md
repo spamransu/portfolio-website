@@ -1,28 +1,28 @@
 ---
-title: "Writing useful portfolio case studies"
+title: "Writing portfolio case studies people can trust"
 slug: "writing-useful-portfolio-case-studies"
 date: "2026-07-22"
 status: "published"
-excerpt: "A practical note on turning real project work into a case study without padding it with vague claims."
+excerpt: "A practical way to turn real project work into a case study without inflating the scope."
 coverImage: "https://picsum.photos/seed/portfolio-case-study-writing/1600/900.jpg"
-coverAlt: "Generic notebook and laptop image used as a placeholder for a case study writing article."
+coverAlt: "Notebook beside a laptop, used as a placeholder cover for a note about case-study writing."
 ---
-A portfolio case study should help someone understand the work quickly. It does not need to make every project sound bigger than it was. The stronger move is usually simpler: name the problem, explain what you handled, and show what changed.
+A portfolio case study has one job: help a reader understand the work without making them reconstruct it from adjectives. Name the problem, say what you handled, and show what changed.
 
-## Start with the real scope
+## Start with the actual scope
 
-I like case studies that say what the project actually was. A maintenance project can be useful. A migration can be useful. A small React build can be useful. The scope only becomes weak when the writing pretends it was something else.
+A maintenance project can be useful. So can a migration, a small React build, or a training project. The scope is not the problem. The problem is calling a maintenance task a transformation or presenting a practice build as client work.
 
-For my own portfolio, that means separating professional work, personal projects, and tutorial-based experiments. They can all belong on the site, but they should not sit under the same claim.
+I separate production work, personal projects, and tutorial-based experiments in this portfolio. They can share the same visual system, but they should not make the same promise.
 
-## Keep the proof close to the sentence
+## Put the proof beside the claim
 
-If I write that I maintained 8 active websites, that number comes from my resume source. If I write that Nsight Index has author and reader flows, that comes from the repository. If a detail is not verified, it should either be removed or softened until it is true.
+When I write that I maintain 8 active websites, the number comes from my resume. When I describe author and reader flows in Nsight Index, I check the repository. If I cannot trace a detail to a source, I remove it or label it as an estimate.
 
-This keeps the writing calmer. It also makes the site easier to update later because each claim has a source behind it.
+That habit keeps the writing easier to revise. A future update has a place to start instead of a sentence that only sounds plausible.
 
-## Do not hide the boring parts
+## Include the work people usually skip
 
-The boring parts are often the useful parts. Reusable classes, admin fields, spam cleanup, deployment handoff, responsive fixes, and content organization are not flashy, but they are exactly the details hiring managers and clients need to understand how you work.
+Reusable classes, admin fields, spam cleanup, deployment handoff, responsive fixes, and content organization are not dramatic. They are often the parts a hiring manager or client needs to understand.
 
-A good case study does not need a fake dramatic arc. It needs enough context for another person to trust the work.
+A useful case study does not need a manufactured story arc. It needs enough context for another person to decide whether the work matches their problem.

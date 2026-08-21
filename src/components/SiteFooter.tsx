@@ -19,11 +19,6 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
   const visibleSocials = siteContent.site.socials.filter((social) => social.label !== 'Linktree')
   const footerCopy = siteContent.siteChrome?.footer
-  const generalLinks = footerCopy?.generalLinks ?? [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About' },
-    { to: '/projects', label: 'Projects' },
-  ]
   const moreLinks = footerCopy?.moreLinks ?? [
     { to: '/#contact', label: 'Book a call' },
     { to: '/resume', label: 'View CV' },
@@ -45,12 +40,17 @@ export function SiteFooter() {
             <p className={sty.description}>{siteContent.site.description}</p>
           </div>
 
+          <nav className={sty.featuredNavigation} aria-label="Featured pages">
+            <Link to="/">Home</Link>
+            <Link to="/projects">Projects</Link>
+            <Link to="/about">About</Link>
+            <Link to="/blog">Notes</Link>
+            <Link to="/#contact">Contact</Link>
+          </nav>
+
           <nav className={sty.navigation} aria-label="Footer">
             <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
             <ul className={sty.linkList}>
-              {generalLinks.map((link) => (
-                <li key={`${link.to}-${link.label}`}><Link to={link.to}>{link.label}</Link></li>
-              ))}
               {moreLinks.map((link) => (
                 <li key={`${link.to}-${link.label}`}>
                   {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')

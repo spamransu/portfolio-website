@@ -2,30 +2,30 @@
 
 ## Site summary
 - Name: Lance Carteciano
-- Tagline: Frontend web developer and graphic designer in the Philippines.
-- Description: Frontend, WordPress, and design-to-code work for websites that need clear pages, reusable sections, and practical maintenance after launch.
+- Tagline: Frontend developer and designer building maintainable websites in the Philippines.
+- Description: I build responsive React interfaces and WordPress systems, then make the content and maintenance work easier for the people who use them.
 - Contact email: cartecianolance@gmail.com
 - Location: Philippines
 
 ## Home
 # Lance Carteciano
 
-Frontend web developer and graphic designer in the Philippines.
+Frontend developer and designer building maintainable websites in the Philippines.
 
 Portfolio of Lance Carteciano
 
 ## Homepage hero
-Frontend web developer and graphic designer based in the Philippines.
+Frontend developer and graphic designer for real-world web work.
 
-I build responsive websites, WordPress systems, and design-to-code interfaces that stay organized after launch.
+I build responsive React interfaces and WordPress systems that stay clear to use after launch.
 
 ## Main pages
-- [Home](https://384721.xyz/index.md): Frontend, WordPress, and design-to-code work for websites that need clear pages, reusable sections, and practical maintenance after launch.
-- [About](https://384721.xyz/about.md): I work on websites that need both clean implementation and visual care.
-- [Blog](https://384721.xyz/blog.md): Short writing about portfolio structure, Git-backed content, and how I turn project work into useful case studies.
+- [Home](https://384721.xyz/index.md): I build responsive React interfaces and WordPress systems, then make the content and maintenance work easier for the people who use them.
+- [About](https://384721.xyz/about.md): Frontend implementation, WordPress maintenance, and visual design for teams that need a site they can keep using.
+- [Blog](https://384721.xyz/blog.md): Short notes on case-study writing, content systems, and the practical decisions that keep a portfolio maintainable.
 - [Projects](https://384721.xyz/projects.md): Project index and case-study summaries.
-- [Contact](https://384721.xyz/contact.md): I am open to frontend developer, WordPress developer, React developer, and web developer roles. I also take selected freelance work for websites, landing pages, Elementor cleanup, and Figma-to-code builds.
-- [Resume](https://384721.xyz/resume.md): Web developer and graphic designer with experience in WordPress, React, responsive UI implementation, website maintenance, and visual asset creation.
+- [Contact](https://384721.xyz/contact.md): I am open to frontend and WordPress roles, plus selected freelance work. Send a brief with what exists, what is blocked, and what a useful result would look like.
+- [Resume](https://384721.xyz/resume.md): Frontend developer and graphic designer with production experience in WordPress maintenance, Elementor systems, React implementation, responsive UI, and visual asset work.
 - [Design system](https://384721.xyz/design-system.md): A public reference for the colors, type, spacing, grid, components, and motion rules used on this site.
 
 ## Featured case studies
@@ -35,9 +35,9 @@ I build responsive websites, WordPress systems, and design-to-code interfaces th
 - [Git-backed portfolio content system](https://384721.xyz/projects/portfolio-cms.md): The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.
 
 ## Homepage stats
-- 3+: Years of experience
-- 5+: Projects completed
-- 4+: Happy clients
+- 8: active sites maintained
+- 4: Elementor migrations supported
+- 3: WordPress themes or templates built
 
 ## Highlighted skills
 - React
@@ -64,97 +64,97 @@ I build responsive websites, WordPress systems, and design-to-code interfaces th
 ## About
 # About
 
-I work on websites that need both clean implementation and visual care.
+Frontend implementation, WordPress maintenance, and visual design for teams that need a site they can keep using.
 
-I am a frontend web developer and graphic designer at Tech Support Plus I.T Services. My current work covers WordPress maintenance, Elementor migrations, reusable templates, content workflows, styling systems, security cleanup, and deployment support.
+I currently work as a frontend web developer and graphic designer at Tech Support Plus I.T Services. My day-to-day work includes maintaining WordPress sites, cleaning up Elementor builds, building reusable templates, improving content workflows, and supporting security and hosting tasks.
 
-Before that, I worked at ABCDE Creative Studio, where I translated Figma designs into responsive React pages and helped with accessible frontend delivery. I also have production design experience from print and social media work, which shaped how I handle details, revisions, and visual consistency.
+At ABCDE Creative Studio, I turned Figma direction into responsive React pages and worked with accessibility checks during implementation. Earlier print and social-media design work taught me to pay attention to production details, not just the first screen.
 
-I like projects where design and implementation have to meet in the middle. A good page should look intentional, read clearly, and stay editable for the team that owns it after launch.
+I am most useful when a project sits between design and maintenance. I can take a visual direction, turn it into a responsive page, and leave behind patterns that make the next edit less fragile.
 
 ## Working principles
-- Start with the content and page purpose.
-- Use reusable sections instead of scattered fixes.
-- Keep responsive behavior readable on real screens.
-- Make the handoff easier for the next person editing the site.
+- Make the page purpose clear before styling it.
+- Prefer reusable sections over repeated one-off fixes.
+- Check responsive behavior on real viewport sizes.
+- Leave the editor and the next developer a clear path forward.
 
 ## Blog
 # Blog
 
-Short writing about portfolio structure, Git-backed content, and how I turn project work into useful case studies.
+Short notes on case-study writing, content systems, and the practical decisions that keep a portfolio maintainable.
 
-## [Writing useful portfolio case studies](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
-
-- Date: 2026-07-22
-
-A practical note on turning real project work into a case study without padding it with vague claims.
-
-## [Why I built a Git-backed portfolio CMS](https://384721.xyz/blog/git-backed-portfolio-cms.md)
+## [Writing portfolio case studies people can trust](https://384721.xyz/blog/writing-useful-portfolio-case-studies.md)
 
 - Date: 2026-07-22
 
-The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents.
+A practical way to turn real project work into a case study without inflating the scope.
 
-# Writing useful portfolio case studies
+## [Why this portfolio uses a Git-backed content system](https://384721.xyz/blog/git-backed-portfolio-cms.md)
 
 - Date: 2026-07-22
-- Excerpt: A practical note on turning real project work into a case study without padding it with vague claims.
+
+How JSON and Markdown keep the portfolio's visible pages, mirrors, and project notes in sync.
+
+# Writing portfolio case studies people can trust
+
+- Date: 2026-07-22
+- Excerpt: A practical way to turn real project work into a case study without inflating the scope.
 - Cover image: https://picsum.photos/seed/portfolio-case-study-writing/1600/900.jpg
 
-A portfolio case study should help someone understand the work quickly. It does not need to make every project sound bigger than it was. The stronger move is usually simpler: name the problem, explain what you handled, and show what changed.
+A portfolio case study has one job: help a reader understand the work without making them reconstruct it from adjectives. Name the problem, say what you handled, and show what changed.
 
-## Start with the real scope
+## Start with the actual scope
 
-I like case studies that say what the project actually was. A maintenance project can be useful. A migration can be useful. A small React build can be useful. The scope only becomes weak when the writing pretends it was something else.
+A maintenance project can be useful. So can a migration, a small React build, or a training project. The scope is not the problem. The problem is calling a maintenance task a transformation or presenting a practice build as client work.
 
-For my own portfolio, that means separating professional work, personal projects, and tutorial-based experiments. They can all belong on the site, but they should not sit under the same claim.
+I separate production work, personal projects, and tutorial-based experiments in this portfolio. They can share the same visual system, but they should not make the same promise.
 
-## Keep the proof close to the sentence
+## Put the proof beside the claim
 
-If I write that I maintained 8 active websites, that number comes from my resume source. If I write that Nsight Index has author and reader flows, that comes from the repository. If a detail is not verified, it should either be removed or softened until it is true.
+When I write that I maintain 8 active websites, the number comes from my resume. When I describe author and reader flows in Nsight Index, I check the repository. If I cannot trace a detail to a source, I remove it or label it as an estimate.
 
-This keeps the writing calmer. It also makes the site easier to update later because each claim has a source behind it.
+That habit keeps the writing easier to revise. A future update has a place to start instead of a sentence that only sounds plausible.
 
-## Do not hide the boring parts
+## Include the work people usually skip
 
-The boring parts are often the useful parts. Reusable classes, admin fields, spam cleanup, deployment handoff, responsive fixes, and content organization are not flashy, but they are exactly the details hiring managers and clients need to understand how you work.
+Reusable classes, admin fields, spam cleanup, deployment handoff, responsive fixes, and content organization are not dramatic. They are often the parts a hiring manager or client needs to understand.
 
-A good case study does not need a fake dramatic arc. It needs enough context for another person to trust the work.
+A useful case study does not need a manufactured story arc. It needs enough context for another person to decide whether the work matches their problem.
 
-# Why I built a Git-backed portfolio CMS
+# Why this portfolio uses a Git-backed content system
 
 - Date: 2026-07-22
-- Excerpt: The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents.
+- Excerpt: How JSON and Markdown keep the portfolio's visible pages, mirrors, and project notes in sync.
 - Cover image: https://picsum.photos/seed/git-backed-portfolio-cms/1600/900.jpg
 
-This portfolio uses source files as the content system. The main site copy lives in JSON. Blog posts live in markdown. A prebuild script generates public markdown mirrors, sitemap entries, and a small navigation skill for agents.
+This portfolio keeps its editable content in the repository. Site copy lives in JSON. Notes live in Markdown. A prebuild script generates the public mirrors, sitemap entries, and agent-readable navigation files.
 
-That sounds heavier than a normal portfolio until the site starts changing often. Then it helps.
+That is more deliberate than a tiny hosted CMS, but it solves a real problem: portfolio copy changes in several places unless one source owns it.
 
-## One source is easier to trust
+## One source prevents drift
 
-Portfolio copy drifts fast. A project title changes in one card but not on the detail page. A resume line gets updated in markdown but not in the public page. A contact email changes in the footer and gets missed somewhere else.
+A project title can change in a card, a detail page, and a resume entry. A contact address can be correct in the footer and stale in a generated page. Editing each copy by hand is an invitation to miss one.
 
-The fix is not complicated. Keep the main content in one place, then render or generate the other surfaces from it.
+The content file is the source of truth. React pages read from it, and the prebuild script creates the derived Markdown and metadata files. The generated files are outputs, not a second place to edit.
 
-## Markdown mirrors make the site easier to inspect
+## Markdown mirrors make the site inspectable
 
-The visual site is for people. The markdown mirrors are for quick reading, search, and agent inspection. A person can browse the React routes. An agent can read `/llms-full.txt`, `/projects.md`, or an individual project markdown file without scraping layout.
+The visual routes are for people. Files such as `/llms-full.txt`, `/projects.md`, and the individual project pages make the same material quick to read, search, or inspect without scraping layout.
 
-That fits how I want the portfolio to work. It should be understandable without needing to inspect every component first.
+That is useful for accessibility, search, and agents. It also makes a content review a file review instead of a tour through every component.
 
-## Git keeps changes reviewable
+## Git keeps the rewrite visible
 
-Because the content is in files, every rewrite shows up in a diff. That makes it easier to catch unsupported claims, stale project pages, and accidental placeholder text before the site ships.
+When the content is in files, a rewrite appears in a diff. I can review changed claims, spot placeholder text, and see whether a project page was updated everywhere before building.
 
-It is not a fancy CMS. It is a small system that fits the way this site is maintained.
+It is not a general-purpose CMS. It is a small content workflow that matches how this portfolio is maintained.
 
 ## Resume
 # Resume
 
 ## Frontend Web Developer and Graphic Designer
 
-Web developer and graphic designer with experience in WordPress, React, responsive UI implementation, website maintenance, and visual asset creation.
+Frontend developer and graphic designer with production experience in WordPress maintenance, Elementor systems, React implementation, responsive UI, and visual asset work.
 
 ## Skills
 - React
@@ -184,17 +184,17 @@ Web developer and graphic designer with experience in WordPress, React, responsi
 
 ## Experience
 ### Frontend Web Developer / Graphic Designer, Tech Support Plus I.T Services (Jan 2026 to present)
-- Maintain 8 active websites across 5 company sites and 3 client sites, plus periodic updates for 8 additional company websites every 2 weeks.
-- Built 3 custom WordPress themes or templates and reusable branded page sections for company and client websites.
-- Supported the migration of 4 websites to cleaner Elementor builds using global variables and reusable class structures.
-- Improved WordPress admin content workflows with ACF and Code Snippets, mainly for SEO and content updates.
-- Supported spam prevention, security cleanup, styling systems, cPanel, and Hostinger handoff work.
+- Maintain 8 active websites across company and client work, with recurring updates for 8 additional company websites.
+- Built 3 custom WordPress themes or templates and reusable branded sections.
+- Supported 4 migrations to cleaner Elementor builds using global variables and reusable class structures.
+- Improved admin content workflows with ACF and Code Snippets for SEO and content updates.
+- Supported spam prevention, security cleanup, styling consistency, cPanel, and Hostinger handoffs.
 
 ### Web Developer, ABCDE Creative Studio (Apr 2025 to Dec 2025)
 - Worked on 3 web projects, including the studio website.
-- Built at least 5 responsive pages from Figma mockups using React, HTML, CSS, JavaScript, and TypeScript.
+- Built at least 5 responsive pages from Figma mockups with React, HTML, CSS, JavaScript, and TypeScript.
 - Applied WCAG-based accessibility checks during frontend implementation.
-- Contributed reusable UI patterns and helped improve delivery workflows with GitHub Actions and Cloudflare.
+- Contributed reusable UI patterns and delivery support through GitHub Actions and Cloudflare.
 
 ### Print Machine Operator / Graphic Designer, Young Alpha Advertising Corp. (Jan 2024 to Oct 2024)
 - Supported print production for food trucks, businesses, and signage work across a 7-person team.
@@ -463,9 +463,9 @@ In-progress product UI can still communicate taste and structure when the case s
 ## Contact
 # Contact
 
-Tell me what you need built or cleaned up.
+Have a page that needs building or untangling?
 
-I am open to frontend developer, WordPress developer, React developer, and web developer roles. I also take selected freelance work for websites, landing pages, Elementor cleanup, and Figma-to-code builds.
+I am open to frontend and WordPress roles, plus selected freelance work. Send a brief with what exists, what is blocked, and what a useful result would look like.
 
 - Email: cartecianolance@gmail.com
 - Location: Philippines
