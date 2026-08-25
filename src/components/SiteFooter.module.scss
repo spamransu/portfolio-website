@@ -17,6 +17,7 @@
 }
 
 .info,
+.links,
 .navigation,
 .contact,
 .linkList,
@@ -27,6 +28,10 @@
 
 .info {
   gap: var(--space-sm);
+}
+
+.links {
+  gap: var(--space-lg);
 }
 
 .brand,
@@ -96,8 +101,9 @@
 
 .featuredNavigation {
   grid-column: 1 / -1;
-  gap: 0;
+  gap: 16px;
   margin-block: var(--space-xl) var(--space-lg);
+  justify-items: end;
 }
 
 .featuredNavigation a {
@@ -142,29 +148,31 @@
 @include mix.mq(md) {
   .inner {
     display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--space-lg);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+    column-gap: var(--space-xl);
   }
 
   .info {
-    grid-column: span 4;
-    grid-row: 1;
+    grid-column: 1;
   }
 
-  .navigation {
-    grid-column: span 2;
-    grid-row: 1;
+  .links {
+    display: grid;
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    column-gap: var(--space-lg);
+  }
+
+  .featuredNavigation {
+    grid-column: auto;
   }
 
   .contact {
-    grid-column: span 2;
-    grid-row: 1;
     margin-top: 0;
   }
 
   .featuredNavigation {
-    grid-column: span 4;
-    grid-row: 1;
+    flex: 0 1 auto;
     margin-block: 0;
   }
 

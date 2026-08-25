@@ -2,6 +2,8 @@ import { Link, useParams } from 'react-router-dom'
 import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { siteContent, type ImageAsset, type Project } from '../content/siteContent'
 import sty from './ProjectDetailPage.module.scss'
+import { ScrollOpacityText } from '../components/ScrollOpacityText'
+import { ProjectStack } from '../components/ProjectStack'
 
 const sectionLabel = (index: string, label: string) => `[ ${index} / ${label} ]`
 
@@ -46,8 +48,6 @@ export function ProjectDetailPage() {
   }
 
   const projects = siteContent.projects
-  const previousProject = projects[(projectIndex - 1 + projects.length) % projects.length]
-  const nextProject = projects[(projectIndex + 1) % projects.length]
   const relatedProjects = getRelatedProjects(projects, projectIndex)
   const openingImage = getProjectImage(project)
   const imagePair = project.gallery.slice(0, 2)
@@ -60,16 +60,20 @@ export function ProjectDetailPage() {
           <div className={sty.heroInner}>
             <Link className={sty.backLink} to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'All Projects'}</Link>
             <div className={sty.heroCopy}>
-              <p className={sty.kicker} data-text-reveal="copy">[ SELECTED CASE STUDY ]</p>
               <h1 id="project-title" data-text-reveal="heading">{project.title}</h1>
               <p data-text-reveal="copy">{project.summary}</p>
+
             </div>
-            <dl className={sty.metaTable} data-text-reveal="copy" aria-label="Project metadata">
-              <div><dt>{detailCopy?.clientLabel ?? 'Client'}</dt><dd>{project.client}</dd></div>
-              <div><dt>{detailCopy?.yearLabel ?? 'Year'}</dt><dd>{project.year}</dd></div>
-              <div><dt>{detailCopy?.roleLabel ?? 'Role'}</dt><dd>{project.role}</dd></div>
-              {project.status ? <div><dt>Status</dt><dd>{project.status}</dd></div> : null}
-            </dl>
+            <div className={sty.heroAside}>
+              <ProjectStack items={project.stack} reverseFlow ariaLabel={`${project.title} technologies`} />
+              <dl className={sty.metaTable} data-text-reveal="copy" aria-label="Project metadata">
+                <div><dt>{detailCopy?.clientLabel ?? 'Client'}</dt><dd>{project.client}</dd></div>
+                <div><dt>{detailCopy?.yearLabel ?? 'Year'}</dt><dd>{project.year}</dd></div>
+                <div><dt>{detailCopy?.roleLabel ?? 'Role'}</dt><dd>{project.role}</dd></div>
+                {project.status ? <div><dt>Status</dt><dd>{project.status}</dd></div> : null}
+              </dl>
+            </div>
+
           </div>
         </div>
       </section>
@@ -85,7 +89,7 @@ export function ProjectDetailPage() {
           <div className={sty.editorialBlock}>
             <p className={sty.lightLabel} data-text-reveal="copy">{sectionLabel('01', 'OVERVIEW')}</p>
             <div>
-              <h2 id="overview-title" className={sty.statement} data-text-reveal="heading">{project.overview}</h2>
+              <ScrollOpacityText id="overview-title" as="h2" className={sty.statement}>{project.overview}</ScrollOpacityText>
             </div>
           </div>
         </div>
@@ -169,9 +173,6 @@ export function ProjectDetailPage() {
             <div>
               <h2 id="scope-title" data-text-reveal="heading">Services / Role / Tools</h2>
               <ul className={sty.scopeList} data-text-reveal="copy">{project.scope.map((item) => <li key={item}>{item}</li>)}</ul>
-              <ul className={sty.stackList} data-text-reveal="copy" aria-label={detailCopy?.stackAriaTemplate?.replace('{title}', project.title) ?? `${project.title} tools`}>
-                {project.stack.map((item) => <li key={item}>{item}</li>)}
-              </ul>
             </div>
           </div>
         </div>
@@ -181,25 +182,26 @@ export function ProjectDetailPage() {
         <div className="lg-wrapper">
           <div>
             <p className={sty.quoteLabel} data-text-reveal="copy">Project Reflection</p>
-            <blockquote data-text-reveal="copy">“{project.reflection}”</blockquote>
+            <ScrollOpacityText as="blockquote">{`“${project.reflection}”`}</ScrollOpacityText>
           </div>
         </div>
       </section>
 
-      <nav className={sty.projectNav} aria-label="Adjacent projects">
+      {/* <nav className={sty.projectNav} aria-label="Adjacent projects">
         <div className="lg-wrapper">
           <div>
+              <Link to={`/projects/${previousProject.slug}`}>
+              <span><LuArrowLeft aria-hidden="true" focusable="false" />Previous Project</span>
+              <strong>{previousProject.title}</strong>
+            </Link>
             <Link to={`/projects/${nextProject.slug}`}>
               <span>Next Project<LuArrowRight aria-hidden="true" focusable="false" /></span>
               <strong>{nextProject.title}</strong>
             </Link>
-            <Link to={`/projects/${previousProject.slug}`}>
-              <span><LuArrowLeft aria-hidden="true" focusable="false" />Previous Project</span>
-              <strong>{previousProject.title}</strong>
-            </Link>
+          
           </div>
         </div>
-      </nav>
+      </nav> */}
 
       <section className={sty.relatedSection} data-text-reveal-group="scrub" aria-labelledby="related-title">
         <div className="lg-wrapper">

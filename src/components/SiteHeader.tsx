@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { LuMenu, LuX } from 'react-icons/lu'
-import { getLinktreeUrl, siteContent } from '../content/siteContent'
+import { siteContent } from '../content/siteContent'
 import sty from './SiteHeader.module.scss'
 
 function getBrandParts(name: string) {
@@ -16,7 +16,6 @@ export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
   const brand = getBrandParts(siteContent.site.name)
-  const linktreeUrl = getLinktreeUrl()
   const navItems = siteContent.siteChrome?.headerNav ?? [
     { to: '/projects', label: 'Projects' },
     { to: '/blog', label: 'Blog' },
@@ -25,7 +24,6 @@ export function SiteHeader() {
     { to: '/resume', label: 'CV' },
   ]
   const navAriaLabel = siteContent.siteChrome?.headerNavAriaLabel ?? 'Primary'
-  const linktreeLabel = siteContent.siteChrome?.headerLinktreeLabel ?? 'Linktree'
 
   useEffect(() => {
     setIsMenuOpen(false)
@@ -57,13 +55,6 @@ export function SiteHeader() {
                   </NavLink>
                 </li>
               ))}
-              {linktreeUrl ? (
-                <li>
-                  <a href={linktreeUrl} target="_blank" rel="noreferrer">
-                    {linktreeLabel}
-                  </a>
-                </li>
-              ) : null}
             </ul>
           </nav>
 
@@ -91,13 +82,6 @@ export function SiteHeader() {
                   </NavLink>
                 </li>
               ))}
-              {linktreeUrl ? (
-                <li>
-                  <a href={linktreeUrl} target="_blank" rel="noreferrer">
-                    {linktreeLabel}
-                  </a>
-                </li>
-              ) : null}
             </ul>
           </div>
         </nav>

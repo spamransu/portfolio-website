@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { LuArrowLeft, LuArrowRight, LuExternalLink } from 'react-icons/lu'
 import { useDirectionalContentSwap, type SwapDirection } from '../animations/useDirectionalContentSwap'
 import type { Project } from '../content/siteContent'
 import sty from './FeaturedProjectCarousel.module.scss'
+import { ProjectStack } from './ProjectStack'
 
 type FeaturedProjectCarouselProps = {
   projects: Project[]
@@ -56,6 +57,7 @@ export function FeaturedProjectCarousel({
   title,
   stackAriaTemplate,
 }: FeaturedProjectCarouselProps) {
+  const navigate = useNavigate()
   const featuredProjects = useMemo(
     () => slugs.map((slug) => projects.find((project) => project.slug === slug)).filter((project): project is Project => Boolean(project)),
     [projects, slugs],
@@ -116,6 +118,18 @@ export function FeaturedProjectCarousel({
   const position = String(activeIndex + 1).padStart(2, '0')
   const total = String(totalProjects).padStart(2, '0')
   const stackLabel = (stackAriaTemplate ?? '{title} tools').replace('{title}', activeProject.title)
+  const projectPath = `/projects/${activeProject.slug}`
+
+  const openProject = () => navigate(projectPath)
+  const handleGridClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLElement).closest('a, button')) return
+    openProject()
+  }
+  const handleGridKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    event.preventDefault()
+    openProject()
+  }
 
   return (
     <div
@@ -150,15 +164,21 @@ export function FeaturedProjectCarousel({
         </div>
       </div>
 
-      <div ref={scopeRef} className={sty.featuredGrid}>
+      <div
+        ref={scopeRef}
+        className={sty.featuredGrid}
+        role="link"
+        tabIndex={0}
+        aria-label={`Open ${activeProject.title} case study`}
+        onClick={handleGridClick}
+        onKeyDown={handleGridKeyDown}
+      >
         <div ref={copyRef} className={sty.featuredCopy}>
           <span className={sty.featuredIndex}>{position}</span>
         
             <h2>{activeProject.title}</h2>
             <p>{activeProject.summary}</p>
-            <ul className="tag-list" aria-label={stackLabel}>
-              {activeProject.stack.map((item) => <li key={item}>{item}</li>)}
-            </ul>
+            <ProjectStack items={activeProject.stack} ariaLabel={stackLabel} />
           
 
           <dl className={sty.projectMeta}>

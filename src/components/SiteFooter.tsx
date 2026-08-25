@@ -40,35 +40,37 @@ export function SiteFooter() {
             <p className={sty.description}>{siteContent.site.description}</p>
           </div>
 
-          <nav className={sty.featuredNavigation} aria-label="Featured pages">
-            <Link to="/">Home</Link>
-            <Link to="/projects">Projects</Link>
-            <Link to="/about">About</Link>
-            <Link to="/blog">Notes</Link>
-            <Link to="/#contact">Contact</Link>
-          </nav>
+          <div className={sty.links}>
+            <nav className={sty.featuredNavigation} aria-label="Featured pages">
+              <Link to="/">HOME</Link>
+              <Link to="/projects">PROJECTS</Link>
+              <Link to="/about">ABOUT</Link>
+              <Link to="/blog">NOTES</Link>
+              <Link to="/#contact">CONTACT</Link>
+            </nav>
 
-          <nav className={sty.navigation} aria-label="Footer">
-            <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
-            <ul className={sty.linkList}>
-              {moreLinks.map((link) => (
-                <li key={`${link.to}-${link.label}`}>
-                  {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')
-                    ? <a href={link.to}>{link.label}</a>
-                    : <Link to={link.to}>{link.label}</Link>}
-                </li>
-              ))}
-              {linktreeUrl ? (
-                <li><a href={linktreeUrl} target="_blank" rel="noreferrer">{footerCopy?.linktreeLabel ?? 'Linktree'}<LuExternalLink aria-hidden="true" className={sty.inlineIcon} focusable="false" /></a></li>
-              ) : null}
-            </ul>
-          </nav>
+            <nav className={sty.navigation} aria-label="Footer">
+              <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
+              <ul className={sty.linkList}>
+                {moreLinks.map((link) => (
+                  <li key={`${link.to}-${link.label}`}>
+                    {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')
+                      ? <a href={link.to}>{link.label}</a>
+                      : <Link to={link.to}>{link.label}</Link>}
+                  </li>
+                ))}
+                {linktreeUrl ? (
+                  <li><a href={linktreeUrl} target="_blank" rel="noreferrer">{footerCopy?.linktreeLabel ?? 'Linktree'}<LuExternalLink aria-hidden="true" className={sty.inlineIcon} focusable="false" /></a></li>
+                ) : null}
+              </ul>
+            </nav>
 
-          <div className={sty.contact}>
-            <p className={sty.heading}>Contact</p>
-            <a href={`mailto:${siteContent.site.email}`}><LuMail aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.email}</a>
-            <a href={siteContent.site.siteUrl}><LuGlobe aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.siteUrl.replace(/^https?:\/\//, '')}</a>
-            <p><LuMapPin aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.location}</p>
+            <div className={sty.contact}>
+              <p className={sty.heading}>Contact</p>
+              <a href={`mailto:${siteContent.site.email}`}><LuMail aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.email}</a>
+              <a href={siteContent.site.siteUrl}><LuGlobe aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.siteUrl.replace(/^https?:\/\//, '')}</a>
+              <p><LuMapPin aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.location}</p>
+            </div>
           </div>
         </div>
 

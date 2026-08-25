@@ -71,6 +71,12 @@
 .featuredGrid {
   display: grid;
   gap: var(--space-lg);
+  cursor: pointer;
+}
+
+.featuredGrid:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: var(--space-xs);
 }
 
 .featuredCopy {

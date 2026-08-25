@@ -1,17 +1,38 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { siteContent, type Project } from '../content/siteContent'
 import sty from './ProjectCard.module.scss'
+import { ProjectStack } from './ProjectStack'
 
 type ProjectCardProps = {
   project: Project
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const navigate = useNavigate()
   const roleLabelPrefix = siteContent.projectsPage?.roleLabelPrefix ?? 'Role'
   const stackAriaLabel = (siteContent.projectsPage?.stackAriaTemplate ?? '{title} technologies').replace('{title}', project.title)
+  const projectPath = `/projects/${project.slug}`
+
+  const handleCardClick = (event: React.MouseEvent<HTMLElement>) => {
+    if ((event.target as HTMLElement).closest('a, button')) return
+    navigate(projectPath)
+  }
+
+  const handleCardKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    event.preventDefault()
+    navigate(projectPath)
+  }
 
   return (
-    <article className={sty.root}>
+    <article
+      className={sty.root}
+      role="link"
+      tabIndex={0}
+      aria-label={`Open ${project.title} case study`}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+    >
       <Link to={`/projects/${project.slug}`} className={sty.imageLink}>
         {project.image ? <img src={project.image.src} alt={project.image.alt} className={sty.image} /> : null}
       </Link>
@@ -27,12 +48,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.status ? <span>{project.status}</span> : null}
           <span>{roleLabelPrefix}: {project.role}</span>
         </div>
-        <ul className="tag-list" aria-label={stackAriaLabel}>
-          {project.kind ? <li>{project.kind === 'case-study' ? 'Case study' : 'Experiment'}</li> : null}
-          {project.stack.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
+        <div className={sty.stackRow}>
+         {/* / {project.kind ? <span className={sty.kind}>{project.kind === 'case-study' ? 'Case study' : 'Experiment'}</span> : null} */}
+          <ProjectStack items={project.stack} ariaLabel={stackAriaLabel} />
+        </div>
       </div>
     </article>
   )
