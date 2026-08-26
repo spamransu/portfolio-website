@@ -6,10 +6,28 @@
 
 .hero,
 .featured,
+.notes,
 .practice,
 .skills {
   border-bottom: var(--section-divider);
 }
+
+.notesInner { display: grid; gap: var(--space-lg); padding-block: var(--space-xl); }
+.notesHeader { display: grid; justify-items: center; gap: var(--space-2xs); text-align: center; }
+.notesHeader span { color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
+.notesHeader h2 { margin-block: 0; color: var(--color-action-primary); text-transform: uppercase; @include mix.type-style(h2); }
+.notesGrid { display: grid; gap: var(--space-sm); }
+.noteCard { display: grid; align-content: start; gap: var(--space-xs); padding: var(--space-md); color: inherit; text-decoration: none; border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); transition: transform var(--motion-emphasized) var(--motion-ease-emphasized), border-color var(--motion-fast) var(--motion-ease-standard), background-color var(--motion-fast) var(--motion-ease-standard); }
+.noteCard:hover, .noteCard:focus-visible { transform: translateY(-0.35rem); border-color: var(--color-action-primary); background: var(--color-surface-overlay); }
+.noteCard:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 0.2rem; }
+.noteCard:hover h3, .noteCard:focus-visible h3 { color: var(--color-action-primary); }
+.noteCard h3, .noteCard p { margin-block: 0; }
+.noteMeta { color: var(--color-text-muted); letter-spacing: 0.05em; @include mix.type-style(body-xs); }
+.noteCard h3 { @include mix.type-style(h5); }
+.noteCard p { color: var(--color-text-muted); @include mix.type-style(body-sm); }
+.noteRead { display: inline-flex; align-items: center; gap: var(--space-2xs); width: fit-content; margin-block-start: auto; color: var(--color-text-primary); font-weight: 700; @include mix.type-style(body-xs); }
+.noteArrow { display: inline-block; transition: transform var(--motion-fast) var(--motion-ease-standard); }
+.noteCard:hover .noteArrow, .noteCard:focus-visible .noteArrow { transform: translate(0.2rem, -0.2rem); }
 
 .heroInner {
   padding-block: var(--space-xl);
@@ -237,6 +255,7 @@
 }
 
 @include mix.mq(sm) {
+  .notesGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .stats {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }

@@ -36,6 +36,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://384721.xyz/blog/build-correctness-is-not-visual-correctness</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://384721.xyz/blog/git-release-workflow-for-small-teams</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

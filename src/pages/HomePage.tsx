@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { LuCalendarCheck, LuDownload, LuMessageCircle } from 'react-icons/lu'
+import { LuArrowUpRight, LuCalendarCheck, LuDownload, LuMessageCircle } from 'react-icons/lu'
 import { ContactForm } from '../components/ContactForm'
 import { FeaturedProjectCarousel } from '../components/FeaturedProjectCarousel'
+import { blogPosts } from '../content/blogContent'
 import { siteContent, type HomeStatTone } from '../content/siteContent'
 import sty from './HomePage.module.scss'
 
@@ -122,6 +123,29 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {blogPosts.length ? (
+        <section className={sty.notes}>
+          <div className="lg-wrapper">
+            <div className={sty.notesInner} data-text-reveal-group="scrub">
+              <div className={sty.notesHeader}>
+                <span data-text-reveal="copy">Latest articles</span>
+                <h2 data-text-reveal="heading">Fresh from the blog</h2>
+              </div>
+              <div className={sty.notesGrid} data-text-reveal="copy">
+                {blogPosts.slice(0, 3).map((post) => (
+                  <Link className={sty.noteCard} key={post.slug} to={`/blog/${post.slug}`}>
+                    <div className={sty.noteMeta}>{post.date} <span aria-hidden="true">·</span> 1 min</div>
+                    <h3>{post.title}</h3>
+                    <p>{post.excerpt ?? post.body.split('\n')[0]}</p>
+                    <span className={sty.noteRead}>Read article<LuArrowUpRight className={sty.noteArrow} aria-hidden="true" focusable="false" /></span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className={sty.contact} id="contact">
         <div className="lg-wrapper">

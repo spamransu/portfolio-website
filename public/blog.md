@@ -2,6 +2,12 @@
 
 Short notes on case-study writing, content systems, and the practical decisions that keep a portfolio maintainable.
 
+## [A passing build is not a finished interface](https://384721.xyz/blog/build-correctness-is-not-visual-correctness.md)
+
+- Date: 2026-08-26
+
+Why frontend work needs a rendered check after the code passes: layout, hierarchy, wrapping, and containment only exist in the browser.
+
 ## [A Git release workflow for small teams](https://384721.xyz/blog/git-release-workflow-for-small-teams.md)
 
 - Date: 2026-08-21

@@ -150,6 +150,8 @@
 .articleCover figure { display: grid; gap: var(--space-xs); margin-block: 0; }
 .articleCover img { width: 100%; max-height: 50rem; aspect-ratio: 3 / 2; object-fit: cover; border: 1px solid var(--color-border-default); border-radius: var(--card-radius); }
 .articleCover figcaption { color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
+.readingProgress { position: sticky; top: 4rem; z-index: 40; width: 100%; height: 0.25rem; background: var(--color-border-default); }
+.readingProgressFill { display: block; width: 100%; height: 100%; background: var(--color-accent-violet); transform: scaleX(0); }
 .article > :global(.sm-wrapper) > * { padding-block: var(--space-xl); }
 .articleBody { display: grid; gap: var(--space-md); }
 .articleBody > div,
@@ -162,6 +164,24 @@
 .articleBody > :first-child p:first-child { color: var(--color-text-primary); }
 .articleBody ul { display: grid; gap: var(--space-xs); padding: 0; list-style: none; }
 .articleBody li { padding: var(--space-sm); border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); }
+.codeBlock {
+  position: relative;
+  overflow-x: auto;
+  max-width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  margin: 0;
+  color: var(--color-text-primary);
+  background: var(--color-background-surface);
+  border: 1px solid var(--color-border-default);
+  border-inline-start: 3px solid var(--color-action-primary);
+  border-radius: var(--radius-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  tab-size: 2;
+  white-space: pre;
+}
+.codeBlock::before { display: block; margin-block-end: var(--space-xs); color: var(--color-text-muted); content: attr(data-language); font-family: var(--font-body); font-size: var(--type-body-xs-size); letter-spacing: 0.12em; text-transform: uppercase; }
 .articleCta { background: var(--color-background-surface-subtle); }
 .articleCta > :global(.lg-wrapper) > * { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-lg); justify-content: space-between; padding-block: var(--space-xl); }
 .articleCta h2,
