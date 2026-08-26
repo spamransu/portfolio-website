@@ -27,21 +27,21 @@ export function ScrollOpacityText({ children, className, as: Tag = 'div', id }: 
     const trigger = triggerRef.current
     if (!trigger || !letters.length) return
 
-    gsap.fromTo(
-      letters,
-      { opacity: 0.3 },
-      {
-        opacity: 1,
-        stagger: { each: 0.035, from: 'start' },
-        scrollTrigger: {
-          trigger,
-          start: 'top 78%',
-          end: 'bottom 42%',
-          scrub: 0.9,
-          invalidateOnRefresh: true,
-        },
+    gsap.set(letters, { opacity: 0.3 })
+    gsap.to(letters, {
+      opacity: 1,
+      stagger: { each: 0.035, from: 'start' },
+      scrollTrigger: {
+        trigger,
+        start: 'top 78%',
+        end: 'bottom 42%',
+        scrub: 0.9,
+        invalidateOnRefresh: true,
       },
-    )
+    })
+
+    requestAnimationFrame(() => ScrollTrigger.refresh())
+    document.fonts?.ready.then(() => ScrollTrigger.refresh())
   }, { scope: triggerRef, dependencies: [children], revertOnUpdate: true })
 
   return (
