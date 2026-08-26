@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { siteContent, type Project } from '../content/siteContent'
 import sty from './ProjectCard.module.scss'
 import { ProjectStack } from './ProjectStack'
@@ -9,19 +9,20 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const navigate = useNavigate()
+  const location = useLocation()
   const roleLabelPrefix = siteContent.projectsPage?.roleLabelPrefix ?? 'Role'
   const stackAriaLabel = (siteContent.projectsPage?.stackAriaTemplate ?? '{title} technologies').replace('{title}', project.title)
   const projectPath = `/projects/${project.slug}`
 
   const handleCardClick = (event: React.MouseEvent<HTMLElement>) => {
     if ((event.target as HTMLElement).closest('a, button')) return
-    navigate(projectPath)
+    navigate(projectPath, { state: { from: location.pathname } })
   }
 
   const handleCardKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key !== 'Enter' && event.key !== ' ') return
     event.preventDefault()
-    navigate(projectPath)
+    navigate(projectPath, { state: { from: location.pathname } })
   }
 
   return (
@@ -33,13 +34,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
       onClick={handleCardClick}
       onKeyDown={handleCardKeyDown}
     >
-      <Link to={`/projects/${project.slug}`} className={sty.imageLink}>
+      <Link to={`/projects/${project.slug}`} state={{ from: location.pathname }} className={sty.imageLink}>
         {project.image ? <img src={project.image.src} alt={project.image.alt} className={sty.image} /> : null}
       </Link>
 
       <div className={sty.content} data-text-reveal="copy">
         <div className={sty.titleRow}>
-          <h2><Link to={`/projects/${project.slug}`}>{project.title}</Link></h2>
+          <h2><Link to={`/projects/${project.slug}`} state={{ from: location.pathname }}>{project.title}</Link></h2>
           <span className={sty.year}>{project.year}</span>
         </div>
         <p>{project.summary}</p>

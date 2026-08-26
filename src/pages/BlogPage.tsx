@@ -39,7 +39,7 @@ export function BlogPage() {
             </div>
 
           {latest ? (
-            <Link className={sty.latestPost} data-text-reveal-group="scrub" to={`/blog/${latest.slug}`}>
+            <Link className={sty.latestPost} data-text-reveal-group="scrub" to={`/blog/${latest.slug}`} state={{ from: '/blog' }}>
               <div className={sty.postMeta} data-text-reveal="copy">
                 <span>{formatDate(latest.date)}</span>
                 <span>{getReadingTime(latest)}</span>
@@ -56,7 +56,7 @@ export function BlogPage() {
             <div className={sty.yearGroup} key={group.year}>
               <div className={sty.yearHeading} data-text-reveal-group="scrub"><span data-text-reveal="copy">{group.year}</span><span data-text-reveal="copy">{String(group.posts.length).padStart(2, '0')} entries</span></div>
               {group.posts.map((post) => (
-                <Link className={sty.postRow} data-text-reveal-group="scrub" key={post.slug} to={`/blog/${post.slug}`}>
+                <Link className={sty.postRow} data-text-reveal-group="scrub" key={post.slug} to={`/blog/${post.slug}`} state={{ from: '/blog' }}>
                   <div className={sty.postMeta} data-text-reveal="copy"><span>{formatDate(post.date)}</span><span>{getReadingTime(post)}</span></div>
                   <div><h2 data-text-reveal="copy">{post.title}</h2><p data-text-reveal="copy">{post.excerpt ?? post.body.split('\n')[0]}</p></div>
                   <span aria-hidden="true"><LuArrowRight focusable="false" /></span>

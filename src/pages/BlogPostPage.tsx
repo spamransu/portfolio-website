@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { InternalHero } from '../components/InternalHero'
 import { parseBlogMarkdownBlocks } from '../content/blogMarkdown'
@@ -10,8 +10,11 @@ import sty from './InternalPages.module.scss'
 
 export function BlogPostPage() {
   const { slug } = useParams()
+  const location = useLocation()
+  const backPath = typeof location.state?.from === 'string' && location.state.from.startsWith('/') ? location.state.from : '/blog'
   const post = slug ? getBlogPostBySlug(slug) : undefined
   const blogPostCopy = siteContent.blogPostPage
+  const backLabel = backPath === '/' ? 'Back to home' : (blogPostCopy?.backToBlogLabel ?? 'Back to notes')
   const pageRef = useRef<HTMLDivElement>(null)
 
   useGSAP(() => {
@@ -48,7 +51,7 @@ export function BlogPostPage() {
       <InternalHero
         title={post.title}
         intro={post.excerpt ?? post.body.split('\n')[0]}
-        beforeTitle={<Link className="backLink" to="/blog"><LuArrowLeft aria-hidden="true" focusable="false" />{blogPostCopy?.backToBlogLabel ?? 'Back to notes'}</Link>}
+        beforeTitle={<Link className="backLink" to={backPath}><LuArrowLeft aria-hidden="true" focusable="false" />{backLabel}</Link>}
       />
 
       {post.coverImage ? (

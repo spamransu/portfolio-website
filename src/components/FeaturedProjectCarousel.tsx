@@ -120,7 +120,7 @@ export function FeaturedProjectCarousel({
   const stackLabel = (stackAriaTemplate ?? '{title} tools').replace('{title}', activeProject.title)
   const projectPath = `/projects/${activeProject.slug}`
 
-  const openProject = () => navigate(projectPath)
+  const openProject = () => navigate(projectPath, { state: { from: '/' } })
   const handleGridClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if ((event.target as HTMLElement).closest('a, button')) return
     openProject()
@@ -189,7 +189,7 @@ export function FeaturedProjectCarousel({
           </dl>
           
           <div className={sty.featuredLinks}>
-            <Link to={`/projects/${activeProject.slug}`}>
+            <Link to={`/projects/${activeProject.slug}`} state={{ from: '/' }}>
               Read the case study
               <LuExternalLink aria-hidden="true" focusable="false" />
             </Link>

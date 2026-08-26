@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { LuArrowLeft, LuArrowRight } from 'react-icons/lu'
 import { siteContent, type ImageAsset, type Project } from '../content/siteContent'
 import sty from './ProjectDetailPage.module.scss'
@@ -27,6 +27,8 @@ function ProjectVisual({ image, className = '', loading = 'lazy' }: { image?: Im
 
 export function ProjectDetailPage() {
   const { slug } = useParams()
+  const location = useLocation()
+  const backPath = typeof location.state?.from === 'string' && location.state.from.startsWith('/') ? location.state.from : '/projects'
   const projectIndex = siteContent.projects.findIndex((entry) => entry.slug === slug)
   const project = projectIndex >= 0 ? siteContent.projects[projectIndex] : undefined
   const detailCopy = siteContent.projectDetailPage
@@ -39,7 +41,7 @@ export function ProjectDetailPage() {
             <div>
               <h1 data-text-reveal="heading">{detailCopy?.notFoundTitle ?? 'Project not found'}</h1>
               <p data-text-reveal="copy">{detailCopy?.notFoundIntro ?? 'That case study is missing or has not been published yet.'}</p>
-              <Link className="button button--primary" to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>
+              <Link className="button button--primary" to={backPath}><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'Back to projects'}</Link>
             </div>
           </div>
         </section>
@@ -58,7 +60,7 @@ export function ProjectDetailPage() {
       <section className={sty.hero} data-text-reveal-group="entry" aria-labelledby="project-title">
         <div className="lg-wrapper">
           <div className={sty.heroInner}>
-            <Link className={sty.backLink} to="/projects"><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'All Projects'}</Link>
+            <Link className={sty.backLink} to={backPath}><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'All Projects'}</Link>
             <div className={sty.heroCopy}>
               <h1 id="project-title" data-text-reveal="heading">{project.title}</h1>
               <p data-text-reveal="copy">{project.summary}</p>

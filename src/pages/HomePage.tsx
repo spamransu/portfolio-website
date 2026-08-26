@@ -134,7 +134,7 @@ export function HomePage() {
               </div>
               <div className={sty.notesGrid} data-text-reveal="copy">
                 {blogPosts.slice(0, 3).map((post) => (
-                  <Link className={sty.noteCard} key={post.slug} to={`/blog/${post.slug}`}>
+                  <Link className={sty.noteCard} key={post.slug} to={`/blog/${post.slug}`} state={{ from: '/' }}>
                     <div className={sty.noteMeta}>{post.date} <span aria-hidden="true">·</span> 1 min</div>
                     <h3>{post.title}</h3>
                     <p>{post.excerpt ?? post.body.split('\n')[0]}</p>
