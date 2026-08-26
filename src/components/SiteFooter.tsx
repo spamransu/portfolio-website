@@ -30,7 +30,8 @@ export function SiteFooter() {
 
   return (
     <footer className={sty.root}>
-      <div className="lg-wrapper">
+      <div className={sty.border}>
+        <div className="lg-wrapper">
         <div className={sty.inner}>
           <div className={sty.info}>
             <p className={sty.brand}>
@@ -74,7 +75,12 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className={sty.bottom}>
+        </div>
+      </div>
+
+      <div className={sty.bottomBorder}>
+        <div className="lg-wrapper">
+          <div className={sty.bottom}>
           <p className={sty.copyright}>{copyright}</p>
           <ul className={sty.socials} aria-label={siteContent.siteChrome?.footerSocialsAriaLabel ?? 'Social links'}>
             {visibleSocials.map((social) => (
@@ -85,6 +91,7 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </div>
     </footer>
