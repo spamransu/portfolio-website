@@ -68,11 +68,13 @@ export function ProjectDetailPage() {
             </div>
             <div className={sty.heroAside}>
               <ProjectStack items={project.stack} reverseFlow ariaLabel={`${project.title} technologies`} />
-              <dl className={sty.metaTable} data-text-reveal="copy" aria-label="Project metadata">
-                <div><dt>{detailCopy?.clientLabel ?? 'Client'}</dt><dd>{project.client}</dd></div>
-                <div><dt>{detailCopy?.yearLabel ?? 'Year'}</dt><dd>{project.year}</dd></div>
-                <div><dt>{detailCopy?.roleLabel ?? 'Role'}</dt><dd>{project.role}</dd></div>
-                {project.status ? <div><dt>Status</dt><dd>{project.status}</dd></div> : null}
+            <dl className={sty.metaTable} data-text-reveal="copy" aria-label="Project metadata">
+              <div className={sty.statusRow}><dt>Status</dt><dd>
+                {project.links?.[0] ? <a href={project.links[0].href} target="_blank" rel="noreferrer">{project.links[0].label}<span aria-hidden="true"> ↗</span></a> : <span className={sty.statusIndicator}><span aria-hidden="true" />{project.status ?? 'Private / in progress'}</span>}
+              </dd></div>
+              <div><dt>{detailCopy?.roleLabel ?? 'Role'}</dt><dd>{project.role}</dd></div>
+              <div><dt>{detailCopy?.clientLabel ?? 'Context'}</dt><dd>{project.client}</dd></div>
+              <div><dt>{detailCopy?.yearLabel ?? 'Year'}</dt><dd>{project.year}</dd></div>
               </dl>
             </div>
 

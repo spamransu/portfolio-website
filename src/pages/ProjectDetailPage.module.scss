@@ -118,7 +118,7 @@
   display: grid;
   grid-template-columns: minmax(6rem, 0.45fr) minmax(0, 1fr);
   gap: var(--space-sm);
-  padding-block: var(--space-sm);
+  padding: var(--space-sm);
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
@@ -130,6 +130,30 @@
  // margin-block: 0;
   color: var(--color-text-primary);
   @include mix.type-style(body-sm, 400);
+}
+
+.statusRow {
+  background: var(--color-surface-overlay);
+}
+
+.metaTable dd a {
+  color: var(--color-action-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.statusIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.statusIndicator > span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-action-primary);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-action-primary) 20%, transparent);
 }
 
 .metaTable dl {

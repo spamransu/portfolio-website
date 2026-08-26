@@ -126,7 +126,7 @@
 .yearHeading { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-md); color: var(--color-text-muted); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs); }
 .archiveMeta { padding-block-end: var(--space-sm); border-bottom: 1px solid var(--color-border-default); }
 .latestPost,
-.postRow { display: grid; gap: var(--space-md); padding-block: var(--space-lg); color: inherit; text-decoration: none; border-bottom: 1px solid var(--color-border-default); transition: background-color var(--motion-fast) var(--motion-ease-standard); }
+.postRow { display: grid; gap: var(--space-md); padding-block: var(--space-lg); padding-inline: var(--space-md); color: inherit; text-decoration: none; border-bottom: 1px solid var(--color-border-default); transition: background-color var(--motion-fast) var(--motion-ease-standard); }
 .latestPost:hover,
 .postRow:hover { background: var(--color-surface-overlay); }
 .latestPost h2,
@@ -136,7 +136,9 @@
 .latestPost h2 { text-transform: uppercase; @include mix.type-style(h3); }
 .latestPost p,
 .postRow p { max-width: var(--measure-prose); color: var(--color-text-muted); }
-.latestPost strong {display: inline-flex; align-items: center; gap: var(--space-2xs); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs, 700);}
+.latestPost strong {
+ 
+  align-items: center; gap: var(--space-2xs); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs, 700);}
 .latestPost:hover h2,
 .postRow:hover h2 { color: var(--color-action-primary); }
 .postMeta { display: flex; flex-wrap: wrap; align-content: start; gap: var(--space-xs); color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }
@@ -241,7 +243,7 @@
   .latestPost > :first-child { grid-column: span 3; }
   .latestPost > div:nth-child(2) { grid-column: span 7; }
   .latestPost > .postMeta { grid-column: span 3; }
-  .latestPost > span:last-child { grid-column: span 1; color: var(--color-action-primary); text-align: right; }
+  .latestPost > strong { grid-column: span 2; text-align: right; }
   .postRow { grid-template-columns: repeat(12, minmax(0, 1fr)); }
   .postRow > .postMeta { grid-column: span 3; }
   .postRow > div:nth-child(2) { grid-column: span 8; }

@@ -32,13 +32,15 @@ export function ProjectStack({ items, ariaLabel, reverseFlow = false }: ProjectS
   const orderedItems = reverseFlow ? [...items].reverse() : items
   return (
     <ul className={`${sty.root}`} aria-label={ariaLabel}>
-      {orderedItems.map((item) => {
+      {orderedItems.map((item, index) => {
         const Icon = icons[item] ?? FaCode
+        const tooltipId = `project-stack-tooltip-${index}-${item.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
         return (
-          <li key={item} title={item} aria-label={item}>
+          <li key={item} aria-label={item} aria-describedby={tooltipId}>
             <div className={sty.iconBox} style={{ '--icon-color': iconColors[item] ?? 'currentColor' } as CSSProperties}>
               <Icon aria-hidden="true" focusable="false" />
             </div>
+            <span className={sty.tooltip} id={tooltipId} role="tooltip">{item}</span>
           </li>
         )
       })}
