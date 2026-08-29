@@ -44,8 +44,10 @@ export function ScrollOpacityText({ children, className, as: Tag = 'div', id }: 
     document.fonts?.ready.then(() => ScrollTrigger.refresh())
   }, { scope: triggerRef, dependencies: [children], revertOnUpdate: true })
 
+  // SAFETY: Every allowed Tag accepts an HTMLElement-compatible ref at runtime.
+  const polymorphicRef = triggerRef as never
   return (
-    <Tag ref={triggerRef as never} id={id} className={className} aria-label={children}>
+    <Tag ref={polymorphicRef} id={id} className={className} aria-label={children}>
       {Array.from(children).map((letter, index) => (
         <span
           key={`${letter}-${index}`}

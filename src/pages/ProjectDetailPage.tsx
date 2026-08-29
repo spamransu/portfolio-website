@@ -13,6 +13,7 @@ const getRelatedProjects = (projects: Project[], currentIndex: number): Project[
   projects
     .filter((_, index) => index !== currentIndex)
     .slice(0, 2)
+const getInternalBackPath = (state: { from?: string } | null, fallback: string) => state?.from?.startsWith('/') ? state.from : fallback
 
 function ProjectVisual({ image, className = '', loading = 'lazy' }: { image?: ImageAsset; className?: string; loading?: 'eager' | 'lazy' }) {
   if (!image) return <div className={`${sty.visualPlaceholder} ${className}`} aria-label="Project visual placeholder" />
@@ -28,7 +29,7 @@ function ProjectVisual({ image, className = '', loading = 'lazy' }: { image?: Im
 export function ProjectDetailPage() {
   const { slug } = useParams()
   const location = useLocation()
-  const backPath = typeof location.state?.from === 'string' && location.state.from.startsWith('/') ? location.state.from : '/projects'
+  const backPath = getInternalBackPath(location.state, '/projects')
   const projectIndex = siteContent.projects.findIndex((entry) => entry.slug === slug)
   const project = projectIndex >= 0 ? siteContent.projects[projectIndex] : undefined
   const detailCopy = siteContent.projectDetailPage
@@ -63,7 +64,7 @@ export function ProjectDetailPage() {
             <Link className={sty.backLink} to={backPath}><LuArrowLeft aria-hidden="true" focusable="false" />{detailCopy?.backToProjectsLabel ?? 'All Projects'}</Link>
             <div className={sty.heroCopy}>
               <h1 id="project-title" data-text-reveal="heading">{project.title}</h1>
-              <p data-text-reveal="copy">{project.summary}</p>
+              <p>{project.summary}</p>
 
             </div>
             <div className={sty.heroAside}>
@@ -111,11 +112,10 @@ export function ProjectDetailPage() {
       <section className={sty.narrativeSection} data-text-reveal-group="scrub" aria-labelledby="challenge-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('02', 'CHALLENGE')}</p>
+            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('02', 'PROBLEM')}</p>
             <div className={sty.prose}>
-              <h2 id="challenge-title" data-text-reveal="heading">Challenge</h2>
+              <h2 id="challenge-title" data-text-reveal="heading">Problem</h2>
               <p data-text-reveal="copy">{project.challenge}</p>
-              <p data-text-reveal="copy">{project.summary}</p>
             </div>
           </div>
         </div>
@@ -124,9 +124,21 @@ export function ProjectDetailPage() {
       <section className={sty.narrativeSection} data-text-reveal-group="scrub" aria-labelledby="approach-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('03', 'APPROACH')}</p>
+            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('03', 'RESPONSIBILITY')}</p>
             <div className={sty.prose}>
-              <h2 id="approach-title" data-text-reveal="heading">Approach</h2>
+              <h2 id="approach-title" data-text-reveal="heading">My responsibility</h2>
+              <p data-text-reveal="copy">I worked as {project.role.toLowerCase()}, responsible for {project.scope.join(', ').toLowerCase()}.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={sty.narrativeSection} data-text-reveal-group="scrub" aria-labelledby="work-title">
+        <div className="lg-wrapper">
+          <div className={sty.editorialBlock}>
+            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('04', 'WORK')}</p>
+            <div className={sty.prose}>
+              <h2 id="work-title" data-text-reveal="heading">What I did</h2>
               <p data-text-reveal="copy">{project.approachSummary}</p>
               <ol className={sty.cardGrid} data-text-reveal="copy">
                 {project.approach.map((item, index) => (
@@ -153,7 +165,7 @@ export function ProjectDetailPage() {
       <section className={sty.narrativeSection} data-text-reveal-group="scrub" aria-labelledby="result-title">
         <div className="lg-wrapper">
           <div className={sty.editorialBlock}>
-            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('04', 'RESULT')}</p>
+            <p className={sty.kicker} data-text-reveal="copy">{sectionLabel('05', 'RESULT')}</p>
             <div className={sty.prose}>
               <h2 id="result-title" data-text-reveal="heading">Result</h2>
               <p data-text-reveal="copy">{project.resultSummary}</p>

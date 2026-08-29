@@ -302,8 +302,10 @@ export type SiteContent = {
   projects: Project[]
 }
 
-// SAFETY: Generated site-content.json is validated against the SiteContent contract during prebuild.
-export const siteContent: SiteContent = rawContent as SiteContent
+export const siteContent: SiteContent = (
+  // SAFETY: Generated site-content.json is validated against the SiteContent contract during prebuild.
+  rawContent as SiteContent
+)
 
 export function getLinktreeUrl() {
   return siteContent.site.socials.find((social) => /linktree/i.test(social.label) || /linktr\.ee/i.test(social.href))?.href

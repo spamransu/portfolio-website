@@ -222,12 +222,6 @@ p {
   text-wrap: pretty;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  [data-text-reveal-group] [data-text-reveal] {
-    opacity: 0;
-  }
-}
-
 dd {
   text-wrap: pretty;
 }
