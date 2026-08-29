@@ -27,6 +27,7 @@ I build responsive React interfaces and WordPress systems, then make the content
 - [Why this portfolio uses a Git-backed content system](https://384721.xyz/blog/git-backed-portfolio-cms.md)
 - [WordPress maintenance and Elementor system work](https://384721.xyz/projects/wordpress-maintenance-system.md)
 - [ABCDE Creative Studio website](https://384721.xyz/projects/abcde-creative.md)
+- [Debase browser-local Base64 tools](https://384721.xyz/projects/debase.md)
 - [Nsight Index blog management system](https://384721.xyz/projects/nsight-index.md)
 - [Git-backed portfolio content system](https://384721.xyz/projects/portfolio-cms.md)
 - [React GSAP animation experiment](https://384721.xyz/projects/gsap-animation.md)
