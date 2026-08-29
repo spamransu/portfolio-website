@@ -6,7 +6,7 @@ import sty from './InternalPages.module.scss'
 export function ResumePage() {
   return (
     <div className={sty.page}>
-      <InternalHero eyebrow={siteContent.resume.eyebrow ?? 'CV / Resume'} title={siteContent.resume.headline} intro={siteContent.resume.summary} />
+      <InternalHero title={siteContent.resume.headline} intro={siteContent.resume.summary} />
 
       <section className={sty.resumeStats} data-text-reveal-group="scrub" aria-label={siteContent.resume.highlightsSectionTitle}>
         <div className="lg-wrapper">

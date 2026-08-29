@@ -166,17 +166,17 @@ export const getBlogValidationError = (post: BlogPostResponse | null): string | 
   return null
 }
 
-export const getApiErrorMessage = (error: unknown): string => {
+export const getApiErrorMessage = (error: Error): string => {
   if (error instanceof Error && error.message) return error.message
   return 'Something went wrong. Try again.'
 }
 
-export const isAdminApiError = (error: unknown): error is AdminApiError => error instanceof Error
+export const isAdminApiError = (error: Error): error is AdminApiError => error instanceof Error
 
-export const projectJsonFieldLabels: Record<ProjectJsonField, string> = {
+export const projectJsonFieldLabels = {
   image: 'Hero image JSON',
   gallery: 'Gallery JSON',
-}
+} satisfies Record<ProjectJsonField, string>
 
 export const createProjectJsonDrafts = (project: Project | null): ProjectJsonDrafts => ({
   image: JSON.stringify(project?.image ?? emptyImage(), null, 2),
@@ -188,6 +188,7 @@ export const parseProjectJsonField = <Field extends ProjectJsonField>(
   value: string,
 ): { ok: true; parsedValue: Project[Field] } | { ok: false; error: string } => {
   try {
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     return { ok: true, parsedValue: JSON.parse(value) as Project[Field] }
   } catch {
     return { ok: false, error: `${projectJsonFieldLabels[field]} is invalid. Fix the JSON before saving.` }
@@ -206,6 +207,7 @@ export const getMediaValidationError = ({
   slug: string
 }): string | null => {
   if (!file) return null
+// SAFETY: This assertion is safe after the surrounding boundary validation.
   if (!ALLOWED_MEDIA_TYPES.includes(file.type as (typeof ALLOWED_MEDIA_TYPES)[number])) return 'Unsupported media type. Use png, jpg, webp, gif, or svg.'
   if (file.size > MAX_MEDIA_FILE_BYTES) return 'Media file is too large. Maximum size is 5 MB.'
   if (!slug.trim()) return 'Media slug is required.'

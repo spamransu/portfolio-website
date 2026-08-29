@@ -90,6 +90,9 @@
   --measure-sidebar: 12rem;
   --measure-form: #{tokens.fluid(16.8rem, 19rem)};
 
+  --font-body: #{tokens.font-family(sans)};
+  --font-display: #{tokens.font-family(display)};
+
   /* Typography roles */
   --type-h1-size: #{tokens.type-prop(h1, size)};
   --type-h1-line: #{tokens.type-prop(h1, line-height)};
@@ -154,7 +157,7 @@ html {
 }
 
 body {
-  margin: 0;
+  margin-block: 0;
   overflow-x: hidden;
   background: var(--color-background-page);
   color: var(--color-text-primary);
@@ -168,7 +171,19 @@ h4,
 h5,
 h6 {
   margin-block: 0 0.5em;
-  text-transform: uppercase;
+}
+
+// Flow elements start without user-agent margins. Containers own rhythm with
+// gap or explicit spacing tokens; prose patterns add back readable separation.
+ul,
+ol,
+dl,
+dt,
+dd,
+figure,
+blockquote {
+  margin-block: 0;
+  margin-inline: 0;
 }
 
 h1,
@@ -249,7 +264,7 @@ img {
 }
 
 blockquote {
-  margin: 0;
+  margin-block: 0;
 }
 
 :where(svg[focusable='false']) {

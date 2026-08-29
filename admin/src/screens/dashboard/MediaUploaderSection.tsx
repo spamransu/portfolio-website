@@ -74,7 +74,7 @@ export const MediaUploaderSection = ({
         <div className="admin-collection-panel">
           <div className="admin-form-grid">
             <Field label="Area">
-              <select id="media-area" value={media.area} onChange={(event) => media.onAreaChange(event.target.value as DashboardMediaProps['area'])}>
+              <select id="media-area" value={media.area} onChange={(event) => { const value = event.target.value; if (value === 'blog' || value === 'projects') media.onAreaChange(value) }}>
                 <option value="blog">Blog</option>
                 <option value="projects">Projects</option>
               </select>

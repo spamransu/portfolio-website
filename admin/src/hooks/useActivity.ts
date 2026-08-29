@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { adminApi, type AdminActivityResponse } from '../api/adminApi'
 import { getApiErrorMessage } from '../lib/adminHelpers'
 
-export const useActivity = (handleUnauthorizedError: (caught: unknown) => boolean) => {
+export const useActivity = (handleUnauthorizedError: (caught: Error) => boolean) => {
   const [activityResponse, setActivityResponse] = useState<AdminActivityResponse | null>(null)
   const [activityError, setActivityError] = useState<string | null>(null)
   const [activityLoadedAt, setActivityLoadedAt] = useState<string | null>(null)
@@ -22,7 +22,7 @@ export const useActivity = (handleUnauthorizedError: (caught: unknown) => boolea
       setActivityResponse(response)
       setActivityLoadedAt(new Date().toLocaleString())
     } catch (caught) {
-      if (!handleUnauthorizedError(caught)) setActivityError(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setActivityError(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setLoadingActivity(false)
     }

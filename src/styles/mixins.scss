@@ -29,12 +29,6 @@
   }
 }
 
-@mixin font($role: body, $weight: 400, $leading: body, $family: sans) {
-  font-family: tokens.font-family($family);
-  font-size: tokens.type-scale($role);
-  font-weight: $weight;
-  line-height: tokens.leading($leading);
-}
 
 @mixin type-style($role, $weight: null) {
   $family: tokens.type-prop($role, family);

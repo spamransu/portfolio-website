@@ -12,7 +12,7 @@ import {
 } from '../lib/adminHelpers'
 
 type UseMediaUploaderOptions = {
-  handleUnauthorizedError: (caught: unknown) => boolean
+  handleUnauthorizedError: (caught: Error) => boolean
   onAfterUpload: () => void
   selectedBlogPost: BlogPostResponse | null
   selectedProject: Project | null
@@ -132,7 +132,7 @@ export const useMediaUploader = ({
       clearMediaFile()
       onAfterUpload()
     } catch (caught) {
-      if (!handleUnauthorizedError(caught)) setMediaStatus(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setMediaStatus(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setUploadingMedia(false)
     }

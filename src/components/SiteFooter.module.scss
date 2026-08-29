@@ -1,28 +1,44 @@
 @use '../styles/mixins' as mix;
 
 .root {
-  border-top: 1px solid var(--color-border-default);
+  box-sizing: border-box;
+  display: block;
   background: var(--color-background-page);
+  color: var(--color-text-primary);
+}
+
+.border {
+  width: 100%;
+  padding-block-start: 4rem;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.bottomBorder {
+  width: 100%;
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .inner {
-  display: grid;
-  gap: var(--space-lg);
-  padding-block: var(--space-xl);
+  width: 100%;
+  padding-block: var(--space-lg) var(--space-2xl);
 }
 
 .info,
+.links,
 .navigation,
 .contact,
-.linkList {
+.linkList,
+.featuredNavigation {
   display: grid;
   align-content: start;
 }
 
-.info,
-.navigation,
-.contact {
-  gap: var(--space-xs);
+.info {
+  gap: var(--space-sm);
+}
+
+.links {
+  gap: var(--space-lg);
 }
 
 .brand,
@@ -32,14 +48,14 @@
 .contact p,
 .linkList,
 .socials {
-  margin: 0;
+  margin-block: 0;
 }
 
 .brand {
   display: inline-flex;
   gap: var(--space-hairline);
   color: var(--color-action-primary);
-  letter-spacing: 0.02em;
+  letter-spacing: .02em;
   text-transform: uppercase;
   @include mix.type-style(h5);
   line-height: 1;
@@ -47,9 +63,6 @@
 
 .brandSecondary {
   color: var(--color-text-primary);
-}
-
-.description {
 }
 
 .description,
@@ -64,9 +77,9 @@
 .heading {
   margin-block-end: var(--space-xs);
   color: var(--color-text-muted);
-  letter-spacing: 0.12em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  @include mix.type-style(body-xs, 600);
+  @include mix.type-style(body-xs, 700);
 }
 
 .linkList {
@@ -83,13 +96,30 @@
   align-items: center;
   gap: var(--space-2xs);
   text-decoration: none;
-  transition: color var(--motion-fast) var(--motion-ease-standard), border-color var(--motion-fast) var(--motion-ease-standard);
+  transition: opacity var(--motion-fast) var(--motion-ease-standard);
 }
 
 .linkList a:hover,
 .contact a:hover,
-.socials a:hover {
-  color: var(--color-action-primary);
+.socials a:hover,
+.featuredNavigation a:hover {
+  opacity: .62;
+}
+
+.featuredNavigation {
+  grid-column: 1 / -1;
+  gap: 16px;
+  margin-block: var(--space-xl) var(--space-lg);
+  justify-items: end;
+}
+
+.featuredNavigation a {
+  color: var(--color-text-primary);
+  font-family: var(--font-family-display);
+  font-size: clamp(2.4rem, 7vw, 5.5rem);
+  line-height: .95;
+  letter-spacing: -.03em;
+  text-decoration: none;
 }
 
 .bottom {
@@ -98,7 +128,6 @@
   gap: var(--space-sm);
   justify-content: space-between;
   padding-block: var(--space-md);
-  border-top: 1px solid var(--color-border-subtle);
 }
 
 .socials {
@@ -124,12 +153,34 @@
 
 @include mix.mq(md) {
   .inner {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+    column-gap: var(--space-xl);
   }
 
-  .info { grid-column: span 5; }
-  .navigation { grid-column: span 3; }
-  .contact { grid-column: span 4; }
+  .info {
+    grid-column: 1;
+  }
+
+  .links {
+    display: grid;
+    grid-column: 2;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    column-gap: var(--space-lg);
+  }
+
+  .featuredNavigation {
+    grid-column: auto;
+  }
+
+  .contact {
+    margin-top: 0;
+  }
+
+  .featuredNavigation {
+    flex: 0 1 auto;
+    margin-block: 0;
+  }
 
   .bottom {
     flex-direction: row;

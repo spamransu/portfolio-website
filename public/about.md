@@ -1,15 +1,15 @@
 # About
 
-I work on websites that need both clean implementation and visual care.
+Frontend implementation, WordPress maintenance, and visual design for teams that need a site they can keep using.
 
-I am a frontend web developer and graphic designer at Tech Support Plus I.T Services. My current work covers WordPress maintenance, Elementor migrations, reusable templates, content workflows, styling systems, security cleanup, and deployment support.
+I currently work as a frontend web developer and graphic designer at Tech Support Plus I.T Services. My day-to-day work includes maintaining WordPress sites, cleaning up Elementor builds, building reusable templates, improving content workflows, and supporting security and hosting tasks.
 
-Before that, I worked at ABCDE Creative Studio, where I translated Figma designs into responsive React pages and helped with accessible frontend delivery. I also have production design experience from print and social media work, which shaped how I handle details, revisions, and visual consistency.
+At ABCDE Creative Studio, I turned Figma direction into responsive React pages and worked with accessibility checks during implementation. Earlier print and social-media design work taught me to pay attention to production details, not just the first screen.
 
-I like projects where design and implementation have to meet in the middle. A good page should look intentional, read clearly, and stay editable for the team that owns it after launch.
+I am most useful when a project sits between design and maintenance. I can take a visual direction, turn it into a responsive page, and leave behind patterns that make the next edit less fragile.
 
 ## Working principles
-- Start with the content and page purpose.
-- Use reusable sections instead of scattered fixes.
-- Keep responsive behavior readable on real screens.
-- Make the handoff easier for the next person editing the site.
+- Make the page purpose clear before styling it.
+- Prefer reusable sections over repeated one-off fixes.
+- Check responsive behavior on real viewport sizes.
+- Leave the editor and the next developer a clear path forward.

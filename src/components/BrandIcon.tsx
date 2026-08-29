@@ -8,16 +8,17 @@ type BrandIconProps = {
   className?: string
 }
 
-const brandIcons: Record<string, IconType> = {
+const brandIcons = {
   figma: SiFigma,
   github: SiGithub,
   linkedin: FaLinkedinIn,
   linktree: SiLinktree,
   x: SiX,
-}
+} satisfies Record<string, IconType>
 
 export function BrandIcon({ className, label }: BrandIconProps) {
-  const Icon = brandIcons[label.trim().toLowerCase()] ?? LuLink
+  const normalizedLabel = label.trim().toLowerCase()
+  const Icon = Object.entries(brandIcons).find(([key]) => key === normalizedLabel)?.[1] ?? LuLink
 
   return <Icon aria-hidden="true" className={className} focusable="false" />
 }

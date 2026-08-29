@@ -16,7 +16,7 @@ import {
 
 type UseProjectEditorOptions = {
   confirmDiscardChanges: (message: string) => boolean
-  handleUnauthorizedError: (caught: unknown) => boolean
+  handleUnauthorizedError: (caught: Error) => boolean
   onAfterSave: () => void
   setGlobalError: (message: string | null) => void
 }
@@ -97,7 +97,7 @@ export const useProjectEditor = ({
       setProjectConflict(null)
       setProjectStatus(`Loaded ${response.projects.length} project${response.projects.length === 1 ? '' : 's'} from GitHub.`)
     } catch (caught) {
-      if (!handleUnauthorizedError(caught)) setGlobalError(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setGlobalError(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setLoadingProjects(false)
     }
@@ -217,10 +217,11 @@ export const useProjectEditor = ({
       setProjectStatus(`Saved projects to ${response.path}.`)
       onAfterSave()
     } catch (caught) {
-      if (isAdminApiError(caught) && caught.status === 409) {
-        setProjectConflict({ currentSha: caught.currentSha, latestCommitSha: caught.latestCommitSha })
+      const error = caught instanceof Error ? caught : new Error(String(caught))
+      if (isAdminApiError(error) && error.status === 409) {
+        setProjectConflict({ currentSha: error.currentSha, latestCommitSha: error.latestCommitSha })
       }
-      if (!handleUnauthorizedError(caught)) setProjectStatus(getApiErrorMessage(caught))
+      if (!handleUnauthorizedError(caught instanceof Error ? caught : new Error(String(caught)))) setProjectStatus(getApiErrorMessage(caught instanceof Error ? caught : new Error(String(caught))))
     } finally {
       setSavingProjects(false)
     }

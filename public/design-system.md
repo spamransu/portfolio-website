@@ -8,7 +8,7 @@ The palette uses a dark page background, quiet borders, and a small set of accen
 
 ## Typography
 
-Oswald handles short display text. Inter carries body copy, labels, forms, and longer reading.
+Oswald handles short display text. Quattrocento Sans carries body copy, labels, forms, and longer reading.
 
 ## Spacing
 

@@ -10,14 +10,13 @@ export function NotFoundPage() {
   return (
     <div className={sty.page}>
       <InternalHero
-        eyebrow={notFoundCopy?.eyebrow ?? '404'}
         title={notFoundCopy?.title ?? 'Page not found'}
         intro={notFoundCopy?.intro ?? 'That route does not exist yet, but the rest of the portfolio is still intact.'}
       />
       <section className={sty.notFoundActions}>
         <div className="lg-wrapper">
           <div data-text-reveal-group="scrub">
-            <p className="eyebrow" data-text-reveal="copy">{notFoundCopy?.suggestionsEyebrow ?? 'Try these instead'}</p>
+            <h2 data-text-reveal="heading">{notFoundCopy?.suggestionsEyebrow ?? 'Try these instead'}</h2>
             <div className="button-row">
               <Link className="button button--primary" to="/projects">{notFoundCopy?.viewProjectsLabel ?? 'View projects'}<LuFolderOpen aria-hidden="true" focusable="false" /></Link>
               <Link className="button button--ghost" to="/"><LuArrowLeft aria-hidden="true" focusable="false" />{notFoundCopy?.backHomeLabel ?? 'Back home'}</Link>

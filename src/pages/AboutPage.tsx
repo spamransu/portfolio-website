@@ -7,10 +7,8 @@ export function AboutPage() {
   return (
     <div className={sty.page}>
       <InternalHero
-        eyebrow={siteContent.about.eyebrow ?? 'About'}
         title={siteContent.about.title}
         intro={siteContent.about.intro}
-        media={siteContent.about.heroImage}
       />
 
       <Section title={siteContent.about.bodySectionTitle}>

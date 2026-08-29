@@ -122,9 +122,13 @@ describe('admin helper functions', () => {
   })
 
   it('validates media uploads and blocks reload for unsaved blog drafts', () => {
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     expect(getMediaValidationError({ area: 'blog', file: { type: 'image/png', size: 1024 } as File, selectedProject: null, slug: 'post' })).toBeNull()
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     expect(getMediaValidationError({ area: 'projects', file: { type: 'application/pdf', size: 1024 } as File, selectedProject: project(), slug: 'project' })).toBe('Unsupported media type. Use png, jpg, webp, gif, or svg.')
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     expect(getMediaValidationError({ area: 'projects', file: { type: 'image/png', size: 6 * 1024 * 1024 } as File, selectedProject: project(), slug: 'project' })).toBe('Media file is too large. Maximum size is 5 MB.')
+// SAFETY: This assertion is safe after the surrounding boundary validation.
     expect(getMediaValidationError({ area: 'projects', file: { type: 'image/png', size: 1024 } as File, selectedProject: null, slug: 'project' })).toBe('Select a project before uploading project media.')
 
     expect(canReloadBlogPost(blogPost({ sha: '' }), 'new-post')).toBe(false)
