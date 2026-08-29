@@ -11,22 +11,25 @@ import { ProjectDetailPage } from '../pages/ProjectDetailPage'
 import { ProjectsPage } from '../pages/ProjectsPage'
 import { ResumePage } from '../pages/ResumePage'
 
-export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RootLayout />,
-    errorElement: <NotFoundPage />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: 'about', element: <AboutPage /> },
-      { path: 'blog', element: <BlogPage /> },
-      { path: 'blog/:slug', element: <BlogPostPage /> },
-      { path: 'projects', element: <ProjectsPage /> },
-      { path: 'projects/:slug', element: <ProjectDetailPage /> },
-      { path: 'contact', element: <ContactPage /> },
-      { path: 'design-system', element: <DesignSystemPage /> },
-      { path: 'resume', element: <ResumePage /> },
-      { path: '*', element: <NotFoundPage /> },
-    ],
-  },
-])
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <RootLayout />,
+      errorElement: <NotFoundPage />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: 'about', element: <AboutPage /> },
+        { path: 'blog', element: <BlogPage /> },
+        { path: 'blog/:slug', element: <BlogPostPage /> },
+        { path: 'projects', element: <ProjectsPage /> },
+        { path: 'projects/:slug', element: <ProjectDetailPage /> },
+        { path: 'contact', element: <ContactPage /> },
+        { path: 'design-system', element: <DesignSystemPage /> },
+        { path: 'resume', element: <ResumePage /> },
+        { path: '*', element: <NotFoundPage /> },
+      ],
+    },
+  ],
+  { basename: import.meta.env.BASE_URL },
+)
