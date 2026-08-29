@@ -3110,7 +3110,7 @@
                 "$type": "string",
                 "$libraryName": "",
                 "$collectionName": "Brand",
-                "$value": "{Font.Family.Inter}"
+                "$value": "{Font.Family.Quattrocento}"
               }
             },
             "Secondary": {
@@ -3904,7 +3904,7 @@
                 "$type": "string",
                 "$libraryName": "",
                 "$collectionName": "Brand",
-                "$value": "{Font.Inter.Style.Inter}"
+                "$value": "{Font.Quattrocento.Style.Quattrocento}"
               }
             },
             "Secondary": {
@@ -4835,9 +4835,9 @@
           },
           "Font": {
             "Family": {
-              "Inter": {
+              "Quattrocento": {
                 "$type": "string",
-                "$value": "Inter"
+                "$value": "Quattrocento"
               },
               "Oswald": {
                 "$type": "string",
@@ -5765,9 +5765,9 @@
           },
           "Font": {
             "Family": {
-              "Inter": {
+              "Quattrocento": {
                 "$type": "string",
-                "$value": "Inter"
+                "$value": "Quattrocento"
               },
               "Oswald": {
                 "$type": "string",

@@ -16,9 +16,27 @@
 .eyebrow {
   margin-block-start: 0;
   color: var(--color-action-primary);
-  @include mix.type-style(body-xs, 600);
+  @include mix.type-style(body-xs, 700);
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  width: fit-content;
+  color: var(--color-text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  @include mix.type-style(body-xs, 700);
+  transition: color var(--motion-emphasized) var(--motion-ease-emphasized), transform var(--motion-emphasized) var(--motion-ease-emphasized);
+}
+
+.backLink:hover {
+  color: var(--color-action-primary);
+  transform: translateX(-0.15rem);
 }
 
 .skip-link {
@@ -56,7 +74,7 @@
 .check-list {
   @include mix.flex(row, null, null, var(--gap-inline), wrap);
   padding: 0;
-  margin: 0;
+  margin-block: 0;
   list-style: none;
 }
 
@@ -92,6 +110,6 @@
   gap: var(--space-stack);
 
   p {
-    margin: 0;
+    margin-block: 0;
   }
 }

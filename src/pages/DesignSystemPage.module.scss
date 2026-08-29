@@ -4,16 +4,16 @@
 .block { border-bottom: var(--section-divider); }
 .blockGrid { display: grid; gap: var(--space-lg); padding-block: var(--space-xl); }
 .blockGrid > header { display: grid; align-content: start; gap: var(--space-sm); }
-.blockGrid > header p { margin: 0; }
+.blockGrid > header p { margin-block: 0; }
 .blockGrid > header p:last-child { color: var(--color-text-muted); }
 .swatches { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; padding: 1px; background: var(--color-border-default); }
 .swatches article { display: grid; gap: var(--space-2xs); padding: var(--space-sm); background: var(--color-background-page); }
 .swatches article > div { aspect-ratio: 3 / 2; margin: calc(var(--space-sm) * -1) calc(var(--space-sm) * -1) var(--space-xs); border-bottom: 1px solid var(--color-border-default); }
-.swatches strong { text-transform: uppercase; @include mix.type-style(body-sm, 600); }
-.swatches code, .swatches p, .typeScale code, .spacingScale code, .spacingScale small, .wrapperList code, .components small { margin: 0; color: var(--color-text-muted); @include mix.type-style(body-xs); }
+.swatches strong { text-transform: uppercase; @include mix.type-style(body-sm, 700); }
+.swatches code, .swatches p, .typeScale code, .spacingScale code, .spacingScale small, .wrapperList code, .components small { margin-block: 0; color: var(--color-text-muted); @include mix.type-style(body-xs); }
 .typeScale, .spacingScale, .components { display: grid; gap: var(--space-md); }
 .typeScale > div { display: grid; gap: var(--space-sm); padding-block-end: var(--space-md); border-bottom: 1px solid var(--color-border-subtle); }
-.typeScale p { margin: 0; text-transform: uppercase; }
+.typeScale p { margin-block: 0; text-transform: uppercase; }
 .spacingScale > div { display: grid; grid-template-columns: 3rem minmax(0, 1fr); align-items: center; gap: var(--space-sm); }
 .spacingScale span { display: block; min-width: 0.25rem; height: 1.5rem; background: var(--color-action-primary); }
 .spacingScale small { grid-column: 2; }
@@ -22,11 +22,11 @@
 .wrapperList, .surfaceDemo { display: grid; gap: var(--space-sm); margin-block-start: var(--space-md); }
 .wrapperList article { display: flex; justify-content: space-between; padding: var(--space-sm); border: 1px solid var(--color-border-default); }
 .fieldDemo { display: grid; max-width: 40rem; gap: var(--space-xs); }
-.fieldDemo label { @include mix.type-style(body-xs, 600); }
+.fieldDemo label { @include mix.type-style(body-xs, 700); }
 .fieldDemo input { min-height: var(--target-min-size); padding: var(--form-field-padding); color: var(--color-text-primary); background: var(--color-background-page); border: 1px solid var(--color-border-default); border-radius: var(--form-field-radius); }
 .surfaceDemo article { padding: var(--space-md); border: 1px solid var(--color-border-default); border-radius: var(--card-radius); background: var(--color-surface-card); }
 .surfaceDemo article:last-child { border-width: 1px 0 0; border-radius: 0; background: var(--color-transparent); }
-.surfaceDemo h3, .surfaceDemo p { margin: 0; }
+.surfaceDemo h3, .surfaceDemo p { margin-block: 0; }
 .surfaceDemo p, .surfaceDemo span { color: var(--color-text-muted); }
 .tagAcid { color: var(--color-action-primary); }
 .tagFlare { color: var(--color-action-secondary); }
@@ -35,7 +35,7 @@
 .dividers span { display: block; border-top: 1px solid var(--color-border-default); }
 .dividers span:nth-child(2) { border-color: var(--color-border-subtle); }
 .dividers span:nth-child(3) { border-color: var(--color-border-strong); }
-.imageDemo { display: grid; gap: var(--space-xs); margin: 0; }
+.imageDemo { display: grid; gap: var(--space-xs); margin-block: 0; }
 .imageDemo img { width: 100%; aspect-ratio: 1.2; object-fit: cover; border: 1px solid var(--color-border-default); border-radius: var(--card-radius); transition: transform var(--motion-emphasized) var(--motion-ease-emphasized); }
 .imageDemo img:hover { transform: scale(1.01); }
 .imageDemo figcaption { color: var(--color-text-muted); letter-spacing: 0.1em; text-transform: uppercase; @include mix.type-style(body-xs); }
@@ -47,3 +47,9 @@
 @include mix.mq(md) { .blockGrid { grid-template-columns: repeat(12, minmax(0, 1fr)); } .blockGrid > header { grid-column: span 3; } .blockGrid > :last-child { grid-column: 4 / span 9; padding-inline-start: var(--space-lg); border-inline-start: 1px solid var(--color-border-default); } }
 
 @media (prefers-reduced-motion: reduce) { .motionDemo:hover, .motionDemo:focus-visible, .imageDemo img:hover { transform: none; } }
+
+.blockGrid > header h2 {
+  margin-block: 0;
+  text-transform: uppercase;
+  @include mix.type-style(h4);
+}

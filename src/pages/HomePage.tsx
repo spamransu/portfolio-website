@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
-import { LuCalendarCheck, LuDownload, LuMessageCircle } from 'react-icons/lu'
+import { LuArrowUpRight, LuCalendarCheck, LuDownload, LuMessageCircle } from 'react-icons/lu'
 import { ContactForm } from '../components/ContactForm'
 import { FeaturedProjectCarousel } from '../components/FeaturedProjectCarousel'
+import { blogPosts } from '../content/blogContent'
 import { siteContent, type HomeStatTone } from '../content/siteContent'
 import sty from './HomePage.module.scss'
 
-const statToneClassNames: Record<HomeStatTone, string> = {
+const statToneClassNames = {
   accent: sty.statAccent,
   'accent-2': sty.statAccent2,
   'accent-3': sty.statAccent3,
-}
+} satisfies Record<HomeStatTone, string>
 
 function renderAccentedTitle(title: string, accentPhrase?: string) {
   if (!accentPhrase || !title.includes(accentPhrase)) return title
@@ -76,8 +77,7 @@ export function HomePage() {
           <div className={sty.sectionInner} data-text-reveal-group="scrub">
             <div className={sty.practiceCopy}>
               <div>
-                <p className="eyebrow" data-text-reveal="copy">{siteContent.home.bio.eyebrow}</p>
-                <h2 data-text-reveal="heading">{siteContent.home.bio.titleLines.join(' ')}</h2>
+                                <h2 data-text-reveal="heading">{siteContent.home.bio.titleLines.join(' ')}</h2>
               </div>
               <p data-text-reveal="copy">{siteContent.home.bio.description}</p>
             </div>
@@ -97,7 +97,6 @@ export function HomePage() {
         <div className="lg-wrapper">
           <div className={sty.skillsGrid} data-text-reveal-group="scrub">
             <div>
-              <p className="eyebrow" data-text-reveal="copy">Capabilities</p>
               <h2 data-text-reveal="heading">{siteContent.home.skills.title}</h2>
               <p data-text-reveal="copy">{siteContent.home.skills.description}</p>
             </div>
@@ -125,11 +124,33 @@ export function HomePage() {
         </div>
       </section>
 
+      {blogPosts.length ? (
+        <section className={sty.notes}>
+          <div className="lg-wrapper">
+            <div className={sty.notesInner} data-text-reveal-group="scrub">
+              <div className={sty.notesHeader}>
+                <span data-text-reveal="copy">Latest articles</span>
+                <h2 data-text-reveal="heading">Fresh from the blog</h2>
+              </div>
+              <div className={sty.notesGrid} data-text-reveal="copy">
+                {blogPosts.slice(0, 3).map((post) => (
+                  <Link className={sty.noteCard} key={post.slug} to={`/blog/${post.slug}`} state={{ from: '/' }}>
+                    <div className={sty.noteMeta}>{post.date} <span aria-hidden="true">·</span> 1 min</div>
+                    <h3>{post.title}</h3>
+                    <p>{post.excerpt ?? post.body.split('\n')[0]}</p>
+                    <span className={sty.noteRead}>Read article<LuArrowUpRight className={sty.noteArrow} aria-hidden="true" focusable="false" /></span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className={sty.contact} id="contact">
         <div className="lg-wrapper">
           <div className={sty.contactGrid} data-text-reveal-group="scrub">
             <div className={sty.contactCopy}>
-              <p className="eyebrow" data-text-reveal="copy">Start a conversation</p>
               <h2 data-text-reveal="heading">{siteContent.home.contact.title}</h2>
               <p data-text-reveal="copy"><LuCalendarCheck aria-hidden="true" className={sty.inlineIcon} focusable="false" />
                 {siteContent.contact.availability}. Reach directly at 

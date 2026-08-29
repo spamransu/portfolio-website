@@ -8,20 +8,20 @@
 }
 
 .root h1 {
-  margin: 0;
+  margin-block: 0;
   @include mix.type-style(h1);
 }
 
 .eyebrow {
   margin-block-start: 0;
   color: var(--color-action-primary);
-  @include mix.type-style(body-xs, 600);
+  @include mix.type-style(body-xs, 700);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .intro {
-  margin: 0;
+  margin-block: 0;
   max-width: var(--measure-intro);
   color: var(--color-text-muted);
   @include mix.type-style(body-lg);

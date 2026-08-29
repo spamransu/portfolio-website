@@ -17,7 +17,6 @@ export function ContactPage() {
   return (
     <div className={sty.page}>
       <InternalHero
-        eyebrow={siteContent.contact.eyebrow ?? 'Contact'}
         title={siteContent.contact.title}
         intro={siteContent.contact.body}
         actions={
@@ -32,7 +31,7 @@ export function ContactPage() {
         <div className="lg-wrapper">
           <div className={sty.contactGrid} data-text-reveal-group="scrub">
             <aside>
-              <p className="eyebrow" data-text-reveal="copy">{siteContent.contact.methodsSectionTitle}</p>
+              <h2 data-text-reveal="heading">{siteContent.contact.methodsSectionTitle}</h2>
               <div className={sty.contactMethods} data-text-reveal="copy">
                 {siteContent.contact.methods.map((method) => {
                   const Icon = getContactIcon(method.title)
@@ -47,7 +46,7 @@ export function ContactPage() {
               </div>
             </aside>
             <div className={sty.contactFormWrap}>
-              <p className="eyebrow" data-text-reveal="copy">{siteContent.contact.formSectionTitle}</p>
+              <h2 data-text-reveal="heading">{siteContent.contact.formSectionTitle}</h2>
               <p data-text-reveal="copy">{siteContent.contact.formSectionIntro}</p>
               <ContactForm contact={siteContent.contact.form} recipientEmail={siteContent.site.email} showIntro={false} />
             </div>

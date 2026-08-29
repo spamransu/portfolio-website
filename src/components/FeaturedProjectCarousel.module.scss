@@ -13,11 +13,11 @@
   color: var(--color-text-muted);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  @include mix.type-style(body-xs, 500);
+  @include mix.type-style(body-xs, 400);
 }
 
 .featuredHeading p {
-  margin: 0;
+  margin-block: 0;
 }
 
 .featuredHeaderActions {
@@ -71,6 +71,12 @@
 .featuredGrid {
   display: grid;
   gap: var(--space-lg);
+  cursor: pointer;
+}
+
+.featuredGrid:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: var(--space-xs);
 }
 
 .featuredCopy {
@@ -89,14 +95,14 @@
 .featuredCopy p,
 .featuredMedia,
 .featuredMedia figcaption {
-  margin: 0;
+  margin-block: 0;
 }
 
 .featuredIndex {
   color: var(--color-action-primary);
-  font-family: Oswald, sans-serif;
+  font-family: var(--font-display);
   font-size: clamp(3.5rem, 7vw, 5.5rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 0.9;
 }
 
@@ -114,7 +120,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-sm);
   padding-block-start: var(--space-sm);
-  margin: 0;
+  margin-block: 0;
   border-top: 1px solid var(--color-border-default);
 }
 
@@ -131,7 +137,7 @@
 }
 
 .projectMeta dd {
-  margin: 0;
+  margin-block: 0;
   @include mix.type-style(body-sm);
 }
 
@@ -147,7 +153,7 @@
   align-items: center;
   gap: var(--space-2xs);
   color: var(--color-text-primary);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   letter-spacing: 0.1em;
   text-transform: uppercase;

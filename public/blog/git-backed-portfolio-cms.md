@@ -1,27 +1,39 @@
-# Why I built a Git-backed portfolio CMS
+# Why this portfolio uses a Git-backed content system
 
 - Date: 2026-07-22
-- Excerpt: The reasoning behind keeping this portfolio content in source files, then generating markdown mirrors for people and agents.
+- Excerpt: How JSON and Markdown keep the portfolio's visible pages, mirrors, and project notes in sync.
 - Cover image: https://picsum.photos/seed/git-backed-portfolio-cms/1600/900.jpg
 
-This portfolio uses source files as the content system. The main site copy lives in JSON. Blog posts live in markdown. A prebuild script generates public markdown mirrors, sitemap entries, and a small navigation skill for agents.
+This portfolio keeps its editable content in the repository. Site copy lives in JSON. Blog and project notes live in Markdown. A prebuild script generates the public mirrors, sitemap entries, and agent-readable navigation files.
 
-That sounds heavier than a normal portfolio until the site starts changing often. Then it helps.
+That is more deliberate than a tiny hosted CMS, but it solves a real problem: portfolio copy changes in several places unless one source owns it.
 
-## One source is easier to trust
+## One source prevents drift
 
-Portfolio copy drifts fast. A project title changes in one card but not on the detail page. A resume line gets updated in markdown but not in the public page. A contact email changes in the footer and gets missed somewhere else.
+A project title can appear in a card, a detail page, a project index, and a resume entry. A contact address can be correct in the footer and stale in a generated page. Editing each copy by hand makes it easy to miss one.
 
-The fix is not complicated. Keep the main content in one place, then render or generate the other surfaces from it.
+The editable content file is the source of truth. React pages read from it, and the prebuild script creates derived Markdown and metadata files. Generated files are outputs, not a second place to edit.
 
-## Markdown mirrors make the site easier to inspect
+This arrangement also gives each change a visible diff. A reviewer can see whether a title, description, or link changed without comparing screenshots manually.
 
-The visual site is for people. The markdown mirrors are for quick reading, search, and agent inspection. A person can browse the React routes. An agent can read `/llms-full.txt`, `/projects.md`, or an individual project markdown file without scraping layout.
+## Markdown mirrors make the site inspectable
 
-That fits how I want the portfolio to work. It should be understandable without needing to inspect every component first.
+The visual routes are for people. Files such as `/llms-full.txt`, `/projects.md`, and individual project pages expose the same material in a form that is quick to read, search, or inspect without scraping layout.
 
-## Git keeps changes reviewable
+The mirrors support accessibility, search, and agent workflows. They also make content review a file review. If a claim is outdated, the source file and its generated copies have a predictable relationship.
 
-Because the content is in files, every rewrite shows up in a diff. That makes it easier to catch unsupported claims, stale project pages, and accidental placeholder text before the site ships.
+The generated files should not be edited directly. The next prebuild can replace them, so a direct change would be temporary and easy to lose.
 
-It is not a fancy CMS. It is a small system that fits the way this site is maintained.
+## Git keeps the rewrite visible
+
+When content is stored in files, a rewrite appears in a diff. I can review changed claims, spot placeholder text, and see whether a project page was updated everywhere before building.
+
+Git also preserves the history of those edits. A future maintainer can identify when a description changed, which files changed together, and whether the update was content-only or part of a structural change.
+
+For this workflow, a focused content commit can be validated with `pnpm run prebuild`. A structural change also runs `pnpm build`, and rendered changes get a browser check.
+
+## This is not a general-purpose CMS
+
+The system does not provide every feature of a hosted CMS. It favors a small set of files, predictable generation, and reviewable changes.
+
+That trade-off fits a portfolio that is edited by its developer. The content remains portable, the outputs can be regenerated, and a rewrite does not disappear inside an opaque admin interface.

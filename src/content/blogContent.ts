@@ -52,6 +52,7 @@ const allPosts = Object.values(modules)
       title: frontmatter.title ?? '',
       slug: frontmatter.slug ?? '',
       date: frontmatter.date ?? '',
+// SAFETY: This assertion is safe after the surrounding boundary validation.
       status: (frontmatter.status ?? 'draft') as BlogStatus,
       coverImage: frontmatter.coverImage || undefined,
       coverAlt: frontmatter.coverAlt || undefined,

@@ -2,7 +2,7 @@
 
 ## Frontend Web Developer and Graphic Designer
 
-Web developer and graphic designer with experience in WordPress, React, responsive UI implementation, website maintenance, and visual asset creation.
+Frontend developer and graphic designer with production experience in WordPress maintenance, Elementor systems, React implementation, responsive UI, and visual asset work.
 
 ## Skills
 - React
@@ -32,17 +32,17 @@ Web developer and graphic designer with experience in WordPress, React, responsi
 
 ## Experience
 ### Frontend Web Developer / Graphic Designer, Tech Support Plus I.T Services (Jan 2026 to present)
-- Maintain 8 active websites across 5 company sites and 3 client sites, plus periodic updates for 8 additional company websites every 2 weeks.
-- Built 3 custom WordPress themes or templates and reusable branded page sections for company and client websites.
-- Supported the migration of 4 websites to cleaner Elementor builds using global variables and reusable class structures.
-- Improved WordPress admin content workflows with ACF and Code Snippets, mainly for SEO and content updates.
-- Supported spam prevention, security cleanup, styling systems, cPanel, and Hostinger handoff work.
+- Maintain 8 active websites across company and client work, with recurring updates for 8 additional company websites.
+- Built 3 custom WordPress themes or templates and reusable branded sections.
+- Supported 4 migrations to cleaner Elementor builds using global variables and reusable class structures.
+- Improved admin content workflows with ACF and Code Snippets for SEO and content updates.
+- Supported spam prevention, security cleanup, styling consistency, cPanel, and Hostinger handoffs.
 
 ### Web Developer, ABCDE Creative Studio (Apr 2025 to Dec 2025)
 - Worked on 3 web projects, including the studio website.
-- Built at least 5 responsive pages from Figma mockups using React, HTML, CSS, JavaScript, and TypeScript.
+- Built at least 5 responsive pages from Figma mockups with React, HTML, CSS, JavaScript, and TypeScript.
 - Applied WCAG-based accessibility checks during frontend implementation.
-- Contributed reusable UI patterns and helped improve delivery workflows with GitHub Actions and Cloudflare.
+- Contributed reusable UI patterns and delivery support through GitHub Actions and Cloudflare.
 
 ### Print Machine Operator / Graphic Designer, Young Alpha Advertising Corp. (Jan 2024 to Oct 2024)
 - Supported print production for food trucks, businesses, and signage work across a 7-person team.

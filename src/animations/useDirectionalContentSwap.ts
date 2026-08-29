@@ -169,7 +169,7 @@ export function useDirectionalContentSwap({
           timelineRef.current = null
           commit()
 
-          if (typeof window === 'undefined') {
+          if (!globalThis.window) {
             enter()
             return
           }

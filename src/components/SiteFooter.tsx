@@ -19,11 +19,6 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
   const visibleSocials = siteContent.site.socials.filter((social) => social.label !== 'Linktree')
   const footerCopy = siteContent.siteChrome?.footer
-  const generalLinks = footerCopy?.generalLinks ?? [
-    { to: '/', label: 'Home' },
-    { to: '/about', label: 'About' },
-    { to: '/projects', label: 'Projects' },
-  ]
   const moreLinks = footerCopy?.moreLinks ?? [
     { to: '/#contact', label: 'Book a call' },
     { to: '/resume', label: 'View CV' },
@@ -35,7 +30,8 @@ export function SiteFooter() {
 
   return (
     <footer className={sty.root}>
-      <div className="lg-wrapper">
+      <div className={sty.border}>
+        <div className="lg-wrapper">
         <div className={sty.inner}>
           <div className={sty.info}>
             <p className={sty.brand}>
@@ -45,34 +41,46 @@ export function SiteFooter() {
             <p className={sty.description}>{siteContent.site.description}</p>
           </div>
 
-          <nav className={sty.navigation} aria-label="Footer">
-            <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
-            <ul className={sty.linkList}>
-              {generalLinks.map((link) => (
-                <li key={`${link.to}-${link.label}`}><Link to={link.to}>{link.label}</Link></li>
-              ))}
-              {moreLinks.map((link) => (
-                <li key={`${link.to}-${link.label}`}>
-                  {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')
-                    ? <a href={link.to}>{link.label}</a>
-                    : <Link to={link.to}>{link.label}</Link>}
-                </li>
-              ))}
-              {linktreeUrl ? (
-                <li><a href={linktreeUrl} target="_blank" rel="noreferrer">{footerCopy?.linktreeLabel ?? 'Linktree'}<LuExternalLink aria-hidden="true" className={sty.inlineIcon} focusable="false" /></a></li>
-              ) : null}
-            </ul>
-          </nav>
+          <div className={sty.links}>
+            <nav className={sty.featuredNavigation} aria-label="Featured pages">
+              <Link to="/">HOME</Link>
+              <Link to="/projects">PROJECTS</Link>
+              <Link to="/about">ABOUT</Link>
+              <Link to="/blog">NOTES</Link>
+              <Link to="/#contact">CONTACT</Link>
+            </nav>
 
-          <div className={sty.contact}>
-            <p className={sty.heading}>Contact</p>
-            <a href={`mailto:${siteContent.site.email}`}><LuMail aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.email}</a>
-            <a href={siteContent.site.siteUrl}><LuGlobe aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.siteUrl.replace(/^https?:\/\//, '')}</a>
-            <p><LuMapPin aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.location}</p>
+            <nav className={sty.navigation} aria-label="Footer">
+              <p className={sty.heading}>{footerCopy?.generalHeading ?? 'General'}</p>
+              <ul className={sty.linkList}>
+                {moreLinks.map((link) => (
+                  <li key={`${link.to}-${link.label}`}>
+                    {link.to.startsWith('/#') || link.to.startsWith('#') || link.to.startsWith('http')
+                      ? <a href={link.to}>{link.label}</a>
+                      : <Link to={link.to}>{link.label}</Link>}
+                  </li>
+                ))}
+                {linktreeUrl ? (
+                  <li><a href={linktreeUrl} target="_blank" rel="noreferrer">{footerCopy?.linktreeLabel ?? 'Linktree'}<LuExternalLink aria-hidden="true" className={sty.inlineIcon} focusable="false" /></a></li>
+                ) : null}
+              </ul>
+            </nav>
+
+            <div className={sty.contact}>
+              <p className={sty.heading}>Contact</p>
+              <a href={`mailto:${siteContent.site.email}`}><LuMail aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.email}</a>
+              <a href={siteContent.site.siteUrl}><LuGlobe aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.siteUrl.replace(/^https?:\/\//, '')}</a>
+              <p><LuMapPin aria-hidden="true" className={sty.inlineIcon} focusable="false" />{siteContent.site.location}</p>
+            </div>
           </div>
         </div>
 
-        <div className={sty.bottom}>
+        </div>
+      </div>
+
+      <div className={sty.bottomBorder}>
+        <div className="lg-wrapper">
+          <div className={sty.bottom}>
           <p className={sty.copyright}>{copyright}</p>
           <ul className={sty.socials} aria-label={siteContent.siteChrome?.footerSocialsAriaLabel ?? 'Social links'}>
             {visibleSocials.map((social) => (
@@ -83,6 +91,7 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
+          </div>
         </div>
       </div>
     </footer>
