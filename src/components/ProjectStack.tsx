@@ -10,7 +10,7 @@ import sty from './ProjectStack.module.scss'
 
 type ProjectStackProps = { items: string[]; ariaLabel: string; reverseFlow?: boolean }
 
-const iconColors: Record<string, string> = {
+const iconColors = {
   WordPress: '#21759b', Elementor: '#92003b', PHP: '#777bb4', HTML: '#e34f26', CSS: '#1572b6',
   React: '#61dafb', TypeScript: '#3178c6', JavaScript: '#f7df1e', Figma: '#f24e1e',
   'GitHub Actions': '#2088ff', Cloudflare: '#f38020', 'Laravel 12': '#ff2d20', Bootstrap: '#7952b3',
@@ -18,7 +18,7 @@ const iconColors: Record<string, string> = {
   cPanel: '#ff6c2c', Hostinger: '#673de6',
 }
 
-const icons: Record<string, IconType> = {
+const icons = {
   WordPress: SiWordpress, Elementor: FaCode, PHP: FaPhp, HTML: FaHtml5, CSS: FaCss3Alt,
   ACF: FaCode, 'Code Snippets': FaCode, cPanel: SiCpanel, Hostinger: SiHostinger, React: SiReact,
   TypeScript: SiTypescript, JavaScript: FaJs, Figma: SiFigma, 'GitHub Actions': SiGithubactions,
@@ -33,11 +33,17 @@ export function ProjectStack({ items, ariaLabel, reverseFlow = false }: ProjectS
   return (
     <ul className={`${sty.root}`} aria-label={ariaLabel}>
       {orderedItems.map((item, index) => {
-        const Icon = icons[item] ?? FaCode
+        // SAFETY: Object.hasOwn proves item is a key of the closed icon registry.
+        const Icon: IconType = Object.hasOwn(icons, item) ? icons[item as keyof typeof icons] : FaCode
         const tooltipId = `project-stack-tooltip-${index}-${item.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`
         return (
           <li key={item} aria-label={item} aria-describedby={tooltipId}>
-            <div className={sty.iconBox} style={{ '--icon-color': iconColors[item] ?? 'currentColor' } as CSSProperties}>
+            <div className={sty.iconBox} style={(() => {
+              // SAFETY: Object.hasOwn proves item is a key of the closed color registry.
+              const color = Object.hasOwn(iconColors, item) ? iconColors[item as keyof typeof iconColors] : 'currentColor'
+              // SAFETY: React supports custom CSS properties although CSSProperties omits their index signature.
+              return { '--icon-color': color } as CSSProperties
+            })()}>
               <Icon aria-hidden="true" focusable="false" />
             </div>
             <span className={sty.tooltip} id={tooltipId} role="tooltip">{item}</span>

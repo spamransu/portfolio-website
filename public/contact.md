@@ -1,9 +1,9 @@
 # Contact
 
-Have a page that needs building or untangling?
+Let’s talk about frontend work.
 
-I am open to frontend and WordPress roles, plus selected freelance work. Send a brief with what exists, what is blocked, and what a useful result would look like.
+I am looking for frontend developer roles. I also take on selected freelance work when the scope is a good fit.
 
 - Email: cartecianolance@gmail.com
 - Location: Philippines
-- Availability: Open to roles and selected freelance work
+- Availability: Open to frontend roles and selected freelance work

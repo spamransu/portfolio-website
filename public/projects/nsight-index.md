@@ -7,16 +7,16 @@
 - Homepage image: https://384721.xyz/images/home/featured-project-3.png
 
 ## Summary
-A Laravel blog management system with author and reader flows for posts, comments, categories, likes, saved posts, and media handling.
+A Laravel blog system with author and reader flows for posts, comments, categories, likes, saved posts, and media.
 
 ## Overview
-A Laravel content-management project focused on practical author and reader workflows for publishing, interaction, categorization, and media handling. Nsight Index is a Laravel blog management system. The useful part for this portfolio is the content workflow: creating posts, organizing categories, handling comments, saving posts, and supporting media.
+Nsight Index is a Laravel training project built around a working publishing flow. Authors can manage posts and readers can comment, like, save, and browse content by category.
 
 ## Challenge
 The project needed a practical content workflow where authors could manage posts and readers could interact with published content.
 
 ## Approach
-I kept the case study honest about what exists. Author and reader flows are the focus. Some admin ideas are still future work, so they do not appear here as finished features.
+I focused the case study on the author and reader flows that work today. Unfinished admin ideas stay out of the public claims.
 
 - Built post, category, comment, like, and saved-post flows.
 - Used Blade views with Bootstrap, Tailwind CSS, and Alpine.js for interface work.
@@ -24,7 +24,7 @@ I kept the case study honest about what exists. Author and reader flows are the 
 - Kept unfinished admin ideas out of the public claims because those flows are still marked as future work.
 
 ## Result
-The project shows that I can work beyond static frontend pages and handle a PHP content system with real data relationships and media handling.
+The repository shows a working Laravel content system and gives the portfolio a backend example without presenting unfinished features as complete.
 
 - The public repository shows a working Laravel content-management project with author and reader features.
 - The project gives a stronger backend example without overstating unfinished admin work.

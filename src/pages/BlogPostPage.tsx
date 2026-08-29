@@ -7,11 +7,12 @@ import { getBlogPostBySlug } from '../content/blogContent'
 import { siteContent } from '../content/siteContent'
 import { gsap, ScrollTrigger, useGSAP } from '../animations/gsap'
 import sty from './InternalPages.module.scss'
+const getInternalBackPath = (state: { from?: string } | null, fallback: string) => state?.from?.startsWith('/') ? state.from : fallback
 
 export function BlogPostPage() {
   const { slug } = useParams()
   const location = useLocation()
-  const backPath = typeof location.state?.from === 'string' && location.state.from.startsWith('/') ? location.state.from : '/blog'
+  const backPath = getInternalBackPath(location.state, '/blog')
   const post = slug ? getBlogPostBySlug(slug) : undefined
   const blogPostCopy = siteContent.blogPostPage
   const backLabel = backPath === '/' ? 'Back to home' : (blogPostCopy?.backToBlogLabel ?? 'Back to notes')

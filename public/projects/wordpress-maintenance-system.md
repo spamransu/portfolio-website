@@ -7,16 +7,16 @@
 - Homepage image: https://384721.xyz/images/home/featured-project-1.png
 
 ## Summary
-Ongoing WordPress work across company and client sites, including Elementor cleanup, reusable sections, admin workflows, spam prevention, and hosting handoff support.
+Ongoing WordPress work across company and client sites. I maintain pages, clean up Elementor builds, make reusable sections, and support content updates and hosting handoffs.
 
 ## Overview
-A recurring website maintenance and Elementor systems track designed to make active WordPress sites easier to update, safer to hand off, and more visually consistent over time. This is ongoing production support, not a single launch. The job is to keep company and client WordPress sites stable, easier to edit, and visually consistent while requests keep moving.
+This entry covers my current WordPress maintenance work rather than one finished project. I help keep company and client sites stable, consistent, and easier to update while requests continue to come in.
 
 ## Challenge
 Several sites needed regular updates, cleaner Elementor structure, and admin workflows that the SEO and content teams could use without breaking layout consistency.
 
 ## Approach
-I focused on the parts that make future edits safer: reusable Elementor classes, global styling variables, admin-side content fields, and cleanup work around spam, security, hosting, and handoff.
+I focus on the parts that make the next update safer: reusable Elementor classes, global styles, clearer content fields, and documented handoffs.
 
 - Maintained 8 active websites across company and client work.
 - Supported 4 migrations into cleaner Elementor builds with global variables and reusable class structures.
@@ -25,7 +25,7 @@ I focused on the parts that make future edits safer: reusable Elementor classes,
 - Handled spam prevention, security cleanup, styling consistency, and deployment support.
 
 ## Result
-The work made recurring site updates less fragile. Teams had clearer patterns to follow, and the managed sites had a stronger base for regular content and SEO updates.
+The sites are easier to update because repeated sections follow clearer patterns and content editors have fewer ways to break the layout.
 
 - Company and client sites became easier to update with more consistent section patterns.
 - Recurring maintenance work had clearer styling rules and less one-off editing.

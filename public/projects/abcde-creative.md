@@ -7,16 +7,16 @@
 - Homepage image: https://384721.xyz/images/home/featured-project-2.png
 
 ## Summary
-Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.
+Frontend work for the ABCDE Creative Studio website and related client projects. I turned Figma designs into responsive React pages and reusable sections.
 
 ## Overview
-A frontend implementation track translating studio design direction into responsive React pages, reusable sections, and delivery-ready interface patterns. At ABCDE Creative Studio, I worked from Figma direction into responsive frontend pages. The focus was practical implementation: clean layouts, accessible behavior, and reusable patterns.
+At ABCDE Creative Studio, I built responsive pages from Figma designs for the studio site and related client work. I focused on layout, accessibility, and reusable sections.
 
 ## Challenge
-The work needed to translate design direction into responsive interfaces while keeping accessibility and maintainability in mind.
+The pages needed to match the Figma direction across screen sizes without losing accessibility or becoming difficult to maintain.
 
 ## Approach
-I treated the mockups as a system instead of isolated screens. Shared sections, consistent spacing, and accessible markup made the work easier to test and adjust.
+I looked for repeated layout and spacing patterns instead of treating each mockup as a separate page. That made the pages easier to adjust and test.
 
 - Worked on 3 web projects, including the studio website.
 - Built at least 5 responsive pages from Figma mockups.
@@ -25,7 +25,7 @@ I treated the mockups as a system instead of isolated screens. Shared sections, 
 - Supported delivery workflows through GitHub Actions and Cloudflare.
 
 ## Result
-The work gave the studio and client pages a steadier frontend base, with responsive behavior and delivery patterns that could carry into later pages.
+The work produced responsive pages that stayed close to the design and gave later pages a more consistent frontend base.
 
 - Responsive pages matched the design direction more closely across screen sizes.
 - Reusable patterns made later project work easier to maintain.
