@@ -452,6 +452,73 @@
       "reflection": "A good frontend translation keeps the energy of the design while making every section dependable across real viewport sizes."
     },
     {
+      "slug": "debase",
+      "title": "Debase browser-local Base64 tools",
+      "year": "2026",
+      "client": "Personal project",
+      "kind": "case-study",
+      "status": "live site",
+      "summary": "A privacy-focused browser utility for encoding and decoding text and files as Base64, Base64URL, or Data URLs without uploading payloads.",
+      "role": "Frontend developer",
+      "stack": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "SCSS",
+        "Vitest",
+        "Playwright"
+      ],
+      "links": [
+        {
+          "label": "Live site",
+          "href": "https://debase.384721.xyz"
+        },
+        {
+          "label": "GitHub repository",
+          "href": "https://github.com/ransuhaneda/debase"
+        }
+      ],
+      "challenge": "The utility needed to handle text and binary files locally, reject malformed encoded input clearly, and preview safe output without turning decoded active content into a browser security risk.",
+      "approach": [
+        "Built encode and decode flows for standard Base64, unpadded Base64URL, and Base64 Data URLs.",
+        "Kept payload text, output, decoded bytes, filenames, MIME details, and file sizes inside the browser.",
+        "Added strict validation, a 25 MiB raw-file limit, drag-and-drop, copy, swap, file picking, and downloads.",
+        "Limited inline previews to allowlisted raster images and bounded plain text while keeping active content download-only.",
+        "Covered the transformation logic and interface with Vitest, Testing Library, and Playwright."
+      ],
+      "outcome": [
+        "The live tool handles common text and file transformations without sending payload data to a server.",
+        "Clear validation and constrained previews make malformed or potentially active decoded content safer to handle.",
+        "The public repository documents the privacy boundary, size limit, deployment path, and verification commands."
+      ],
+      "gallery": [
+        {
+          "src": "https://picsum.photos/seed/portfolio-debase-workbench/1600/1100.jpg",
+          "alt": "Editorial browser workbench image used as a placeholder for the Debase interface.",
+          "caption": "Placeholder visual. A public-safe product screenshot can replace this later."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-debase-files/1600/1100.jpg",
+          "alt": "Editorial file utility image used as a placeholder for Debase file transformations."
+        },
+        {
+          "src": "https://picsum.photos/seed/portfolio-debase-validation/1600/1100.jpg",
+          "alt": "Editorial interface detail used as a placeholder for Debase validation states."
+        }
+      ],
+      "overview": "A browser-local utility for transforming UTF-8 text and binary files between standard Base64, unpadded Base64URL, and Data URLs. Debase keeps payload data on the device and focuses on a compact workbench for encoding, decoding, copying, swapping, previewing, and downloading results.",
+      "approachSummary": "I treated privacy and safe output handling as product constraints rather than marketing copy. Transformations stay browser-local, validation is strict, raw files are capped at 25 MiB, and only allowlisted raster images or bounded plain text can render inline.",
+      "resultSummary": "Debase is live as a focused utility with documented limits, a public TypeScript codebase, and automated unit, component, and end-to-end coverage.",
+      "scope": [
+        "Browser-local File Processing",
+        "Base64 and Base64URL",
+        "Data URL Handling",
+        "Safe Output Previews",
+        "Automated Testing"
+      ],
+      "reflection": "Small utilities become more trustworthy when their privacy boundary, validation behavior, content limits, and unsafe-output handling are explicit in both the interface and the codebase."
+    },
+    {
       "slug": "nsight-index",
       "title": "Nsight Index blog management system",
       "year": "2026",

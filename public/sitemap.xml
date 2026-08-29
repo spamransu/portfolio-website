@@ -66,6 +66,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://384721.xyz/projects/debase</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://384721.xyz/projects/nsight-index</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

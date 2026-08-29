@@ -20,6 +20,15 @@ Ongoing WordPress work across company and client sites, including Elementor clea
 
 Frontend implementation work for the studio website and related client projects, translating Figma direction into responsive React pages and reusable UI patterns.
 
+## [Debase browser-local Base64 tools](https://384721.xyz/projects/debase.md)
+
+- Year: 2026
+- Client: Personal project
+- Role: Frontend developer
+- Stack: React, TypeScript, Vite, SCSS, Vitest, Playwright
+
+A privacy-focused browser utility for encoding and decoding text and files as Base64, Base64URL, or Data URLs without uploading payloads.
+
 ## [Nsight Index blog management system](https://384721.xyz/projects/nsight-index.md)
 
 - Year: 2026
