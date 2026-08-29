@@ -16,6 +16,9 @@ type PagesContext = {
   env: Env
 }
 
+type JsonPrimitive = boolean | null | number | string
+type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue }
+
 type AdminSession = {
   accessToken: string
   expiresAt: number
@@ -117,7 +120,7 @@ type Project = {
 type ProjectsWriteRequest = {
   branch?: string
   commitMessage?: string
-  projects: unknown
+  projects: JsonValue
   sha?: string
 }
 
@@ -146,7 +149,7 @@ type BlogPostResponse = BlogPostMeta & {
 type BlogPostWriteRequest = {
   branch?: string
   commitMessage?: string
-  post: unknown
+  post: JsonValue
   sha?: string
 }
 
@@ -241,7 +244,7 @@ const appendHeaders = (target: Headers, source: HeadersInit): void => {
   })
 }
 
-const jsonResponse = (body: unknown, init: ResponseInit = {}): Response => {
+const jsonResponse = (body: JsonValue, init: ResponseInit = {}): Response => {
   const headers = adminHeaders()
   headers.set('Content-Type', 'application/json; charset=utf-8')
 
@@ -385,22 +388,23 @@ const toMarkdownPath = (pathname: string): string | null => {
   return null
 }
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
+const isRecord = (value: JsonValue): value is { [key: string]: JsonValue } =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
-const isStringArray = (value: unknown): value is string[] =>
-  Array.isArray(value) && value.every((entry) => typeof entry === 'string')
+const isString = (value: JsonValue): value is string => typeof value === 'string'
+const isStringArray = (value: JsonValue): value is string[] =>
+  Array.isArray(value) && value.every(isString)
 
-const isStringRecordArray = (value: unknown, keys: string[]): value is Array<Record<string, unknown>> =>
-  Array.isArray(value) && value.every((entry) => isRecord(entry) && keys.every((key) => typeof entry[key] === 'string'))
+const isStringRecordArray = (value: JsonValue, keys: string[]): value is Array<{ [key: string]: JsonValue }> =>
+  Array.isArray(value) && value.every((entry) => isRecord(entry) && keys.every((key) => isString(entry[key])))
 
-const isImageAsset = (value: unknown): boolean =>
-  isRecord(value) && typeof value.src === 'string' && typeof value.alt === 'string' && (value.caption === undefined || typeof value.caption === 'string')
+const isImageAsset = (value: JsonValue): boolean =>
+  isRecord(value) && isString(value.src) && isString(value.alt) && (value.caption === undefined || isString(value.caption))
 
 const BLOG_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
-const validateSiteContent = (value: unknown): value is Record<string, unknown> => {
+const validateSiteContent = (value: JsonValue): value is { [key: string]: JsonValue } => {
   if (!isRecord(value)) return false
 
   const site = value.site
@@ -535,7 +539,7 @@ const validateSiteContent = (value: unknown): value is Record<string, unknown> =
   })
 }
 
-const validateProject = (value: unknown): value is Project => {
+const validateProject = (value: JsonValue): value is Project => {
   if (!isRecord(value)) return false
   if (!['slug', 'title', 'year', 'client', 'summary', 'role', 'challenge', 'overview', 'approachSummary', 'resultSummary', 'reflection'].every((key) => typeof value[key] === 'string')) return false
   if (value.kind !== undefined && !['case-study', 'experiment'].includes(`${value.kind}`)) return false
@@ -547,7 +551,7 @@ const validateProject = (value: unknown): value is Project => {
   return true
 }
 
-const getProjectsValidationError = (value: unknown): string | null => {
+const getProjectsValidationError = (value: JsonValue): string | null => {
   if (!Array.isArray(value)) return 'Projects payload failed validation.'
   if (!value.every(validateProject)) return 'Projects payload failed validation.'
 
@@ -582,7 +586,7 @@ const getProjectsValidationError = (value: unknown): string | null => {
   return null
 }
 
-const isBlogStatus = (value: unknown): value is BlogStatus => value === 'draft' || value === 'published'
+const isBlogStatus = (value: JsonValue): value is BlogStatus => value === 'draft' || value === 'published'
 const isAllowedMediaArea = (value: string): value is (typeof ALLOWED_MEDIA_AREAS)[number] =>
 // SAFETY: This assertion is safe after the surrounding boundary validation.
   (ALLOWED_MEDIA_AREAS as readonly string[]).includes(value)
@@ -592,7 +596,7 @@ const isAllowedMediaType = (value: string): value is (typeof ALLOWED_MEDIA_TYPES
   (ALLOWED_MEDIA_TYPES as readonly string[]).includes(value)
 
 
-const validateBlogPost = (value: unknown): value is BlogPost => {
+const validateBlogPost = (value: JsonValue): value is BlogPost => {
   if (!isRecord(value)) return false
   if (typeof value.title !== 'string' || typeof value.slug !== 'string' || typeof value.date !== 'string' || typeof value.body !== 'string') return false
   if (!isBlogStatus(value.status)) return false
@@ -604,7 +608,7 @@ const validateBlogPost = (value: unknown): value is BlogPost => {
   return true
 }
 
-const getBlogPostValidationError = (value: unknown): string | null => {
+const getBlogPostValidationError = (value: JsonValue): string | null => {
   if (!validateBlogPost(value)) return 'Blog post payload failed validation.'
 
 // SAFETY: This assertion is safe after the surrounding boundary validation.
@@ -659,8 +663,8 @@ const resolveMediaFilename = (originalName: string, mimeType: string): string =>
   return `${filename}.${extensionForMimeType(mimeType)}`
 }
 
-const sanitizeCommitMessage = (value: unknown, fallback: string): string => {
-  if (typeof value !== 'string') return fallback
+const sanitizeCommitMessage = (value: JsonValue, fallback: string): string => {
+  if (!isString(value)) return fallback
   const normalized = value.replace(/\s+/g, ' ').trim()
   if (!normalized) return fallback
   return normalized.slice(0, 120)
@@ -702,41 +706,42 @@ const requireSameOrigin = (request: Request): Response | null => {
   return null
 }
 
-const readJsonBody = async (request: Request): Promise<unknown | Response> => {
+const readJsonBody = async (request: Request): Promise<JsonValue | Response> => {
   const contentLengthHeader = request.headers.get('content-length')
   if (contentLengthHeader && Number(contentLengthHeader) > MAX_ADMIN_BODY_BYTES) {
     return jsonResponse({ error: 'Admin request body is too large.' }, { status: 413 })
   }
 
   try {
-    return await request.json()
+    // SAFETY: Request.json uses JSON.parse semantics and therefore returns a JSON value.
+    return await request.json() as JsonValue
   } catch {
     return jsonResponse({ error: 'Expected a JSON request body.' }, { status: 400 })
   }
 }
 
-const parseRequestBody = async <T>(request: Request, parser: (value: unknown) => value is T): Promise<T | Response> => {
+const parseRequestBody = async <T>(request: Request, parser: (value: JsonValue) => value is T): Promise<T | Response> => {
   const payload = await readJsonBody(request)
   if (payload instanceof Response) return payload
   if (!parser(payload)) return jsonResponse({ error: 'Request body failed validation.' }, { status: 400 })
   return payload
 }
 
-const isProjectsWriteRequest = (value: unknown): value is ProjectsWriteRequest =>
+const isProjectsWriteRequest = (value: JsonValue): value is ProjectsWriteRequest =>
   isRecord(value)
   && (value.branch === undefined || typeof value.branch === 'string')
   && (value.commitMessage === undefined || typeof value.commitMessage === 'string')
   && 'projects' in value
   && (value.sha === undefined || typeof value.sha === 'string')
 
-const isBlogPostWriteRequest = (value: unknown): value is BlogPostWriteRequest =>
+const isBlogPostWriteRequest = (value: JsonValue): value is BlogPostWriteRequest =>
   isRecord(value)
   && (value.branch === undefined || typeof value.branch === 'string')
   && (value.commitMessage === undefined || typeof value.commitMessage === 'string')
   && 'post' in value
   && (value.sha === undefined || typeof value.sha === 'string')
 
-const isBlogPostDeleteRequest = (value: unknown): value is BlogPostDeleteRequest =>
+const isBlogPostDeleteRequest = (value: JsonValue): value is BlogPostDeleteRequest =>
   isRecord(value)
   && (value.branch === undefined || typeof value.branch === 'string')
   && (value.commitMessage === undefined || typeof value.commitMessage === 'string')
@@ -888,7 +893,9 @@ const listGitHubBlogEntries = async (env: Env, accessToken: string, branch: stri
   return entries.filter((entry) => entry.type === 'file' && entry.name.endsWith('.md'))
 }
 
-const parseFrontmatter = (markdown: string): { frontmatter: BlogFrontmatter; body: string } => {
+type ParsedFrontmatter = { frontmatter: BlogFrontmatter; body: string }
+
+const parseFrontmatter = (markdown: string): ParsedFrontmatter => {
   const match = markdown.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/)
   if (!match) {
     throw new Error('Markdown file is missing frontmatter.')
@@ -1358,8 +1365,8 @@ const handleAdminMediaUpload = async ({ request, env }: PagesContext): Promise<R
     branch,
     content,
     message: `${DEFAULT_MEDIA_COMMIT_MESSAGE}: ${area}/${slug}/${filename}`.slice(0, 120),
-    ...(existing ? { sha: existing.sha } : {}),
   }
+  if (existing) updatePayload.sha = existing.sha
 
   const updateResponse = await fetchGitHubJson<GitHubUpdateContentResponse>(
     `${getRepoBase(env)}/contents/${repoPath}`,
@@ -1448,8 +1455,8 @@ const handleAdminBlogUpdate = async (context: PagesContext, slug: string): Promi
     branch,
     content: toBase64(serializeBlogPost(body.post)),
     message: sanitizeCommitMessage(body.commitMessage, DEFAULT_BLOG_COMMIT_MESSAGE),
-    ...(existingPost && !isRename ? { sha: existingPost.sha } : {}),
   }
+  if (existingPost && !isRename) updatePayload.sha = existingPost.sha
 
   const updateResponse = await fetchGitHubJson<GitHubUpdateContentResponse>(
     `${getRepoBase(env)}/contents/${targetPath}`,

@@ -7,16 +7,16 @@
 - Homepage image: https://384721.xyz/images/home/featured-project-4.png
 
 ## Summary
-The content system behind this site, with JSON as the source of truth, generated markdown mirrors, blog files, project pages, and Cloudflare Pages support.
+The content system behind this site. One JSON file feeds the React pages, generated Markdown, project pages, and machine-readable indexes.
 
 ## Overview
-A Git-backed content architecture that keeps this portfolio editable from one JSON source while publishing readable React routes and markdown mirrors. A portfolio gets messy when page copy, case studies, markdown files, and machine-readable indexes all drift apart. This build treats content as the source, then generates the files other surfaces need.
+This portfolio uses one JSON file for the main site copy and project data. A prebuild script turns that source into React content, public Markdown, a sitemap, and machine-readable indexes.
 
 ## Challenge
 The site needed to work as a human portfolio and as a machine-readable content source without keeping duplicate copy in separate places.
 
 ## Approach
-The React routes read from the same JSON content used by the generation script. Blog posts stay in markdown. The prebuild step writes public markdown pages, indexes, sitemap entries, and the site navigation skill.
+The React pages and generation script read from the same source. Blog posts stay in Markdown. This keeps me from updating the same copy in several places.
 
 - Kept main site copy in content/site-content.json.
 - Generated markdown mirrors for pages, projects, resume, blog, and LLM-friendly indexes.
@@ -24,7 +24,7 @@ The React routes read from the same JSON content used by the generation script. 
 - Used Cloudflare Pages functions to serve markdown when requested.
 
 ## Result
-The site stays easier to update because the copy has one main home. It also gives agents and readers a cleaner way to understand the site through markdown mirrors.
+I can update the portfolio from one main source, regenerate the public files, and check the human and machine-readable versions together.
 
 - The portfolio can be edited from one content source and still publish readable markdown mirrors.
 - The site is easier for humans and agents to inspect without scraping visual pages.

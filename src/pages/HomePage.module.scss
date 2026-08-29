@@ -12,6 +12,10 @@
   border-bottom: var(--section-divider);
 }
 
+.featured {
+  scroll-margin-top: var(--header-height);
+}
+
 .notesInner { display: grid; gap: var(--space-lg); padding-block: var(--space-xl); }
 .notesHeader { display: grid; justify-items: center; gap: var(--space-2xs); text-align: center; }
 .notesHeader span { color: var(--color-text-muted); letter-spacing: 0.08em; text-transform: uppercase; @include mix.type-style(body-xs); }

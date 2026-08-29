@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { LuArrowUpRight, LuCalendarCheck, LuDownload, LuMessageCircle } from 'react-icons/lu'
+import { LuArrowDown, LuArrowRight, LuArrowUpRight, LuCalendarCheck } from 'react-icons/lu'
 import { ContactForm } from '../components/ContactForm'
 import { FeaturedProjectCarousel } from '../components/FeaturedProjectCarousel'
 import { blogPosts } from '../content/blogContent'
@@ -46,9 +46,9 @@ export function HomePage() {
                   </dl>
                 ) : null}
                 <div className="button-row">
-                  <a className="button button--primary" href="#contact">{siteContent.home.cta.primaryLabel}<LuMessageCircle aria-hidden="true" focusable="false" /></a>
+                  <a className="button button--primary" href="#selected-work">{siteContent.home.cta.primaryLabel}<LuArrowDown aria-hidden="true" focusable="false" /></a>
                   {siteContent.home.cta.secondaryLabel ? (
-                    <Link className="button button--ghost" to="/resume">{siteContent.home.cta.secondaryLabel}<LuDownload aria-hidden="true" focusable="false" /></Link>
+                    <Link className="button button--ghost" to="/resume">{siteContent.home.cta.secondaryLabel}<LuArrowRight aria-hidden="true" focusable="false" /></Link>
                   ) : null}
                 </div>
               </div>
@@ -58,7 +58,7 @@ export function HomePage() {
       </section>
 
       {siteContent.home.featuredProjects.slugs.length ? (
-        <section className={sty.featured}>
+        <section className={sty.featured} id="selected-work">
           <div className="lg-wrapper">
             <div className={sty.sectionInner} data-text-reveal-group="scrub">
               <FeaturedProjectCarousel

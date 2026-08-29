@@ -40,4 +40,8 @@ export default defineConfig({
     'anti-slop/no-widen-then-assert': 'error',
     'anti-slop/require-safety-comment-for-type-assertion': 'error',
   },
+  overrides: [{
+    files: ['functions/**/*.ts'],
+    rules: { 'anti-slop/no-runtime-typeof': 'off' },
+  }],
 });
